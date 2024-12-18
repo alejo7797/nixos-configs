@@ -9,6 +9,9 @@
   # QEMU guest settings.
   virtualisation.qemu.options = [ "-device virtio-vga" ];
 
+  # Set the hostname.
+  networking.hostName = "nixos-vm";
+
   # Configure my user account.
   myNixOS.home-users."ewan" = {
     userConfig = ./home.nix;
@@ -25,21 +28,14 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Set the kernel parameters.
-  boot.kernelParams = [
-    "quiet"
-    "splash"
-    "loglevel=3"
-    "nowatchdog"
-  ];
+  boot.kernelParams = [ "quiet" "splash" "loglevel=3" "nowatchdog" ];
 
   # Use NetworkManager together with systemd-resolved.
-  networking.hostName = "nixos";
   networking.networkmanager.enable = true;
   services.resolved.enable = true;
 
   # Set the system time zone.
   time.timeZone = "Europe/Madrid";
-  #services.timesyncd.enable = true;
 
   # Customise the tty.
   console = {
@@ -47,47 +43,27 @@
     keyMap = "us";
   };
 
-  # Locale settings.
-  i18n.defaultLocale = "en_US.UTF-8";
-  i18n.supportedLocales = [
-    "en_DK.UTF-8/UTF-8"
-    "es_ES.UTF-8/UTF-8"
-    "ja_JP.UTF-8/UTF-8"
-  ];
-  i18n.extraLocaleSettings = {
-    LC_TIME = "en_DK.UTF-8";
-  };
-
-  # Enable and configure greetd.
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --remember --cmd sway";
-        user = "greeter";
+  # Enable and configure SDDM.
+  services.xserver.enable = true;
+  services.displayManager = {
+    defaultSession = "sway";
+    sddm = {
+      enable = true;
+      theme = "chili";
+      settings = {
+        Current = {
+          CursorSize = 24;
+          CursorTheme = "breeze_cursors";
+        };
       };
     };
   };
 
-  # Enable and configure sway.
+  # Enable sway.
   programs.sway = {
     enable = true;
     wrapperFeatures.gtk = true;
     extraPackages = [ ];
-    extraSessionCommands = ''
-      # Session
-      export XDG_CURRENT_DESKTOP=sway
-      export XDG_SESSION_DESKTOP=sway
-      export XDG_SESSION_TYPE=wayland
-
-      # Wayland
-      export _JAVA_AWT_WM_NONREPARENTING=1
-      export MOZ_ENABLE_WAYLAND=1
-      export QT_QPA_PLATFORM=wayland
-
-      # QT settings
-      export QT_IM_MODULE=fcitx
-    '';
   };
 
   # Enable Hyprland.
@@ -240,6 +216,7 @@
     kdePackages.kio-extras
     kdePackages.konsole
     kdePackages.qtsvg
+    libsForQt5.qt5.qtwayland
     kdePackages.qtwayland
     ilya-fedin.qt5ct
     ilya-fedin.qt6ct
@@ -248,6 +225,7 @@
     dconf-editor
     font-manager
     pavucontrol
+    xsettingsd
 
     # Actual programs.
     filezilla
@@ -298,6 +276,13 @@
         scheme-medium
         collection-langcyrillic
         ;
+    })
+
+    # SDDM theme.
+    (sddm-chili-theme.override {
+      themeConfig = {
+        ScreenWidth = 960;
+      };
     })
 
   ];

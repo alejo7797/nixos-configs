@@ -2,7 +2,7 @@
 
   imports = [ ../style.nix ];
 
-  options.myHome.style.enable = lib.mkEnableOption "enable user theme";
+  options.myHome.style.enable = lib.mkEnableOption "the user theme";
 
   config = lib.mkIf config.myHome.style.enable {
 
@@ -14,6 +14,12 @@
       "kdeglobals".source = ../dotfiles/kdeglobals;
       "qt5ct/qt5ct.conf".source = ../dotfiles/qt5ct.conf;
       "qt6ct/qt6ct.conf".source = ../dotfiles/qt6ct.conf;
+    };
+
+    # Additionally set the following.
+    home.sessionVariables = {
+      QT_FONT_DPI = 120;
+      QT_QPA_PLATFORMTHEME = "qt6ct";
     };
 
     # Set our desired font DPI.

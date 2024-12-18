@@ -1,14 +1,14 @@
-{ inputs, pkgs, ... }: {
+{ inputs, pkgs, lib, ... }: {
 
   imports = [
 
     # External modules.
     inputs.home-manager.nixosModules.home-manager
     inputs.stylix.nixosModules.stylix
-  ] ++ [
 
     # My personal modules.
-    ./style.nix ./users.nix
+    ./style.nix ./users.nix ./vim.nix ./locale.nix
+
   ];
 
   # Enable Nix flakes support.
@@ -29,17 +29,14 @@
     syntaxHighlighting.enable = true;
   };
 
-  # Install vim.
-  programs.vim = {
-    enable = true;
-    package = pkgs.vim-full;
-  };
+  # Enable and configure vim.
+  myNixOS.vim.enable = true;
 
-  # And set it as default.
-  environment.variables = {
-    DIFFPROG = "vimdiff";
-    EDITOR = "vim";
-  };
+  # Enable systemd-timesyncd.
+  services.timesyncd.enable = lib.mkDefault true;
+
+  # Use the en_DK.UTF-8 locale for dates and times.
+  myNixOS.iso-time-format.enable = true;
 
   # Enable plocate.
   services.locate = {

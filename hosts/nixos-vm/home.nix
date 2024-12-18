@@ -15,9 +15,21 @@
   # Configure sway.
   wayland.windowManager.sway = {
     enable = true;
-    package = null;
-    config = {
+    wrapperFeatures.gtk = true;
+    extraSessionCommands = ''
+      export _JAVA_AWT_WM_NONREPARENTING=1
+      export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+      export QT_IM_MODULE=fcitx
+    '';
+    systemd.variables = lib.mkOptionDefault [
+      "QT_FONT_DPI"
+      "QT_QPA_PLATFORMTHEME"
+    ];
+    config = let
       modifier = "Mod4";
+      exit = "exit: [s]leep, [h]ibernate, [r]eboot, [p]oweroff";
+    in {
+      inherit modifier;
       terminal = "kitty";
       menu = "wofi | xargs swaymsg exec --";
       bars = [ { command = "waybar"; } ];
@@ -26,7 +38,8 @@
         size = 12.0;
       };
       keybindings = lib.mkOptionDefault {
-        "Mod4+Shift+x" = "exec slurpshot";
+        "${modifier}+x" = "mode ${exit}";
+        "${modifier}+Shift+x" = "exec slurpshot";
       };
       gaps = {
         inner = 0;
@@ -35,37 +48,29 @@
       window.hideEdgeBorders = "both";
       defaultWorkspace = "workspace number 1";
       startup = [
-        { command = "swayidle"; }
-        { command = "swaync"; }
+        { command = "xrdb -load ~/.Xresources"; }
+        { command = "systemctl --user start xsettingsd"; }
+        { command = "systemctl --user start gnome-polkit-agent"; }
+        { command = "dex --autostart --environment sway"; }
         { command = "kdeconnect-indicator"; }
         { command = "gammastep-indicator"; }
-        { command = "dex --autostart --environment sway"; }
-        { command = "ststemctl --user start gnome-polkit-agent"; }
-        { command = "systemctl --user import-environment QT_FONT_DPI QT_QPA_PLATFORMTHEME"; }
-        { command = "dbus-update-activation-environment --systemd QT_FONT_DPI QT_QPA_PLATFORMTHEME"; }
+        { command = "swayidle"; }
+        { command = "swaync"; }
       ];
+      modes = lib.mkOptionDefault {
+        ${exit} = {
+          s = "systemctl suspend-then-hibernate, mode default";
+          h = "systemctl hibernate, mode default";
+          p = "systemctl poweroff";
+          r = "systemctl reboot";
+          Escape = "mode default";
+          "${modifier}+x" = "mode default";
+        };
+      };
     };
-    extraConfig = ''
-      #
-      # Exit mode
-      #
-      set $exit "exit: [s]leep, [h]ibernate, [r]eboot, [p]oweroff"
-      mode $exit {
-          bindsym --to-code {
-              s exec systemctl suspend-then-hibernate, mode "default"
-              h exec systemctl hibernate, mode "default"
-              p exec systemctl poweroff
-              r exec systemctl reboot
-
-              Escape mode "default"
-              Mod4+x mode "default"
-          }
-      }
-      bindsym --to-code Mod4+x mode $exit
-    '';
   };
 
-  # Use wofi as our application runner.
+  # Install and configure wofi.
   programs.wofi = {
     enable = true;
     settings = {
@@ -74,12 +79,12 @@
     };
   };
 
-  # Use kitty as our terminal emulator.
+  # Install and configure kitty.
   programs.kitty = {
     enable = true;
   };
 
-  # Enable and configure waybar.
+  # Install and configure waybar.
   programs.waybar = {
     enable = true;
   };

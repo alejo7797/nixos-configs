@@ -1,6 +1,6 @@
 { pkgs, lib, config, ... }: {
 
-options.myStyle.enable = lib.mkEnableOption "enable common theme components";
+options.myStyle.enable = lib.mkEnableOption "the common theme components";
 
 config = lib.mkIf config.myStyle.enable {
 
