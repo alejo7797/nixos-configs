@@ -78,21 +78,6 @@
     pulse.enable = true;
   };
 
-  # Enable polkit.
-  security.polkit.enable = true;
-
-  # And give us easy access to the gnome polkit agent.
-  systemd.user.units."polkit-gnome-agent.service" = {
-    text = ''
-      [Unit]
-      Description=GNOME polkit agent
-
-      [Service]
-      Type=oneshot
-      ExecStart=${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1
-    '';
-  };
-
   # Enable and configure fcitx5.
   i18n.inputMethod = {
     enable = true;
@@ -177,12 +162,14 @@
     htop
     imagemagick
     libfido2
+    libnotify
     lsd
     neofetch
     nettools
     nmap
     pdftk
     playerctl
+    procps
     psmisc
     rsync
     usbutils

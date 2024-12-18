@@ -38,6 +38,9 @@
   # Use the en_DK.UTF-8 locale for dates and times.
   myNixOS.iso-time-format.enable = true;
 
+  # Enable polkit.
+  security.polkit.enable = true;
+
   # Enable plocate.
   services.locate = {
     enable = true;
