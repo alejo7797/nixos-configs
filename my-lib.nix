@@ -7,10 +7,7 @@ in rec {
   pkgsFor = system:
     import inputs.nixpkgs {
       inherit system;
-      overlays = [
-        inputs.nixgl.overlay
-        inputs.nur.overlays.default
-      ];
+      overlays = [ inputs.nixgl.overlay ];
     };
 
   # Build a NixOS configuration.

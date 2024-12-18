@@ -5,10 +5,6 @@
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nur = {
-      url = "github:nix-community/NUR";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nixgl.url = "github:nix-community/nixGL";
     stylix.url = "github:danth/stylix";
     ilya-fedin.url = "github:ilya-fedin/nur-repository";

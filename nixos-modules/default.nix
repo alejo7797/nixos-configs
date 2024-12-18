@@ -4,7 +4,6 @@
 
     # External modules.
     inputs.home-manager.nixosModules.home-manager
-    inputs.nur.modules.nixos.default
     inputs.stylix.nixosModules.stylix
   ] ++ [
 
