@@ -31,18 +31,18 @@
     };
 
     # And define the user account itself.
-    users.users = builtins.mapAttrs (name: user:
-      {
+    users.users = builtins.mapAttrs (name: user: {
 
-        # Sane defaults.
-        isNormalUser = true;
-        initialPassword = "admin";
-        description = "";
-        shell = pkgs.zsh;
-        extraGroups = ["networkmanager" "wheel"];
+      # Sane defaults.
+      isNormalUser = true;
+      initialPassword = "admin";
+      description = "";
+      shell = pkgs.zsh;
+      extraGroups = ["networkmanager" "wheel"];
 
-      # With customisation.
-      } // user.userSettings
+    # With customisation.
+    } // user.userSettings
+
     ) (config.myNixOS.home-users);
 
   };

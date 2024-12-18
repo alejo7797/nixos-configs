@@ -23,7 +23,7 @@
   # Enable my custom system theme.
   myNixOS.style.enable = true;
 
-  # Use systemd-boot as the boot loader.
+  # Use systemd-boot as our boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -43,31 +43,15 @@
     keyMap = "us";
   };
 
-  # Enable and configure SDDM.
-  services.xserver.enable = true;
-  services.displayManager = {
-    defaultSession = "sway";
-    sddm = {
-      enable = true;
-      theme = "chili";
-      settings = {
-        Current = {
-          CursorSize = 24;
-          CursorTheme = "breeze_cursors";
-        };
-      };
-    };
-  };
+  # Use SDDM as our display manager.
+  myNixOS.sddm.enable = true;
 
-  # Enable sway.
-  programs.sway = {
-    enable = true;
-    wrapperFeatures.gtk = true;
-    extraPackages = [ ];
-  };
+  # Install sway, the i3-compatible Wayland compositor.
+  myNixOS.sway.enable = true;
 
-  # Enable Hyprland.
-  programs.hyprland.enable = true;
+  # Install Hyprland, the tiling Wayland compositor
+  # that doesn't sacrifice on its looks.
+  myNixOS.hyprland.enable = true;
 
   # Enable sound.
   security.rtkit.enable = true;
@@ -78,27 +62,10 @@
     pulse.enable = true;
   };
 
-  # Enable and configure fcitx5.
-  i18n.inputMethod = {
-    enable = true;
-    type = "fcitx5";
-    fcitx5 = {
-      waylandFrontend = true;
-      plasma6Support = true;
-      addons = with pkgs; [
-        fcitx5-mozc
-        fcitx5-rime
-      ];
-    };
-  };
+  # Configure Fcitx5 as our input method.
+  myNixOS.fcitx5.enable = true;
 
-  # And define the following environment variables.
-  environment.variables = {
-    SDL_IM_MODULE = "fcitx";
-    XMODIFIERS = "@im=fcitx";
-  };
-
-  # Enable printer-related services.
+  # Enable printing-related services.
   services.printing.enable = true;
   services.avahi.enable = true;
   services.saned.enable = true;
@@ -110,40 +77,23 @@
     openDefaultPorts = true;
   };
 
-  # Enable and configure the GnuPG agent.
-  programs.gnupg.agent = {
-    enable = true;
-    pinentryPackage = pkgs.pinentry-gnome3;
-  };
+  # Install Dolphin and related KDE applications.
+  myNixOS.dolphin.enable = true;
 
-  # Manage storage devices.
-  services.udisks2.enable = true;
-  programs.gnome-disks.enable = true;
-
-  # More useful utilities to enable.
-  services.blueman.enable = true;
-  programs.dconf.enable = true;
-  programs.direnv.enable = true;
-  services.geoclue2.enable = true;
-  programs.git.enable = true;
-  programs.gamemode.enable = true;
-  programs.kdeconnect.enable = true;
-  programs.nm-applet.enable = true;
-  programs.ssh.startAgent = true;
-
-  # Install firefox and set it as default.
-  programs.firefox.enable = true;
-  environment.variables.BROWSER = "firefox";
-
-  # More programs benefitting from system integration.
+  # Install Thunderbird.
   programs.thunderbird.enable = true;
+
+  # Install Wireshark.
   programs.wireshark.enable = true;
 
-  # Install Steam to download and play games.
+  # Install Steam and Protontricks.
   programs.steam = {
     enable = true;
     protontricks.enable = true;
   };
+
+  # Install gamemode.
+  programs.gamemode.enable = true;
 
   # Install the following packages system-wide.
   environment.systemPackages = with pkgs; [
@@ -152,77 +102,11 @@
     cnijfilter2
     ntfs3g
 
-    # Utilities.
-    bemenu
-    bind
-    curl
-    dex
-    file
-    ffmpeg
-    htop
-    imagemagick
-    libfido2
-    libnotify
-    lsd
-    neofetch
-    nettools
-    nmap
-    pdftk
-    playerctl
-    procps
-    psmisc
-    rsync
-    usbutils
-    wget
-    yt-dlp
-
-    # Wayland goodies.
-    brightnessctl
-    gammastep
-    hyprlock
-    kanshi
-    swaybg
-    swayidle
-    swaynotificationcenter
-    waybar
-    wf-recorder
-    wofi
-    wl-clipboard
-    wlogout
-
-    # KDE and QT utilities.
-    kdePackages.ark
-    libsForQt5.breeze-qt5
-    kdePackages.breeze
-    kdePackages.dolphin
-    kdePackages.dolphin-plugins
-    kdePackages.ffmpegthumbs
-    kdePackages.gwenview
-    kdePackages.kimageformats
-    kdePackages.kio-admin
-    kdePackages.kio-extras
-    kdePackages.konsole
-    kdePackages.qtsvg
-    libsForQt5.qt5.qtwayland
-    kdePackages.qtwayland
-    ilya-fedin.qt5ct
-    ilya-fedin.qt6ct
-
-    # Other GUI utilities.
-    dconf-editor
-    font-manager
-    pavucontrol
-    xsettingsd
-
     # Actual programs.
     filezilla
     gimp
     inkscape
     joplin-desktop
-    keepassxc
-    kitty
-    libreoffice
-    mpv
     #plex-desktop
     qbittorrent
     #spotify
@@ -255,7 +139,6 @@
     sage
     shellcheck
     shfmt
-    uv
 
     # TeX Live.
     (texlive.combine {
@@ -265,30 +148,6 @@
         ;
     })
 
-    # SDDM theme.
-    (sddm-chili-theme.override {
-      themeConfig = {
-        ScreenWidth = 960;
-      };
-    })
-
-  ];
-
-  # This fixes the unpopulated MIME menus.
-  environment.etc."/xdg/menus/plasma-applications.menu".text =
-    builtins.readFile "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
-  environment.variables.XDG_MENU_PREFIX = "plasma-";
-
-  # Install the following fonts system-wide.
-  fonts.packages = with pkgs; [
-    #corefonts
-    dejavu_fonts
-    font-awesome
-    noto-fonts-cjk-sans
-    noto-fonts-color-emoji
-    source-han-sans
-    source-han-serif
-    source-sans
   ];
 
 }

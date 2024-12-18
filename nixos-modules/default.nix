@@ -7,7 +7,10 @@
     inputs.stylix.nixosModules.stylix
 
     # My personal modules.
-    ./style.nix ./users.nix ./vim.nix ./locale.nix
+    ./style.nix ./users.nix ./locale.nix
+    ./vim.nix ./wayland.nix ./gui.nix
+    ./sddm.nix ./sway.nix ./hyprland.nix
+    ./dolphin.nix ./fcitx5.nix
 
   ];
 
@@ -22,14 +25,14 @@
     (self: super: { ilya-fedin = import inputs.ilya-fedin { pkgs = super; }; })
   ];
 
-  # Enable and configure zsh.
+  # Install and configure zsh.
   programs.zsh = {
     enable = true;
     autosuggestions.enable = true;
     syntaxHighlighting.enable = true;
   };
 
-  # Enable and configure vim.
+  # Install and configure vim.
   myNixOS.vim.enable = true;
 
   # Enable systemd-timesyncd.
@@ -41,11 +44,27 @@
   # Enable polkit.
   security.polkit.enable = true;
 
-  # Enable plocate.
+  # Install git.
+  programs.git.enable = true;
+
+  # Enable the SSH agent.
+  programs.ssh.startAgent = true;
+
+  # Install direnv.
+  programs.direnv.enable = true;
+
+  # Install plocate.
   services.locate = {
     enable = true;
     localuser = null;
     package = pkgs.plocate;
   };
+
+  # Install the following essential packages.
+  environment.systemPackages = with pkgs; [
+    bind curl file ffmpeg htop imagemagick
+    libfido2 lsd neofetch nettools nmap procps
+    psmisc rsync usbutils uv wget yt-dlp
+  ];
 
 }
