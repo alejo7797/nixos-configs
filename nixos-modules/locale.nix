@@ -1,9 +1,9 @@
 { lib, config, ... }: {
 
-  # Configure the locale.
+  # Set the default locale.
   i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
 
-  # A generous selection of available locales.
+  # Provide a generous selection of available locales.
   i18n.supportedLocales = [
     "en_GB.UTF-8/UTF-8"
     "en_US.UTF-8/UTF-8"

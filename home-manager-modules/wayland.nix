@@ -7,17 +7,17 @@
     # Configure common graphical applications.
     myHome.graphical-environment = true;
 
-    # Configure waybar.
+    # Install and configure waybar.
     programs.waybar = {
       enable = true;
     };
 
-    # Configure swaync.
+    # Enable and configure swaync.
     services.swaync = {
       enable = true;
     };
 
-    # Configure wofi.
+    # Install and configure wofi.
     programs.wofi = {
       enable = true;
       settings = {
@@ -26,17 +26,22 @@
       };
     };
 
-    # Configure hyprlock.
+    # Install and configure hyprlock.
     programs.hyprlock = {
       enable = true;
     };
 
-    # Configure kanshi.
+    # Enable and configure kanshi.
     services.kanshi = {
       enable = true;
     };
 
-    # Configure swayidle.
+    # Change the gammastep adjustment method.
+    services.gammastep.settings.general = {
+      adjustment-method = "wayland";
+    };
+
+    # Enable and configure swayidle.
     services.swayidle = let
       lock = "${pkgs.hyprlock}/bin/hyprlock";
     in {

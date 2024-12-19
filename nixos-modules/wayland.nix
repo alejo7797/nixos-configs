@@ -13,12 +13,10 @@
       # Let hyprlock authenticate users.
       security.pam.services.hyprlock = {};
 
-      # Install a bunch of Wayland-specific goodies.
+      # Install some Wayland-specific packages.
       environment.systemPackages = with pkgs; [
 
-        bemenu brightnessctl gammastep
-        wf-recorder wl-clipboard
-
+        bemenu wf-recorder wl-clipboard
         libsForQt5.qt5.qtwayland
         kdePackages.qtwayland
 

@@ -6,11 +6,7 @@
 
     # Configure zsh.
     programs.zsh = {
-
       enable = true;
-
-      # So that .zsh_history stays small.
-      history.save = 5000;
 
     };
 

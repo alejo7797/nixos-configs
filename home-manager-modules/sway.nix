@@ -4,7 +4,7 @@
 
   config = lib.mkIf config.myHome.sway.enable {
 
-    # Configure a bunch of wayland-specific utilities.
+    # Install and configure a bunch of wayland-specific utilities.
     myHome.wayland.enable = true;
 
     # Configure sway, the i3-compatible Wayland compositor.
@@ -22,8 +22,7 @@
       systemd = {
         xdgAutostart = true;
         variables = lib.mkOptionDefault [
-          "QT_FONT_DPI"
-          "QT_QPA_PLATFORMTHEME"
+          "QT_FONT_DPI" "QT_QPA_PLATFORMTHEME"
         ];
       };
 
@@ -46,16 +45,39 @@
         window.hideEdgeBorders = "both";
         defaultWorkspace = "workspace number 1";
 
-        keybindings = lib.mkOptionDefault {
+        keybindings = let
+
+          pactl = "${pkgs.pulseaudio}/bin/pactl";
+          playerctl = "${pkgs.playerctl}/bin/playerctl";
+          brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
+
+        in lib.mkOptionDefault {
+
           "${modifier}+x" = "mode \"${exit}\"";
+          "${modifier}+Shift+o" = "loginctl lock-session";
           "${modifier}+Shift+x" = "exec slurpshot";
+
+          # Use pactl to adjust volume in PulseAudio.
+          "XF86AudioRaiseVolume"  = "exec ${pactl} set-sink-volume @DEFAULT_SINK@ +4%";
+          "XF86AudioLowerVolume"  = "exec ${pactl} set-sink-volume @DEFAULT_SINK@ -4%";
+          "XF86AudioMute"         = "exec ${pactl} set-sink-mute @DEFAULT_SINK@ toggle";
+          "XF86AudioMicMute"      = "exec ${pactl} set-source-mute @DEFAULT_SOURCE@ toggle";
+
+          # Bind the media keys to playerctl actions.
+          "XF86AudioPlay"   = "exec ${playerctl} play-pause";
+          "XF86AudioPause"  = "exec ${playerctl} pause";
+          "XF86AudioNext"   = "exec ${playerctl} next";
+          "XF86AudioPrev"   = "exec ${playerctl} previous";
+
+          # Control the screen brightness.
+          "XF86MonBrightnessDown" = "exec ${brightnessctl} set 2%-";
+          "XF86MonBrightnessUp"   = "exec ${brightnessctl} set 2%+";
+
         };
 
         startup = [
           { command = "${pkgs.xorg.xrdb}/bin/xrdb -load ~/.Xresources"; }
           { command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; }
-          { command = "${pkgs.kdePackages.kdeconnect-kde}/bin/kdeconnect-indicator"; }
-          { command = "${pkgs.gammastep}/bin/gammastep-indicator"; }
         ];
 
         modes = lib.mkOptionDefault {

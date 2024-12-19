@@ -4,7 +4,6 @@
 
   config = lib.mkIf config.myNixOS.tuigreet.enable  {
 
-    # Enable greetd.
     services.greetd = {
       enable = true;
       settings = {

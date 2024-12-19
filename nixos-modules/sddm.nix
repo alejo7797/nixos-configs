@@ -7,24 +7,17 @@
     # Enable the X11 windowing system.
     services.xserver.enable = true;
 
-    # Enable and configure SDDM.
-    services.displayManager = {
+    # Enable the Simple Desktop Display Manager.
+    services.displayManager.sddm = {
+      enable = true;
 
-      # Set Hyprland as default when available.
-      defaultSession = lib.mkIf config.myNixOS.hyprland.enable "hyprland";
-
-      sddm = {
-        enable = true;
-
-        # Make it look nice.
-        theme = "chili";
-        settings = {
-          Current = {
-            CursorSize = 24;
-            CursorTheme = "breeze_cursors";
-          };
+      # And make it look nice.
+      theme = "chili";
+      settings = {
+        Current = {
+          CursorSize = 24;
+          CursorTheme = "breeze_cursors";
         };
-
       };
 
     };
@@ -37,9 +30,8 @@
       # And our theme configuration.
       (sddm-chili-theme.override {
         themeConfig = {
-          background = "/var/public/sddm-bg.png";
-          ScreenWidth = 1920;
-          ScreenHeight = 1080;
+          background = "/var/lib/sddm/background.png";
+          ScreenWidth = 1920; ScreenHeight = 1080;
         };
       })
 
