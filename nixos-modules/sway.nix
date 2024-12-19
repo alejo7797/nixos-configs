@@ -14,6 +14,16 @@
       extraPackages = [ ];
     };
 
+    # Configure UWSM to manage sway.
+    programs.uwsm = {
+      enable = true;
+      waylandCompositors.sway = {
+        prettyName = "Sway";
+        binPath = "/run/current-system/sw/bin/sway";
+        comment = "Sway compositor managed by UWSM";
+      };
+    };
+
   };
 
 }

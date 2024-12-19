@@ -13,29 +13,26 @@
       enable = true;
       wrapperFeatures.gtk = true;
 
+      # Useful Wayland environment variables to set.
+      # Also see https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland#Sway.
       extraSessionCommands = ''
         export _JAVA_AWT_WM_NONREPARENTING=1
         export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
         export QT_IM_MODULE=fcitx
       '';
 
-      systemd = {
-        xdgAutostart = true;
-        variables = lib.mkOptionDefault [
-          "QT_FONT_DPI" "QT_QPA_PLATFORMTHEME"
-        ];
-      };
-
       config = let
         modifier = "Mod4";
         exit = "exit: [s]leep, [h]ibernate, [r]eboot, [p]oweroff";
+        uwsm_app = "${pkgs.uwsm}/bin/uwsm app --";
       in {
 
         inherit modifier;
-        terminal = "${pkgs.kitty}/bin/kitty";
-        menu = "${pkgs.wofi}/bin/wofi | ${pkgs.findutils}/bin/xargs swaymsg exec --";
-        bars = [ { command = "${pkgs.waybar}/bin/waybar"; } ];
+        terminal = "${uwsm_app} ${pkgs.kitty}/bin/kitty";
+        menu = "${pkgs.wofi}/bin/wofi | ${pkgs.findutils}/bin/xargs swaymsg exec ${uwsm_app}";
+        bars = [ { command = "${uwsm_app} ${pkgs.waybar}/bin/waybar"; } ];
 
+        # Override automatic Stylix settings.
         fonts = lib.mkForce {
           names = [ "Noto Sans Medium" ];
           size = 12.0;
@@ -76,8 +73,8 @@
         };
 
         startup = [
-          { command = "${pkgs.xorg.xrdb}/bin/xrdb -load ~/.Xresources"; }
-          { command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; }
+          { command = "${uwsm_app} ${pkgs.xorg.xrdb}/bin/xrdb -load ~/.Xresources"; }
+          { command = "${uwsm_app} ${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; }
         ];
 
         modes = lib.mkOptionDefault {

@@ -12,14 +12,15 @@
           # Use tuigreet as our greeter.
           tuigreet = "${pkgs.greetd.tuigreet}/bin/tuigreet";
 
-          # Start Hyprland using UWSM.
+          # Use UWSM to manage sway and Hyprland.
+          uwsm-start = "${pkgs.uwsm}/bin/uwsm start -S -F";
           hyprland = "${pkgs.hyprland}/bin/Hyprland";
-          hyprland-uwsm = "${pkgs.uwsm}/bin/uwsm start -S -F ${hyprland}";
+          sway = "${pkgs.sway}/bin/sway";
 
-          # Launch Hyprland by default when available.
+          # Start Hyprland by default when available.
           default =
-            if config.myNixOS.hyprland.enable then "${hyprland-uwsm}"
-            else if config.myNixOS.sway.enable then "sway"
+            if config.myNixOS.hyprland.enable then "\"${uwsm-start} ${hyprland}\""
+            else if config.myNixOS.sway.enable then "\"${uwsm-start} ${sway}\""
             else "zsh";
 
         in {
