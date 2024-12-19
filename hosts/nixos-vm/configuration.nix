@@ -1,4 +1,4 @@
-{ inputs, outputs, lib, myLib, pkgs, config,  ... }: {
+{ pkgs, lib, config,  ... }: {
 
   # Did you read the comment?
   system.stateVersion = "24.11";
@@ -99,48 +99,33 @@
   environment.systemPackages = with pkgs; [
 
     # Hardware support.
-    cnijfilter2
-    ntfs3g
+    cnijfilter2 ntfs3g
 
     # Actual programs.
-    filezilla
-    gimp
-    inkscape
-    joplin-desktop
-    #plex-desktop
-    qbittorrent
-    #spotify
+    filezilla gimp inkscape
+    joplin-desktop plex-desktop
+    qbittorrent spotify
     ungoogled-chromium
-    variety
-    yubioath-flutter
-    zathura
-    zoom-us
-    zotero
+    variety yubioath-flutter
+    zathura zoom-us zotero
 
     # Wine.
     wineWowPackages.stable
     winetricks
 
     # Gaming.
-    gamescope
-    lutris
-    prismlauncher
-    vesktop
+    gamescope lutris
+    prismlauncher vesktop
 
     # Coding.
-    biber
-    black
-    clang
-    gdb
-    jupyter
+    biber black clang
+    gdb jupyter
     #mathematica-webdoc
     nixfmt-rfc-style
-    ruby
-    sage
-    shellcheck
-    shfmt
+    ruby sage
+    shellcheck shfmt
 
-    # TeX Live.
+    # LaTeX.
     (texlive.combine {
       inherit (texlive)
         scheme-medium

@@ -32,7 +32,8 @@
         bemenu dex dconf-editor
         font-manager libnotify
         pavucontrol pdftk
-        playerctl xsettingsd
+        playerctl polkit_gnome
+        xsettingsd xorg.xrdb
 
         # QT theming support.
         libsForQt5.breeze-qt5

@@ -4,7 +4,7 @@
 
     config = lib.mkIf config.myNixOS.wayland.enable {
 
-      # Configure some basic graphical utlities.
+      # Install some basic graphical utlities.
       myNixOS.graphical-environment = true;
 
       # Integrate Fcitx5 with Wayland.

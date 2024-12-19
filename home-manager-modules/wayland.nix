@@ -4,7 +4,20 @@
 
   config = lib.mkIf config.myHome.wayland.enable {
 
-    # Install and configure wofi.
+    # Configure common graphical applications.
+    myHome.graphical-environment = true;
+
+    # Configure waybar.
+    programs.waybar = {
+      enable = true;
+    };
+
+    # Configure swaync.
+    services.swaync = {
+      enable = true;
+    };
+
+    # Configure wofi.
     programs.wofi = {
       enable = true;
       settings = {
@@ -13,22 +26,12 @@
       };
     };
 
-    # Enable and configure kanshi.
+    # Configure kanshi.
     services.kanshi = {
       enable = true;
     };
 
-    # Install and configure waybar.
-    programs.waybar = {
-      enable = true;
-    };
-
-    # Install and configure swaync.
-    services.swaync = {
-      enable = true;
-    };
-
-    # Enable and configure swayidle.
+    # Configure swayidle.
     services.swayidle = {
       enable = true;
       events = [
@@ -36,8 +39,8 @@
         { event = "before-sleep"; command = "loginctl lock-session"; }
       ];
       timeouts = [
-        {timeout = 600; command = "loginctl lock-session"; }
-        {timeout = 660; command = "systemctl suspend-then-hibernate"; }
+        { timeout = 600; command = "loginctl lock-session"; }
+        { timeout = 660; command = "systemctl suspend-then-hibernate"; }
       ];
     };
 

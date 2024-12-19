@@ -4,7 +4,7 @@
 
   config = lib.mkIf config.myHome.sway.enable {
 
-    # Enable a bunch of wayland-specific utilities.
+    # Configure a bunch of wayland-specific utilities.
     myHome.wayland.enable = true;
 
     # Configure sway, the i3-compatible Wayland compositor.
@@ -49,7 +49,7 @@
         defaultWorkspace = "workspace number 1";
 
         keybindings = lib.mkOptionDefault {
-          "${modifier}+x" = "mode ${exit}";
+          "${modifier}+x" = "mode \"${exit}\"";
           "${modifier}+Shift+x" = "exec slurpshot";
         };
 

@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }: {
+{ pkgs, lib, config, ... }: {
 
   home.username = "ewan";
   home.homeDirectory = "/home/ewan";
@@ -9,16 +9,5 @@
 
   # Set up sway, the i3-compatible Wayland compositor.
   myHome.sway.enable = true;
-
-  # Configure zsh.
-  programs.zsh = {
-    enable = true;
-    history.save = 5000;
-  };
-
-  # Install and configure kitty.
-  programs.kitty = {
-    enable = true;
-  };
 
 }
