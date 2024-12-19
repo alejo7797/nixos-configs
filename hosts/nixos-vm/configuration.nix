@@ -43,9 +43,6 @@
     keyMap = "us";
   };
 
-  # Use SDDM as our display manager.
-  #myNixOS.sddm.enable = true;
-
   # Use tuigreet to log us in.
   myNixOS.tuigreet.enable = true;
 

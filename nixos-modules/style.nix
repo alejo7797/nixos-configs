@@ -6,6 +6,12 @@
 
   config = lib.mkIf config.myNixOS.style.enable {
 
+    # Style QT applications consistently.
+    qt = {
+      enable = true;
+      platformTheme = "qt5ct";
+    };
+
     # Enable common theme components.
     myStyle.enable = true;
 

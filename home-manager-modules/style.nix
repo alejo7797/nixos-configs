@@ -16,18 +16,13 @@
       "qt6ct/qt6ct.conf".source = ../dotfiles/qt6ct.conf;
     };
 
-    # Additionally set the following.
-    home.sessionVariables = {
-      QT_FONT_DPI = 120;
-      QT_QPA_PLATFORMTHEME = "qt6ct";
+    # Set our desired font DPI.
+    dconf.settings."org/gnome/desktop/interface" = {
+      text-scaling-factor = 1.25;
     };
 
-    # Set our desired font DPI.
-    dconf.settings = {
-      "org/gnome/desktop/interface" = {
-        text-scaling-factor = 1.25;
-      };
-    };
+    # And also for QT apps.
+    home.sessionVariables.QT_FONT_DPI = 120;
 
     # Use Papirus as our icon theme.
     stylix.iconTheme = {
