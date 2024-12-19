@@ -44,7 +44,10 @@
   };
 
   # Use SDDM as our display manager.
-  myNixOS.sddm.enable = true;
+  #myNixOS.sddm.enable = true;
+
+  # Use tuigreet to log us in.
+  myNixOS.tuigreet.enable = true;
 
   # Install sway, the i3-compatible Wayland compositor.
   myNixOS.sway.enable = true;
