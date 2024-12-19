@@ -9,7 +9,10 @@
 
       # Install Hyprland, the tiling Wayland compositor
       # that doesn't sacrifice on its looks.
-      programs.hyprland.enable = true;
+      programs.hyprland = {
+        enable = true;
+        withUWSM = true;
+      };
 
     };
 

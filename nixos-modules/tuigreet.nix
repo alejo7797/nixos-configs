@@ -11,16 +11,20 @@
         default_session = let
 
           # Use tuigreet as our greeter.
-          tuigreet = "${pkgs.tuigreet}/bin/tuigreet";
+          tuigreet = "${pkgs.greetd.tuigreet}/bin/tuigreet";
+
+          # Start Hyprland using UWSM.
+          hyprland = "${pkgs.hyprland}/bin/Hyprland";
+          hyprland-uwsm = "${pkgs.uwsm}/bin/uwsm start -S -F ${hyprland}";
 
           # Launch Hyprland by default when available.
-          default_environment =
-            if config.myNixOS.hyprland.enable then "Hyprland"
+          default =
+            if config.myNixOS.hyprland.enable then "${hyprland-uwsm}"
             else if config.myNixOS.sway.enable then "sway"
-            else "zsh --login";
+            else "zsh";
 
         in {
-            command = "${tuigreet} --cmd ${default_environment}";
+            command = "${tuigreet} --cmd ${default}";
             user = "greeter";
         };
 
