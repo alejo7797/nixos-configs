@@ -9,6 +9,9 @@
     # Enable common theme components.
     myStyle.enable = true;
 
+    # Ensure GTK applications use the correct theme.
+    home.sessionVariables.GTK_THEME = "adw-gtk3";
+
     # Fix the look of QT applications.
     xdg.configFile = {
       "kdeglobals".source = ../dotfiles/kdeglobals;

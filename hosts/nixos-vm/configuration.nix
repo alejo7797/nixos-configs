@@ -49,11 +49,10 @@
   # Install sway, the i3-compatible Wayland compositor.
   myNixOS.sway.enable = true;
 
-  # Install Hyprland, the tiling Wayland compositor
-  # that doesn't sacrifice on its looks.
+  # Install Hyprland, the tiling Wayland compositor.
   myNixOS.hyprland.enable = true;
 
-  # Enable sound.
+  # Enable sound support.
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
