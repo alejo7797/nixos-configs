@@ -10,6 +10,7 @@
     # Install and configure waybar.
     programs.waybar = {
       enable = true;
+      systemd.enable = true;
     };
 
     # Enable and configure swaync.

@@ -30,7 +30,7 @@
         inherit modifier;
         terminal = "${uwsm_app} ${pkgs.kitty}/bin/kitty";
         menu = "${pkgs.wofi}/bin/wofi | ${pkgs.findutils}/bin/xargs swaymsg exec ${uwsm_app}";
-        bars = [ { command = "${uwsm_app} ${pkgs.waybar}/bin/waybar"; } ];
+        bars = [ ];
 
         # Override automatic Stylix settings.
         fonts = lib.mkForce {
@@ -73,7 +73,7 @@
         };
 
         startup = [
-          { command = "${uwsm_app} ${pkgs.xorg.xrdb}/bin/xrdb -load ~/.Xresources"; }
+          { command = "${pkgs.xorg.xrdb}/bin/xrdb -load ~/.Xresources"; }
           { command = "${uwsm_app} ${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; }
         ];
 
