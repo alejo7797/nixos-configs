@@ -1,4 +1,4 @@
-{ lib, config, ... }: {
+{ pkgs, lib, config, ... }: {
 
   imports = [ ../style.nix ];
 
@@ -14,6 +14,23 @@
 
     # Enable common theme components.
     myStyle.enable = true;
+
+    # Install necessary theme packages.
+    environment.systemPackages = with pkgs; [
+
+      # The default KDE theme.
+      libsForQt5.breeze-qt5
+      kdePackages.breeze
+
+      # The default KDE sound theme.
+      kdePackages.ocean-sound-theme
+
+      # Great fork for compatibility
+      # with KDE apps like dolphin.
+      ilya-fedin.qt5ct
+      ilya-fedin.qt6ct
+
+    ];
 
   };
 

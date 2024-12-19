@@ -29,17 +29,9 @@
       environment.systemPackages = with pkgs; [
 
         # System utilities.
-        bemenu dex dconf-editor
-        font-manager libnotify
-        pavucontrol pdftk
+        dconf-editor font-manager
+        libnotify pavucontrol pdftk
         playerctl polkit_gnome
-        xsettingsd xorg.xrdb
-
-        # QT theming support.
-        libsForQt5.breeze-qt5
-        kdePackages.breeze
-        ilya-fedin.qt5ct
-        ilya-fedin.qt6ct
 
         # Essential applications.
         keepassxc kitty
@@ -53,6 +45,7 @@
         corefonts
         dejavu_fonts
         font-awesome
+        noto-fonts
         noto-fonts-cjk-sans
         noto-fonts-color-emoji
         source-han-sans

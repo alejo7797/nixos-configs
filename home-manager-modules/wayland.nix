@@ -26,16 +26,24 @@
       };
     };
 
+    # Configure hyprlock.
+    programs.hyprlock = {
+      enable = true;
+    };
+
     # Configure kanshi.
     services.kanshi = {
       enable = true;
     };
 
     # Configure swayidle.
-    services.swayidle = {
+    services.swayidle = let
+      lock = "${pkgs.hyprlock}/bin/hyprlock";
+    in {
       enable = true;
       events = [
-        { event = "lock"; command = "playerctl -a pause && pidof hyprlock || hyprlock"; }
+        { event = "lock"; command = "${pkgs.playerctl}/bin/playerctl -a pause"; }
+        { event = "lock"; command = "${pkgs.procps}/bin/pidof ${lock} || ${lock}"; }
         { event = "before-sleep"; command = "loginctl lock-session"; }
       ];
       timeouts = [

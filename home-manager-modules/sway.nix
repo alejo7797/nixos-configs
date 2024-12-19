@@ -33,18 +33,16 @@
       in {
 
         inherit modifier;
-        terminal = "kitty";
-        menu = "wofi | xargs swaymsg exec --";
-        bars = [ { command = "waybar"; } ];
+        terminal = "${pkgs.kitty}/bin/kitty";
+        menu = "${pkgs.wofi}/bin/wofi | ${pkgs.findutils}/bin/xargs swaymsg exec --";
+        bars = [ { command = "${pkgs.waybar}/bin/waybar"; } ];
 
         fonts = lib.mkForce {
           names = [ "Noto Sans Medium" ];
           size = 12.0;
         };
-        gaps = {
-          inner = 0;
-          outer = 0;
-        };
+
+        gaps = { inner = 0; outer = 0; };
         window.hideEdgeBorders = "both";
         defaultWorkspace = "workspace number 1";
 
@@ -54,21 +52,19 @@
         };
 
         startup = [
-          { command = "xrdb -load ~/.Xresources"; }
-          { command = "systemctl --user start xsettingsd"; }
+          { command = "${pkgs.xorg.xrdb}/bin/xrdb -load ~/.Xresources"; }
           { command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; }
-          { command = "kdeconnect-indicator"; }
-          { command = "gammastep-indicator"; }
+          { command = "${pkgs.kdePackages.kdeconnect-kde}/bin/kdeconnect-indicator"; }
+          { command = "${pkgs.gammastep}/bin/gammastep-indicator"; }
         ];
 
         modes = lib.mkOptionDefault {
           ${exit} = {
-            s = "systemctl suspend-then-hibernate, mode default";
+            s = "systemctl suspend, mode default";
             h = "systemctl hibernate, mode default";
             p = "systemctl poweroff";
             r = "systemctl reboot";
             Escape = "mode default";
-            "${modifier}+x" = "mode default";
           };
         };
 

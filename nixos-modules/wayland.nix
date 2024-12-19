@@ -10,14 +10,14 @@
       # Integrate Fcitx5 with Wayland.
       i18n.inputMethod.fcitx5.waylandFrontend = true;
 
+      # Let hyprlock authenticate users.
+      security.pam.services.hyprlock = {};
+
       # Install a bunch of Wayland-specific goodies.
       environment.systemPackages = with pkgs; [
 
-        brightnessctl gammastep
-        hyprlock kanshi swaybg
-        swayidle swaynotificationcenter
-        waybar wf-recorder wofi
-        wl-clipboard wlogout
+        bemenu brightnessctl gammastep
+        wf-recorder wl-clipboard
 
         libsForQt5.qt5.qtwayland
         kdePackages.qtwayland

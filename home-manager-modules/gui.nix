@@ -1,8 +1,12 @@
 { pkgs, lib, config, ... }: {
 
-  options.myHome.graphical-environment = lib.mkEnableOption "the user-level graphical environment";
+  options.myHome.graphical-environment =
+    lib.mkEnableOption "the user-level graphical environment";
 
   config = lib.mkIf config.myHome.graphical-environment {
+
+    # Enable the xsettings daemon.
+    services.xsettingsd.enable = true;
 
     # Configure kitty.
     programs.kitty = {

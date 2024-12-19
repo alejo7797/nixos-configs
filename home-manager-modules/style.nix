@@ -37,15 +37,12 @@
     dconf.settings."org/gnome/desktop/sound".theme-name = "ocean";
 
     # Pass our settings to xsettingsd.
-    services.xsettingsd = {
-      enable = true;
-      settings = {
-        "Net/ThemeName" = "adw-gkt3";
-        "Net/IconThemeName" = "Papirus-Dark";
-        "Net/SoundThemeName" = "ocean";
-        "Gtk/CursorThemeName" = "breeze_cursors";
-        "Xft/DPI" = 122880;
-      };
+    services.xsettingsd.settings = {
+      "Net/ThemeName" = "adw-gkt3";
+      "Net/IconThemeName" = "Papirus-Dark";
+      "Net/SoundThemeName" = "ocean";
+      "Gtk/CursorThemeName" = "breeze_cursors";
+      "Xft/DPI" = 122880;
     };
 
   };

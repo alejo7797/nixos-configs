@@ -62,9 +62,9 @@
 
   # Install the following essential packages.
   environment.systemPackages = with pkgs; [
-    bind curl file ffmpeg htop imagemagick
-    libfido2 lsd neofetch nettools nmap procps
-    psmisc rsync usbutils uv wget yt-dlp
+    bind curl file findutils ffmpeg htop
+    imagemagick libfido2 lsd neofetch nettools
+    nmap procps psmisc rsync usbutils uv wget yt-dlp
   ];
 
 }

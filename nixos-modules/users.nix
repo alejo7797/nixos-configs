@@ -40,8 +40,7 @@
 
       # Sane defaults.
       isNormalUser = true;
-      initialPassword = "admin";
-      description = "";
+      initialPassword = "password";
       shell = pkgs.zsh;
       extraGroups = [ "networkmanager" "wheel" ];
 
