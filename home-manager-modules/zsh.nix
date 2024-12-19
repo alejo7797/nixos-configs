@@ -11,14 +11,26 @@
       # Use OhMyZsh to load useful plugins.
       oh-my-zsh = {
         enable = true;
+
         plugins = [
-          "aliases" "git" "git-auto-fetch" "history"
-          "python" "rsync" "safe-paste" "systemd"
+          "alias-finder" "git" "git-auto-fetch"
+          "history" "python" "rsync" "safe-paste"
+          "sudo" "systemd" "zbell"
         ];
       };
 
       # Load additional plugins.
-      plugins = [];
+      plugins = [
+        {
+          name = "nix-shell";
+          src = "${pkgs.zsh-nix-shell}/share/zsh-nix-shell";
+        }
+        {
+          name = "powerlevel10k";
+          src = pkgs.zsh-powerlevel10k;
+          file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+        }
+      ];
 
     };
 

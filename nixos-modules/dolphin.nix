@@ -1,33 +1,32 @@
 { pkgs, lib, config, ... }: {
 
-    options.myNixOS.dolphin.enable = lib.mkEnableOption "the dolphin ecosystem";
+  options.myNixOS.dolphin.enable = lib.mkEnableOption "the dolphin ecosystem";
 
-    config = lib.mkIf config.myNixOS.dolphin.enable {
+  config = lib.mkIf config.myNixOS.dolphin.enable {
 
-      # Pull this in just in case.
-      myNixOS.graphical-environment = true;
+    # Pull this in just in case.
+    myNixOS.graphical-environment = true;
 
-      # Install dolphin and all that's good with it.
-      environment.systemPackages = with pkgs; [
+    # Install dolphin and all that's good with it.
+    environment.systemPackages = with pkgs; [
 
-        kdePackages.ark
-        kdePackages.dolphin
-        kdePackages.dolphin-plugins
-        kdePackages.ffmpegthumbs
-        kdePackages.gwenview
-        kdePackages.kimageformats
-        kdePackages.kio-admin
-        kdePackages.kio-extras
-        kdePackages.konsole
-        kdePackages.qtsvg
+      kdePackages.ark
+      kdePackages.dolphin
+      kdePackages.dolphin-plugins
+      kdePackages.ffmpegthumbs
+      kdePackages.gwenview
+      kdePackages.kimageformats
+      kdePackages.kio-admin
+      kdePackages.kio-extras
+      kdePackages.konsole
+      kdePackages.qtsvg
 
-      ];
+    ];
 
-      # This fixes the unpopulated MIME menus.
-      environment.etc."/xdg/menus/plasma-applications.menu".text =
-        builtins.readFile "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
-      environment.variables.XDG_MENU_PREFIX = "plasma-";
+    # This fixes the unpopulated MIME menus.
+    environment.etc."/xdg/menus/plasma-applications.menu".text =
+      builtins.readFile "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
+    environment.variables.XDG_MENU_PREFIX = "plasma-";
 
-    };
-
+  };
 }

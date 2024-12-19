@@ -11,7 +11,7 @@
     services.displayManager.sddm = {
       enable = true;
 
-      # And make it look nice.
+      # And make it look good.
       theme = "chili";
       settings = {
         Current = {
@@ -19,7 +19,6 @@
           CursorTheme = "breeze_cursors";
         };
       };
-
     };
 
     environment.systemPackages = with pkgs; [
@@ -38,5 +37,4 @@
     ];
 
   };
-
 }

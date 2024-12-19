@@ -27,7 +27,6 @@
             command = "${tuigreet} --cmd ${default}";
             user = "greeter";
         };
-
       };
     };
 

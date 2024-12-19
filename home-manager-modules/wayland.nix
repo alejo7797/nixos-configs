@@ -32,10 +32,8 @@
       enable = true;
     };
 
-    # Enable and configure kanshi.
-    services.kanshi = {
-      enable = true;
-    };
+    # Enable kanshi.
+    services.kanshi.enable = true;
 
     # Change the gammastep adjustment method.
     services.gammastep.settings.general = {
@@ -54,10 +52,9 @@
       ];
       timeouts = [
         { timeout = 600; command = "loginctl lock-session"; }
-        { timeout = 660; command = "systemctl suspend-then-hibernate"; }
+        { timeout = 660; command = "systemctl suspend"; }
       ];
     };
 
   };
-
 }
