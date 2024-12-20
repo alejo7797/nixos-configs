@@ -1,5 +1,7 @@
 { pkgs, lib, config, ... }: {
 
+  imports = [ ./arch-fixes.nix ];
+
   home.username = "ewan";
   home.homeDirectory = "/home/ewan";
   home.stateVersion = "24.11";
@@ -9,11 +11,6 @@
 
   # Configure some basic graphical utilities.
   myHome.graphical-environment = true;
-
-  # Temporary stop-gap.
-  services.gammastep.settings.general = {
-    adjustment-method = "wayland";
-  };
 
   # Configure zsh.
   programs.zsh = {
@@ -34,30 +31,6 @@
         wf-pacman = "sudo -u wonderful /opt/wonderful/bin/wf-pacman";
 
     };
-
-    # Host specific plugins.
-    oh-my-zsh.plugins = [ "archlinux" ];
-    plugins = [
-      {
-        name = "zsh-syntax-highlighting";
-        src = "${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting";
-        file = "zsh-syntax-highlighting.zsh";
-      }
-      {
-        name = "nix-zsh-completions";
-        src = "${pkgs.nix-zsh-completions}/share/zsh/plugins/nix";
-      }
-      {
-        name = "zsh-autosuggestions";
-        src = pkgs.fetchFromGitHub {
-          owner = "zsh-users";
-          repo = "zsh-autosuggestions";
-          rev = "v0.7.1";
-          sha256 = "vpTyYq9ZgfgdDsWzjxVAE7FZH4MALMNZIFyEOBLm5Qo=";
-        };
-      }
-    ];
-
   };
 
   # Install packages to our user profile.
