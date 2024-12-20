@@ -1,5 +1,7 @@
 { pkgs, lib, config, ... }: {
 
+  imports = [ ./hyprland.nix ./sway.nix ];
+
   options.myNixOS.wayland.enable = lib.mkEnableOption "wayland";
 
   config = lib.mkIf config.myNixOS.wayland.enable {

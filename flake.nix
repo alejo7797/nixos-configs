@@ -25,8 +25,8 @@
         "ewan@satsuki" = mkHome "x86_64-linux" ./hosts/satsuki/home.nix;
       };
 
-      nixosModules.default = ./nixos-modules;
-      homeManagerModules.default = ./home-manager-modules;
+      nixosModules.default = ./modules/nixos;
+      homeManagerModules.default = ./modules/home-manager;
 
     };
 }

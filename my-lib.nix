@@ -1,6 +1,8 @@
 { inputs }: let
+
   myLib = (import ./my-lib.nix) { inherit inputs; };
   outputs = inputs.self.outputs;
+
 in rec {
 
   # Return the appropriate Nixpkgs instance.
