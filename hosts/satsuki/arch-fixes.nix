@@ -4,13 +4,13 @@
 
 in {
 
-  # Temporary stopgap.
-  services.gammastep.settings.general = {
-    adjustment-method = "wayland";
-  };
+  # These services get managed natively.
+  services.gammastep.enable = lib.mkForce false;
+  services.xsettingsd.enable = lib.mkForce false;
+  services.kdeconnect.enable = lib.mkForce false;
 
+  # We need to pull these plugins manually from the Nix store.
   programs.zsh = {
-
     # Host specific plugins.
     oh-my-zsh.plugins = [ "archlinux" ];
     plugins = [
@@ -25,21 +25,10 @@ in {
       }
       {
         name = "zsh-autosuggestions";
-        src = pkgs.fetchFromGitHub {
-          owner = "zsh-users";
-          repo = "zsh-autosuggestions";
-          rev = "v0.7.1";
-          sha256 = "vpTyYq9ZgfgdDsWzjxVAE7FZH4MALMNZIFyEOBLm5Qo=";
-        };
+        src = "${pkgs.zsh-autosuggestions}/share/zsh-autosuggestions";
+        file = "zsh-autosuggestions.zsh";
       }
     ];
-  };
-
-  systemd.user.services.kdeconnect = {
-    Service.ExecStart = lib.mkForce (lib.concatStringsSep " " [
-      "${pkgs.nixgl.auto.nixGLDefault}/bin/nixGL"
-      "${kdeconnect-cfg.package}/libexec/kdeconnectd"
-    ]);
   };
 
 }
