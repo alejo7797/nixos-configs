@@ -1,6 +1,6 @@
 { pkgs, lib, config, ... }: {
 
-  options.myHome.sway.enable = lib.mkEnableOption "sway";
+  options.myHome.sway.enable = lib.mkEnableOption "sway configuration";
 
   config = lib.mkIf config.myHome.sway.enable {
 
