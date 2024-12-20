@@ -31,6 +31,9 @@
     syntaxHighlighting.enable = true;
   };
 
+  # For zsh completion.
+  environment.pathsToLink = [ "/share/zsh" ];
+
   # Install and configure vim.
   myNixOS.vim.enable = true;
 
@@ -58,7 +61,7 @@
 
   # Install the following essential packages.
   environment.systemPackages = with pkgs; [
-    bind curl file findutils ffmpeg
+    curl dig file findutils ffmpeg
     htop imagemagick jq libfido2 lsd
     neofetch nettools nmap procps psmisc
     rsync usbutils uv wget yt-dlp

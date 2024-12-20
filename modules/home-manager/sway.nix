@@ -14,7 +14,7 @@
       wrapperFeatures.gtk = true;
 
       # Useful Wayland environment variables to set.
-      # Also see https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland#Sway.
+      # https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland#Sway.
       extraSessionCommands = ''
         export _JAVA_AWT_WM_NONREPARENTING=1
         export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
@@ -22,9 +22,12 @@
       '';
 
       config = let
+
         modifier = "Mod4";
         exit = "exit: [s]leep, [h]ibernate, [r]eboot, [p]oweroff";
         uwsm_app = "${pkgs.uwsm}/bin/uwsm app --";
+        systemctl = "${pkgs.systemd}/bin/systemctl";
+
       in {
 
         inherit modifier;
@@ -79,10 +82,10 @@
 
         modes = lib.mkOptionDefault {
           ${exit} = {
-            s = "systemctl suspend, mode default";
-            h = "systemctl hibernate, mode default";
-            p = "systemctl poweroff";
-            r = "systemctl reboot";
+            s = "${systemctl} suspend, mode default";
+            h = "${systemctl} hibernate, mode default";
+            p = "${systemctl} poweroff";
+            r = "${systemctl} reboot";
             Escape = "mode default";
           };
         };

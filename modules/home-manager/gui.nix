@@ -5,6 +5,11 @@
 
   config = lib.mkIf config.myHome.graphical-environment {
 
+    # Enable a few more zsh plugins.
+    programs.zsh.oh-my-zsh = {
+      plugins = [ "gpg-agent" "zbell" ];
+    };
+
     # Enable the xsettings daemon.
     services.xsettingsd.enable = true;
 

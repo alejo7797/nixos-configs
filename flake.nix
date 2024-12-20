@@ -11,10 +11,10 @@
   };
 
   outputs = { ... }@inputs: let
+
       myLib = import ./my-lib.nix { inherit inputs; };
-    in
-    with myLib;
-    {
+
+    in with myLib; {
 
       nixosConfigurations = {
         "nixos-vm" = mkSystem ./hosts/nixos-vm/configuration.nix;
