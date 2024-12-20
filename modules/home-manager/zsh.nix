@@ -22,7 +22,7 @@
       shellAliases = {
 
         # https://github.com/lsd-rs/lsd
-        ls = "${pkgs.lsd}/bin/lsd";
+        ls = "${pkgs.lsd}/bin/lsd \${=lsd_params}";
 
         l = "ls -l"; lt = "ls --tree";
         la = "ls -a"; lla = "ls -la";
@@ -49,10 +49,17 @@
       '';
 
       initExtra = ''
-        # Allow quitting zsh mid-command
+
+        # Compatibility mode for lsd.
+        if (( terminfo[colors] == 8 )); then
+          lsd_params="--icon never"
+        fi
+
+        # Allow quitting zsh mid-command.
         exit_zsh() { exit }
         zle -N exit_zsh
         bindkey '^D' exit_zsh
+
       '';
 
       # Use OhMyZsh to load useful plugins.
@@ -97,7 +104,7 @@
           file = "p10k.zsh";
         }
         {
-          name = "powerlevel10k-portable-config";
+          name = "powerlevel10k-config";
           src = dotfiles."zsh/powerlevel10k";
           file = "p10k-portable.zsh";
         }
@@ -107,7 +114,7 @@
 
     xdg.configFile = with myLib; {
       # Configure lsd, the next-gen ls command.
-      "lsd/config.yaml".source = dotfiles."zsh/lsd.yaml";
+      "lsd/config.yaml".source = dotfiles."zsh/lsd-config.yaml";
     };
 
   };
