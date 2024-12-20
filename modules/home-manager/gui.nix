@@ -1,4 +1,8 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
+
+  dotfiles = ../../dotfiles;
+
+in {
 
   options.myHome.graphical-environment =
     lib.mkEnableOption "the user-level graphical environment";
@@ -40,6 +44,9 @@
         "enable_audio_bell" = "yes";
         "linux_bell_theme" = "ocean";
       };
+      extraConfig = lib.mkForce ''
+        include ${dotfiles}/kitty/current-theme.conf
+      '';
     };
 
   };
