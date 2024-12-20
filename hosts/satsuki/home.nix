@@ -37,8 +37,12 @@
 
     # Host specific plugins.
     oh-my-zsh.plugins = [ "archlinux" ];
-
     plugins = [
+      {
+        name = "zsh-syntax-highlighting";
+        src = "${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting";
+        file = "zsh-syntax-highlighting.zsh";
+      }
       {
         name = "nix-zsh-completions";
         src = "${pkgs.nix-zsh-completions}/share/zsh/plugins/nix";
@@ -48,8 +52,8 @@
         src = pkgs.fetchFromGitHub {
           owner = "zsh-users";
           repo = "zsh-autosuggestions";
-          rev = "0.7.1";
-          sha256 = "sha256-iJdWopZwHpSyYl5/FQXEW7gl/SrKaYDEtTH9cGP7iPo=";
+          rev = "v0.7.1";
+          sha256 = "vpTyYq9ZgfgdDsWzjxVAE7FZH4MALMNZIFyEOBLm5Qo=";
         };
       }
     ];
