@@ -9,8 +9,8 @@
   # Load up our custom theme.
   myHome.style.enable = true;
 
-  # Configure some basic graphical utilities.
-  myHome.graphical-environment = true;
+  # Whether to configure some basic graphical utilities.
+  myHome.graphical-environment = false;
 
   # Configure zsh.
   programs.zsh = {

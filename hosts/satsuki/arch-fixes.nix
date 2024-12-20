@@ -36,10 +36,10 @@ in {
   };
 
   systemd.user.services.kdeconnect = {
-    Service.ExecStart = lib.concatStringsSep " " [
+    Service.ExecStart = lib.mkForce (lib.concatStringsSep " " [
       "${pkgs.nixgl.auto.nixGLDefault}/bin/nixGL"
-      "${kdeconnect-cfg.package}/bin/kdeconnectd"
-    ];
+      "${kdeconnect-cfg.package}/libexec/kdeconnectd"
+    ]);
   };
 
 }
