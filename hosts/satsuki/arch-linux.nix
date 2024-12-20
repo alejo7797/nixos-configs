@@ -8,6 +8,8 @@ in {
   services.gammastep.enable = lib.mkForce false;
   services.xsettingsd.enable = lib.mkForce false;
   services.kdeconnect.enable = lib.mkForce false;
+  programs.waybar.enable = lib.mkForce false;
+  services.swaync.enable = lib.mkForce false;
 
   programs.zsh = {
     # Host specific plugins.
