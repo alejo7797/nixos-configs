@@ -46,6 +46,9 @@
   # Use tuigreet to log us in.
   myNixOS.tuigreet.enable = true;
 
+  # Make sway the default session.
+  myNixOS.tuigreet.user_session = "sway";
+
   # Install sway, the i3-compatible Wayland compositor.
   myNixOS.sway.enable = true;
 

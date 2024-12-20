@@ -1,6 +1,6 @@
 { pkgs, lib, config, ... }: {
 
-  imports = [ ./arch-fixes.nix ];
+  imports = [ ./arch-linux.nix ];
 
   home.username = "ewan";
   home.homeDirectory = "/home/ewan";

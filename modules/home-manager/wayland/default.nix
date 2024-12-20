@@ -1,5 +1,7 @@
 { pkgs, lib, config, ... }: {
 
+  imports = [ ./hyprland.nix ./sway.nix ./waybar.nix ./swaync.nix ];
+
   options.myHome.wayland.enable = lib.mkEnableOption "wayland";
 
   config = lib.mkIf config.myHome.wayland.enable {
@@ -7,16 +9,8 @@
     # Configure common graphical applications.
     myHome.graphical-environment = true;
 
-    # Install and configure waybar.
-    programs.waybar = {
-      enable = true;
-      systemd.enable = true;
-    };
-
-    # Enable and configure swaync.
-    services.swaync = {
-      enable = true;
-    };
+    # Enable kanshi.
+    services.kanshi.enable = true;
 
     # Install and configure wofi.
     programs.wofi = {
@@ -32,12 +26,15 @@
       enable = true;
     };
 
-    # Enable kanshi.
-    services.kanshi.enable = true;
-
-    # Change the gammastep adjustment method.
-    services.gammastep.settings.general = {
-      adjustment-method = "wayland";
+    # Enable and configure gammastep.
+    services.gammastep = {
+      enable = true;
+      tray = true;
+      provider = "geoclue2";
+      settings.general = {
+        fade = 1; gamma = 0.8;
+        adjustment-method = "wayland";
+      };
     };
 
     # Enable and configure swayidle.

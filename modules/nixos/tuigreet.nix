@@ -1,32 +1,50 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
 
-  options.myNixOS.tuigreet.enable = lib.mkEnableOption "tuigreet";
+    cfg = config.myNixOS.tuigreet;
 
-  config = lib.mkIf config.myNixOS.tuigreet.enable  {
+in {
+
+  options.myNixOS.tuigreet = {
+
+    enable = lib.mkEnableOption "tuigreet";
+
+    user_session = lib.mkOption {
+      type = lib.types.enum [ "sway" "hyprland" "zsh" ];
+      description = "Default session to run after login.";
+      default = "zsh";
+    };
+
+  };
+
+  config = lib.mkIf cfg.enable  {
 
     services.greetd = {
       enable = true;
       settings = {
         default_session = let
 
-          # Use tuigreet as our greeter.
-          tuigreet = "${pkgs.greetd.tuigreet}/bin/tuigreet";
-
           # Use UWSM to manage sway and Hyprland.
           uwsm-start = "${pkgs.uwsm}/bin/uwsm start -S -F";
-          hyprland = "${pkgs.hyprland}/bin/Hyprland";
-          sway = "${pkgs.sway}/bin/sway";
 
-          # Start Hyprland by default when available.
-          default =
-            if config.myNixOS.hyprland.enable then "\"${uwsm-start} ${hyprland}\""
-            else if config.myNixOS.sway.enable then "\"${uwsm-start} ${sway}\""
-            else "zsh";
+          sessions = {
+            hyprland = "'${uwsm-start} ${pkgs.hyprland}/bin/Hyprland'";
+            sway = "'${uwsm-start} ${pkgs.sway}/bin/sway'";
+          };
 
-        in {
-            command = "${tuigreet} --cmd ${default}";
-            user = "greeter";
-        };
+          command = lib.concatStringsSep " " [
+
+            # Use tuigreet as our greeter.
+            "${pkgs.greetd.tuigreet}/bin/tuigreet"
+
+            # Remember the last used session.
+            "--remember" "--remember-session"
+
+            # Set the default user session.
+            ("--cmd " + sessions.${cfg.user_session})
+
+          ];
+
+        in { inherit command; user = "greeter"; };
       };
     };
 

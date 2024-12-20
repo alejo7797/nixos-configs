@@ -1,12 +1,6 @@
-{ inputs, ... }: {
+{ inputs, myLib, ... }: {
 
-  imports = [
-
-    # My personal Home Manager modules.
-    ./style.nix ./sway.nix ./hyprland.nix
-    ./zsh.nix ./gui.nix ./wayland.nix
-
-  ];
+  imports = [ ./zsh.nix ./style.nix ./gui.nix ./wayland ];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

@@ -9,10 +9,11 @@ in {
   services.xsettingsd.enable = lib.mkForce false;
   services.kdeconnect.enable = lib.mkForce false;
 
-  # We need to pull these plugins manually from the Nix store.
   programs.zsh = {
     # Host specific plugins.
     oh-my-zsh.plugins = [ "archlinux" ];
+
+    # We need to pull these plugins manually from the Nix store.
     plugins = [
       {
         name = "zsh-syntax-highlighting";

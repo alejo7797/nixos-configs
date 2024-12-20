@@ -1,9 +1,4 @@
-{ pkgs, lib, config, ... }: let
-
-  dotfiles = ../../dotfiles;
-  lsd = "${pkgs.lsd}/bin/lsd";
-
-in {
+{ pkgs, lib, myLib, config, ... }: {
 
   options.myHome.zsh.enable = lib.mkEnableOption "user zsh configuration";
 
@@ -27,17 +22,19 @@ in {
       shellAliases = {
 
         # https://github.com/lsd-rs/lsd
-        ls = "${lsd}";
+        ls = "${pkgs.lsd}/bin/lsd";
 
         l = "ls -l"; lt = "ls --tree";
         la = "ls -a"; lla = "ls -la";
 
-        su = "${pkgs.sudo}/bin/sudo -i";
+        su = "sudo -i";
+
+        # Use standard syntax.
         ps = "${pkgs.procps}/bin/ps -ef";
 
+        # Pretty dmesg output.
         dmesg = lib.concatStringsSep " " [
-          "${pkgs.sudo}/bin/sudo"
-          "${pkgs.util-linux}/bin/dmesg"
+          "sudo ${pkgs.util-linux}/bin/dmesg"
           "-H -e --color=always"
           "| ${pkgs.less}/bin/less"
         ];
@@ -84,7 +81,7 @@ in {
       };
 
       # Load additional plugins.
-      plugins = [
+      plugins = with myLib; [
         {
           name = "nix-shell";
           src = "${pkgs.zsh-nix-shell}/share/zsh-nix-shell";
@@ -96,11 +93,22 @@ in {
         }
         {
           name = "powerlevel10k-config";
-          src = "${dotfiles}/zsh";
+          src = dotfiles."zsh/powerlevel10k";
           file = "p10k.zsh";
+        }
+        {
+          name = "powerlevel10k-portable-config";
+          src = dotfiles."zsh/powerlevel10k";
+          file = "p10k-portable.zsh";
         }
       ];
 
     };
+
+    xdg.configFile = with myLib; {
+      # Configure lsd, the next-gen ls command.
+      "lsd/config.yaml".source = dotfiles."zsh/lsd.yaml";
+    };
+
   };
 }

@@ -1,8 +1,4 @@
-{ pkgs, lib, myLib, config, ... }: let
-
-  dotfiles = ../../dotfiles;
-
-in {
+{ pkgs, lib, myLib, config, ... }:  {
 
   imports = [ ../style.nix ];
 
@@ -17,10 +13,10 @@ in {
     home.sessionVariables.GTK_THEME = "adw-gtk3";
 
     # Fix the look of QT applications.
-    xdg.configFile = {
-      "kdeglobals".source = "${dotfiles}/qt/kdeglobals";
-      "qt5ct/qt5ct.conf".source = "${dotfiles}/qt/qt5ct.conf";
-      "qt6ct/qt6ct.conf".source = "${dotfiles}/qt/qt6ct.conf";
+    xdg.configFile = with myLib; {
+      "kdeglobals".source = dotfiles."qt/kdeglobals";
+      "qt5ct/qt5ct.conf".source = dotfiles."qt/qt5ct.conf";
+      "qt6ct/qt6ct.conf".source = dotfiles."qt/qt6ct.conf";
     };
 
     # Set our desired font DPI.
