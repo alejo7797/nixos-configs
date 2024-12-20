@@ -37,7 +37,7 @@
   home.packages = with pkgs; [
     nixfmt-rfc-style
     nixos-generators
-    nixgl.auto.nixGLDefault
+    nixgl.nixGLIntel
   ];
 
 }
