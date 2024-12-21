@@ -122,9 +122,20 @@
           config = ''
             lua << END
 
+              -- disable netrw
+              vim.g.loaded_netrw = 1
+              vim.g.loaded_netrwPlugin = 1
+
               require("nvim-tree").setup()
 
             END
+
+          '';
+        }
+
+        {
+          plugin = nvim-web-devicons;
+          config = ''
 
           '';
         }
