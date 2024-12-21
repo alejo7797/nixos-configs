@@ -7,8 +7,17 @@
     # Ensure the undodir gets created.
     home.file.".cache/nvim/undodir/README".text = "Created by Home Manager.";
 
+    # Specify the plugin for Stylix to use.
+    stylix.targets.neovim.plugin = "base16-nvim";
+
     # Configure neovim.
-    programs.neovim = {
+    programs.neovim = let
+
+      # Set the <leader> key.
+      leader = ",";
+
+    in {
+
       enable = true;
 
       # Symlink vim and vimdiff.
@@ -29,7 +38,11 @@
         " Show whitespace with `set list`.
         set lcs+=space:·
 
-        " Copy to and paste from the system clipboard.
+        " Set the <leader> key.
+        let mapleader = "${leader}"
+        let maplocalleader = "${leader}"
+
+        " Use the system clipboard.
         vnoremap <C-c> "+y
         nnoremap <C-v> "+p
 
@@ -49,7 +62,7 @@
         " Visually indent wrapped lines.
         set breakindent
 
-        " Manage code folding.
+        " Leave folds open by default.
         set foldmethod=syntax
         set foldlevelstart=99
 
@@ -57,9 +70,10 @@
         set undofile
         set undodir=${config.home.homeDirectory}/.cache/nvim/undodir
 
-        " Move between buffers.
+        " Move between and close open buffers.
         nnoremap <leader>n :bnext<cr>
         nnoremap <leader>p :bprevious<cr>
+        nnoremap <leader>d :bdelete<cr>
 
         " Enter insert mode when opening a terminal window.
         autocmd TermOpen * :startinsert
@@ -80,46 +94,37 @@
       plugins = with pkgs.vimPlugins; [
 
         {
-          plugin = nerdtree;
+          plugin = gitsigns-nvim;
           config = ''
-
-            " Open and close NERDTree.
-            nnoremap <C-n> :NERDTreeToggle<CR>
-            nnoremap <C-f> :NERDTreeFind<CR>
-
-            " Start NERDTree when Vim is started without file arguments.
-            autocmd StdinReadPre * let s:std_in=1
-            autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
-
-            " Start NERDTree when Vim starts with a directory argument.
-            autocmd StdinReadPre * let s:std_in=1
-            autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') |
-            \   execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | endif
-
-            " Exit Vim if NERDTree is the only window remaining in the only tab.
-            autocmd BufEnter *
-            \   if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
-            \       call feedkeys(":quit\<CR>:\<BS>") |
-            \   endif
-
-            " Close the tab if NERDTree is the only window remaining in it.
-            autocmd BufEnter *
-            \   if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
-            \       call feedkeys(":quit\<CR>:\<BS>") |
-            \   endif
-
+            lua << END
+              require('gitsigns').setup()
+            END
           '';
         }
 
         {
-          plugin = telescope-nvim;
+          plugin = mini-nvim;
           config = ''
+            lua << END
 
-            " Find files using Telescope command-line sugar.
-            nnoremap <leader>ff <cmd>Telescope find_files<cr>
-            nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-            nnoremap <leader>fb <cmd>Telescope buffers<cr>
-            nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+              require('mini.bufremove').setup()
+              require('mini.comment').setup()
+              require('mini.icons').setup()
+              require('mini.pairs').setup()
+              require('mini.surround').setup()
+
+            END
+          '';
+        }
+
+        {
+          plugin = nvim-tree-lua;
+          config = ''
+            lua << END
+
+              require("nvim-tree").setup()
+
+            END
 
           '';
         }
@@ -127,14 +132,46 @@
         {
           plugin = lualine-nvim;
           config = ''
+            lua << END
+              require('lualine').setup {
 
+                options = {
+
+                  -- Follow base16-nvim.
+                  theme = 'base16',
+
+                  -- Always show the tabline.
+                  always_show_tabline = true,
+
+                },
+
+                -- Set up the tabline.
+                tabline = {
+                  lualine_a = {'buffers'},
+                  lualine_b = {'branch'},
+                  lualine_c = {'filename'},
+                  lualine_x = {},
+                  lualine_y = {},
+                  lualine_z = {'tabs'}
+                },
+
+              }
+            END
           '';
         }
 
         {
-          plugin = nvim-web-devicons;
+          plugin = telescope-nvim;
           config = ''
 
+            " Make sure the <leader> key is correctly set.
+            let mapleader = "${leader}"
+
+            " Find files using Telescope command-line sugar.
+            nnoremap <leader>ff <cmd>Telescope find_files<cr>
+            nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+            nnoremap <leader>fb <cmd>Telescope buffers<cr>
+            nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
           '';
         }
@@ -148,11 +185,6 @@
 
           '';
         }
-
-        comment-nvim
-        gitsigns-nvim
-        nerdtree-git-plugin
-        nvim-surround
 
       ];
 
