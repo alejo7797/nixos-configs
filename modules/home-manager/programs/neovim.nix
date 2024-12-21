@@ -7,6 +7,9 @@
     # Ensure the undodir gets created.
     home.file.".cache/nvim/undodir/README".text = "Created by Home Manager.";
 
+    # Specify the plugin for Stylix to use.
+    stylix.targets.neovim.plugin = "base16-nvim";
+
     # Configure neovim.
     programs.neovim = {
       enable = true;
@@ -29,23 +32,18 @@
         " Show whitespace with `set list`.
         set lcs+=space:·
 
-        " Copy to the clipboard.
-        nmap <C-c> "+yy
-        vmap <C-c> "+y
+        " Copy to and paste from the system clipboard.
+        vnoremap <C-c> "+y
+        nnoremap <C-v> "+p
 
-        " Paste from the clipboard.
-        nmap <C-v> "+p
-
-        " Configure the behaviour of tabs and spaces.
+        " Configure the behaviour of tabs.
         set expandtab
-        set tabstop=8
         set shiftwidth=4
-        set softtabstop=-1
 
         " In C.
         autocmd FileType c setlocal shiftwidth=2
 
-        " In Nix.
+        " In nix.
         autocmd FileType nix setlocal shiftwidth=2
 
         " Traverse line breaks with the arrow keys.
@@ -56,16 +54,14 @@
 
         " Manage code folding.
         set foldmethod=syntax
-        set foldlevelstart=99
 
         " Enable persistent undo.
         set undofile
         set undodir=${config.home.homeDirectory}/.cache/nvim/undodir
 
-        " Move between, and close, open buffers.
+        " Move between buffers.
         nnoremap <leader>n :bnext<cr>
         nnoremap <leader>p :bprevious<cr>
-        nnoremap <leader>d :bdelete<cr>
 
         " Enter insert mode when opening a terminal window.
         autocmd TermOpen * :startinsert
@@ -75,7 +71,7 @@
 
         " Fix an nnoying issue with underlined syntax highlighting.
         hi clear Underlined
-        hi Underlined term=underline cterm=underline gui=underline
+        hi Underlined cterm=underline gui=underline
 
       '';
 
@@ -129,14 +125,6 @@
             " Options to pass to latexindent.
             let g:ale_tex_latexindent_options = '-y="defaultIndent:'''    '''" -c /tmp'
 
-          '';
-        }
-
-        {
-          plugin = base16-nvim;
-          config = ''
-            set background=dark
-            colorscheme base16-tomorrow-night
           '';
         }
 
@@ -199,10 +187,10 @@
         {
           plugin = vim-airline;
           config = ''
-            # Enable the tabline.
+            " Enable the tabline.
             let g:airline#extensions#tabline#enabled=1
 
-            # Set the symbol font appropriately.
+            " Set the symbol font appropriately.
             if &t_Co > 255
               let g:airline_powerline_fonts=1
             else
@@ -221,8 +209,8 @@
         {
           plugin = vim-devicons;
           config = ''
-            # Disable devicons in tty context.
-            if &t_Co = 8
+            " Disable devicons in tty context.
+            if &t_Co == 8
               let g:webdevicons_enable=0
             endif
           '';
@@ -231,8 +219,8 @@
         {
           plugin = vimtex;
           config = ''
-              let g:vimtex_view_method='zathura_simple'
-            '';
+            let g:vimtex_view_method='zathura_simple'
+          '';
         }
 
         delimitMate
@@ -242,8 +230,6 @@
         vim-fugitive
         vim-surround
         vim-gitgutter
-        vim-oscyank
-        vim-wayland-clipboard
 
       ];
 
