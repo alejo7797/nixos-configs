@@ -34,8 +34,11 @@
   # For zsh completion.
   environment.pathsToLink = [ "/share/zsh" ];
 
-  # Install and configure vim.
+  # Install vim.
   myNixOS.vim.enable = true;
+
+  # Install neovim.
+  programs.neovim.enable = true;
 
   # Enable systemd-timesyncd.
   services.timesyncd.enable = lib.mkDefault true;

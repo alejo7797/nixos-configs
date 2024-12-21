@@ -14,4 +14,7 @@
   # Configure zsh.
   myHome.zsh.enable = true;
 
+  # Configure neovim.
+  myHome.neovim.enable = true;
+
 }

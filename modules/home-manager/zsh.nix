@@ -29,8 +29,6 @@
 
         su = "sudo -i";
 
-        vim = "${pkgs.neovim}/bin/nvim";
-
         # Use standard syntax.
         ps = "${pkgs.procps}/bin/ps -ef";
 
