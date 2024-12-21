@@ -50,6 +50,9 @@
 
       initExtra = ''
 
+        # Accept autosuggestion with Shift+Tab
+        bindkey '^[[Z' autosuggest-accept
+
         # Compatibility mode for lsd.
         if (( terminfo[colors] == 8 )); then
           lsd_params="--icon never"
