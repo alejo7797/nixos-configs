@@ -7,9 +7,6 @@
     # Ensure the undodir gets created.
     home.file.".cache/nvim/undodir/README".text = "Created by Home Manager.";
 
-    # Specify the plugin for Stylix to use.
-    stylix.targets.neovim.plugin = "base16-nvim";
-
     # Configure neovim.
     programs.neovim = {
       enable = true;
@@ -54,6 +51,7 @@
 
         " Manage code folding.
         set foldmethod=syntax
+        set foldlevelstart=99
 
         " Enable persistent undo.
         set undofile
@@ -69,10 +67,6 @@
         " Close the terminal buffer when the process exits.
         autocmd TermClose * if !v:event.status | exe 'bdelete! '..expand('<abuf>') | endif
 
-        " Fix an nnoying issue with underlined syntax highlighting.
-        hi clear Underlined
-        hi Underlined cterm=underline gui=underline
-
       '';
 
       extraPackages = with pkgs; [
@@ -86,77 +80,10 @@
       plugins = with pkgs.vimPlugins; [
 
         {
-          plugin = ale;
-          config = ''
-
-            " Set desired linters per filetype.
-            let g:ale_linters = {
-            \   'python': ['flake8'],
-            \   'c': ['clangd'],
-            \   'tex': ['chktex'],
-            \}
-
-            " Enable desired fixers per filetype.
-            let g:ale_fixers = {
-            \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-            \   'html': ['prettier'],
-            \   'css': ['prettier'],
-            \   'scss': ['prettier'],
-            \   'javascript': ['standard'],
-            \   'sh': ['shfmt'],
-            \   'python': ['black'],
-            \   'c': ['clang-format', 'clangtidy'],
-            \   'tex': ['latexindent'],
-            \   'bib': ['bibclean'],
-            \   'nix': ['nixfmt'],
-            \}
-
-            " ALEFix files on save.
-            let g:ale_fix_on_save = 1
-
-            " Except for the following filetypes.
-            let g:ale_fix_on_save_ignore = {
-            \   'nix': ['nixfmt'],
-            \}
-
-            " Options to pass to shfmt.
-            let g:ale_sh_shfmt_options = '-i 4'
-
-            " Options to pass to latexindent.
-            let g:ale_tex_latexindent_options = '-y="defaultIndent:'''    '''" -c /tmp'
-
-          '';
-        }
-
-        {
-          plugin = deoplete-nvim;
-          config = ''
-
-            " Enable deoplete.
-            let g:deoplete#enable_at_startup=1
-
-            " Use ALE as a completion source.
-            call deoplete#custom#option('sources', {
-            \ '_': ['ale', 'omni'],
-            \})
-
-            " Integrate vimtex with deoplete.
-            call deoplete#custom#var('omni', 'input_patterns', {
-            \ 'tex': g:vimtex#re#deoplete
-            \})
-
-            " Enable <TAB> completion.
-            inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-            inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
-
-          '';
-        }
-
-        {
           plugin = nerdtree;
           config = ''
 
-            " Binds to open NERDTree and to focus on the open file.
+            " Open and close NERDTree.
             nnoremap <C-n> :NERDTreeToggle<CR>
             nnoremap <C-f> :NERDTreeFind<CR>
 
@@ -185,51 +112,47 @@
         }
 
         {
-          plugin = vim-airline;
+          plugin = telescope-nvim;
           config = ''
-            " Enable the tabline.
-            let g:airline#extensions#tabline#enabled=1
 
-            " Set the symbol font appropriately.
-            if &t_Co > 255
-              let g:airline_powerline_fonts=1
-            else
-              let g:airline_symbols_ascii=1
-            endif
+            " Find files using Telescope command-line sugar.
+            nnoremap <leader>ff <cmd>Telescope find_files<cr>
+            nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+            nnoremap <leader>fb <cmd>Telescope buffers<cr>
+            nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
           '';
         }
 
         {
-          plugin = vim-airline-themes;
+          plugin = lualine-nvim;
           config = ''
-            let g:airline_theme='base16_tomorrow_night'
+
           '';
         }
 
         {
-          plugin = vim-devicons;
+          plugin = nvim-web-devicons;
           config = ''
-            " Disable devicons in tty context.
-            if &t_Co == 8
-              let g:webdevicons_enable=0
-            endif
+
+
           '';
         }
 
         {
           plugin = vimtex;
           config = ''
+
+            " Use zathura to view compiled PDFs.
             let g:vimtex_view_method='zathura_simple'
+
           '';
         }
 
-        delimitMate
-        nerdcommenter
+        comment-nvim
+        gitsigns-nvim
         nerdtree-git-plugin
-        vim-better-whitespace
-        vim-fugitive
-        vim-surround
-        vim-gitgutter
+        nvim-surround
 
       ];
 
