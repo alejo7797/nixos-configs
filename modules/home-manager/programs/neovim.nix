@@ -91,6 +91,15 @@
 
       ];
 
+      # Enable Coc.
+      coc = {
+        enable = true;
+
+        pluginConfig = "";
+        settings = {};
+
+      };
+
       plugins = with pkgs.vimPlugins; [
 
         {
@@ -109,7 +118,6 @@
 
               require('mini.bufremove').setup()
               require('mini.comment').setup()
-              require('mini.icons').setup()
               require('mini.pairs').setup()
               require('mini.surround').setup()
 
@@ -122,11 +130,15 @@
           config = ''
             lua << END
 
-              -- disable netrw
+              -- Disable netrw.
               vim.g.loaded_netrw = 1
               vim.g.loaded_netrwPlugin = 1
 
-              require("nvim-tree").setup()
+              -- Load nvimtree.
+              require('nvim-tree').setup()
+
+              -- Open and close nvimtree.
+              vim.keymap.set("n", "<C-n>", "<cmd>NvimTreeToggle<CR>")
 
             END
 
@@ -134,9 +146,20 @@
         }
 
         {
-          plugin = nvim-web-devicons;
+          plugin = nvim-treesitter;
           config = ''
 
+          '';
+        }
+
+        {
+          plugin = nvim-web-devicons;
+          config = ''
+            lua << END
+              require'nvim-web-devicons'.setup {
+
+              }
+            END
           '';
         }
 
@@ -188,10 +211,17 @@
         }
 
         {
+          plugin = trouble-nvim;
+          config = ''
+
+          '';
+        }
+
+        {
           plugin = vimtex;
           config = ''
 
-            " Use zathura to view compiled PDFs.
+            " Use Zathura as the VimTeX PDF viewer.
             let g:vimtex_view_method='zathura_simple'
 
           '';
