@@ -17,6 +17,7 @@
 
     # Host-specific aliases.
     shellAliases = let
+      nmcli = "${pkgs.networkmanager}/bin/nmcli";
       what-is-my-ip = "${pkgs.dig}/bin/dig +short myip.opendns.com";
     in {
 
@@ -26,6 +27,10 @@
         # Relies on a custom firewall rule.
         pubip = "${what-is-my-ip} @resolver1.opendns.com";
         vpnip = "${what-is-my-ip} @resolver2.opendns.com";
+
+        # Manage connection to my VPN server.
+        vpnup   = "${nmcli} c up Koakuma_VPN";
+        vpndown = "${nmcli} c down Koakuma_VPN";
 
         # Manage the wonderful toolchain.
         wf-pacman = "sudo -u wonderful /opt/wonderful/bin/wf-pacman";

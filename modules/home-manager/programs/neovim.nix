@@ -38,6 +38,9 @@
         " Show whitespace with `set list`.
         set lcs+=space:·
 
+        " Color support in tty context.
+        set termguicolors
+
         " Set the <leader> key.
         let mapleader = "${leader}"
         let maplocalleader = "${leader}"
@@ -78,6 +81,9 @@
         " Enter insert mode when opening a terminal window.
         autocmd TermOpen * :startinsert
 
+        " Easily exit terminal mode.
+        tnoremap <Esc> <C-\><C-n>
+
         " Close the terminal buffer when the process exits.
         autocmd TermClose * if !v:event.status | exe 'bdelete! '..expand('<abuf>') | endif
 
@@ -85,9 +91,8 @@
 
       extraPackages = with pkgs; [
 
-        # Install desired linters & fixers.
-        black llvmPackages_19.clang-tools
-        nixfmt-rfc-style shfmt
+        black fd llvmPackages_19.clang-tools
+        nixfmt-rfc-style shfmt tree-sitter
 
       ];
 
@@ -156,9 +161,12 @@
           plugin = nvim-web-devicons;
           config = ''
             lua << END
-              require'nvim-web-devicons'.setup {
 
-              }
+              -- Enable devicons only outside of tty context.
+              if os.getenv("TERM") ~= linux then
+                require('nvim-web-devicons').setup()
+              end
+            
             END
           '';
         }
