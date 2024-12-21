@@ -7,8 +7,8 @@
     # Ensure the undodir gets created.
     home.file.".cache/nvim/undodir/README".text = "Created by Home Manager.";
 
-    # Specify the plugin for Stylix to use.
-    stylix.targets.neovim.plugin = "base16-nvim";
+    # Manage theming ourselves.
+    stylix.targets.neovim.enable = false;
 
     # Configure neovim.
     programs.neovim = let
@@ -108,10 +108,48 @@
       plugins = with pkgs.vimPlugins; [
 
         {
+          plugin = base16-nvim;
+          config = ''
+            colorscheme base16-tomorrow-night
+          '';
+        }
+
+        {
           plugin = gitsigns-nvim;
           config = ''
             lua << END
               require('gitsigns').setup()
+            END
+          '';
+        }
+
+        {
+          plugin = lualine-nvim;
+          config = ''
+            lua << END
+              require('lualine').setup {
+
+                options = {
+
+                  -- Follow base16-nvim.
+                  theme = 'base16',
+
+                  -- Always show the tabline.
+                  always_show_tabline = true,
+
+                },
+
+                -- Set up the tabline.
+                tabline = {
+                  lualine_a = {'buffers'},
+                  lualine_b = {'branch'},
+                  lualine_c = {'filename'},
+                  lualine_x = {},
+                  lualine_y = {},
+                  lualine_z = {'tabs'}
+                },
+
+              }
             END
           '';
         }
@@ -167,37 +205,6 @@
                 require('nvim-web-devicons').setup()
               end
             
-            END
-          '';
-        }
-
-        {
-          plugin = lualine-nvim;
-          config = ''
-            lua << END
-              require('lualine').setup {
-
-                options = {
-
-                  -- Follow base16-nvim.
-                  theme = 'base16',
-
-                  -- Always show the tabline.
-                  always_show_tabline = true,
-
-                },
-
-                -- Set up the tabline.
-                tabline = {
-                  lualine_a = {'buffers'},
-                  lualine_b = {'branch'},
-                  lualine_c = {'filename'},
-                  lualine_x = {},
-                  lualine_y = {},
-                  lualine_z = {'tabs'}
-                },
-
-              }
             END
           '';
         }
