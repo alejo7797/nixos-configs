@@ -165,7 +165,14 @@
         {
           plugin = base16-nvim;
           config = ''
-              colorscheme base16-tomorrow-night
+            colorscheme base16-tomorrow-night
+          '';
+        }
+
+        {
+          plugin = coc-snippets;
+          config = ''
+
           '';
         }
 
@@ -291,6 +298,13 @@
           plugin = trouble-nvim;
           config = ''
 
+          '';
+        }
+        
+        {
+          plugin = vim-snippets;
+          config = ''
+          
           '';
         }
 
