@@ -38,9 +38,6 @@
         " Show whitespace with `set list`.
         set lcs+=space:·
 
-        " Color support in tty context.
-        set termguicolors
-
         " Set the <leader> key.
         let mapleader = "${leader}"
         let maplocalleader = "${leader}"
@@ -110,7 +107,7 @@
         {
           plugin = base16-nvim;
           config = ''
-            colorscheme base16-tomorrow-night
+              colorscheme base16-tomorrow-night
           '';
         }
 
