@@ -90,9 +90,8 @@
         set undofile
         set undodir=${config.home.homeDirectory}/.cache/nvim/undodir
 
-        " Open and close buffers.
+        " Open a new empty.
         nnoremap <leader>b :enew<cr>
-        nnoremap <leader>x :bdelete<cr>
 
         " Enter insert mode when opening a terminal window.
         autocmd TermOpen * :startinsert
@@ -134,9 +133,6 @@
                   -- Follow base16-nvim.
                   theme = 'base16',
 
-                  -- Always show the tabline.
-                  always_show_tabline = true,
-
                 },
 
                 -- Set up the tabline.
@@ -156,11 +152,24 @@
         {
           plugin = mini-nvim;
           config = ''
+
+            " Make sure the <leader> key is correctly set.
+            let mapleader = "${leader}"
+
             lua << END
 
+              -- Keep window layout when deleting buffers.
               require('mini.bufremove').setup()
+              vim.keymap.set("n", "<leader>x", "MiniBufremove.delete()")
+
+              -- Toggle comments with 'gc'.
               require('mini.comment').setup()
+
+              -- Automatically match pairs.
               require('mini.pairs').setup()
+
+              -- Add surroundings with 'sa'.
+              -- More helpful commands available.
               require('mini.surround').setup()
 
             END
