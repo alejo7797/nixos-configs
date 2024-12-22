@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, myLib, config, ... }: {
 
   options.myHome.neovim.enable = lib.mkEnableOption "neovim configuration";
 
@@ -9,6 +9,9 @@
 
     # Manage theming ourselves.
     stylix.targets.neovim.enable = false;
+
+    # Link in our snippets directory.
+    xdg.configFile."nvim/UltiSnips".source = myLib.dotfiles."nvim/UltiSnips";
 
     # Configure neovim.
     programs.neovim = let
@@ -259,6 +262,13 @@
 
         {
           plugin = nvim-treesitter;
+          config = ''
+
+          '';
+        }
+
+        {
+          plugin = nvim-treesitter-parsers.latex;
           config = ''
 
           '';
