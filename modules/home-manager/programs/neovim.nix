@@ -170,6 +170,13 @@
         }
 
         {
+          plugin = coc-vimtex;
+          config = ''
+
+          '';
+        }
+
+        {
           plugin = gitsigns-nvim;
           config = ''
             lua << END
