@@ -35,8 +35,17 @@
         " Set the terminal window title.
         set title
 
+        " Set a lower update time.
+        set updatetime=100
+
+        " Always show the sign column.
+        set signcolumn=yes
+
         " Show whitespace with `set list`.
         set lcs+=space:·
+
+        " Color support in the linux console.
+        set termguicolors
 
         " Set the <leader> key.
         let mapleader = "${leader}"
@@ -70,19 +79,13 @@
         set undofile
         set undodir=${config.home.homeDirectory}/.cache/nvim/undodir
 
-        " Move between and close open buffers.
-        nnoremap <leader>n :bnext<cr>
-        nnoremap <leader>p :bprevious<cr>
-        nnoremap <leader>d :bdelete<cr>
+        " Open and close buffers.
+        nnoremap <leader>b :enew<cr>
+        nnoremap <leader>x :bdelete<cr>
 
         " Enter insert mode when opening a terminal window.
         autocmd TermOpen * :startinsert
-
-        " Easily exit terminal mode.
-        tnoremap <Esc> <C-\><C-n>
-
-        " Close the terminal buffer when the process exits.
-        autocmd TermClose * if !v:event.status | exe 'bdelete! '..expand('<abuf>') | endif
+        autocmd BufEnter * if &buftype == 'terminal' | :startinsert | endif
 
       '';
 
@@ -97,7 +100,62 @@
       coc = {
         enable = true;
 
-        pluginConfig = "";
+        pluginConfig = ''
+
+          " Use tab for trigger completion with characters ahead and navigate.
+          inoremap <silent><expr> <TAB>
+              \ coc#pum#visible() ? coc#pum#next(1) :
+              \ CheckBackspace() ? "\<Tab>" :
+              \ coc#refresh()
+          inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+          " Make <CR> to accept selected completion item or notify coc.nvim to format.
+          inoremap <silent><expr> <CR> 
+              \ coc#pum#visible() ? coc#pum#confirm()
+              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+          function! CheckBackspace() abort
+            let col = col('.') - 1
+            return !col || getline('.')[col - 1]  =~# '\s'
+          endfunction
+
+          " Use <C-space> to trigger completion.
+          inoremap <silent><expr> <C-space> coc#refresh()
+
+          " Use `[g` and `]g` to navigate diagnostics.
+          nmap <silent> [g <Plug>(coc-diagnostic-prev)
+          nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+          " GoTo code navigation.
+          nmap <silent> gd <Plug>(coc-definition)
+          nmap <silent> gy <Plug>(coc-type-definition)
+          nmap <silent> gi <Plug>(coc-implementation)
+          nmap <silent> gr <Plug>(coc-references)
+
+          " Highlight the symbol and its references when holding the cursor.
+          autocmd CursorHold * silent call CocActionAsync('highlight')
+
+          " Symbol renaming.
+          nmap <leader>rn <Plug>(coc-rename)
+
+          " Formatting selected code.
+          xmap <leader>f  <Plug>(coc-format-selected)
+          nmap <leader>f  <Plug>(coc-format-selected)
+
+          " Remap keys for applying code actions at the cursor position.
+          nmap <leader>ac  <Plug>(coc-codeaction-cursor)
+          " Remap keys for apply code actions affect whole buffer
+          nmap <leader>as  <Plug>(coc-codeaction-source)
+          " Apply the most preferred quickfix action to fix diagnostic on the current line
+          nmap <leader>qf  <Plug>(coc-fix-current)
+
+          " Add `:Format` command to format current buffer.
+          command! -nargs=0 Format :call CocActionAsync('format')
+
+          " Add `:Fold` command to fold current buffer.
+          command! -nargs=? Fold :call CocAction('fold', <f-args>)
+
+        '';
         settings = {};
 
       };
@@ -197,7 +255,7 @@
           config = ''
             lua << END
 
-              -- Enable devicons only outside of tty context.
+              -- Do not enable devicons in the linux console.
               if os.getenv("TERM") ~= linux then
                 require('nvim-web-devicons').setup()
               end
