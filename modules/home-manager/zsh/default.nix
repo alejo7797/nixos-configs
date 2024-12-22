@@ -103,12 +103,12 @@
         }
         {
           name = "powerlevel10k-config";
-          src = dotfiles."zsh/powerlevel10k";
+          src = ./powerlevel10k;
           file = "p10k.zsh";
         }
         {
           name = "powerlevel10k-config";
-          src = dotfiles."zsh/powerlevel10k";
+          src = ./powerlevel10k;
           file = "p10k-portable.zsh";
         }
       ];
@@ -117,7 +117,7 @@
 
     xdg.configFile = with myLib; {
       # Configure lsd, the next-gen ls command.
-      "lsd/config.yaml".source = dotfiles."zsh/lsd-config.yaml";
+      "lsd/config.yaml".source = ./lsd-config.yaml;
     };
 
   };

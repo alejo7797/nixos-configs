@@ -2,7 +2,7 @@
 
   imports = [ ../style.nix ];
 
-  options.myNixOS.style.enable = lib.mkEnableOption "the system theme";
+  options.myNixOS.style.enable = lib.mkEnableOption "system theme components";
 
   config = lib.mkIf config.myNixOS.style.enable {
 

@@ -5,10 +5,7 @@
   config = lib.mkIf config.myNixOS.vim.enable {
 
     # Install vim.
-    programs.vim = {
-      enable = true;
-      package = pkgs.vim-full;
-    };
+    programs.vim.enable = true;
 
     # And set it as default.
     environment.variables = {

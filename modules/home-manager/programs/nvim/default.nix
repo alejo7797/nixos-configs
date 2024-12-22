@@ -1,4 +1,4 @@
-{ pkgs, lib, myLib, config, ... }: {
+{ pkgs, lib, config, ... }: {
 
   imports = [ ./ale.nix ./coc.nix ./deoplete.nix ];
 
@@ -13,7 +13,7 @@
     stylix.targets.neovim.enable = false;
 
     # Load in our personal snippets.
-    xdg.configFile."nvim/UltiSnips".source = myLib.dotfiles."nvim/UltiSnips";
+    xdg.configFile."nvim/UltiSnips".source = ./UltiSnips;
 
     # Install ALE by default.
     myHome.neovim.ale.enable = lib.mkDefault true;

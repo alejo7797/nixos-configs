@@ -1,0 +1,28 @@
+{ pkgs, lib, config, ... }: {
+
+  options.myHome.kitty.enable = lib.mkEnableOption "kitty";
+
+  config = lib.mkIf config.myHome.kitty.enable {
+
+    # Install and configure kitty.
+    programs.kitty = {
+      enable = true;
+      settings = {
+        "text_comosition_strategy" = "2.0 0";
+        "enable_audio_bell" = "yes";
+        "linux_bell_theme" = "ocean";
+      };
+      extraConfig = ''
+        include current-theme.conf
+      '';
+    };
+
+    xdg.configFile = {
+      
+      # Patched to have correct selection colors.
+      "kitty/current-theme.conf".source = ./current-theme.conf;
+
+    };
+
+  };
+}

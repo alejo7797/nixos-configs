@@ -1,8 +1,8 @@
 { pkgs, lib, myLib, config, ... }:  {
 
-  imports = [ ../style.nix ];
+  imports = [ ../../style.nix ];
 
-  options.myHome.style.enable = lib.mkEnableOption "the user theme";
+  options.myHome.style.enable = lib.mkEnableOption "user theme components";
 
   config = lib.mkIf config.myHome.style.enable {
 
@@ -13,10 +13,10 @@
     home.sessionVariables.GTK_THEME = "adw-gtk3";
 
     # Fix the look of QT applications.
-    xdg.configFile = with myLib; {
-      "kdeglobals".source = dotfiles."qt/kdeglobals";
-      "qt5ct/qt5ct.conf".source = dotfiles."qt/qt5ct.conf";
-      "qt6ct/qt6ct.conf".source = dotfiles."qt/qt6ct.conf";
+    xdg.configFile = {
+      "kdeglobals".source = ./kdeglobals;
+      "qt5ct/qt5ct.conf".source = ./qt5ct.conf;
+      "qt6ct/qt6ct.conf".source = ./qt6ct.conf;
     };
 
     # Set our desired font DPI.

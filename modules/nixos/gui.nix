@@ -1,6 +1,6 @@
 { pkgs, lib, config, ... }: {
 
-  options.myNixOS.graphical-environment = lib.mkEnableOption "some basic graphical utilities";
+  options.myNixOS.graphical-environment = lib.mkEnableOption "basic graphical utilities";
 
   config = lib.mkIf config.myNixOS.graphical-environment {
 

@@ -29,21 +29,6 @@ in rec {
         ++ [ inputs.stylix.homeManagerModules.stylix ];
     };
 
-  # Handy dotfiles helper.
-  dotfiles = builtins.listToAttrs (
-    map (f: {
-      name = myLib.prettyName f;
-      value = f;
-    }) (builtins.concatLists (
-      map (f: myLib.filesIn f)
-        (myLib.filesIn ./dotfiles)
-    ))
-  );
-
-  # Cute format for dotfiles attribute names.
-  prettyName = f: inputs.nixpkgs.lib.removePrefix "./"
-    ( inputs.nixpkgs.lib.path.removePrefix ./dotfiles f );
-
   # Return a list with files in a directory.
   filesIn = dir: (map (fname: dir + "/${fname}")
     (builtins.attrNames (builtins.readDir dir)));

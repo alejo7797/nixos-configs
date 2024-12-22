@@ -1,9 +1,9 @@
-{ inputs, myLib, ... }: {
+{ ... }: {
 
   imports = [
 
     # My personal modules.
-    ./zsh.nix ./programs ./style.nix
+    ./zsh ./programs ./style
     ./gui.nix ./wayland ./i3.nix
 
   ];

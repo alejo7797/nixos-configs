@@ -1,7 +1,6 @@
-{ pkgs, lib, myLib, config, ... }: {
+{ pkgs, lib, config, ... }: {
 
-  options.myHome.graphical-environment =
-    lib.mkEnableOption "the user-level graphical environment";
+  options.myHome.graphical-environment = lib.mkEnableOption "basic graphical utilities";
 
   config = lib.mkIf config.myHome.graphical-environment {
 
@@ -20,17 +19,7 @@
     };
 
     # Install and configure kitty.
-    programs.kitty = {
-      enable = true;
-      settings = {
-        "text_comosition_strategy" = "2.0 0";
-        "enable_audio_bell" = "yes";
-        "linux_bell_theme" = "ocean";
-      };
-      extraConfig = lib.mkForce ''
-        include ${myLib.dotfiles."kitty/current-theme.conf"}
-      '';
-    };
+    myHome.kitty.enable = true;
 
   };
 }
