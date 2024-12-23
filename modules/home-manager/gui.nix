@@ -4,9 +4,28 @@
 
   config = lib.mkIf config.myHome.graphical-environment {
 
-    # Enable a few more zsh plugins.
-    programs.zsh.oh-my-zsh = {
-      plugins = [ "gpg-agent" "zbell" ];
+    programs.zsh = {
+
+      # Define a few more aliases.
+      shellAliases = let
+
+        variety = "${pkgs.variety}/bin/variety";
+
+      in {
+
+        # Interact with Variety.
+        bgnext  = "${variety} --next";
+        bgprev  = "${variety} --previous";
+        bgtrash = "${variety} --trash";
+        bgfav   = "${variety} --favorite";
+
+      };
+
+      # Enable a few more zsh plugins.
+      oh-my-zsh = {
+        plugins = [ "gpg-agent" "zbell" ];
+      };
+
     };
 
     # Enable the xsettings daemon.

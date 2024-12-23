@@ -12,17 +12,17 @@
     # Manage theming ourselves.
     stylix.targets.neovim.enable = false;
 
-    # Load in our personal snippets.
-    xdg.configFile."nvim/UltiSnips".source = ./UltiSnips;
-
     # Install ALE by default.
     myHome.neovim.ale.enable = lib.mkDefault true;
 
-    # Use nvim-cmp as our default completion engine.
+    # Use nvim-cmp as our completion engine by default.
     myHome.neovim.nvim-cmp.enable = lib.mkDefault true;
 
-    # Install the UltiSnips plugin by default.
+    # Install UltiSnips by default.
     myHome.neovim.ultisnips.enable = lib.mkDefault true;
+
+    # Load in our personal snippets.
+    xdg.configFile."nvim/UltiSnips".source = ./UltiSnips;
 
     # Install and configure neovim.
     programs.neovim = let
@@ -65,6 +65,9 @@
         let mapleader = "${leader}"
         let maplocalleader = "${leader}"
 
+        " Clear highlights.
+        nnoremap <Esc> :noh<cr>
+
         " Use the system clipboard.
         vnoremap <C-c> "+y
         nnoremap <C-v> "+p
@@ -93,7 +96,7 @@
         set undofile
         set undodir=${config.home.homeDirectory}/.cache/nvim/undodir
 
-        " Open a new empty.
+        " Open a new empty buffer.
         nnoremap <leader>b :enew<cr>
 
         " Enter insert mode when opening a terminal window.
@@ -161,17 +164,17 @@
 
             lua << END
 
-              -- Keep window layout when deleting buffers.
+              -- Keep the window layout when deleting buffers.
               require('mini.bufremove').setup()
-              vim.keymap.set("n", "<leader>x", "MiniBufremove.delete()")
+              vim.keymap.set("n", "<leader>x", "<cmd> lua MiniBufremove.delete()")
 
-              -- Toggle comments with 'gc'.
+              -- Toggle comments with `gc`.
               require('mini.comment').setup()
 
               -- Automatically match pairs.
               require('mini.pairs').setup()
 
-              -- Add surroundings with 'sa'.
+              -- Add surroundings with `sa`.
               -- More helpful commands available.
               require('mini.surround').setup()
 
@@ -236,10 +239,10 @@
             let mapleader = "${leader}"
 
             " Find files using Telescope command-line sugar.
-            nnoremap <leader>ff <cmd>Telescope find_files<cr>
-            nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-            nnoremap <leader>fb <cmd>Telescope buffers<cr>
-            nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+            nnoremap <leader>ff <cmd>Telescope find_files<CR>
+            nnoremap <leader>fg <cmd>Telescope live_grep<CR>
+            nnoremap <leader>fb <cmd>Telescope buffers<CR>
+            nnoremap <leader>fh <cmd>Telescope help_tags<CR>
 
           '';
         }

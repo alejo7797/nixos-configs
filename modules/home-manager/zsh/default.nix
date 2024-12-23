@@ -38,12 +38,6 @@
         vpnup   = "${nmcli} c up Koakuma_VPN";
         vpndown = "${nmcli} c down Koakuma_VPN";
 
-        # Interact with Variety.
-        bgnext  = "${variety} --next";
-        bgprev  = "${variety} --previous";
-        bgtrash = "${variety} --trash";
-        bgfav   = "${variety} --favorite";
-
         # Use standard syntax.
         ps = "${pkgs.procps}/bin/ps -ef";
 
