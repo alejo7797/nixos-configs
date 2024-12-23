@@ -57,14 +57,22 @@
           xmap <C-k> <Plug>(neosnippet_expand_target)
 
           " Also set up <TAB> completion.
+          imap <expr><TAB>
+          \ pumvisible() ? "\<C-n>" :
+          \ neosnippet#expandable_or_jumpable() ?
+          \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
           smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
           \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
           " Enable snipMate compatibility feature.
           let g:neosnippet#enable_snipmate_compatibility = 1
 
-          " Tell Neosnippet where to find more snippets.
-          let g:neosnippet#snippets_directory='${pkgs.vimPlugins.vim-snippets}/snippets'
+        '';
+      }
+      {
+        plugin = neosnippet-snippets;
+        config = ''
 
         '';
       }
