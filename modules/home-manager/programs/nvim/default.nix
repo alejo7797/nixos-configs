@@ -1,6 +1,6 @@
 { pkgs, lib, config, ... }: {
 
-  imports = [ ./ale.nix ./coc.nix ./nvim-cmp.nix ./ycm.nix ];
+  imports = [ ./ale.nix ./coc.nix ./nvim-cmp.nix ./ultisnips.nix ./ycm.nix ];
 
   options.myHome.neovim.enable = lib.mkEnableOption "neovim";
 
@@ -20,6 +20,9 @@
 
     # Use nvim-cmp as our default completion engine.
     myHome.neovim.nvim-cmp.enable = lib.mkDefault true;
+
+    # Install the UltiSnips plugin by default.
+    myHome.neovim.ultisnips.enable = lib.mkDefault true;
 
     # Install and configure neovim.
     programs.neovim = let

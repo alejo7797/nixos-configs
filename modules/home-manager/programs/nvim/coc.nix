@@ -7,6 +7,9 @@
     # Disable nvim-cmp.
     myHome.neovim.nvim-cmp.enable = false;
 
+    # Disable UltiSnips.
+    myHome.neovim.ultisnips.enable = false;
+
     programs.neovim = {
 
       coc = {

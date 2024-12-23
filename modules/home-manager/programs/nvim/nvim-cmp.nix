@@ -28,15 +28,17 @@
               },
 
               -- Command mappings.
-              mapping = cmp.mapping.preset.insert({
-                ["<C-j>"] = cmp.mapping.select_next_item(),
-                ["<C-k>"] = cmp.mapping.select_prev_item(),
-                ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-                ['<C-f>'] = cmp.mapping.scroll_docs(4),
-                ['<C-Space>'] = cmp.mapping.complete(),
-                ['<C-e>'] = cmp.mapping.abort(),
-                ['<CR>'] = cmp.mapping.confirm({ select = true }),
-              }),
+              mapping = {
+                ['<TAB>'] = cmp.mapping.select_next_item(),
+                ['<S-TAB>'] = cmp.mapping.select_prev_item(),
+                ['<CR>'] = function(fallback)
+                  if cmp.visible() then
+                    cmp.confirm({ select = false })
+                  else
+                    fallback()
+                  end
+                end,
+              },
 
               sources = cmp.config.sources({
                 { name = 'nvim_lsp' },
@@ -94,7 +96,6 @@
       cmp-nvim-ultisnips
       cmp-path
       cmp-vimtex
-      ultisnips
 
     ];
   };
