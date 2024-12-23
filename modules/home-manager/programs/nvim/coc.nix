@@ -4,8 +4,8 @@
 
   config = lib.mkIf config.myHome.neovim.coc.enable {
 
-    # Disable deoplete.
-    myHome.neovim.deoplete.enable = false;
+    # Disable YouCompleteMe.
+    myHome.neovim.ycm.enable = false;
 
     programs.neovim = {
 

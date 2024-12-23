@@ -1,6 +1,6 @@
 { pkgs, lib, config, ... }: {
 
-  imports = [ ./ale.nix ./coc.nix ./deoplete.nix ];
+  imports = [ ./ale.nix ./coc.nix ./ycm.nix ];
 
   options.myHome.neovim.enable = lib.mkEnableOption "neovim";
 
@@ -18,8 +18,8 @@
     # Install ALE by default.
     myHome.neovim.ale.enable = lib.mkDefault true;
 
-    # Use deoplete as our completion plugin by default.
-    myHome.neovim.deoplete.enable = lib.mkDefault true;
+    # Install YouCompleteMe by default.
+    myHome.neovim.ycm.enable = lib.mkDefault true;
 
     # Install and configure neovim.
     programs.neovim = let
@@ -164,6 +164,9 @@
 
               -- Toggle comments with 'gc'.
               require('mini.comment').setup()
+
+              -- Automatically match pairs.
+              require('mini.pairs').setup()
 
               -- Add surroundings with 'sa'.
               -- More helpful commands available.
