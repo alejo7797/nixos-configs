@@ -1,0 +1,33 @@
+stages:
+  - update
+
+update:
+  stage: update
+  tags:
+    - nix, git
+  script:
+    - echo "These are needed to make commits."
+    - git config user.name nix-updater
+    - git config user.email nix-updater@patchoulihq.cc
+
+    - echo "This access token gives us write access."
+    - git remote add https-origin https://gitlab-ci-token:${ACCESS_TOKEN}@git.patchoulihq.cc/alex/nixconfig.git
+
+    - echo "Pulling changes from master branch."
+    - git switch updates
+    - git fetch origin master
+    - git merge -m "pull changes from master" origin/master
+    - git push -o ci.skip https-origin
+
+    - echo "Running nix flake update."
+    - nix flake update
+    - git add flake.lock
+    - git commit -m "automatic nix-flakes update"
+
+    - echo "Updating flake.lock on master branch."
+    - git switch master
+    - git checkout updates flake.lock
+    - git commit -m "automatic nix-flakes update"
+
+    - echo "Pushing new flake.lock to master branch."
+    - git push https-origin
