@@ -42,17 +42,23 @@
           \ pumvisible() ? "\<C-p>" : "\<S-TAB>"
 
           " Use <CR> to accept completions.
-          inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-
-          function! s:my_cr_function()
-            return deoplete#mappings#smart_close_popup() . "\<CR>"
-          endfunction
+          inoremap <silent><expr> <CR>
+          \ pumvisible() ? deoplete#close_popup() : "\<CR>"
 
         '';
       }
       {
         plugin = neosnippet;
         config = ''
+
+          " Expand snippets and jump between fields.
+          imap <C-k> <Plug>(neosnippet_expand_or_jump)
+          smap <C-k> <Plug>(neosnippet_expand_or_jump)
+          xmap <C-k> <Plug>(neosnippet_expand_target)
+
+          " Also set up <TAB> completion.
+          smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+          \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
           " Enable snipMate compatibility feature.
           let g:neosnippet#enable_snipmate_compatibility = 1

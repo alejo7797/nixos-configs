@@ -165,9 +165,6 @@
               -- Toggle comments with 'gc'.
               require('mini.comment').setup()
 
-              -- Automatically match pairs.
-              require('mini.pairs').setup()
-
               -- Add surroundings with 'sa'.
               -- More helpful commands available.
               require('mini.surround').setup()
