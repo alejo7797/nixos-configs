@@ -1,6 +1,6 @@
 { pkgs, lib, config, ... }: {
 
-  imports = [ ./ale.nix ./coc.nix ./ycm.nix ];
+  imports = [ ./ale.nix ./coc.nix ./nvim-cmp.nix ./ycm.nix ];
 
   options.myHome.neovim.enable = lib.mkEnableOption "neovim";
 
@@ -18,8 +18,8 @@
     # Install ALE by default.
     myHome.neovim.ale.enable = lib.mkDefault true;
 
-    # Install YouCompleteMe by default.
-    myHome.neovim.ycm.enable = lib.mkDefault true;
+    # Use nvim-cmp as our default completion engine.
+    myHome.neovim.nvim-cmp.enable = lib.mkDefault true;
 
     # Install and configure neovim.
     programs.neovim = let
@@ -173,6 +173,12 @@
               require('mini.surround').setup()
 
             END
+          '';
+        }
+        {
+          plugin = nvim-lspconfig;
+          config = ''
+
           '';
         }
         {

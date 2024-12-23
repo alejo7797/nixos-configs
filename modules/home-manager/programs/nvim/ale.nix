@@ -1,6 +1,6 @@
 { pkgs, lib, config, ... }: {
 
-  options.myHome.neovim.ale.enable = lib.mkEnableOption "ale";
+  options.myHome.neovim.ale.enable = lib.mkEnableOption "ALE";
 
   config = lib.mkIf config.myHome.neovim.ale.enable {
 

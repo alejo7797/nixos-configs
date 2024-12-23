@@ -4,8 +4,8 @@
 
   config = lib.mkIf config.myHome.neovim.coc.enable {
 
-    # Disable YouCompleteMe.
-    myHome.neovim.ycm.enable = false;
+    # Disable nvim-cmp.
+    myHome.neovim.nvim-cmp.enable = false;
 
     programs.neovim = {
 

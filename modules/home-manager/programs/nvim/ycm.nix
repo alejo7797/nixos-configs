@@ -8,6 +8,9 @@
 
   in lib.mkIf cfg.ycm.enable {
 
+    # Disable nvim-cmp.
+    myHome.neovim.nvim-cmp.enable = false;
+
     programs.neovim.plugins = with pkgs.vimPlugins; [
       {
         plugin = YouCompleteMe;
