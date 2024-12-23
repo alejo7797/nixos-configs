@@ -33,8 +33,8 @@
       playerctl polkit_gnome
 
       # Essential applications.
-      keepassxc kitty
-      mpv libreoffice
+      keepassxc kitty mpv
+      libreoffice variety
 
     ];
 

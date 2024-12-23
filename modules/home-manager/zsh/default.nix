@@ -19,7 +19,12 @@
       };
 
       # Configure some useful aliases.
-      shellAliases = {
+      shellAliases = let
+
+        nmcli = "${pkgs.networkmanager}/bin/nmcli";
+        variety = "${pkgs.variety}/bin/variety";
+
+      in {
 
         # https://github.com/lsd-rs/lsd
         ls = "${pkgs.lsd}/bin/lsd \${=lsd_params}";
@@ -28,6 +33,16 @@
         la = "ls -a"; lla = "ls -la";
 
         su = "sudo -i";
+
+        # Manage connection to my VPN server.
+        vpnup   = "${nmcli} c up Koakuma_VPN";
+        vpndown = "${nmcli} c down Koakuma_VPN";
+
+        # Interact with Variety.
+        bgnext  = "${variety} --next";
+        bgprev  = "${variety} --previous";
+        bgtrash = "${variety} --trash";
+        bgfav   = "${variety} --favorite";
 
         # Use standard syntax.
         ps = "${pkgs.procps}/bin/ps -ef";
@@ -91,7 +106,7 @@
       };
 
       # Load additional plugins.
-      plugins = with myLib; [
+      plugins = [
         {
           name = "nix-shell";
           src = "${pkgs.zsh-nix-shell}/share/zsh-nix-shell";
