@@ -12,9 +12,9 @@
 
       # Don't use open source Nvidia drivers.
       open = false;
-      
-      # Troubleshooting suspend issues.
-      nvidiaPersistenced = true;
+
+      # Use 550 driver for RTX 4070 SUPER support.
+      package = config.boot.kernelPackages.nvidiaPackages.beta;
 
     };
   };
