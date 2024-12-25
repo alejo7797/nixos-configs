@@ -14,7 +14,7 @@
       open = false;
 
       # Use 550 driver for RTX 4070 SUPER support.
-      package = config.boot.kernelPackages.nvidiaPackages.beta;
+      package = config.boot.kernelPackages.nvidiaPackages.production;
 
     };
   };
