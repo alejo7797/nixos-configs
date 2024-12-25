@@ -4,9 +4,18 @@
 
   config = {
     
+    # Install Nvidia kernel modules.
     hardware.graphics.enable = true;
     services.xserver.videoDrivers = [ "nvidia" ];
-    hardware.nvidia.open = true;
 
+    hardware.nvidia = {
+
+      # Use open source Nvidia drivers.
+      open = true;
+      
+      # Troubleshooting suspend issues.
+      nvidiaPersistenced = true;
+
+    };
   };
 }
