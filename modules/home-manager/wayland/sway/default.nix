@@ -66,16 +66,16 @@
           "${modifier}+Shift+x" = "exec slurpshot";
 
           # Use pactl to adjust volume in PulseAudio.
-          "XF86AudioRaiseVolume"  = "exec ${pactl} set-sink-volume @DEFAULT_SINK@ +4%";
-          "XF86AudioLowerVolume"  = "exec ${pactl} set-sink-volume @DEFAULT_SINK@ -4%";
-          "XF86AudioMute"         = "exec ${pactl} set-sink-mute @DEFAULT_SINK@ toggle";
-          "XF86AudioMicMute"      = "exec ${pactl} set-source-mute @DEFAULT_SOURCE@ toggle";
+          "XF86AudioRaiseVolume" = "exec ${pactl} set-sink-volume @DEFAULT_SINK@ +4%";
+          "XF86AudioLowerVolume" = "exec ${pactl} set-sink-volume @DEFAULT_SINK@ -4%";
+          "XF86AudioMute"        = "exec ${pactl} set-sink-mute @DEFAULT_SINK@ toggle";
+          "XF86AudioMicMute"     = "exec ${pactl} set-source-mute @DEFAULT_SOURCE@ toggle";
 
           # Bind the media keys to playerctl actions.
-          "XF86AudioPlay"   = "exec ${playerctl} play-pause";
-          "XF86AudioPause"  = "exec ${playerctl} pause";
-          "XF86AudioNext"   = "exec ${playerctl} next";
-          "XF86AudioPrev"   = "exec ${playerctl} previous";
+          "XF86AudioPlay"  = "exec ${playerctl} play-pause";
+          "XF86AudioPause" = "exec ${playerctl} pause";
+          "XF86AudioNext"  = "exec ${playerctl} next";
+          "XF86AudioPrev"  = "exec ${playerctl} previous";
 
           # Control the screen brightness.
           "XF86MonBrightnessDown" = "exec ${brightnessctl} set 2%-";
@@ -86,7 +86,7 @@
         startup = [
           { command = "${pkgs.xorg.xrdb}/bin/xrdb -load ~/.Xresources"; }
           { command = "${uwsm_app} ${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; }
-          { command = "${./startup}"; }
+          { command = "${./sway-startup}"; }
         ];
 
         modes = lib.mkOptionDefault {
