@@ -1,5 +1,3 @@
-#!/bin/bash
-
 swaymsg workspace 4
 swaymsg exec uwsm app -- dolphin
 sleep 1.5

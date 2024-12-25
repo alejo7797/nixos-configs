@@ -86,7 +86,7 @@
         startup = [
           { command = "${pkgs.xorg.xrdb}/bin/xrdb -load ~/.Xresources"; }
           { command = "${uwsm_app} ${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; }
-          { command = "${./sway-startup}"; }
+          { command = "${pkgs.bash}/bin/bash ${./sway-startup}"; }
         ];
 
         modes = lib.mkOptionDefault {
