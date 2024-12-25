@@ -50,14 +50,15 @@
 
         keybindings = let
 
+          brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
+          loginctl = "${pkgs.systemd}/bin/loginctl";
           pactl = "${pkgs.pulseaudio}/bin/pactl";
           playerctl = "${pkgs.playerctl}/bin/playerctl";
-          brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
 
         in lib.mkOptionDefault {
 
           "${modifier}+x" = "mode \"${exit}\"";
-          "${modifier}+Shift+o" = "loginctl lock-session";
+          "${modifier}+Shift+o" = "exec ${loginctl} lock-session";
           "${modifier}+Shift+x" = "exec slurpshot";
 
           # Use pactl to adjust volume in PulseAudio.
@@ -85,16 +86,32 @@
 
         modes = lib.mkOptionDefault {
           ${exit} = {
-            s = "${systemctl} suspend, mode default";
-            h = "${systemctl} hibernate, mode default";
-            p = "${systemctl} poweroff";
-            r = "${systemctl} reboot";
+            s = "exec ${systemctl} suspend, mode default";
+            h = "exec ${systemctl} hibernate, mode default";
+            p = "exec ${systemctl} poweroff";
+            r = "exec ${systemctl} reboot";
             Escape = "mode default";
           };
         };
 
-      };
+        # Window rules.
+        window.commands =
+          
+          # Floating windows.
+          map (w: w // { command = "floating enable"; }) [
+            { criteria.window_type = "dialog"; }
+            { criteria.window_role = "dialog"; }
+            { criteria.app_id = "^blueman-manager$"; }
+            { criteria.app_id = "^org\.keepassxc\.KeePassXC$"; }
+            { criteria = { app_id = "^lutris$"; title = "Log for .*"; }; }
+            { criteria.app_id = "^nm-connection-editor$"; }
+            { criteria.app_id = "^org.pulseaudio.pavucontrol$"; }
+            { criteria.app_id = "^org.prismlauncher.PrismLauncher$"; }
+            { criteria.app_id = "^qt\dct$"; }
+            { criteria.title = "^Yubico Authenticator$"; }
+          ];
 
+      };
     };
   };
 }

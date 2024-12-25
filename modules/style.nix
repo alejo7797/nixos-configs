@@ -7,7 +7,7 @@ config = lib.mkIf config.myStyle.enable {
     # Enable and configure Stylix.
     stylix.enable = true;
     stylix.polarity = "dark";
-    stylix.image = ../wallpaper.png;
+    stylix.image = ./wallpaper.png;
     stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/tomorrow-night.yaml";
 
     # Configure our desired fonts.

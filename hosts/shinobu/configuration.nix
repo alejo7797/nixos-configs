@@ -38,20 +38,27 @@
       # Disable the command line editor.
       editor = false;
 
-      # Tell systemd-boot where to find Windows.
+      # Create our own Windows bootloader entry.
       windows."11" = {
         title = "Windows 11";
         sortKey = "a_windows";
         efiDeviceHandle = "HD0b";
       };
 
-      # Set Windows as the default boot entry.
       extraInstallCommands = ''
+
+        # Do not show the auto-generated Windows entry.
+        echo "auto-entries false" >>/boot/loader/loader.conf
+        
+        # Set Windows as the default boot entry.
         ${pkgs.gnused}/bin/sed -i 's/default .*/default windows_11.conf/' /boot/loader/loader.conf
+
       '';
     };
 
+    # Allow systemd-boot to modify EFI variables.
     efi.canTouchEfiVariables = true;
+
   }; 
 
   # Set the kernel parameters.
