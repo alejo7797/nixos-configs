@@ -15,7 +15,7 @@
 
     sway.config.input = {
       "Razer Razer DeathAdder Chroma" = {
-        pointer_accel = -1;
+        pointer_accel = "-1";
       };
     };
 
