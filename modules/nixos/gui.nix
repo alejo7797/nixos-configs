@@ -4,6 +4,11 @@
 
   config = lib.mkIf config.myNixOS.graphical-environment {
 
+    # Enable the plymouth splash screen.
+    boot.plymouth = {
+      enable = true;
+    };
+
     # Install firefox and set it as default.
     programs.firefox.enable = true;
     environment.variables.BROWSER = "firefox";

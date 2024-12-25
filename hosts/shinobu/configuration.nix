@@ -38,9 +38,16 @@
       # Disable the command line editor.
       editor = false;
 
+      # Tell systemd-boot where to find Windows.
+      windows."11" = {
+        title = "Windows 11";
+        sortKey = "a_windows";
+        efiDeviceHandle = "HD0b";
+      };
+
       # Set Windows as the default boot entry.
       extraInstallCommands = ''
-        ${pkgs.gnused}/bin/sed -i 's/default .*/default auto_windows/' /boot/loader/loader.conf
+        ${pkgs.gnused}/bin/sed -i 's/default .*/default windows_11.conf/' /boot/loader/loader.conf
       '';
     };
 

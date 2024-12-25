@@ -32,6 +32,9 @@
         # Rebuild NixOS system.
         upgrade = "sudo nixos-rebuild switch --flake ~/.nix";
 
+        # Clean up the Nix store.
+        cleanup = "sudo nix-collect-garbage -d";
+
         # Manage connection to my VPN server.
         vpnup   = "nmcli c up Koakuma_VPN";
         vpndown = "nmcli c down Koakuma_VPN";
