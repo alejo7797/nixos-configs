@@ -50,7 +50,6 @@
         gaps = { inner = 0; outer = 0; };
         window.hideEdgeBorders = "both";
         workspaceLayout = "tabbed";
-        defaultWorkspace = "workspace number 1";
 
         keybindings = let
 

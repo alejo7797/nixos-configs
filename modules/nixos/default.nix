@@ -28,6 +28,9 @@
   # Limit the number of generations to keep in the bootloader.
   boot.loader.systemd-boot.configurationLimit = 20;
 
+  # Wireguard trips up rpfilter.
+  networking.firewall.checkReversePath = "loose";
+
   # Install and configure zsh.
   programs.zsh = {
     enable = true;
