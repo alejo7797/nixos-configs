@@ -22,6 +22,9 @@
         # https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland#Sway.
         export QT_IM_MODULE=fcitx
 
+        # Run Electron apps under XWayland.
+        export ELECTRON_OZONE_PLATFORM_HINT=x11
+
       '';
 
       config = let
@@ -46,6 +49,7 @@
 
         gaps = { inner = 0; outer = 0; };
         window.hideEdgeBorders = "both";
+        workspaceLayout = "tabbed";
         defaultWorkspace = "workspace number 1";
 
         keybindings = let
@@ -82,6 +86,7 @@
         startup = [
           { command = "${pkgs.xorg.xrdb}/bin/xrdb -load ~/.Xresources"; }
           { command = "${uwsm_app} ${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; }
+          { command = ./startup; }
         ];
 
         modes = lib.mkOptionDefault {
@@ -92,6 +97,23 @@
             r = "exec ${systemctl} reboot";
             Escape = "mode default";
           };
+        };
+
+        # Workspace assignments.
+        assigns = {
+          "1" = [
+            { app_id = "^firefox$"; }
+            { app_id = "^thunderbird$"; }
+            { app_id = "^@joplinapp\/desktop$"; }
+          ];
+          "2" = [{ app_id = "^Zotero$"; }];
+          "3" = [
+            { class = "^steam$"; }
+            { class = "^steam_app_\d*"; }
+            { title = "^Minecraft\* 1\.\d{1,2}\.\d$"; }
+          ];
+          "8" = [{ class = "^vesktop$"; }];
+          "9" = [{ class = "^spotify$"; }];
         };
 
         # Window rules.

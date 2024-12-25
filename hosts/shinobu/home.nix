@@ -10,4 +10,15 @@
   # Set up sway, the i3-compatible Wayland compositor.
   myHome.sway.enable = true;
 
+  # Configure input devices.
+  wayland.windowManager = {
+
+    sway.config.input = {
+      "Razer Razer DeathAdder Chroma" = {
+        pointer_accel = -1;
+      };
+    };
+
+  };
+
 }
