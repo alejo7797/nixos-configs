@@ -17,14 +17,36 @@
       enable = true;
       settings = {
         show = "drun";
+        width = "36%";
         allow_images = true;
+        key-expand = "Ctrl-x";
       };
     };
 
     # Install and configure hyprlock.
     programs.hyprlock = {
       enable = true;
+      settings = {
+        general = {
+          grace = 5;
+          hide_cursor = true;
+        };
+        background = {
+          path = "${config.xdg.configHome}/hypr/wall.png";
+          blur_passes = 2;
+          brightness = 0.5;
+        };
+        input-field = {
+          monitor = "";
+          fade_timeout = 1000;
+          placeholder_text = "";
+          size = "400, 60";
+        };
+      };
     };
+
+    # Stylix wants to set the wallpaper too.
+    stylix.targets.hyprlock.enable = false;
 
     # Enable and configure gammastep.
     services.gammastep = {
