@@ -9,23 +9,10 @@
 
     # Configure sway, the i3-compatible Wayland compositor.
     wayland.windowManager.sway = {
-
       enable = true;
-      wrapperFeatures.gtk = true;
 
-      extraSessionCommands = ''
-
-        # Useful Wayland environment variables to set.
-        export _JAVA_AWT_WM_NONREPARENTING=1
-        export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
-
-        # https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland#Sway.
-        export QT_IM_MODULE=fcitx
-
-        # Run Electron apps under XWayland.
-        export ELECTRON_OZONE_PLATFORM_HINT=x11
-
-      '';
+      # We install sway as a NixOS module.
+      package = null;
 
       config = let
 
