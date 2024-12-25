@@ -7,10 +7,9 @@
     inputs.stylix.nixosModules.stylix
 
     # My personal modules.
-    ./users.nix ./locale.nix
-    ./tuigreet.nix ./programs
-    ./nvidia.nix ./wayland
-    ./gui.nix ./style.nix
+    ./users.nix ./pam.nix ./locale.nix
+    ./tuigreet.nix ./programs ./nvidia.nix 
+    ./wayland ./graphical.nix ./style.nix
 
   ];
 

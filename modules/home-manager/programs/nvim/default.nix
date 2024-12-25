@@ -247,6 +247,12 @@
           '';
         }
         {
+          plugin = vim-better-whitespace;
+          config = ''
+
+          '';
+        }
+        {
           plugin = vim-snippets;
           config = ''
 

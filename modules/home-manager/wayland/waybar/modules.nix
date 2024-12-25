@@ -12,7 +12,7 @@
         "6" = "";    # git
         "8" = "";    # discord
         "9" = "";    # spotify
-        "0" = "";    # extra
+        "10" = "";   # extra
         urgent = ""; # (!)
       };
     };
@@ -22,10 +22,38 @@
     "sway/workspaces" = workspaces;
     "hyprland/workspaces" = workspaces;
     
+    idle_inhibitor = {
+      format = "{icon}";
+    };
+
     pulseaudio = {
       scroll-step = 1;
+      format = "{volume}% {icon} {format_source}";
+      format-bluetooth = "{volume}% {icon} {format_source}";
+      format-bluetooth-muted = " {icon} {format_source}";
+      format-muted = " {format_source}";
+      format-source = "{volume}% ";
       format-source-muted = "";
+      format-icons = {
+        headphone = "";
+        hands-free = "";
+        headset = "";
+        phone = "";
+        portable = "";
+        car = "";
+        default = ["" "" ""];
+      };
+      on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
       on-click-right = "audio-switch";
+    };
+
+    cpu = {
+      tooltip = false;
+      format = "{usage}% ";
+    };
+  
+    memory = {
+      format = "{}% ";
     };
 
     disk = {
@@ -39,6 +67,8 @@
         if config.myHome.hostname == "satsuki" then 7
         else if config.myHome.hostname == "shinobu" then 1
         else null;
+      format = "{temperatureC}°C {icon}";
+      format-icons = ["" "" ""];
     };
 
     network = {
@@ -55,6 +85,7 @@
     "network#harvard" = {
       interface = "vpn0";
       format = "Harvard VPN ";
+      format-disconnected = "";
     };
 
     "custom/weather" = {

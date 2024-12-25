@@ -33,9 +33,11 @@
     environment.systemPackages = with pkgs; [
 
       # System utilities.
-      dconf-editor font-manager libnotify 
-      mesa-demos pavucontrol pdftk playerctl
-      polkit_gnome xorg.xeyes vulkan-tools
+      dconf-editor font-manager 
+      libnotify  mesa-demos
+      pavucontrol pdftk playerctl
+      polkit_gnome yubico-pam
+      xorg.xeyes vulkan-tools
 
       # Essential applications.
       keepassxc kitty mpv
