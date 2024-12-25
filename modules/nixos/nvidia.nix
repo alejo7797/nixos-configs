@@ -13,8 +13,8 @@
       # Don't use open source Nvidia drivers.
       open = false;
 
-      # Use 550 driver for RTX 4070 SUPER support.
-      package = config.boot.kernelPackages.nvidiaPackages.production;
+      # Enable kernel modesetting.
+      modesetting.enable = true;
 
     };
   };
