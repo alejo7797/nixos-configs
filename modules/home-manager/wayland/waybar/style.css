@@ -1,0 +1,69 @@
+
+* {
+  font-family: "Noto Sans", "Font Awesome 6 Free Solid",
+    "Font Awesome 6 Brands Regular", "Font Awesome 6 Pro Solid";
+  font-weight: 500;
+  font-size: 15px;
+}
+
+window#waybar, tooltip {
+    background: #1d1f21;
+    color: #ffffff;
+}
+
+tooltip {
+    border-color: #81a2be;
+}
+
+button {
+  /* Use box-shadow instead of border so the text isn't offset. */
+  box-shadow: inset 0 -3px transparent;
+  /* Avoid rounded borders under each button name. */
+  border: none;
+  border-radius: 0;
+}
+
+/* Leave the box-shadow alone while hovering. */
+button:hover {
+  background: inherit;
+  box-shadow: inset 0 -3px #ffffff;
+}
+
+#workspaces button.focused,
+#workspaces button.active {
+  box-shadow: inset 0 -3px #81a2be;
+}
+
+#workspaces button.urgent {
+  background-color: #cc6666;
+}
+
+#submap,
+#mode,
+#idle_inhibitor,
+#pulseaudio,
+#cpu,
+#memory,
+#disk,
+#battery,
+#temperature,
+#network,
+#custom-weather,
+#clock,
+#tray {
+  padding: 0 5px;
+}
+
+#custom-swaync {
+  padding-left: 5px;
+}
+
+@keyframes blink {
+  to {
+    background-color: transparent;
+  }
+}
+
+#battery.critical:not(.charging) {
+  background-color: #cc6666;
+}

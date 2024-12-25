@@ -10,8 +10,8 @@
 
     hardware.nvidia = {
 
-      # Don't use open source Nvidia drivers.
-      open = false;
+      # Use open source Nvidia drivers.
+      open = true;
 
       # Enable kernel modesetting.
       modesetting.enable = true;

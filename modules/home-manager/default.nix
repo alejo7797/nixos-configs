@@ -1,23 +1,39 @@
-{ ... }: {
+{ pkgs, lib, config, ... }: {
 
   imports = [
 
     # My personal modules.
-    ./zsh ./programs ./style
+    ./zsh ./programs ./scripts ./style
     ./gui.nix ./wayland ./i3.nix
 
   ];
 
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+  options.myHome = {
 
-  # Configure zsh.
-  myHome.zsh.enable = true;
+    hostname = lib.mkOption {
+      description = "system hostname";
+    };
 
-  # Configure neovim.
-  myHome.neovim.enable = true;
+    laptop.enable = lib.mkEnableOption "laptop configuration";
 
-  # Configure git.
-  myHome.git.enable = true;
+  };
 
+  config = {
+
+    # Allow unfree packages.
+    nixpkgs.config.allowUnfree = true;
+
+    # Let Home Manager install and manage itself.
+    programs.home-manager.enable = true;
+
+    # Configure zsh.
+    myHome.zsh.enable = true;
+
+    # Configure neovim.
+    myHome.neovim.enable = true;
+
+    # Configure git.
+    myHome.git.enable = true;
+
+  };
 }

@@ -34,8 +34,8 @@
 
       # System utilities.
       dconf-editor font-manager libnotify 
-      mesa-demos pavucontrol pdftk
-      playerctl polkit_gnome vulkan-tools
+      mesa-demos pavucontrol pdftk playerctl
+      polkit_gnome xorg.xeyes vulkan-tools
 
       # Essential applications.
       keepassxc kitty mpv

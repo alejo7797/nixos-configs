@@ -18,7 +18,7 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Allow unfree packages.
-  nixpkgs.config = { allowUnfree = true; };
+  nixpkgs.config.allowUnfree = true;
 
   # Access ilya-fedin's repository.
   nixpkgs.overlays = [
@@ -29,7 +29,7 @@
   boot.loader.systemd-boot.configurationLimit = 20;
 
   # Wireguard trips up rpfilter.
-  networking.firewall.checkReversePath = "loose";
+  networking.firewall.checkReversePath = false;
 
   # Install and configure zsh.
   programs.zsh = {
@@ -74,10 +74,13 @@
 
   # Install the following essential packages.
   environment.systemPackages = with pkgs; [
-    curl dig file findutils ffmpeg htop
-    imagemagick jq libfido2 lsd neofetch
-    nettools nmap procps psmisc rsync
-    usbutils uv wireguard-tools wget yt-dlp
+    curl dig file findutils
+    ffmpeg htop imagemagick
+    jq libfido2 lm_sensors
+    lsd  neofetch nettools
+    nmap procps psmisc rsync
+    unrar usbutils uv
+    wireguard-tools wget yt-dlp
   ];
 
 }

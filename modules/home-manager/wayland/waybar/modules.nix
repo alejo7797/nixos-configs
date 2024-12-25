@@ -1,0 +1,101 @@
+{ pkgs, lib, config, ... }: {
+
+  programs.waybar.settings.mainBar = let
+
+    workspaces = {
+      format = "{icon}";
+      format-icons = {
+        "1" = "";    # firefox
+        "2" = "";    # library
+        "3" = "";    # steam
+        "4" = "";    # terminal
+        "6" = "";    # git
+        "8" = "";    # discord
+        "9" = "";    # spotify
+        "0" = "";    # extra
+        urgent = ""; # (!)
+      };
+    };
+
+  in {
+
+    "sway/workspaces" = workspaces;
+    "hyprland/workspaces" = workspaces;
+    
+    pulseaudio = {
+      scroll-step = 1;
+      format-source-muted = "";
+      on-click-right = "audio-switch";
+    };
+
+    disk = {
+      interval = 30;
+      format = "{percentage_used}% ";
+      path = "/";
+    };
+
+    temperature = {
+      thermal-zone =
+        if config.myHome.hostname == "satsuki" then 7
+        else if config.myHome.hostname == "shinobu" then 1
+        else null;
+    };
+
+    network = {
+      format-wifi = "{essid} ";
+      tooltip-format = "{ifname} via {gwaddr}";
+    };
+
+    "network#vpn" = {
+      interface = "wg0";
+      format = "VPN ";
+      format-disconnected = "VPN ";
+    };
+
+    "network#harvard" = {
+      interface = "vpn0";
+      format = "Harvard VPN ";
+    };
+
+    "custom/weather" = {
+      format = "{}";
+      tooltip = true;
+      interval = 1800;
+      exec = "wttrbar-wrapper";
+      return-type = "json";
+    };
+
+    clock = {
+      format-alt = "{:%Y-%m-%d %H:%M:%S}";
+    };
+
+    "custom/swaync" = let 
+      swaync-client = "${pkgs.swaynotificationcenter}/bin/swaync-client";
+    in {
+      tooltip = false;
+      format = "{icon}";
+      format-icons = let 
+        alert = "<span foreground='#cc6666'><sup></sup></span>"; 
+      in{
+        notification = "${alert}";
+        none = "";
+        dnd-notification = "${alert}";
+        dnd-none = "";
+        inhibited-notification = "${alert}";
+        inhibited-none = "";
+        dnd-inhibited-notification = "${alert}";
+        dnd-inhibited-none = "";
+      };
+      return-type = "json";
+      exec = "${swaync-client} -swb";
+      on-click = "${swaync-client} -t -sw";
+      on-click-right = "${swaync-client} -d -sw";
+      escape = true;
+    };
+
+    tray = {
+      spacing = 10;
+    };
+    
+  };
+}

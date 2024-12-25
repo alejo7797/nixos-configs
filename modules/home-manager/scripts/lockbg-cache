@@ -1,0 +1,26 @@
+#
+# Solution to apply effects to the lock
+# screen wallpaper when using plain i3lock.
+#
+
+if [[ "$XDG_CURRENT_DESKTOP" = "i3" ]]; then
+
+    cd ~/.config/i3 || exit 1
+
+    if [[ "$(<.wp_status)" = "new_wp" ]]; then
+
+        magick "$(<~/.config/variety/wallpaper/wallpaper.jpg.txt)" \
+            -resize 1920x1080^ \
+            -gravity center \
+            -extent 1920x1080 \
+            -fill black -colorize 50% \
+            -blur 0x20 \
+            lockbg.png
+
+        magick lockbg.png lockbg.png +append lockbg.png
+
+        echo "old_wp" >.wp_status
+
+    fi
+
+fi

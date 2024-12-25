@@ -153,8 +153,8 @@
     filezilla gimp inkscape
     joplin-desktop plex-desktop
     qbittorrent spotify
-    ungoogled-chromium
-    variety yubioath-flutter
+    ungoogled-chromium variety
+    vesktop yubioath-flutter
     zathura zoom-us zotero
 
     # Wine.
@@ -163,7 +163,8 @@
 
     # Gaming.
     gamescope lutris
-    prismlauncher vesktop
+    prismlauncher
+    unigine-heaven
 
     # Coding.
     biber black clang

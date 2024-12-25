@@ -66,7 +66,7 @@
         let maplocalleader = "${leader}"
 
         " Clear highlights.
-        nnoremap <Esc> :noh<cr>
+        nnoremap <silent> <Esc> :noh<cr>
 
         " Use the system clipboard.
         vnoremap <C-c> "+y

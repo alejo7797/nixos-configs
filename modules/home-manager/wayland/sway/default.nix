@@ -1,5 +1,7 @@
 { pkgs, lib, config, ... }: {
 
+  imports = [ ./window-rules.nix ];
+
   options.myHome.sway.enable = lib.mkEnableOption "sway configuration";
 
   config = lib.mkIf config.myHome.sway.enable {
@@ -11,7 +13,7 @@
     wayland.windowManager.sway = {
       enable = true;
 
-      # We install sway as a NixOS module.
+      # We install sway via a NixOS module.
       package = null;
 
       config = let
@@ -84,40 +86,6 @@
             Escape = "mode default";
           };
         };
-
-        # Workspace assignments.
-        assigns = {
-          "1" = [
-            { app_id = "^firefox$"; }
-            { app_id = "^thunderbird$"; }
-            { app_id = "^@joplinapp\/desktop$"; }
-          ];
-          "2" = [{ app_id = "^Zotero$"; }];
-          "3" = [
-            { class = "^steam$"; }
-            { class = "^steam_app_\d*"; }
-            { title = "^Minecraft\* 1\.\d{1,2}\.\d$"; }
-          ];
-          "8" = [{ class = "^vesktop$"; }];
-          "9" = [{ class = "^spotify$"; }];
-        };
-
-        # Window rules.
-        window.commands =
-          
-          # Floating windows.
-          map (w: w // { command = "floating enable"; }) [
-            { criteria.window_type = "dialog"; }
-            { criteria.window_role = "dialog"; }
-            { criteria.app_id = "^blueman-manager$"; }
-            { criteria.app_id = "^org\.keepassxc\.KeePassXC$"; }
-            { criteria = { app_id = "^lutris$"; title = "Log for .*"; }; }
-            { criteria.app_id = "^nm-connection-editor$"; }
-            { criteria.app_id = "^org.pulseaudio.pavucontrol$"; }
-            { criteria.app_id = "^org.prismlauncher.PrismLauncher$"; }
-            { criteria.app_id = "^qt\dct$"; }
-            { criteria.title = "^Yubico Authenticator$"; }
-          ];
 
       };
     };
