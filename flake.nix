@@ -12,21 +12,21 @@
 
   outputs = { ... }@inputs: let
 
-      myLib = import ./my-lib.nix { inherit inputs; };
+    myLib = import ./my-lib.nix { inherit inputs; };
 
-    in with myLib; {
+  in with myLib; {
 
-      nixosConfigurations = {
-        "nixos-vm" = mkSystem ./hosts/nixos-vm/configuration.nix;
-      };
-
-      homeConfigurations = {
-        "ewan@nixos-vm" = mkHome "x86_64-linux" ./hosts/nixos-vm/home.nix;
-        "ewan@satsuki" = mkHome "x86_64-linux" ./hosts/satsuki/home.nix;
-      };
-
-      nixosModules.default = ./modules/nixos;
-      homeManagerModules.default = ./modules/home-manager;
-
+    nixosConfigurations = {
+      "shinobu" = mkSystem ./hosts/shinobu/configuration.nix;
     };
+
+    homeConfigurations = {
+      "ewan@shinobu" = mkHome "x86_64-linux" ./hosts/shinobu/home.nix;
+      "ewan@satsuki" = mkHome "x86_64-linux" ./hosts/satsuki/home.nix;
+    };
+
+    nixosModules.default = ./modules/nixos;
+    homeManagerModules.default = ./modules/home-manager;
+
+  };
 }

@@ -43,5 +43,4 @@ config = lib.mkIf config.myStyle.enable {
     };
 
   };
-
 }

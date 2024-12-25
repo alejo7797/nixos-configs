@@ -17,4 +17,7 @@
   # Configure neovim.
   myHome.neovim.enable = true;
 
+  # Configure git.
+  myHome.git.enable = true;
+
 }

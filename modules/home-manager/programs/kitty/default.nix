@@ -8,7 +8,7 @@
     programs.kitty = {
       enable = true;
       settings = {
-        "text_comosition_strategy" = "2.0 0";
+        "text_composition_strategy" = "2.0 0";
         "enable_audio_bell" = "yes";
         "linux_bell_theme" = "ocean";
       };
@@ -17,11 +17,12 @@
       '';
     };
 
+    # Set the color theme ourselves.
+      stylix.targets.kitty.enable = false;
+
     xdg.configFile = {
-      
       # Patched to have correct selection colors.
       "kitty/current-theme.conf".source = ./current-theme.conf;
-
     };
 
   };

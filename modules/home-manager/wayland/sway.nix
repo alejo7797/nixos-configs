@@ -13,12 +13,15 @@
       enable = true;
       wrapperFeatures.gtk = true;
 
-      # Useful Wayland environment variables to set.
-      # https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland#Sway.
       extraSessionCommands = ''
+
+        # Useful Wayland environment variables to set.
         export _JAVA_AWT_WM_NONREPARENTING=1
         export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+
+        # https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland#Sway.
         export QT_IM_MODULE=fcitx
+
       '';
 
       config = let

@@ -3,14 +3,55 @@
   # Did you read the comment?
   system.stateVersion = "24.11";
 
-  # Set the system architecure.
-  nixpkgs.hostPlatform.system = "x86_64-linux";
+  # Include the results of the hardware scan.
+  imports = [ ./hardware-configuration.nix ];
 
-  # QEMU guest settings.
-  virtualisation.qemu.options = [ "-device virtio-vga" ];
+  # Enable swap.
+  swapDevices = [ { device = "/var/swapfile"; size = 32768; } ];
+
+  # Install Nvidia drivers.
+  myNixOS.nvidia.enable = true;
+
+  # Enable Bluetooth.
+  hardware.bluetooth.enable = true;
+
+  # Mount extra partitions.
+  fileSystems = {
+
+    "/mnt/windows" = { 
+      device = "/dev/disk/by-label/Windows";
+      fsType = "ntfs";
+    };
+
+    "/mnt/vault" = {
+      device = "/dev/disk/by-label/Vault";
+      fsType = "ntfs";
+    };
+  };
+
+  boot.loader = {
+
+    # Use systemd-boot as our boot loader.
+    systemd-boot = {
+      enable = true;
+
+      # Disable the command line editor.
+      editor = false;
+
+      # Set Windows as the default boot entry.
+      extraInstallCommands = ''
+        ${pkgs.gnused}/bin/sed -i 's/default .*/default auto_windows/' /boot/loader/loader.conf
+      '';
+    };
+
+    efi.canTouchEfiVariables = true;
+  }; 
+
+  # Set the kernel parameters.
+  boot.kernelParams = [ "quiet" "splash" "loglevel=3" "nowatchdog" ];
 
   # Set the hostname.
-  networking.hostName = "nixos-vm";
+  networking.hostName = "shinobu";
 
   # Configure my user account.
   myNixOS.home-users."ewan" = {
@@ -19,16 +60,6 @@
       description = "Alex";
     };
   };
-
-  # Enable my custom system theme.
-  myNixOS.style.enable = true;
-
-  # Use systemd-boot as our boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  # Set the kernel parameters.
-  boot.kernelParams = [ "quiet" "splash" "loglevel=3" "nowatchdog" ];
 
   # Use NetworkManager together with systemd-resolved.
   networking.networkmanager.enable = true;
@@ -46,14 +77,11 @@
   # Use tuigreet to log us in.
   myNixOS.tuigreet.enable = true;
 
-  # Make sway the default session.
-  myNixOS.tuigreet.user_session = "sway";
+  # Install Hyprland, the tiling Wayland compositor.
+  myNixOS.hyprland.enable = true;
 
   # Install sway, the i3-compatible Wayland compositor.
   myNixOS.sway.enable = true;
-
-  # Install Hyprland, the tiling Wayland compositor.
-  myNixOS.hyprland.enable = true;
 
   # Enable sound support.
   security.rtkit.enable = true;
@@ -76,8 +104,12 @@
   # Enable and configure syncthing.
   services.syncthing = {
     enable = true;
-    openDefaultPorts = true;
+    user = "ewan";
+    dataDir = "/home/ewan";
   };
+
+  # Enable my custom system theme.
+  myNixOS.style.enable = true;
 
   # Install Dolphin and related KDE applications.
   myNixOS.dolphin.enable = true;
@@ -136,5 +168,4 @@
     })
 
   ];
-
 }

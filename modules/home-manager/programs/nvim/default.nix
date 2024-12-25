@@ -109,7 +109,7 @@
 
         # Install plugin dependencies.
         black fd nixfmt-rfc-style
-        shfmt tree-sitter
+        ripgrep shfmt tree-sitter
 
       ];
 
@@ -166,7 +166,7 @@
 
               -- Keep the window layout when deleting buffers.
               require('mini.bufremove').setup()
-              vim.keymap.set("n", "<leader>x", "<cmd> lua MiniBufremove.delete()")
+              vim.keymap.set("n", "<leader>x", "<cmd> lua MiniBufremove.delete()<CR>")
 
               -- Toggle comments with `gc`.
               require('mini.comment').setup()

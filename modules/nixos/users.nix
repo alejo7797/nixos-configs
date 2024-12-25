@@ -50,5 +50,4 @@
     ) (config.myNixOS.home-users);
 
   };
-
 }

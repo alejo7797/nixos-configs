@@ -9,7 +9,8 @@
     # My personal modules.
     ./users.nix ./locale.nix
     ./tuigreet.nix ./programs
-    ./gui.nix ./style.nix ./wayland
+    ./nvidia.nix ./wayland
+    ./gui.nix ./style.nix
 
   ];
 
@@ -47,7 +48,10 @@
   security.polkit.enable = true;
 
   # Install git.
-  programs.git.enable = true;
+  programs.git = {
+    enable = true;
+    package = pkgs.gitFull;
+  };
 
   # Enable the SSH agent.
   programs.ssh.startAgent = true;
@@ -64,10 +68,10 @@
 
   # Install the following essential packages.
   environment.systemPackages = with pkgs; [
-    curl dig file findutils ffmpeg
-    htop imagemagick jq libfido2 lsd
-    neofetch nettools nmap procps psmisc
-    rsync usbutils uv wget yt-dlp
+    curl dig file findutils ffmpeg htop
+    imagemagick jq libfido2 lsd neofetch
+    nettools nmap procps psmisc rsync
+    usbutils uv wireguard-tools wget yt-dlp
   ];
 
 }
