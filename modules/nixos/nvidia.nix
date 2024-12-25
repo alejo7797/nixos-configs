@@ -8,8 +8,14 @@
     hardware.graphics.enable = true;
     services.xserver.videoDrivers = [ "nvidia" ];
 
-    # Don't use open source Nvidia drivers.
-    hardware.nvidia.open = false;
+    hardware.nvidia = {
 
+      # Don't use open source Nvidia drivers.
+      open = false;
+      
+      # Troubleshooting suspend issues.
+      nvidiaPersistenced = true;
+
+    };
   };
 }
