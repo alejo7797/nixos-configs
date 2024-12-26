@@ -19,7 +19,7 @@
         show = "drun";
         width = "36%";
         allow_images = true;
-        key-expand = "Ctrl-x";
+        key_expand = "Ctrl-x";
       };
     };
 
