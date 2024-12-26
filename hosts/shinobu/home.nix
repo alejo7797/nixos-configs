@@ -16,7 +16,7 @@ myHome.hostname = "shinobu";
     # Configure input devices.
     input = {
       "5426:67:Razer_Razer_DeathAdder_Chroma" = {
-        pointer_accel = "-1";
+        pointer_accel = "-0.8";
       };
     };
 
