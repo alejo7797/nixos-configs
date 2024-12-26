@@ -48,5 +48,9 @@
       "Xft/DPI" = 122880;
     };
 
+    # Make our theme available to Konsole.
+    xdg.dataFile."konsole".source = ./konsole/data;
+    xdg.configFile."konsolerc".source = ./konsole/konsolerc;
+
   };
 }
