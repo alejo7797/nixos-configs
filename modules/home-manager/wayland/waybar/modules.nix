@@ -28,11 +28,11 @@
 
     pulseaudio = {
       scroll-step = 1;
-      format = "{volume}% {icon} {format-source}";
+      format = "{volume}% {icon}{format_source}";
       format-bluetooth = "{volume}% {icon}";
       format-bluetooth-muted = " {icon}";
       format-muted = " ";
-      format-source = "{volume}% ";
+      format-source = " {volume}% ";
       format-source-muted = "";
       format-icons = {
         headphone = "";
@@ -97,8 +97,18 @@
     };
 
     clock = {
-      tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+      interval = 5;
+      format = "{:%H:%M (%Z)}";
       format-alt = "{:%Y-%m-%d %H:%M:%S}";
+      tooltip-format = "{tz_list}";
+      timezones = [
+        "Europe/Madrid"
+        "America/Los_Angeles"
+        "America/New_York"
+        "Europe/London"
+        "Asia/Shanghai"
+        "Asia/Tokyo"
+      ];
     };
 
     "custom/swaync" = let
