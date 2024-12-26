@@ -68,7 +68,7 @@
         command = "float, no_focus, resize set 450 160, move position 1460 880";
         criteria = {
           app_id = "^org\\.kde\\.dolphin$";
-          title = "^(Creating directory|Copying|Moving|Deleting|Progress Dialog) — Dolphin$";
+          title = "^(?:Creating directory|Copying|Moving|Deleting|Progress Dialog) — Dolphin$";
         };
       }]
 

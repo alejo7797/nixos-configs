@@ -5,7 +5,7 @@
     # My personal modules.
     ./zsh ./programs ./scripts
     ./autostart.nix ./style ./i3.nix
-    ./graphical.nix ./wayland 
+    ./graphical.nix ./wayland
 
   ];
 

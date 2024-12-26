@@ -40,5 +40,13 @@
     # Install and configure kitty.
     myHome.kitty.enable = true;
 
+    # XDG autostart.
+    myHome.xdgAutostart = with pkgs; [
+
+      firefox keepassxc
+      thunderbird variety
+
+    ];
+
   };
 }
