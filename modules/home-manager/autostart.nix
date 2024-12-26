@@ -21,13 +21,17 @@
             # We're happy.
             { text = pkg.desktopItem.text; }
 
-          else if pkg ? desktopFile then
-            # We're confused.
-            { source = "${pkg}/share/applications/${pkg.desktopFile}"; }
+          else { source = "${pkg}/share/applications/" + "${
+            if pkg ? desktopFile then
+              # We're confused.
+              "${pkg.desktopFile}"
 
-          else
-            # We're mad.
-            { source = "${pkg}/share/applications/${stripVersion pkg.name}.desktop"; };
+            else
+              # We're mad.
+              "${stripVersion pkg.name}.desktop"}";
+
+          };
+
         })
         config.myHome.xdgAutostart
     );
