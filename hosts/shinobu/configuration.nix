@@ -112,11 +112,15 @@
   # Configure Fcitx5 as our input method.
   myNixOS.fcitx5.enable = true;
 
-  # Enable printing-related services.
+  # Enable CUPS.
   services.printing.enable = true;
   services.avahi.enable = true;
-  services.saned.enable = true;
   services.system-config-printer.enable = true;
+
+  # Enable SANE.
+  hardware.sane.enable = true;
+  services.saned.enable = true;
+  users.users.ewan.extraGroups = [ "scanner" ];
 
   # Enable and configure syncthing.
   services.syncthing = {
