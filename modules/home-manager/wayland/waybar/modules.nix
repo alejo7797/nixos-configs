@@ -80,6 +80,7 @@
       interface = "wg0";
       format = "VPN ";
       format-disconnected = "VPN ";
+      tooltip = false;
     };
 
     "network#harvard" = {

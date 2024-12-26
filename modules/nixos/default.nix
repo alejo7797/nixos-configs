@@ -27,8 +27,16 @@
   # Limit the number of generations to keep in the bootloader.
   boot.loader.systemd-boot.configurationLimit = 20;
 
-  # Wireguard trips up rpfilter.
-  networking.firewall.checkReversePath = false;
+  # Default networking configuration.
+  networking = {
+
+    # Use standard network interface names.
+    usePredictableInterfaceNames = lib.mkDefault false;
+
+    # Wireguard trips up rpfilter.
+    firewall.checkReversePath = false;
+
+  };
 
   # Install and configure zsh.
   programs.zsh = {

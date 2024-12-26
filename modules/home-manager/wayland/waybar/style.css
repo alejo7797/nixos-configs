@@ -7,12 +7,12 @@
 }
 
 window#waybar, tooltip {
-    background: #1d1f21;
-    color: #c5c8c6;
+  background: #1d1f21;
+  color: #c5c8c6;
 }
 
 tooltip {
-    border-color: #81a2be;
+  border-color: #81a2be;
 }
 
 button {
@@ -54,6 +54,7 @@ button:hover {
 }
 
 tooltip#clock {
+  background: #ff00ff;
 }
 
 #custom-swaync {
