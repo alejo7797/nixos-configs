@@ -11,7 +11,10 @@
       map
         (pkg: {
           name = pkg.name + ".desktop";
-          value = { text = pkg.desktopItem.text; };
+          value = if pkg ? desktopItem then
+            { text = pkg.desktopItem.text; }
+          else
+            { source = "${pkg}/share/applications/${pkg.desktopFile}"; };
         })
         config.myHome.xdgAutostart
     );

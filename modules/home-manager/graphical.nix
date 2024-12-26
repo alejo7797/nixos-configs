@@ -43,8 +43,11 @@
     # XDG autostart.
     myHome.xdgAutostart = with pkgs; [
 
-      firefox keepassxc
-      thunderbird variety
+      firefox thunderbird
+
+      # Need to specify .desktop file manually.
+      (keepassxc // { desktopFile = "org.keepassxc.KeePassXC.desktop"; })
+      (variety // { desktopFile = "variety.desktop"; })
 
     ];
 

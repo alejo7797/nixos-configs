@@ -34,8 +34,12 @@ myHome.hostname = "shinobu";
   # Autostart applications.
   myHome.xdgAutostart = with pkgs; [
 
-    joplin-desktop spotify
-    steam vesktop zotero
+    vesktop zotero
+
+    # Need to specify .desktop file manually.
+    (joplin-desktop // { desktopFile = "@joplinapp-desktop.desktop"; })
+    (spotify // { desktopFile = "spotify.desktop"; })
+    (steam // { desktopFile = "steam.desktop"; })
 
   ];
 
