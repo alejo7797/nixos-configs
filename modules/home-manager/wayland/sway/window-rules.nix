@@ -38,7 +38,7 @@
     window.commands =
 
       # System tray.
-      map (w: w // { command = "resize set 600 600, move position 1320 450"; }) [
+      map (w: w // { command = "resize set 600 600, move position 1320 448"; }) [
         { criteria = { app_id = "^blueman-manager$"; title = "^Bluetooth Devices$"; }; }
         { criteria = { app_id = "^nm-connection-editor$"; title = "^Network Connections$"; }; }
         { criteria.app_id = "^nm-openconnect-auth-dialog$"; }
