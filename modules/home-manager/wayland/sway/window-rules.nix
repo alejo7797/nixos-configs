@@ -77,6 +77,6 @@
         criteria.class = "^xwaylandvideobridge$";
         command = "floating enable, resize set 50 50, move position 1920 -50";
       }];
-  
+
   };
 }

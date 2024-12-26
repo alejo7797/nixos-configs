@@ -1,5 +1,5 @@
 { pkgs, lib, config, ... }: {
-  
+
   options.myHome.neovim.ultisnips.enable = lib.mkEnableOption "ultisnips";
 
   config = lib.mkIf config.myHome.neovim.ultisnips.enable {

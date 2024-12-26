@@ -33,7 +33,7 @@
     environment.systemPackages = with pkgs; [
 
       # System utilities.
-      dconf-editor font-manager 
+      dconf-editor font-manager
       libnotify  mesa-demos
       pavucontrol pdftk playerctl
       polkit_gnome yubico-pam

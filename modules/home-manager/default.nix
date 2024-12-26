@@ -3,8 +3,9 @@
   imports = [
 
     # My personal modules.
-    ./zsh ./programs ./scripts ./style
-    ./graphical.nix ./wayland ./i3.nix
+    ./zsh ./programs ./scripts
+    ./autostart.nix ./style ./i3.nix
+    ./graphical.nix ./wayland 
 
   ];
 

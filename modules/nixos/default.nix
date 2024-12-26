@@ -8,7 +8,7 @@
 
     # My personal modules.
     ./users.nix ./pam.nix ./locale.nix
-    ./tuigreet.nix ./programs ./nvidia.nix 
+    ./tuigreet.nix ./programs ./nvidia.nix
     ./wayland ./graphical.nix ./style.nix
 
   ];

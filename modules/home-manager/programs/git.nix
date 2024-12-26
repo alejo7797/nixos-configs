@@ -1,12 +1,12 @@
 { pkgs, lib, config, ... }: {
-  
+
   options.myHome.git.enable = lib.mkEnableOption "git configuration";
 
   config.programs.git = lib.mkIf config.myHome.git.enable {
-    
+
     # Configure Git.
     enable = true;
-    
+
     # Configure my Git identity.
     userName = "Alex Epelde";
     userEmail = "alex@epelde.net";

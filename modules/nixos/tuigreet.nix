@@ -16,9 +16,9 @@
 
             # Remember the last used session.
             "--remember" "--remember-session"
-          
+
           ];
-          
+
           user = "greeter";
 
         };

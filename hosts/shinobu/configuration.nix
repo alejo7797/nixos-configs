@@ -18,7 +18,7 @@
   # Mount extra partitions.
   fileSystems = {
 
-    "/mnt/windows" = { 
+    "/mnt/windows" = {
       device = "/dev/disk/by-label/Windows";
       fsType = "ntfs";
     };
@@ -49,7 +49,7 @@
 
         # Do not show the auto-generated Windows entry.
         echo "auto-entries false" >>/boot/loader/loader.conf
-        
+
         # Set Windows as the default boot entry.
         ${pkgs.gnused}/bin/sed -i 's/default .*/default windows_11.conf/' /boot/loader/loader.conf
 
@@ -59,7 +59,7 @@
     # Allow systemd-boot to modify EFI variables.
     efi.canTouchEfiVariables = true;
 
-  }; 
+  };
 
   # Set the kernel parameters.
   boot.kernelParams = [ "quiet" "splash" "loglevel=3" "nowatchdog" ];

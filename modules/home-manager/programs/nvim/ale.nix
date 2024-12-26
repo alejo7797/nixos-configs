@@ -28,7 +28,7 @@
           \   'c': ['clang-format', 'clangtidy'],
           \   'tex': ['latexindent'],
           \   'bib': ['bibclean'],
-          \   'nix': ['nixfmt'],
+          \   'nix': ['nixfmt', 'trim_whitespace'],
           \}
 
           " ALEFix files on save.

@@ -3,7 +3,7 @@
   options.myNixOS.nvidia.enable = lib.mkEnableOption "nvidia";
 
   config = {
-    
+
     # Install Nvidia kernel modules.
     hardware.graphics.enable = true;
     services.xserver.videoDrivers = [ "nvidia" ];

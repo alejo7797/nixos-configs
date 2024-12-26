@@ -1,19 +1,14 @@
 { pkgs, lib, config, ... }: {
 
   options.myNixOS = {
-    
+
     passwordlessSudo = lib.mkEnableOption "passwordless sudo";
 
   };
 
   config.security.pam = {
 
-    u2f =  {
-
-      # Hostname independent orign.
-      settings.origin  = "pam://my-origin";
-
-    } // lib.mkIf config.myNixOS.passwordlessSudo {
+    u2f = lib.mkIf config.myNixOS.passwordlessSudo {
 
       # Use a YubiKey instead of a password.
       control = "sufficient";

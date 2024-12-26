@@ -27,7 +27,7 @@
         export ELECTRON_OZONE_PLATFORM_HINT=x11
 
       '';
-      
+
       # Let sway now we are using Nvidia drivers.
       extraOptions = lib.mkIf config.myNixOS.nvidia.enable [ "--unsupported-gpu" ];
 
