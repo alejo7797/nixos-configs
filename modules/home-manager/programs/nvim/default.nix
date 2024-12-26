@@ -99,6 +99,9 @@
         " Open a new empty buffer.
         nnoremap <leader>b :enew<cr>
 
+        " Split the window vertically and open a terminal.
+        nnoremap <silent> <C-`> <cmd>rightb vertical terminal<CR>
+
         " Enter insert mode when opening a terminal window.
         autocmd TermOpen * :startinsert
         autocmd BufEnter * if &buftype == 'terminal' | :startinsert | endif

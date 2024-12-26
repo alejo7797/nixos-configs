@@ -21,14 +21,14 @@
 
     "sway/workspaces" = workspaces;
     "hyprland/workspaces" = workspaces;
-    
+
     idle_inhibitor = {
       format = "{icon}";
     };
 
     pulseaudio = {
       scroll-step = 1;
-      format = "{volume}% {icon}";
+      format = "{volume}% {icon} {format-source}";
       format-bluetooth = "{volume}% {icon}";
       format-bluetooth-muted = " {icon}";
       format-muted = " ";
@@ -51,7 +51,7 @@
       tooltip = false;
       format = "{usage}% ";
     };
-  
+
     memory = {
       format = "{}% ";
     };
@@ -101,13 +101,13 @@
       format-alt = "{:%Y-%m-%d %H:%M:%S}";
     };
 
-    "custom/swaync" = let 
+    "custom/swaync" = let
       swaync-client = "${pkgs.swaynotificationcenter}/bin/swaync-client";
     in {
       tooltip = false;
       format = "{icon}";
-      format-icons = let 
-        alert = "<span foreground='#cc6666'><sup></sup></span>"; 
+      format-icons = let
+        alert = "<span foreground='#cc6666'><sup></sup></span>";
       in{
         notification = "${alert}";
         none = "";
@@ -128,6 +128,6 @@
     tray = {
       spacing = 10;
     };
-    
+
   };
 }
