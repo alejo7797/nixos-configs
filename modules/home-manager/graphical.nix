@@ -31,7 +31,7 @@
     # Enable the xsettings daemon.
     services.xsettingsd.enable = true;
 
-    # Enable KDE connect.
+    # Start KDE connect as a user service.
     services.kdeconnect = {
       enable = true;
       indicator = true;

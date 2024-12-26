@@ -17,6 +17,7 @@
     services.blueman.enable = true;
     programs.dconf.enable = true;
     services.geoclue2.enable = true;
+    programs.kdeconnect.enable = true;
     programs.nm-applet.enable = true;
 
     # Enable XDG desktop integration.
