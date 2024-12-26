@@ -8,6 +8,7 @@
     programs.kitty = {
       enable = true;
       settings = {
+        "font_family" = "Hack Nerd Font";
         "text_composition_strategy" = "2.0 0";
         "enable_audio_bell" = "yes";
         "linux_bell_theme" = "ocean";

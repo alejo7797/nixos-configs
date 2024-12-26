@@ -17,6 +17,7 @@
   in with myLib; {
 
     nixosConfigurations = {
+      "nixos-vm" = mkSystem ./hosts/nixos-vm/configuration.nix;
       "shinobu" = mkSystem ./hosts/shinobu/configuration.nix;
     };
 
