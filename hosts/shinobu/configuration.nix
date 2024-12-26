@@ -118,6 +118,9 @@
   services.saned.enable = true;
   services.system-config-printer.enable = true;
 
+  # Install printer drivers.
+  services.printing.drivers = [ pkgs.cnijfilter2 ];
+
   # Enable and configure syncthing.
   services.syncthing = {
     enable = true;
@@ -150,7 +153,7 @@
   environment.systemPackages = with pkgs; [
 
     # Hardware support.
-    cnijfilter2 ntfs3g
+    ntfs3g
 
     # Actual programs.
     filezilla gimp inkscape
