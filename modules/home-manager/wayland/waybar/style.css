@@ -8,7 +8,7 @@
 
 window#waybar, tooltip {
     background: #1d1f21;
-    color: #ffffff;
+    color: #c5c8c6;
 }
 
 tooltip {
@@ -23,10 +23,9 @@ button {
   border-radius: 0;
 }
 
-/* Leave the box-shadow alone while hovering. */
 button:hover {
   background: inherit;
-  box-shadow: inset 0 -3px #ffffff;
+  box-shadow: inset 0 -3px #c5c8c6;
 }
 
 #workspaces button.focused,

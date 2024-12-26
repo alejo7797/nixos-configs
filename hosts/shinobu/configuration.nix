@@ -75,8 +75,8 @@
     };
   };
 
-  # Enable YubiKey-based authentication.
-  myNixOS.yubicoAuth = true;
+  # Enable YubiKey-based passwordless sudo.
+  myNixOS.passwordlessSudo = true;
 
   # Use NetworkManager together with systemd-resolved.
   networking.networkmanager.enable = true;

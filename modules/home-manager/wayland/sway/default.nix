@@ -38,10 +38,7 @@
 
         gaps = { inner = 0; outer = 0; };
         workspaceLayout = "tabbed";
-        window = {
-          border = lib.mkForce 0;
-          hideEdgeBorders = "both";
-        };
+        window.border = lib.mkForce 1;
 
         keybindings = let
 
