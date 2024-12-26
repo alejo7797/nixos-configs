@@ -16,7 +16,7 @@
     xdg.configFile = builtins.listToAttrs (
       map
         (pkg: {
-          name = pkg.name + ".desktop";
+          name = "autostart/" + pkg.name + ".desktop";
           value = if pkg ? desktopItem then
             # We're happy.
             { text = pkg.desktopItem.text; }
