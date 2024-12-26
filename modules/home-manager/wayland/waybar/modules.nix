@@ -69,6 +69,7 @@
         else null;
       format = "{temperatureC}°C {icon}";
       format-icons = ["" "" ""];
+      tooltip = false;
     };
 
     network = {
@@ -99,18 +100,10 @@
 
     clock = {
       interval = 5;
-      format = "{:%H:%M (%Z)}";
+      format = "{:%H:%M:%S}";
       format-alt = "{:%Y-%m-%d %H:%M:%S}";
-      tooltip-format = "{tz_list}";
-      timezones = [
-        "Europe/Madrid"
-        "America/Los_Angeles"
-        "America/New_York"
-        "Europe/London"
-        "Asia/Shanghai"
-        "Asia/Tokyo"
-      ];
-    };
+      tooltip-format = "<tt><small>{calendar}</small></tt>";
+   };
 
     "custom/swaync" = let
       swaync-client = "${pkgs.swaynotificationcenter}/bin/swaync-client";
