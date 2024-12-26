@@ -19,25 +19,26 @@
       "9" = [{ class = "^Spotify$"; }];
     };
 
+    # Floating windows.
+    floating.criteria = [
+        { window_type = "dialog"; }
+        { window_role = "dialog"; }
+        { app_id = "^blueman-manager$"; }
+        { app_id = "^org\\.keepassxc\\.KeePassXC$"; }
+        { app_id = "^lutris$"; title = "Log for .*"; }
+        { app_id = "^nm-connection-editor$"; }
+        { app_id = "^nm-openconnect-auth-dialog$"; }
+        { app_id = "^org\\.pulseaudio\\.pavucontrol$"; }
+        { app_id = "^qt\\dct$"; }
+        { class = "^XEyes$"; }
+        { title = "^Yubico Authenticator$"; }
+
+    ];
+
     window.commands =
-      
-      # Floating windows.
-      map (w: w // { command = "floating enable"; }) [
-        { criteria.window_type = "dialog"; }
-        { criteria.window_role = "dialog"; }
-        { criteria.app_id = "^blueman-manager$"; }
-        { criteria.app_id = "^org\\.keepassxc\\.KeePassXC$"; }
-        { criteria = { app_id = "^lutris$"; title = "Log for .*"; }; }
-        { criteria.app_id = "^nm-connection-editor$"; }
-        { criteria.app_id = "^nm-openconnect-auth-dialog$"; }
-        { criteria.app_id = "^org\\.pulseaudio\\.pavucontrol$"; }
-        { criteria.app_id = "^qt\\dct$"; }
-        { criteria.class = "^XEyes$"; }
-        { criteria.title = "^Yubico Authenticator$"; }
-      ]
 
       # System tray.
-      ++ map (w: w // { command = "resize set 600 600, move position 1320 450"; }) [
+      map (w: w // { command = "resize set 600 600, move position 1320 450"; }) [
         { criteria = { app_id = "^blueman-manager$"; title = "^Bluetooth Devices$"; }; }
         { criteria = { app_id = "^nm-connection-editor$"; title = "^Network Connections$"; }; }
         { criteria.app_id = "^nm-openconnect-auth-dialog$"; }

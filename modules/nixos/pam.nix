@@ -10,7 +10,7 @@
 
     yubico = lib.mkIf config.myNixOS.yubicoAuth {
 
-      # Enable YubiKey-based passwordless authentication.
+      # Enable YubiKey-based authentication.
       enable = true;
 
       # Use pam_yubico in HMAC-SHA-1 Challenge-Response mode.

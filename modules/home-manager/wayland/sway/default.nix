@@ -37,8 +37,11 @@
         };
 
         gaps = { inner = 0; outer = 0; };
-        window.hideEdgeBorders = "both";
         workspaceLayout = "tabbed";
+        window = {
+          border = lib.mkForce 0;
+          hideEdgeBorders = "both";
+        };
 
         keybindings = let
 
