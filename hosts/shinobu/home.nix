@@ -11,12 +11,21 @@ myHome.hostname = "shinobu";
   # Set up sway, the i3-compatible Wayland compositor.
   myHome.sway.enable = true;
 
-  # Configure input devices.
-  wayland.windowManager = {
+  wayland.windowManager.sway.config = {
 
-    sway.config.input = {
-      "Razer Razer DeathAdder Chroma" = {
+    # Configure input devices.
+    input = {
+      "5426:67:Razer_Razer_DeathAdder_Chroma" = {
         pointer_accel = "-1";
+      };
+    };
+
+    # Configure outputs.
+    output = {
+      "Microstep MSI MP273A PB4HC14702300" = {
+        mode = "1920x1080@99.999Hz";
+        position = "0,0";
+        scale = "1";
       };
     };
 
