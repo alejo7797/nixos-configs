@@ -1,4 +1,5 @@
 swaymsg workspace 4
+sleep 0.5
 swaymsg exec uwsm app -- dolphin
 sleep 1.5
 swaymsg exec uwsm app -- kitty

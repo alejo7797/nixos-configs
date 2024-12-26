@@ -118,9 +118,6 @@
   services.saned.enable = true;
   services.system-config-printer.enable = true;
 
-  # Install printer drivers.
-  services.printing.drivers = [ pkgs.cnijfilter2 ];
-
   # Enable and configure syncthing.
   services.syncthing = {
     enable = true;
@@ -158,7 +155,7 @@
     # Actual programs.
     filezilla gimp inkscape
     joplin-desktop plex-desktop
-    qbittorrent spotify
+    qbittorrent simple-scan spotify
     ungoogled-chromium variety
     vesktop yubioath-flutter
     zathura zoom-us zotero
