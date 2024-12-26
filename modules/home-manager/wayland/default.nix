@@ -52,7 +52,7 @@
     services.gammastep = {
       enable = true;
       tray = true;
-      provider = "geoclue2";
+      provider = lib.mkDefault "geoclue2";
       settings.general = {
         fade = 1; gamma = 0.8;
         adjustment-method = "wayland";
