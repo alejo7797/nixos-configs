@@ -19,6 +19,12 @@
     services.geoclue2.enable = true;
     programs.nm-applet.enable = true;
 
+    # Enable XDG desktop integration.
+    xdg.portal = {
+      enable = true;
+      xdgOpenUsePortal = true;
+    };
+
     # Manage storage devices.
     services.udisks2.enable = true;
     programs.gnome-disks.enable = true;
