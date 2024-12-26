@@ -5,16 +5,29 @@
     description = "List of programs to run at system startup.";
   };
 
-  config = {
+  config = let
+
+    stripVersion = with lib.strings; (packageName:
+      builtins.elemAt (splitString "-" packageName) 0
+    );
+
+  in {
 
     xdg.configFile = builtins.listToAttrs (
       map
         (pkg: {
           name = pkg.name + ".desktop";
           value = if pkg ? desktopItem then
+            # We're happy.
             { text = pkg.desktopItem.text; }
+
+          else if pkg ? desktopFile then
+            # We're confused.
+            { source = "${pkg}/share/applications/${pkg.desktopFile}"; }
+
           else
-            { source = "${pkg}/share/applications/${pkg.desktopFile}"; };
+            # We're mad.
+            { source = "${pkg}/share/applications/${stripVersion pkg.name}.desktop"; };
         })
         config.myHome.xdgAutostart
     );
