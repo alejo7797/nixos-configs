@@ -34,7 +34,7 @@
 
       # System utilities.
       dconf-editor font-manager
-      libnotify  mesa-demos
+      icoutils libnotify  mesa-demos
       pavucontrol pdftk playerctl
       polkit_gnome yubico-pam
       xorg.xeyes vulkan-tools
