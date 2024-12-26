@@ -102,7 +102,7 @@
       interval = 5;
       format = "{:%H:%M:%S}";
       format-alt = "{:%Y-%m-%d %H:%M:%S}";
-      tooltip-format = "<tt><small>{calendar}</small></tt>";
+      tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
    };
 
     "custom/swaync" = let
