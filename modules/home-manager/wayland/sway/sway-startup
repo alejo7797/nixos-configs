@@ -1,7 +1,7 @@
 swaymsg workspace 4
 sleep 0.5
 swaymsg exec uwsm app -- dolphin
-sleep 1.5
+sleep 2
 swaymsg exec uwsm app -- kitty
 sleep 0.5
 swaymsg move right

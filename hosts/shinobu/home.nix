@@ -15,8 +15,8 @@ myHome.hostname = "shinobu";
 
     # Configure input devices.
     input = {
-      "5426:67:Razer_Razer_DeathAdder_Chroma" = {
-        pointer_accel = "-0.8";
+      "1133:49298:Logitech_G203_LIGHTSYNC_Gaming_Mouse" = {
+        pointer_accel = "-1";
       };
     };
 
@@ -46,8 +46,7 @@ myHome.hostname = "shinobu";
   services.gammastep = {
     provider = "manual";
     settings.manual = {
-      lat = 40;
-      lon = -4;
+      lat = 40; lon = -4;
     };
   };
 
