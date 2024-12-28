@@ -1,0 +1,35 @@
+#
+# Switch pulse audio sinks.
+# Only tested on satsuki.
+#
+
+system "switch-audio-profile >/dev/null"
+
+state = IO.popen("wpctl status").read().split("\n")
+
+sink_index = state.index(" ├─ Sinks:")
+source_index = state.index(" ├─ Sources:")
+
+state = state[ sink_index+1 .. source_index-2 ]
+
+available = []
+active = 0
+
+state.each do |line|
+  line_s = line.split
+  if line_s[1] == "*"
+    active = line_s[2][..-2]
+    available.append(line_s[2][..-2])
+  elsif line !~ /HDMI/
+    available.append(line_s[1][..-2])
+  end
+end
+
+if not !!available.index(active) or active == available[-1]
+  new_sink = available[0]
+else
+  new_sink = available[ available.index(active) + 1 ]
+end
+
+puts "Setting default sink to #{new_sink}"
+system "wpctl set-default #{new_sink}"

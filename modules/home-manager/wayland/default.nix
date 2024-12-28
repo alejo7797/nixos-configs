@@ -1,6 +1,6 @@
 { pkgs, lib, config, ... }: {
 
-  imports = [ ./hyprland.nix ./sway.nix ./waybar.nix ./swaync.nix ];
+  imports = [ ./hyprland.nix ./sway ./waybar ./swaync.nix ];
 
   options.myHome.wayland.enable = lib.mkEnableOption "wayland";
 
@@ -17,20 +17,42 @@
       enable = true;
       settings = {
         show = "drun";
+        width = "36%";
         allow_images = true;
+        key_expand = "Ctrl-x";
       };
     };
 
     # Install and configure hyprlock.
     programs.hyprlock = {
       enable = true;
+      settings = {
+        general = {
+          grace = 5;
+          hide_cursor = true;
+        };
+        background = {
+          path = "${config.xdg.configHome}/hypr/wall.png";
+          blur_passes = 2;
+          brightness = 0.5;
+        };
+        input-field = {
+          monitor = "";
+          fade_timeout = 1000;
+          placeholder_text = "";
+          size = "400, 60";
+        };
+      };
     };
+
+    # Stylix wants to set the wallpaper too.
+    stylix.targets.hyprlock.enable = false;
 
     # Enable and configure gammastep.
     services.gammastep = {
       enable = true;
       tray = true;
-      provider = "geoclue2";
+      provider = lib.mkDefault "geoclue2";
       settings.general = {
         fade = 1; gamma = 0.8;
         adjustment-method = "wayland";

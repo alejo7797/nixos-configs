@@ -4,6 +4,11 @@
 
   config = lib.mkIf config.myNixOS.graphical-environment {
 
+    # Enable the plymouth splash screen.
+    boot.plymouth = {
+      enable = true;
+    };
+
     # Install firefox and set it as default.
     programs.firefox.enable = true;
     environment.variables.BROWSER = "firefox";
@@ -12,7 +17,14 @@
     services.blueman.enable = true;
     programs.dconf.enable = true;
     services.geoclue2.enable = true;
+    programs.kdeconnect.enable = true;
     programs.nm-applet.enable = true;
+
+    # Enable XDG desktop integration.
+    xdg.portal = {
+      enable = true;
+      xdgOpenUsePortal = true;
+    };
 
     # Manage storage devices.
     services.udisks2.enable = true;
@@ -29,8 +41,10 @@
 
       # System utilities.
       dconf-editor font-manager
-      libnotify pavucontrol pdftk
-      playerctl polkit_gnome
+      icoutils libnotify  mesa-demos
+      pavucontrol pdftk playerctl
+      polkit_gnome yubico-pam
+      xorg.xeyes vulkan-tools
 
       # Essential applications.
       keepassxc kitty mpv

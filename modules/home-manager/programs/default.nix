@@ -1,5 +1,5 @@
 { pkgs, lib, config, ... }: {
 
-  imports = [ ./kitty ./nvim ];
+  imports = [ ./git.nix ./kitty ./nvim ];
 
 }

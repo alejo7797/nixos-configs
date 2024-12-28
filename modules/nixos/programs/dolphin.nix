@@ -24,9 +24,12 @@
     ];
 
     # This fixes the unpopulated MIME menus.
-    environment.etc."/xdg/menus/plasma-applications.menu".text =
-      builtins.readFile "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
-    environment.variables.XDG_MENU_PREFIX = "plasma-";
-
+    environment.etc = let
+      plasma-applications = builtins.readFile
+        "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
+    in {
+      "/xdg/menus/sway-applications.menu".text = "${plasma-applications}";
+      "/xdg/menus/Hyprland-applications.menu".text = "${plasma-applications}";
+    };
   };
 }

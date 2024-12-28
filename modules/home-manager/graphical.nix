@@ -31,7 +31,7 @@
     # Enable the xsettings daemon.
     services.xsettingsd.enable = true;
 
-    # Enable KDE connect.
+    # Start KDE connect as a user service.
     services.kdeconnect = {
       enable = true;
       indicator = true;
@@ -39,6 +39,16 @@
 
     # Install and configure kitty.
     myHome.kitty.enable = true;
+
+    # XDG autostart.
+    myHome.xdgAutostart = with pkgs; [
+
+      firefox thunderbird variety
+
+      # Need to specify .desktop file manually.
+      (keepassxc // { desktopFile = "org.keepassxc.KeePassXC.desktop"; })
+
+    ];
 
   };
 }

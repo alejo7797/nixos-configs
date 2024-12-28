@@ -99,8 +99,8 @@ ForegroundPositive=181,189,104
 ForegroundVisited=197,200,198
 
 [General]
-Name=Tomorrow Night
 ColorScheme=TomorrowNight
+TerminalApplication=kitty
 desktopFont[$i]=Noto Sans,10,-1,5,50,0,0,0,0,0
 fixed[$i]=Hack Nerd Font,11,-1,5,50,0,0,0,0,0
 font[$i]=Noto Sans,10,-1,5,50,0,0,0,0,0

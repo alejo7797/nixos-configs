@@ -46,9 +46,6 @@
   # Use tuigreet to log us in.
   myNixOS.tuigreet.enable = true;
 
-  # Make sway the default session.
-  myNixOS.tuigreet.user_session = "sway";
-
   # Install sway, the i3-compatible Wayland compositor.
   myNixOS.sway.enable = true;
 
@@ -72,12 +69,6 @@
   services.avahi.enable = true;
   services.saned.enable = true;
   services.system-config-printer.enable = true;
-
-  # Enable and configure syncthing.
-  services.syncthing = {
-    enable = true;
-    openDefaultPorts = true;
-  };
 
   # Install Dolphin and related KDE applications.
   myNixOS.dolphin.enable = true;

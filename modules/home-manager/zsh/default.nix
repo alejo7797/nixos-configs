@@ -19,34 +19,34 @@
       };
 
       # Configure some useful aliases.
-      shellAliases = let
-
-        nmcli = "${pkgs.networkmanager}/bin/nmcli";
-        variety = "${pkgs.variety}/bin/variety";
-
-      in {
+      shellAliases = {
 
         # https://github.com/lsd-rs/lsd
-        ls = "${pkgs.lsd}/bin/lsd \${=lsd_params}";
+        ls = "lsd \${=lsd_params}";
 
         l = "ls -l"; lt = "ls --tree";
         la = "ls -a"; lla = "ls -la";
 
         su = "sudo -i";
 
+        # Rebuild NixOS system.
+        nixos-switch = "sudo nixos-rebuild switch --flake ~/.nix";
+
+        # Rebuild Home Manager environment.
+        home-switch = "home-manager switch --flake ~/.nix";
+
+        # Clean up the Nix store.
+        nix-cleanup = "sudo nix-collect-garbage -d";
+
         # Manage connection to my VPN server.
-        vpnup   = "${nmcli} c up Koakuma_VPN";
-        vpndown = "${nmcli} c down Koakuma_VPN";
+        vpnup   = "nmcli c up Koakuma_VPN";
+        vpndown = "nmcli c down Koakuma_VPN";
 
         # Use standard syntax.
-        ps = "${pkgs.procps}/bin/ps -ef";
+        ps = "ps -ef";
 
         # Pretty dmesg output.
-        dmesg = lib.concatStringsSep " " [
-          "sudo ${pkgs.util-linux}/bin/dmesg"
-          "-H -e --color=always"
-          "| ${pkgs.less}/bin/less"
-        ];
+        dmesg = "sudo dmesg -H -e --color=always | less";
 
       };
 

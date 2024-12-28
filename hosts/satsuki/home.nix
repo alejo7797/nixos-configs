@@ -2,6 +2,7 @@
 
   imports = [ ./arch-linux.nix ];
 
+  myHome.hostname = "satsuki";
   home.username = "ewan";
   home.homeDirectory = "/home/ewan";
   home.stateVersion = "24.11";

@@ -1,5 +1,7 @@
 { pkgs, lib, config, ... }: {
 
+  imports = [ ./window-rules.nix ];
+
   options.myHome.sway.enable = lib.mkEnableOption "sway configuration";
 
   config = lib.mkIf config.myHome.sway.enable {
@@ -9,17 +11,10 @@
 
     # Configure sway, the i3-compatible Wayland compositor.
     wayland.windowManager.sway = {
-
       enable = true;
-      wrapperFeatures.gtk = true;
 
-      # Useful Wayland environment variables to set.
-      # https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland#Sway.
-      extraSessionCommands = ''
-        export _JAVA_AWT_WM_NONREPARENTING=1
-        export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
-        export QT_IM_MODULE=fcitx
-      '';
+      # We install sway via a NixOS module.
+      package = null;
 
       config = let
 
@@ -42,32 +37,33 @@
         };
 
         gaps = { inner = 0; outer = 0; };
-        window.hideEdgeBorders = "both";
-        defaultWorkspace = "workspace number 1";
+        workspaceLayout = "tabbed";
+        window.border = lib.mkForce 1;
 
         keybindings = let
 
+          brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
+          loginctl = "${pkgs.systemd}/bin/loginctl";
           pactl = "${pkgs.pulseaudio}/bin/pactl";
           playerctl = "${pkgs.playerctl}/bin/playerctl";
-          brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
 
         in lib.mkOptionDefault {
 
           "${modifier}+x" = "mode \"${exit}\"";
-          "${modifier}+Shift+o" = "loginctl lock-session";
+          "${modifier}+Shift+o" = "exec ${loginctl} lock-session";
           "${modifier}+Shift+x" = "exec slurpshot";
 
           # Use pactl to adjust volume in PulseAudio.
-          "XF86AudioRaiseVolume"  = "exec ${pactl} set-sink-volume @DEFAULT_SINK@ +4%";
-          "XF86AudioLowerVolume"  = "exec ${pactl} set-sink-volume @DEFAULT_SINK@ -4%";
-          "XF86AudioMute"         = "exec ${pactl} set-sink-mute @DEFAULT_SINK@ toggle";
-          "XF86AudioMicMute"      = "exec ${pactl} set-source-mute @DEFAULT_SOURCE@ toggle";
+          "XF86AudioRaiseVolume" = "exec ${pactl} set-sink-volume @DEFAULT_SINK@ +4%";
+          "XF86AudioLowerVolume" = "exec ${pactl} set-sink-volume @DEFAULT_SINK@ -4%";
+          "XF86AudioMute"        = "exec ${pactl} set-sink-mute @DEFAULT_SINK@ toggle";
+          "XF86AudioMicMute"     = "exec ${pactl} set-source-mute @DEFAULT_SOURCE@ toggle";
 
           # Bind the media keys to playerctl actions.
-          "XF86AudioPlay"   = "exec ${playerctl} play-pause";
-          "XF86AudioPause"  = "exec ${playerctl} pause";
-          "XF86AudioNext"   = "exec ${playerctl} next";
-          "XF86AudioPrev"   = "exec ${playerctl} previous";
+          "XF86AudioPlay"  = "exec ${playerctl} play-pause";
+          "XF86AudioPause" = "exec ${playerctl} pause";
+          "XF86AudioNext"  = "exec ${playerctl} next";
+          "XF86AudioPrev"  = "exec ${playerctl} previous";
 
           # Control the screen brightness.
           "XF86MonBrightnessDown" = "exec ${brightnessctl} set 2%-";
@@ -78,20 +74,20 @@
         startup = [
           { command = "${pkgs.xorg.xrdb}/bin/xrdb -load ~/.Xresources"; }
           { command = "${uwsm_app} ${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; }
+          { command = "${pkgs.bash}/bin/bash ${./sway-startup}"; }
         ];
 
         modes = lib.mkOptionDefault {
           ${exit} = {
-            s = "${systemctl} suspend, mode default";
-            h = "${systemctl} hibernate, mode default";
-            p = "${systemctl} poweroff";
-            r = "${systemctl} reboot";
+            s = "exec ${systemctl} suspend, mode default";
+            h = "exec ${systemctl} hibernate, mode default";
+            p = "exec ${systemctl} poweroff";
+            r = "exec ${systemctl} reboot";
             Escape = "mode default";
           };
         };
 
       };
-
     };
   };
 }

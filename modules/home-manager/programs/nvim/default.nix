@@ -66,7 +66,7 @@
         let maplocalleader = "${leader}"
 
         " Clear highlights.
-        nnoremap <Esc> :noh<cr>
+        nnoremap <silent> <Esc> :noh<cr>
 
         " Use the system clipboard.
         vnoremap <C-c> "+y
@@ -99,6 +99,9 @@
         " Open a new empty buffer.
         nnoremap <leader>b :enew<cr>
 
+        " Split the window vertically and open a terminal.
+        nnoremap <silent> <C-`> <cmd>rightb vertical terminal<CR>
+
         " Enter insert mode when opening a terminal window.
         autocmd TermOpen * :startinsert
         autocmd BufEnter * if &buftype == 'terminal' | :startinsert | endif
@@ -109,7 +112,7 @@
 
         # Install plugin dependencies.
         black fd nixfmt-rfc-style
-        shfmt tree-sitter
+        ripgrep shfmt tree-sitter
 
       ];
 
@@ -166,7 +169,7 @@
 
               -- Keep the window layout when deleting buffers.
               require('mini.bufremove').setup()
-              vim.keymap.set("n", "<leader>x", "<cmd> lua MiniBufremove.delete()")
+              vim.keymap.set("n", "<leader>x", "<cmd> lua MiniBufremove.delete()<CR>")
 
               -- Toggle comments with `gc`.
               require('mini.comment').setup()
@@ -243,6 +246,12 @@
             nnoremap <leader>fg <cmd>Telescope live_grep<CR>
             nnoremap <leader>fb <cmd>Telescope buffers<CR>
             nnoremap <leader>fh <cmd>Telescope help_tags<CR>
+
+          '';
+        }
+        {
+          plugin = vim-better-whitespace;
+          config = ''
 
           '';
         }

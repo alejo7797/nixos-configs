@@ -7,9 +7,9 @@
     inputs.stylix.nixosModules.stylix
 
     # My personal modules.
-    ./users.nix ./locale.nix
-    ./tuigreet.nix ./programs
-    ./gui.nix ./style.nix ./wayland
+    ./users.nix ./pam.nix ./locale.nix
+    ./tuigreet.nix ./programs ./nvidia.nix
+    ./wayland ./graphical.nix ./style.nix
 
   ];
 
@@ -17,12 +17,26 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Allow unfree packages.
-  nixpkgs.config = { allowUnfree = true; };
+  nixpkgs.config.allowUnfree = true;
 
   # Access ilya-fedin's repository.
   nixpkgs.overlays = [
     (self: super: { ilya-fedin = import inputs.ilya-fedin { pkgs = super; }; })
   ];
+
+  # Limit the number of generations to keep in the bootloader.
+  boot.loader.systemd-boot.configurationLimit = 20;
+
+  # Default networking configuration.
+  networking = {
+
+    # Use standard network interface names.
+    usePredictableInterfaceNames = lib.mkDefault false;
+
+    # Wireguard trips up rpfilter.
+    firewall.checkReversePath = false;
+
+  };
 
   # Install and configure zsh.
   programs.zsh = {
@@ -47,7 +61,10 @@
   security.polkit.enable = true;
 
   # Install git.
-  programs.git.enable = true;
+  programs.git = {
+    enable = true;
+    package = pkgs.gitFull;
+  };
 
   # Enable the SSH agent.
   programs.ssh.startAgent = true;
@@ -64,10 +81,13 @@
 
   # Install the following essential packages.
   environment.systemPackages = with pkgs; [
-    curl dig file findutils ffmpeg
-    htop imagemagick jq libfido2 lsd
-    neofetch nettools nmap procps psmisc
-    rsync usbutils uv wget yt-dlp
+    curl dig file findutils
+    ffmpeg htop imagemagick
+    jq libfido2 lm_sensors
+    lsd  neofetch nettools
+    nmap procps psmisc rsync
+    unrar usbutils uv
+    wireguard-tools wget yt-dlp
   ];
 
 }
