@@ -15,6 +15,7 @@
       kdePackages.dolphin-plugins
       kdePackages.ffmpegthumbs
       kdePackages.gwenview
+      kdePackages.kfind
       kdePackages.kimageformats
       kdePackages.kio-admin
       kdePackages.kio-extras
