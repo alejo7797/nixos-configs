@@ -27,10 +27,7 @@
 
     # As opposed to when using SDDM, we need this
     # to be available early on in the login process.
-    environment.sessionVariables = {
-      QT_FONT_DPI = 120;
-      QT_QPA_PLATFORMTHEME = "qt5ct";
-    };
+    environment.variables.QT_FONT_DPI = 120;
 
   };
 }

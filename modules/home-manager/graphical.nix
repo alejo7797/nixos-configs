@@ -45,9 +45,6 @@
 
       firefox thunderbird variety
 
-      # Need to specify .desktop file manually.
-      (keepassxc // { desktopFile = "org.keepassxc.KeePassXC.desktop"; })
-
     ];
 
   };
