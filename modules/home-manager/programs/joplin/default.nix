@@ -13,9 +13,9 @@
       extraConfig = {
 
         # Basic settings.
-	locale = "en_US";
-	dateFormat = "YYYY-MM-DD";
-	themeAutoDetect = true;
+	"locale" = "en_US";
+	"dateFormat" = "YYYY-MM-DD";
+	"themeAutoDetect" = true;
 	"notes.sortOrder.field" = "title";
 
         # Font configuration.

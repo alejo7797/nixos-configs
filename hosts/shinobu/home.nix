@@ -42,7 +42,12 @@
 
   # Autostart applications.
   myHome.xdgAutostart = with pkgs; [
+
     spotify steam vesktop zotero
+
+    # Need to specify .desktop file manually.
+    (joplin-desktop // { desktopFile = "@joplinapp-desktop.desktop"; })
+
   ];
 
   # Set the location used by gammastep manually.
