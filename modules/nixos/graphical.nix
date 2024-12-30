@@ -24,6 +24,7 @@
     services.blueman.enable = true;
     programs.dconf.enable = true;
     services.geoclue2.enable = true;
+    services.gnome.gnome-keyring.enable = true;
     programs.kdeconnect.enable = true;
     programs.nm-applet.enable = true;
     services.ratbagd.enable = true;
@@ -42,10 +43,11 @@
     environment.systemPackages = with pkgs; [
 
       # System utilities.
-      dconf-editor font-manager icoutils
-      libnotify mesa-demos pavucontrol
-      pdftk piper playerctl polkit_gnome
-      yubico-pam xorg.xeyes vulkan-tools
+      dconf-editor font-manager
+      icoutils libnotify mesa-demos
+      pavucontrol pdftk piper playerctl
+      polkit_gnome seahorse yubico-pam
+      xorg.xeyes vulkan-tools
 
       # Essential applications.
       keepassxc kitty mpv
