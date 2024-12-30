@@ -28,7 +28,7 @@
 
       '';
 
-      # Let sway now we are using Nvidia drivers.
+      # Let sway now if we are using Nvidia drivers.
       extraOptions = lib.mkIf config.myNixOS.nvidia.enable [ "--unsupported-gpu" ];
 
     };

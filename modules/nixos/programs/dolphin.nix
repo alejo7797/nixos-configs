@@ -1,6 +1,6 @@
 { pkgs, lib, config, ... }: {
 
-  options.myNixOS.dolphin.enable = lib.mkEnableOption "the dolphin ecosystem";
+  options.myNixOS.dolphin.enable = lib.mkEnableOption "the Dolphin ecosystem";
 
   config = lib.mkIf config.myNixOS.dolphin.enable {
 

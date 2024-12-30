@@ -1,6 +1,6 @@
 { pkgs, lib, config, ... }: {
 
-  options.myNixOS.nvidia.enable = lib.mkEnableOption "nvidia";
+  options.myNixOS.nvidia.enable = lib.mkEnableOption "Nvidia";
 
   config = {
 

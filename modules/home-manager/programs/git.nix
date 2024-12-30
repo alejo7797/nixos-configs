@@ -1,6 +1,6 @@
 { pkgs, lib, config, ... }: {
 
-  options.myHome.git.enable = lib.mkEnableOption "git configuration";
+  options.myHome.git.enable = lib.mkEnableOption "Git configuration";
 
   config.programs.git = lib.mkIf config.myHome.git.enable {
 

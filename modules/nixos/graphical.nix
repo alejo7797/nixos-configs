@@ -13,12 +13,20 @@
     programs.firefox.enable = true;
     environment.variables.BROWSER = "firefox";
 
+    # Enable the SSH agent.
+    programs.ssh.startAgent = true;
+
+    # Enable the GnuPG agent.
+    programs.gnupg.agent.enable = true;
+    hardware.gpgSmartcards.enable = true;
+
     # Enable the following utilities.
     services.blueman.enable = true;
     programs.dconf.enable = true;
     services.geoclue2.enable = true;
     programs.kdeconnect.enable = true;
     programs.nm-applet.enable = true;
+    services.ratbagd.enable = true;
 
     # Enable XDG desktop integration.
     xdg.portal = {
@@ -30,21 +38,14 @@
     services.udisks2.enable = true;
     programs.gnome-disks.enable = true;
 
-    # Enable and configure the GnuPG agent.
-    programs.gnupg.agent = {
-      enable = true;
-      pinentryPackage = pkgs.pinentry-gnome3;
-    };
-
     # Install the following packages system-wide.
     environment.systemPackages = with pkgs; [
 
       # System utilities.
-      dconf-editor font-manager
-      icoutils libnotify  mesa-demos
-      pavucontrol pdftk playerctl
-      polkit_gnome yubico-pam
-      xorg.xeyes vulkan-tools
+      dconf-editor font-manager icoutils
+      libnotify mesa-demos pavucontrol
+      pdftk piper playerctl polkit_gnome
+      yubico-pam xorg.xeyes vulkan-tools
 
       # Essential applications.
       keepassxc kitty mpv

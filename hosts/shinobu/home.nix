@@ -1,6 +1,11 @@
 { pkgs, lib, config, ... }: {
 
-myHome.hostname = "shinobu";
+  imports = [ ./syncthing.nix ];
+
+  # Set the system hostname.
+  myHome.hostname = "shinobu";
+
+  # Basic settings needed by Home Manager.
   home.username = "ewan";
   home.homeDirectory = "/home/ewan";
   home.stateVersion = "24.11";

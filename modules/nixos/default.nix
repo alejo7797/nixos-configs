@@ -60,14 +60,11 @@
   # Enable polkit.
   security.polkit.enable = true;
 
-  # Install git.
+  # Install Git.
   programs.git = {
     enable = true;
     package = pkgs.gitFull;
   };
-
-  # Enable the SSH agent.
-  programs.ssh.startAgent = true;
 
   # Install direnv.
   programs.direnv.enable = true;
@@ -86,7 +83,7 @@
     jq libfido2 lm_sensors
     lsd  neofetch nettools
     nmap procps psmisc rsync
-    unrar usbutils uv
+    unrar-free usbutils uv
     wireguard-tools wget yt-dlp
   ];
 

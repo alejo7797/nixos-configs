@@ -12,7 +12,8 @@
   options.myHome = {
 
     hostname = lib.mkOption {
-      description = "system hostname";
+      description = "The system hostname.";
+      example = "satsuki";
     };
 
     laptop.enable = lib.mkEnableOption "laptop configuration";
@@ -27,14 +28,17 @@
     # Let Home Manager install and manage itself.
     programs.home-manager.enable = true;
 
-    # Configure zsh.
+    # Configure Zsh.
     myHome.zsh.enable = true;
 
-    # Configure neovim.
+    # Configure Neovim.
     myHome.neovim.enable = true;
 
-    # Configure git.
+    # Configure Git.
     myHome.git.enable = true;
+
+    # Configure GnuPG.
+    myHome.gpg.enable = true;
 
   };
 }

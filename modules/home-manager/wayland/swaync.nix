@@ -1,8 +1,15 @@
 { pkgs, lib, config, ... }: {
 
-  # Enable and configure swaync.
   services.swaync = {
-    enable = true;
-  };
 
+    # Enable the swaync daemon.
+    enable = true;
+
+    # Configure swaync.
+    settings = {
+      positionX = "right";
+      positionY = "bottom";
+    };
+
+  };
 }

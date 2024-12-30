@@ -1,6 +1,6 @@
 { pkgs, lib, myLib, config, ... }: {
 
-  options.myHome.zsh.enable = lib.mkEnableOption "zsh configuration";
+  options.myHome.zsh.enable = lib.mkEnableOption "Zsh configuration";
 
   config = lib.mkIf config.myHome.zsh.enable {
 

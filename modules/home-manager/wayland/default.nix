@@ -2,7 +2,7 @@
 
   imports = [ ./hyprland.nix ./sway ./waybar ./swaync.nix ];
 
-  options.myHome.wayland.enable = lib.mkEnableOption "wayland";
+  options.myHome.wayland.enable = lib.mkEnableOption "Wayland";
 
   config = lib.mkIf config.myHome.wayland.enable {
 

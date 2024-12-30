@@ -122,13 +122,6 @@
   services.saned.enable = true;
   users.users.ewan.extraGroups = [ "scanner" ];
 
-  # Enable and configure syncthing.
-  services.syncthing = {
-    enable = true;
-    user = "ewan";
-    dataDir = "/home/ewan";
-  };
-
   # Enable my custom system theme.
   myNixOS.style.enable = true;
 
