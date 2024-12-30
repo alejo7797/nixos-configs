@@ -82,8 +82,8 @@
     ffmpeg htop imagemagick
     jq libfido2 lm_sensors
     lsd  neofetch nettools
-    nmap procps psmisc rsync
-    unrar-free usbutils uv
+    nmap procps p7zip psmisc
+    rsync unrar-free usbutils uv
     wireguard-tools wget yt-dlp
   ];
 
