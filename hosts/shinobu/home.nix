@@ -16,6 +16,7 @@
   # Set up sway, the i3-compatible Wayland compositor.
   myHome.sway.enable = true;
 
+  # Host-specific sway configuration.
   wayland.windowManager.sway.config = {
 
     # Configure input devices.
@@ -36,14 +37,12 @@
 
   };
 
+  # Install and configure joplin-desktop.
+  myHome.joplin-desktop.enable = true;
+
   # Autostart applications.
   myHome.xdgAutostart = with pkgs; [
-
     spotify steam vesktop zotero
-
-    # Need to specify .desktop file manually.
-    (joplin-desktop // { desktopFile = "@joplinapp-desktop.desktop"; })
-
   ];
 
   # Set the location used by gammastep manually.

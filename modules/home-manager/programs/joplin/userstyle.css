@@ -1,0 +1,15 @@
+/* For styling the rendered Markdown */
+
+body {
+  font-family: 'Noto Sans';
+}
+
+ul {
+  margin-top: 0em;
+  list-style: square;
+}
+
+a {
+  color: #b5bd68;
+  text-decoration: none;
+}

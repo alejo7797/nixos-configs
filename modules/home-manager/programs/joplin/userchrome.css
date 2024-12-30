@@ -1,0 +1,125 @@
+/* For styling the entire Joplin app (except the rendered Markdown, which is defined in `userstyle.css`) */
+
+:root{
+  --bg: #1d1f21;
+  --cl: #282a2e;
+  --selection: #373b41;
+  --fg: #c5c8c6;
+  --comment: #969896;
+  --red: #cc6666;
+  --orange: #de935f;
+  --yellow: #f0c674;
+  --green: #b5bd68;
+  --aqua: #8abeb7;
+  --blue: #81a2be;
+  --purple: #b294bb;
+  --primary: var(--blue);
+}
+
+body {
+  --joplin-background-color3: #1D2024;
+  --joplin-background-color-hover3: var(--selection);
+  --joplin-url-color: var(--blue);
+}
+
+.rli-noteList > div > div > div {
+  background-color: var(--joplin-background-color3);
+}
+
+.new-todo-button,
+.new-note-button,
+.sort-order-field-button,
+.sort-order-reverse-button {
+	background: #1D2024 !important;
+}
+
+.new-todo-button span,
+.new-note-button span,
+.sort-order-field-button span,
+.sort-order-reverse-button span {
+	color: var(--primary) !important;
+}
+
+.new-note-button {
+  border: 1px solid rgba(221,221,221,0.3) !important;
+}
+
+.search-bar input {
+  border-color: rgba(221,221,221,0.3) !important;
+}
+
+.CodeMirror-cursor {
+  border-left: 1px solid var(--fg) !important;
+}
+
+.CodeMirror * {
+  font-family: "Noto Sans", "Noto Sans CJK JP" !important;
+}
+
+.cm-enhancement-finished-task {
+  text-decoration: none !important;
+  opacity: 1 !important;
+}
+
+.cm-rm-header-token {
+  display: none !important;
+}
+
+.cm-header-1 {
+  color: var(--purple) !important;
+}
+
+.cm-header-2 {
+  color: var(--green) !important;
+}
+
+.cm-header-3 {
+  color: var(--aqua) !important;
+}
+
+.cm-header-4 {
+  color: var(--purple) !important;
+}
+
+.cm-rm-link {
+  color: var(--blue) !important;
+}
+
+.cm-link-text {
+    color: rgb(221, 221, 221) !important;
+}
+
+.cm-link {
+  text-decoration: none !important;
+}
+
+.cm-jn-code-block-background {
+  background-color: var(--joplin-background-color4) !important;
+}
+
+.cm-jn-monospace {
+  color: rgb(221, 221, 221) !important;
+  font-size: 14px !important; 
+}
+
+.content.-selected {
+  background-color: var(--cl) !important;
+}
+
+.note-list {
+  box-sizing: border-box;
+  width: calc(100% + 50px) !important;
+}
+
+.cm-rm-em-token {
+  display: none;
+}
+
+.cm-rm-strong-token {
+  display: none;
+}
+
+.cm-rm-backtick-token {
+  display: none;
+}
+

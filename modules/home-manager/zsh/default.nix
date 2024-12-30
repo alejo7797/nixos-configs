@@ -79,9 +79,10 @@
         enable = true;
 
         plugins = [
-          "alias-finder" "dirhistory" "git"
-          "git-auto-fetch" "history" "python"
-          "rsync" "safe-paste" "sudo" "systemd"
+          "alias-finder" "dirhistory"
+          "git" "git-auto-fetch" "history"
+          "python" "rsync" "safe-paste"
+          "sudo" "systemd" "zbell"
         ];
 
         extraConfig = ''
@@ -124,7 +125,7 @@
 
     };
 
-    xdg.configFile = with myLib; {
+    xdg.configFile = {
       # Configure lsd, the next-gen ls command.
       "lsd/config.yaml".source = ./lsd-config.yaml;
     };

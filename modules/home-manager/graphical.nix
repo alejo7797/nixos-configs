@@ -21,11 +21,6 @@
 
       };
 
-      # Enable a few more zsh plugins.
-      oh-my-zsh = {
-        plugins = [ "gpg-agent" "zbell" ];
-      };
-
     };
 
     # Enable the xsettings daemon.
@@ -42,9 +37,7 @@
 
     # XDG autostart.
     myHome.xdgAutostart = with pkgs; [
-
       firefox thunderbird variety
-
     ];
 
   };
