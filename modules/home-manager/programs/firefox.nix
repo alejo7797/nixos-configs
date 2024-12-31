@@ -22,6 +22,7 @@
         keepassxc-browser
         privacy-badger
         return-youtube-dislikes
+        simple-tab-groups
         tampermonkey
         to-google-translate
         user-agent-string-switcher
@@ -43,7 +44,7 @@
         # Restore previous session.
         "broswer.startup.page" = 3;
 
-        # Ask where to save downloaded files.
+        # Always ask where to save downloaded files.
         "browser.download.useDownloadDir" = false;
 
         # Do not ask to save passwords or addresses.
@@ -56,6 +57,12 @@
         "privacy.donottrackheader.enabled" = true;
         "privacy.fingerprintingProtection" = true;
         "privacy.globalprivacycontrol.enabled" = true;
+
+        # HTTPS-only mode.
+        "dom.security.https_only_mode" = true;
+
+        # Play DRM-controlled content.
+        "media.eme.enabled" = true;
 
         # Clear cookies on browser shutdown.
         "privacy.history.custom" = true;
