@@ -88,6 +88,7 @@
           {
             label = "patchouli";
             url = "https://patchoulihq.cc";
+            baseDomain = "patchoulihq.cc";
           }
           {
             label = "nextcloud";
@@ -96,10 +97,12 @@
           {
             label = "arxiv";
             url = "https://arxiv.org/list/math.GT/recent";
+            baseDomain = "arxiv.org";
           }
           {
             label = "ae433";
             url = "https://ae433.user.srcf.net/about-to-get-very-silly";
+            baseDomain = "ae433.user.srcf.net";
           }
           {
             label = "archwiki";
@@ -109,6 +112,7 @@
           {
             label = "patreon";
             url = "https://www.patreon.com";
+            baseDomain = "patreon.com";
           }
         ];
       };
