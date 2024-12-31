@@ -45,7 +45,7 @@
       icoutils libnotify mesa-demos
       pavucontrol pdftk piper playerctl
       polkit_gnome seahorse yubico-pam
-      xorg.xeyes vulkan-tools
+      xorg.xeyes vulkan-tools zenity
 
       # Essential applications.
       keepassxc kitty mpv
