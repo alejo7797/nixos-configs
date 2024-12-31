@@ -5,7 +5,7 @@ body {
   --cl: #282a2e;
   --selection: #373b41;
   --fg: #c5c8c6;
-  --comment: #969896;
+  --border: #c5c8c64d;
   --red: #cc6666;
   --orange: #de935f;
   --yellow: #f0c674;
@@ -15,64 +15,27 @@ body {
   --purple: #b294bb;
   --primary: var(--blue);
 
-  --joplin-appearance: dark;
-  --joplin-background-color: var(--bg);
-  --joplin-background-color2: var(--bg);
   --joplin-background-color3: var(--bg);
-  --joplin-background-color4: var(--bg);
-  --joplin-background-color5: var(--blue);
-  --joplin-background-color-active3: var(--cl);
-  --joplin-background-color-active4: var(--cl);
-  --joplin-background-color-active5: var(--blue);
-  --joplin-background-color-hover2: var(--blue);
   --joplin-background-color-hover3: var(--selection);
-  --joplin-background-color-hover4: var(--selection);
-  --joplin-background-color-hover5: var(--blue);
-  --joplin-background-color-hover-dim3: var(--cl);
-  --joplin-background-hover: var(--cl);
-  --joplin-code-background-color: var(--bg);
-  --joplin-code-color: var(--fg);
-  --joplin-color: var(--fg);
-  --joplin-color2: var(--fg);
-  --joplin-color3: var(--fg);
-  --joplin-color4: var(--blue);
-  --joplin-color5: var(--bg);
-  --joplin-color-correct: var(--green);
-  --joplin-color-error: var(--red);
-  --joplin-color-error2: var(--red);
-  --joplin-color-faded: var(--comment);
-  --joplin-color-hover: var(--fg);
-  --joplin-color-hover3: var(--fg);
-  --joplin-color-warn: var(--orange);
-  --joplin-color-warn2: var(--orange);
-  --joplin-color-warn3: var(--orange);
-  --joplin-color-warn-url: var(--yellow);
-  --joplin-destructive-color: var(--red);
-  --joplin-divider-color: var(--comment);
-  --joplin-header-background-color: var(--bg);
-  --joplin-highlighted-color: var(--cl);
-  --joplin-odd-background-color: var(--bg);
-  --joplin-raised-background-color: var(--bg);
-  --joplin-search-marker-background-color: var(--yellow);
-  --joplin-search-marker-color: var(--bg);
-  --joplin-selected-color: var(--selection);
-  --joplin-selected-color2: var(--blue);
-  --joplin-selected-divider-color: var(--selection);
-  --joplin-table-background-color: var(--bg);
-  --joplin-text-selection-color: var(--blue);
+  --joplin-divider-color: var(--bg);
+  --joplin-selected-color: var(--cl);
   --joplin-url-color: var(--blue);
-  --joplin-warning-background-color: var(--blue);
 }
 
 .rli-noteList > div > div > div {
-  background-color: var(--joplin-background-color3);
+  background-color: var(--bg);
+}
+
+.note-list {
+  box-sizing: border-box;
+  width: calc(100% + 50px) !important;
 }
 
 .new-todo-button,
 .new-note-button,
 .sort-order-field-button,
 .sort-order-reverse-button {
-  background: var(--joplin-background-color) !important;
+  background: var(--bg) !important;
 }
 
 .new-todo-button span,
@@ -83,19 +46,27 @@ body {
 }
 
 .new-note-button {
-  border: 1px solid var(--joplin-border-color4) !important;
+  border: 1px solid var(--border) !important;
+}
+
+.icon-search {
+  color: var(--blue) !important;
 }
 
 .search-bar input {
-  border-color: var(--joplin-border-color4) !important;
+  border-color: var(--border) !important;
 }
 
-.CodeMirror-cursor {
-  border-left: 1px solid var(--fg) !important;
+.editor-toolbar {
+  background-color: inherit !important;
 }
 
 .CodeMirror * {
   font-family: "Noto Sans", "Noto Sans CJK JP" !important;
+}
+
+.CodeMirror-cursor {
+  border-left: 1px solid var(--fg) !important;
 }
 
 .cm-enhancement-finished-task {
@@ -128,7 +99,7 @@ body {
 }
 
 .cm-link-text {
-    color: var(--fg) !important;
+  color: var(--fg) !important;
 }
 
 .cm-link {
@@ -136,12 +107,11 @@ body {
 }
 
 .cm-jn-code-block-background {
-  background-color: var(--joplin-background-color4) !important;
+  background-color: var(--bg) !important;
 }
 
-.note-list {
-  box-sizing: border-box;
-  width: calc(100% + 50px) !important;
+.cm-comment {
+  color: var(--fg) !important;
 }
 
 .cm-rm-em-token {
