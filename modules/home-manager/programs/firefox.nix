@@ -46,23 +46,37 @@
         # Ask where to save downloaded files.
         "browser.download.useDownloadDir" = false;
 
-        # Do not ask to save passwords.
+        # Do not ask to save passwords or addresses.
         "signon.rememberSignons" = false;
+        "extensions.formautofill.addresses.enabled" = false;
+        "extensions.formautofill.creditCards.enabled" = false;
 
         # Privacy settings.
+        "browser.contentblocking.category" = "strict";
         "privacy.donottrackheader.enabled" = true;
         "privacy.fingerprintingProtection" = true;
         "privacy.globalprivacycontrol.enabled" = true;
+
+        # Clear cookies on browser shutdown.
+        "privacy.history.custom" = true;
+        "privacy.sanitize.sanitizeOnShutdown" = true;
+        "privacy.sanitize.pending" = [
+          {
+            "id"="shutdown";
+            "itemsToClear" = [ "cache" "cookiesAndStorage" ];
+            "options" ={};
+          }
+        ];
 
         # Pinned sites.
         "browser.newtabpage.pinned" = [
           {
             label = "youtube";
-            url = "https://youtube.com";
+            url = "https://www.youtube.com";
           }
           {
             label = "wanikani";
-            url = "https://wanikani.com";
+            url = "https://www.wanikani.com";
           }
           {
             label = "patchouli";
@@ -87,7 +101,7 @@
           }
           {
             label = "patreon";
-            url = "https://patreon.com";
+            url = "https://www.patreon.com";
           }
         ];
       };
