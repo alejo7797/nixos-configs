@@ -25,8 +25,7 @@
       # The default KDE sound theme.
       kdePackages.ocean-sound-theme
 
-      # Great fork for compatibility
-      # with KDE apps like dolphin.
+      # Great fork for compatibility with KDE apps.
       ilya-fedin.qt5ct
       ilya-fedin.qt6ct
 

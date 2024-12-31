@@ -14,7 +14,7 @@
   myHome.style.enable = true;
 
   # Configure some basic graphical utilities.
-  myHome.graphical-environment = true;
+  myHome.graphical.enable = true;
 
   # Configure zsh.
   programs.zsh = {
@@ -26,15 +26,15 @@
 
     in {
 
-        # Legacy dotfiles implementation.
-        dotfiles = "${pkgs.git}/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME";
+      # Legacy dotfiles implementation.
+      dotfiles = "${pkgs.git}/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME";
 
-        # Rely on a custom firewall rule.
-        pubip = "${what-is-my-ip} @resolver1.opendns.com";
-        vpnip = "${what-is-my-ip} @resolver2.opendns.com";
+      # These rely on a custom firewall rule.
+      pubip = "${what-is-my-ip} @resolver1.opendns.com";
+      vpnip = "${what-is-my-ip} @resolver2.opendns.com";
 
-        # Manage the wonderful toolchain.
-        wf-pacman = "sudo -u wonderful /opt/wonderful/bin/wf-pacman";
+      # Manage the wonderful toolchain.
+      wf-pacman = "sudo -u wonderful /opt/wonderful/bin/wf-pacman";
 
     };
   };

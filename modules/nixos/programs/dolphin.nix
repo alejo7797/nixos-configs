@@ -5,7 +5,7 @@
   config = lib.mkIf config.myNixOS.dolphin.enable {
 
     # Pull this in just in case.
-    myNixOS.graphical-environment = true;
+    myNixOS.graphical.enable = true;
 
     # Install dolphin and all that's good with it.
     environment.systemPackages = with pkgs; [

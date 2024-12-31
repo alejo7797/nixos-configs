@@ -1,8 +1,8 @@
 { pkgs, lib, config, ... }: {
 
-  options.myHome.graphical-environment = lib.mkEnableOption "basic graphical utilities";
+  options.myHome.graphical.enable = lib.mkEnableOption "basic graphical utilities";
 
-  config = lib.mkIf config.myHome.graphical-environment {
+  config = lib.mkIf config.myHome.graphical.enable {
 
     programs.zsh = {
 
@@ -16,6 +16,7 @@
         bgtrash = "${variety} --trash";
         bgfav   = "${variety} --favorite";
       };
+
     };
 
     # Enable the xsettings daemon.
@@ -38,7 +39,7 @@
 
       firefox thunderbird variety
 
-      # Need to specify .desktop file manually.
+      # We need to specify the .desktop file manually.
       (keepassxc // { desktopFile = "org.keepassxc.KeePassXC.desktop"; })
 
     ];

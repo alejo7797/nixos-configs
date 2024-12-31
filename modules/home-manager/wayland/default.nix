@@ -7,7 +7,7 @@
   config = lib.mkIf config.myHome.wayland.enable {
 
     # Configure common graphical applications.
-    myHome.graphical-environment = true;
+    myHome.graphical.enable = true;
 
     # Enable kanshi.
     services.kanshi.enable = true;

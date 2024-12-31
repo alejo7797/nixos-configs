@@ -7,7 +7,7 @@
   config = lib.mkIf config.myNixOS.wayland.enable {
 
     # Install some basic graphical utlities.
-    myNixOS.graphical-environment = true;
+    myNixOS.graphical.enable = true;
 
     # Integrate Fcitx5 with Wayland.
     i18n.inputMethod.fcitx5.waylandFrontend = true;
@@ -18,7 +18,8 @@
     # Install some Wayland-specific packages.
     environment.systemPackages = with pkgs; [
 
-      bemenu wf-recorder wl-clipboard
+      bemenu hyprlock
+      wf-recorder wl-clipboard
       libsForQt5.qt5.qtwayland
       kdePackages.qtwayland
 

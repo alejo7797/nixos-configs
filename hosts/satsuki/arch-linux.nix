@@ -1,21 +1,17 @@
-{ pkgs, lib, config, ... }: let
-
-  kdeconnect-cfg = config.services.kdeconnect;
-
-in {
+{ pkgs, lib, config, ... }:  {
 
   # These services get managed natively.
   services.gammastep.enable = lib.mkForce false;
-  services.xsettingsd.enable = lib.mkForce false;
   services.kdeconnect.enable = lib.mkForce false;
-  programs.waybar.enable = lib.mkForce false;
   services.swaync.enable = lib.mkForce false;
+  programs.waybar.enable = lib.mkForce false;
+  services.xsettingsd.enable = lib.mkForce false;
 
   programs.zsh = {
     # Host specific plugins.
     oh-my-zsh.plugins = [ "archlinux" ];
 
-    # We need to pull these plugins manually from the Nix store.
+    # We need to pull these manually from the Nix store.
     plugins = [
       {
         name = "zsh-syntax-highlighting";

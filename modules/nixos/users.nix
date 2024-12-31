@@ -7,7 +7,7 @@
 
         userConfig = lib.mkOption {
           description = "Home Manager configuration path.";
-          default = ../hosts/satsuki/home.nix;
+          default = ../../hosts/satsuki/home.nix;
         };
 
         userSettings = lib.mkOption {

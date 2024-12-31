@@ -1,8 +1,8 @@
 { pkgs, lib, config, ... }: {
 
-  options.myNixOS.graphical-environment = lib.mkEnableOption "basic graphical utilities";
+  options.myNixOS.graphical.enable = lib.mkEnableOption "basic graphical utilities";
 
-  config = lib.mkIf config.myNixOS.graphical-environment {
+  config = lib.mkIf config.myNixOS.graphical.enable {
 
     # Enable the plymouth splash screen.
     boot.plymouth.enable = true;
@@ -41,10 +41,10 @@
     environment.systemPackages = with pkgs; [
 
       # System utilities.
-      dconf-editor font-manager
-      icoutils libnotify mesa-demos
-      pavucontrol pdftk piper playerctl
-      polkit_gnome seahorse yubico-pam
+      dconf-editor font-manager icoutils
+      libnotify mesa-demos pavucontrol
+      pdftk piper playerctl polkit_gnome
+      seahorse sqlitebrowser yubico-pam
       xorg.xeyes vulkan-tools zenity
 
       # Essential applications.
@@ -53,7 +53,7 @@
 
     ];
 
-    # Install the following fonts system-wide.
+    # Install the following fonts.
     fonts.packages = with pkgs; [
       corefonts
       dejavu_fonts
