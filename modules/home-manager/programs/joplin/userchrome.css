@@ -1,6 +1,6 @@
 /* For styling the entire Joplin app (except the rendered Markdown, which is defined in `userstyle.css`) */
 
-:root{
+body {
   --bg: #1d1f21;
   --cl: #282a2e;
   --selection: #373b41;
@@ -16,61 +16,52 @@
   --primary: var(--blue);
 
   --joplin-appearance: dark;
-  --joplin-background-color: #1D2024;
-  --joplin-background-color2: #181A1D;
-  --joplin-background-color3: #2E3138;
-  --joplin-background-color4: #1D2024;
-  --joplin-background-color5: #789FE9;
-  --joplin-background-color-active3: rgba(78, 78, 78, 0.5);
-  --joplin-background-color-active4: rgba(78, 78, 78, 0.8);
-  --joplin-background-color-active5: #1E52B6;
-  --joplin-background-color-hover2: rgba(1, 63, 116, 0.4);
-  --joplin-background-color-hover3: #4E4E4E;
-  --joplin-background-color-hover4: rgba(78, 78, 78, 0.3);
-  --joplin-background-color-hover5: #3B74DF;
-  --joplin-background-color-hover-dim3: rgba(78, 78, 78, 0.3);
-  --joplin-background-color-transparent: rgba(255, 255, 255, 0.9);
-  --joplin-background-hover: #013F7444;
-  --joplin-border-color4: rgba(221, 221, 221, 0.3);
-  --joplin-code-background-color: rgb(47, 48, 49);
-  --joplin-code-border-color: rgb(70, 70, 70);
-  --joplin-code-color: #ffffff;
-  --joplin-color: #dddddd;
-  --joplin-color2: #ffffff;
-  --joplin-color3: #dddddd;
-  --joplin-color4: #789FE9;
-  --joplin-color5: #1D2024;
-  --joplin-color-active2: rgba(255, 255, 255, 0.9);
-  --joplin-color-bright2: #ffffff;
-  --joplin-color-correct: #72b972;
-  --joplin-color-error: red;
-  --joplin-color-error2: #ff6c6c;
-  --joplin-color-faded: #999999;
-  --joplin-color-faded2: rgba(255, 255, 255, 0.5);
-  --joplin-color-hover: #dddddd;
-  --joplin-color-hover2: rgba(255, 255, 255, 0.7);
-  --joplin-color-hover3: #dddddd;
-  --joplin-color-warn: #9A5B00;
-  --joplin-color-warn2: #ffcb81;
-  --joplin-color-warn3: #ffcb81;
-  --joplin-color-warn-url: #ffff82;
-  --joplin-destructive-color: #F07777;
-  --joplin-divider-color: #555555;
-  --joplin-header-background-color: #2D3136;
-  --joplin-highlighted-color: #013F74;
-  --joplin-icon-color: rgba(221, 221, 221, 0.8);
-  --joplin-odd-background-color: #141517;
-  --joplin-raised-background-color: #474747;
-  --joplin-raised-color: #ffffff;
-  --joplin-search-marker-background-color: #F7D26E;
-  --joplin-search-marker-color: black;
-  --joplin-selected-color: #616161;
-  --joplin-selected-color2: #013F74;
-  --joplin-selected-divider-color: #444444;
-  --joplin-table-background-color: rgb(40, 41, 42);
-  --joplin-text-selection-color: #00AEFF;
-  --joplin-url-color: rgb(166, 166, 255);
-  --joplin-warning-background-color: #013F74;
+  --joplin-background-color: var(--bg);
+  --joplin-background-color2: var(--bg);
+  --joplin-background-color3: var(--bg);
+  --joplin-background-color4: var(--bg);
+  --joplin-background-color5: var(--blue);
+  --joplin-background-color-active3: var(--cl);
+  --joplin-background-color-active4: var(--cl);
+  --joplin-background-color-active5: var(--blue);
+  --joplin-background-color-hover2: var(--blue);
+  --joplin-background-color-hover3: var(--selection);
+  --joplin-background-color-hover4: var(--selection);
+  --joplin-background-color-hover5: var(--blue);
+  --joplin-background-color-hover-dim3: var(--cl);
+  --joplin-background-hover: var(--cl);
+  --joplin-code-background-color: var(--bg);
+  --joplin-code-color: var(--fg);
+  --joplin-color: var(--fg);
+  --joplin-color2: var(--fg);
+  --joplin-color3: var(--fg);
+  --joplin-color4: var(--blue);
+  --joplin-color5: var(--bg);
+  --joplin-color-correct: var(--green);
+  --joplin-color-error: var(--red);
+  --joplin-color-error2: var(--red);
+  --joplin-color-faded: var(--comment);
+  --joplin-color-hover: var(--fg);
+  --joplin-color-hover3: var(--fg);
+  --joplin-color-warn: var(--orange);
+  --joplin-color-warn2: var(--orange);
+  --joplin-color-warn3: var(--orange);
+  --joplin-color-warn-url: var(--yellow);
+  --joplin-destructive-color: var(--red);
+  --joplin-divider-color: var(--comment);
+  --joplin-header-background-color: var(--bg);
+  --joplin-highlighted-color: var(--cl);
+  --joplin-odd-background-color: var(--bg);
+  --joplin-raised-background-color: var(--bg);
+  --joplin-search-marker-background-color: var(--yellow);
+  --joplin-search-marker-color: var(--bg);
+  --joplin-selected-color: var(--selection);
+  --joplin-selected-color2: var(--blue);
+  --joplin-selected-divider-color: var(--selection);
+  --joplin-table-background-color: var(--bg);
+  --joplin-text-selection-color: var(--blue);
+  --joplin-url-color: var(--blue);
+  --joplin-warning-background-color: var(--blue);
 }
 
 .rli-noteList > div > div > div {
@@ -146,15 +137,6 @@
 
 .cm-jn-code-block-background {
   background-color: var(--joplin-background-color4) !important;
-}
-
-.cm-jn-monospace {
-  color: var(--fg) !important;
-  font-size: 14px !important;
-}
-
-.content.-selected {
-  background-color: var(--cl) !important;
 }
 
 .note-list {
