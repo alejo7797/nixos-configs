@@ -256,6 +256,12 @@
           '';
         }
         {
+          plugin = vim-css-color;
+          config = ''
+
+          '';
+        }
+        {
           plugin = vim-snippets;
           config = ''
 

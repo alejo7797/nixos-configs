@@ -91,7 +91,7 @@
     keyMap = "us";
   };
 
-  # Use tuigreet to log us in.
+  # Use tuigreet to log in.
   myNixOS.tuigreet.enable = true;
 
   # Install Hyprland, the tiling Wayland compositor.
@@ -145,9 +145,6 @@
 
   # Install the following packages system-wide.
   environment.systemPackages = with pkgs; [
-
-    # Hardware support.
-    ntfs3g
 
     # Actual programs.
     filezilla gimp inkscape

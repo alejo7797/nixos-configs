@@ -4,12 +4,10 @@
 
   config = lib.mkIf config.myHome.joplin-desktop.enable {
 
+    # Install and configure joplin-desktop.
     programs.joplin-desktop = {
-
-      # Install joplin-desktop.
       enable = true;
 
-      # Configure joplin-desktop.
       extraConfig = {
 
         # Basic settings.
