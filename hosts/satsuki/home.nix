@@ -2,7 +2,10 @@
 
   imports = [ ./arch-linux.nix ];
 
+  # Set the system hostname.
   myHome.hostname = "satsuki";
+
+  # Basic settings needed by Home Manager.
   home.username = "ewan";
   home.homeDirectory = "/home/ewan";
   home.stateVersion = "24.11";
@@ -18,13 +21,15 @@
 
     # Host-specific aliases.
     shellAliases = let
+
       what-is-my-ip = "${pkgs.dig}/bin/dig +short myip.opendns.com";
+
     in {
 
         # Legacy dotfiles implementation.
         dotfiles = "${pkgs.git}/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME";
 
-        # Relies on a custom firewall rule.
+        # Rely on a custom firewall rule.
         pubip = "${what-is-my-ip} @resolver1.opendns.com";
         vpnip = "${what-is-my-ip} @resolver2.opendns.com";
 

@@ -5,9 +5,7 @@
   config = lib.mkIf config.myNixOS.graphical-environment {
 
     # Enable the plymouth splash screen.
-    boot.plymouth = {
-      enable = true;
-    };
+    boot.plymouth.enable = true;
 
     # Install firefox and set it as default.
     programs.firefox.enable = true;
@@ -57,7 +55,6 @@
 
     # Install the following fonts system-wide.
     fonts.packages = with pkgs; [
-
       corefonts
       dejavu_fonts
       font-awesome
@@ -67,7 +64,6 @@
       source-han-sans
       source-han-serif
       source-sans
-
     ];
 
   };

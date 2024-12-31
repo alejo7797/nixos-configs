@@ -9,7 +9,6 @@
       enable = true;
 
       extraConfig = {
-
         # Basic settings.
 	"locale" = "en_US";
 	"dateFormat" = "YYYY-MM-DD";
@@ -20,12 +19,6 @@
 	"style.editor.fontSize" = 14;
 	"style.editor.fontFamily" = "Noto Sans CJK JP";
 	"style.editor.monospaceFontFamily" = "Hack Nerd Font Mono";
-
-        # Sync to my Nextcloud instance.
-        "sync.target" = 5;
-	"sync.5.path" = "https://cloud.patchoulihq.cc/remote.php/dav/files/ewan/joplin";
-	"sync.5.username" = "ewan";
-
       };
     };
 

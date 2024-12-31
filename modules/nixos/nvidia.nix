@@ -9,13 +9,11 @@
     services.xserver.videoDrivers = [ "nvidia" ];
 
     hardware.nvidia = {
-
       # Use open source Nvidia drivers.
       open = true;
-
       # Enable kernel modesetting.
       modesetting.enable = true;
-
     };
+
   };
 }

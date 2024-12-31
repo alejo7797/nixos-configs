@@ -76,7 +76,7 @@
   };
 
   # Enable YubiKey-based passwordless sudo.
-  myNixOS.passwordlessSudo = true;
+  myNixOS.passwordlessSudo.enable = true;
 
   # Use NetworkManager together with systemd-resolved.
   networking.networkmanager.enable = true;

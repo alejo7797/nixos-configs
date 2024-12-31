@@ -1,7 +1,7 @@
 /* For styling the rendered Markdown */
 
 body {
-  font-family: 'Noto Sans';
+  font-family: 'Noto Sans CJK JP';
 }
 
 ul {
@@ -10,6 +10,6 @@ ul {
 }
 
 a {
-  color: #b5bd68;
+  color: #81a2be;
   text-decoration: none;
 }

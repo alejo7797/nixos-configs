@@ -9,16 +9,14 @@
       enable = true;
 
       sessionVariables = {
-
         # Configure OhMyZsh.
         DISABLE_AUTO_TITLE="true";
         ENABLE_CORRECTION = "true";
         COMPLETION_WAITING_DOTS = "true";
         HIST_STAMPS = "yyyy-mm-dd";
-
       };
 
-      # Configure some useful aliases.
+      # Some useful aliases.
       shellAliases = {
 
         # https://github.com/lsd-rs/lsd
@@ -58,7 +56,6 @@
       '';
 
       initExtra = ''
-
         # Accept autosuggestion with Shift+Tab
         bindkey '^[[Z' autosuggest-accept
 
@@ -71,7 +68,6 @@
         exit_zsh() { exit }
         zle -N exit_zsh
         bindkey '^D' exit_zsh
-
       '';
 
       # Use OhMyZsh to load useful plugins.
@@ -86,7 +82,6 @@
         ];
 
         extraConfig = ''
-
           # Suppress notifications
           zbell_ignore=( dotfiles nix-shell git
                          htop less man powertop
@@ -96,7 +91,6 @@
           zstyle ':omz:plugins:alias-finder' autoload yes
           zstyle ':omz:plugins:alias-finder' exact yes
           zstyle ':omz:plugins:alias-finder' cheaper yes
-
         '';
       };
 

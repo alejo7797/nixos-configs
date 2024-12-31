@@ -8,14 +8,13 @@
       {
         plugin = ultisnips;
         config = ''
-
           " Change the default keymappings.
           let g:UltiSnipsExpandTrigger="<C-k>"
           let g:UltiSnipsJumpForwardTrigger="<C-k>"
           let g:UltiSnipsJumpBackwardTrigger="<C-j>"
-
         '';
       }
     ];
+
   };
 }

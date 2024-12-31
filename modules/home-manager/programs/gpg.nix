@@ -9,7 +9,6 @@
 
     # Import public keys into the keyring.
     publicKeys = [
-
       {
         # My personal OpenPGP public key.
         source = builtins.fetchurl{
@@ -20,7 +19,6 @@
         # Appropriate trust level.
         trust = "ultimate";
       }
-
     ];
 
   };

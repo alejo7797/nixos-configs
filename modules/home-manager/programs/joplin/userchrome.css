@@ -1,10 +1,10 @@
 /* For styling the entire Joplin app (except the rendered Markdown, which is defined in `userstyle.css`) */
 
 body {
-  --bg: #1d1f21;
-  --cl: #282a2e;
+  --background: #1d1f21;
+  --current-line: #282a2e;
   --selection: #373b41;
-  --fg: #c5c8c6;
+  --foreground: #c5c8c6;
   --border: #c5c8c64d;
   --red: #cc6666;
   --orange: #de935f;
@@ -15,15 +15,11 @@ body {
   --purple: #b294bb;
   --primary: var(--blue);
 
-  --joplin-background-color3: var(--bg);
+  --joplin-background-color3: var(--background);
   --joplin-background-color-hover3: var(--selection);
-  --joplin-divider-color: var(--bg);
-  --joplin-selected-color: var(--cl);
+  --joplin-divider-color: var(--background);
+  --joplin-selected-color: var(--current-line);
   --joplin-url-color: var(--blue);
-}
-
-.rli-noteList > div > div > div {
-  background-color: var(--bg);
 }
 
 .note-list {
@@ -34,10 +30,14 @@ body {
 .new-todo-button,
 .new-note-button,
 .sort-order-field-button,
-.sort-order-reverse-button {
-  background: var(--bg) !important;
+.sort-order-reverse-button,
+.editor-toolbar,
+.cm-jn-code-block-background,
+.rli-noteList > div > div > div {
+  background: var(--background) !important;
 }
 
+.icon-search,
 .new-todo-button span,
 .new-note-button span,
 .sort-order-field-button span,
@@ -45,37 +45,18 @@ body {
   color: var(--primary) !important;
 }
 
-.new-note-button {
+.new-note-button,
+.search-bar input {
   border: 1px solid var(--border) !important;
 }
 
-.icon-search {
-  color: var(--blue) !important;
-}
-
-.search-bar input {
-  border-color: var(--border) !important;
-}
-
-.editor-toolbar {
-  background-color: inherit !important;
-}
-
-.CodeMirror * {
-  font-family: "Noto Sans", "Noto Sans CJK JP" !important;
-}
-
 .CodeMirror-cursor {
-  border-left: 1px solid var(--fg) !important;
+  border-left: 1px solid var(--foreground) !important;
 }
 
 .cm-enhancement-finished-task {
   text-decoration: none !important;
   opacity: 1 !important;
-}
-
-.cm-rm-header-token {
-  display: none !important;
 }
 
 .cm-header-1 {
@@ -98,30 +79,18 @@ body {
   color: var(--blue) !important;
 }
 
-.cm-link-text {
-  color: var(--fg) !important;
+.cm-link-text,
+.cm-comment {
+  color: var(--foreground) !important;
 }
 
 .cm-link {
   text-decoration: none !important;
 }
 
-.cm-jn-code-block-background {
-  background-color: var(--bg) !important;
-}
-
-.cm-comment {
-  color: var(--fg) !important;
-}
-
-.cm-rm-em-token {
-  display: none;
-}
-
-.cm-rm-strong-token {
-  display: none;
-}
-
+.cm-rm-em-token,
+.cm-rm-header-token,
+.cm-rm-strong-token,
 .cm-rm-backtick-token {
   display: none;
 }

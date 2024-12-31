@@ -14,7 +14,9 @@
   in {
 
     xdg.configFile = builtins.listToAttrs (
+
       map
+
         (pkg: {
           name = "autostart/" + pkg.name + ".desktop";
           value = if pkg ? desktopItem then
@@ -22,19 +24,19 @@
             { text = pkg.desktopItem.text; }
 
           else { source = "${pkg}/share/applications/" + "${
+
             if pkg ? desktopFile then
               # We're confused.
               "${pkg.desktopFile}"
 
             else
-              # We're mad.
+              # We're annoyed.
               "${stripVersion pkg.name}.desktop"}";
-
           };
-
         })
-        config.myHome.xdgAutostart
-    );
 
+        config.myHome.xdgAutostart
+
+    );
   };
 }

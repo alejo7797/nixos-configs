@@ -1,7 +1,6 @@
 { inputs, pkgs, lib, ... }: {
 
   imports = [
-
     # External modules.
     inputs.home-manager.nixosModules.home-manager
     inputs.stylix.nixosModules.stylix
@@ -10,7 +9,6 @@
     ./users.nix ./pam.nix ./locale.nix
     ./tuigreet.nix ./programs ./nvidia.nix
     ./wayland ./graphical.nix ./style.nix
-
   ];
 
   # Enable Nix flakes support.
@@ -29,13 +27,11 @@
 
   # Default networking configuration.
   networking = {
-
     # Use standard network interface names.
     usePredictableInterfaceNames = lib.mkDefault false;
 
     # Wireguard trips up rpfilter.
     firewall.checkReversePath = false;
-
   };
 
   # Install and configure zsh.

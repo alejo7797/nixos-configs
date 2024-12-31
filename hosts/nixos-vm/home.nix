@@ -1,5 +1,10 @@
 { pkgs, lib, config, ... }: {
 
+
+  # Set the system hostname.
+  myHome.hostname = "nixos-vm";
+
+  # Basic settings needed by Home Manager.
   home.username = "ewan";
   home.homeDirectory = "/home/ewan";
   home.stateVersion = "24.11";

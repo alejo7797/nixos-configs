@@ -161,7 +161,6 @@
         {
           plugin = mini-nvim;
           config = ''
-
             " Make sure the <leader> key is correctly set.
             let mapleader = "${leader}"
 
@@ -206,7 +205,6 @@
               vim.keymap.set("n", "<C-n>", "<cmd>NvimTreeToggle<CR>")
 
             END
-
           '';
         }
         {
@@ -237,7 +235,6 @@
         {
           plugin = telescope-nvim;
           config = ''
-
             " Make sure the <leader> key is correctly set.
             let mapleader = "${leader}"
 
@@ -246,7 +243,6 @@
             nnoremap <leader>fg <cmd>Telescope live_grep<CR>
             nnoremap <leader>fb <cmd>Telescope buffers<CR>
             nnoremap <leader>fh <cmd>Telescope help_tags<CR>
-
           '';
         }
         {
@@ -270,10 +266,8 @@
         {
           plugin = vimtex;
           config = ''
-
             " Use Zathura as the VimTeX PDF viewer.
             let g:vimtex_view_method='zathura_simple'
-
           '';
         }
       ];
