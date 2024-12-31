@@ -10,6 +10,7 @@
       positionX = "right";
       positionY = "bottom";
       fit-to-screen = false;
+      control-center-height = 500;
     };
 
   };
