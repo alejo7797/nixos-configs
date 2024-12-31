@@ -30,6 +30,9 @@
     # Install and configure kitty.
     myHome.kitty.enable = true;
 
+    # Configure Firefox.
+    myHome.firefox.enable = true;
+
     # XDG autostart.
     myHome.xdgAutostart = with pkgs; [
 
