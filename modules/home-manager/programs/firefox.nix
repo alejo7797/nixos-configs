@@ -57,36 +57,36 @@
         # Pinned sites.
         "browser.newtabpage.pinned" = [
           {
-            title = "youtube";
+            label = "youtube";
             url = "https://youtube.com";
           }
           {
-            title = "wanikani";
+            label = "wanikani";
             url = "https://wanikani.com";
           }
           {
-            title = "patchouli";
+            label = "patchouli";
             url = "https://patchoulihq.cc";
           }
           {
-            title = "nextcloud";
+            label = "nextcloud";
             url = "https://cloud.patchoulihq.cc";
           }
           {
-            title = "arxiv";
+            label = "arxiv";
             url = "https://arxiv.org/list/math.GT/recent";
           }
           {
-            title = "ae433";
+            label = "ae433";
             url = "https://ae433.user.srcf.net/about-to-get-very-silly";
           }
           {
-            title = "archwiki";
+            label = "archwiki";
             url = "https://wiki.archlinux.org";
             customScreenshotURL = "https://img.icons8.com/color/480/arch-linux.png";
           }
           {
-            title = "patreon";
+            label = "patreon";
             url = "https://patreon.com";
           }
         ];
