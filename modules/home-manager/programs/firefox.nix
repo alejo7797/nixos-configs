@@ -7,21 +7,6 @@
     # Enable Firefox configuration.
     enable = true;
 
-    # Handy policies to enable.
-    policies = {
-      "DisableFeedbackCommands" = true;
-      "DisableFirefoxStudies" = true;
-      "DisablePocket" = true;
-      "DisableSetDesktopBackground" = true;
-      "DisableTelemetry" = true;
-
-      "Extensions" = {
-        "Install" = [
-          "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi"
-        ];
-      };
-    };
-
     # Manage my profile declaratively.
     profiles."${config.home.username}.default" = {
 
@@ -98,6 +83,7 @@
           {
             title = "archwiki";
             url = "https://wiki.archlinux.org";
+            customScreenshotURL = "https://img.icons8.com/color/480/arch-linux.png";
           }
           {
             title = "patreon";
