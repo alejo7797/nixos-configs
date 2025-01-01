@@ -47,27 +47,60 @@
         }
       ];
 
-      style = ''
-        window {
-          background-color: rgba(12,12,12,0.4);
-        }
+      style =
 
-        button {
-          color: #c5c8c6;
-          font-size: 18px;
-        }
+        let
+          icon-path = "${pkgs.wlogout}/share/wlogout/icons";
+        in
 
-        button:focus {
-          outline-style: none;
-        }
+        ''
+          window {
+            background-color: rgba(12,12,12,0.4);
+          }
 
-        button:active,
-        button:hover {
-          background-color: #81a2be;
-          outline-style: none;
-        }
-      '';
+          button {
+            color: #c5c8c6;
+            font-size: 18px;
+            background-color: #1d1f21;
+            border-radius: 0;
+            border-color: black;
+          }
+
+          button:focus {
+            outline-style: none;
+          }
+
+          button:active,
+          button:hover {
+            color: #1d1f21;
+            background-color: #81a2be;
+            outline-style: none;
+          }
+        ''
+
+        # Smart icon-path configuration.
+        + lib.concatStringsSep "\n" (
+
+            map
+
+              (a:
+                ''
+                  #${a} {
+                    background-image: image(
+                      url("${icon-path}/${a}.png")
+                    )
+                  }
+                ''
+              )
+
+              [
+                "lock" "logout"
+                "suspend" "hibernate"
+                "shutdown" "reboot"
+              ]
+
+        );
+
     };
-
   };
 }
