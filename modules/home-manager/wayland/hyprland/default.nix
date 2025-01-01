@@ -21,6 +21,7 @@
         waybar = extraDelay;
         kdeconnect = extraDelay;
         kdeconnect-indicator = extraDelay;
+        xsettingsd = extraDelay;
       };
 
     # Configure Hyprland, the tiling Wayland compositor.

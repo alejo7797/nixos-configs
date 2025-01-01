@@ -18,6 +18,14 @@
     # Let hyprlock authenticate users.
     security.pam.services.hyprlock = {};
 
+    # Make nm-applet more resilient.
+    systemd.user.services.nm-applet = {
+      serviceConfig = {
+        Restart = "on-failure";
+        RestartSec = "800ms";
+      };
+    };
+
     # Install some Wayland-specific packages.
     environment.systemPackages = with pkgs; [
 

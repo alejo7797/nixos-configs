@@ -23,6 +23,13 @@
     # Enable the xsettings daemon.
     services.xsettingsd.enable = true;
 
+    # Make xsettingsd more resilient.
+    systemd.user.services.xsettingsd = {
+      Service = {
+        Restart = lib.mkForce "on-failure";
+      };
+    };
+
     # Enable the mpris-proxy service.
     services.mpris-proxy.enable = true;
 
