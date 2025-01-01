@@ -8,19 +8,21 @@
 
     # Tab group settings.
     tabs = {
-      height = 24;
+      height = 30;
       padding = 0;
       rounding = 0;
       text_height = 12;
       text_padding = 12;
 
-      "col.active" = "0xff81a2be";
-      "col.urgent" = "0xffcc6666";
-      "col.inactive" = "0xff282a2e";
+      text_font = "Noto Sans Medium";
 
-      "col.text.active" = "0xff282a2e";
-      "col.text.urgent" = "0xff282a2e";
-      "col.text.inactive" = "0xffc5c8c6";
+      "col.active" = "0xff1d1f21";
+      "col.urgent" = "0xffcc6666";
+      "col.inactive" = "0xff1d1f21";
+
+      "col.text.active" = "0xffc5c8c6";
+      "col.text.urgent" = "0xffc5c8c6";
+      "col.text.inactive" = "0xff969896";
     };
 
   };
