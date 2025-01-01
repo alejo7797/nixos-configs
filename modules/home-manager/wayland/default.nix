@@ -12,6 +12,20 @@
     # Configure common graphical applications.
     myHome.graphical.enable = true;
 
+    # Set environment variables using UWSM.
+    xdg.configFile."uwsm/env".text = ''
+
+      # Set the cursor size.
+      export XCURSOR_SIZE=24
+      export HYPRCURSOR_SIZE=24
+
+      # Wayland fixes.
+      export _JAVA_AWT_WM_NONREPARENTING=1
+      export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+      export ELECTRON_OZONE_PLATFORM_HINT=auto
+
+    '';
+
     # Enable kanshi.
     services.kanshi.enable = true;
 

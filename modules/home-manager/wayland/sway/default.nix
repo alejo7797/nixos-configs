@@ -9,6 +9,17 @@
     # Install and configure a bunch of wayland-specific utilities.
     myHome.wayland.enable = true;
 
+    # Set environment variables using UWSM.
+    xdg.configFile."uwsm/env-sway".text = ''
+
+      # https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland#Sway.
+      export QT_IM_MODULE=fcitx
+
+      # Run Electron apps under XWayland.
+      export ELECTRON_OZONE_PLATFORM_HINT=x11
+
+    '';
+
     # Configure sway, the i3-compatible Wayland compositor.
     wayland.windowManager.sway = {
       enable = true;
