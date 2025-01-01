@@ -16,6 +16,22 @@
   # Set up Hyprland, the tiling Wayland compositor.
   myHome.hyprland.enable = true;
 
+  # Set up sway, the i3-compatible Wayland compositor.
+  myHome.sway.enable = true;
+
+  # Configure outputs.
+  services.kanshi.settings = [
+    {
+      profile.name = "default";
+      profile.outputs = [
+        {
+          criteria = "Microstep MSI MP273A PB4HC14702300";
+          mode = "1920x1080@99.999Hz";
+        }
+      ];
+    }
+  ];
+
   # Host-specific Hyprland configuration.
   wayland.windowManager.hyprland.settings = {
     device = [
@@ -26,28 +42,13 @@
     ];
   };
 
-  # Set up sway, the i3-compatible Wayland compositor.
-  myHome.sway.enable = true;
-
   # Host-specific sway configuration.
   wayland.windowManager.sway.config = {
-
-    # Configure input devices.
     input = {
       "1133:49298:Logitech_G203_LIGHTSYNC_Gaming_Mouse" = {
         pointer_accel = "-1";
       };
     };
-
-    # Configure outputs.
-    output = {
-      "Microstep MSI MP273A PB4HC14702300" = {
-        mode = "1920x1080@99.999Hz";
-        position = "0,0";
-        scale = "1";
-      };
-    };
-
   };
 
   # Install and configure joplin-desktop.
