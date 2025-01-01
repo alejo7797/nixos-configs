@@ -16,6 +16,16 @@
   # Set up Hyprland, the tiling Wayland compositor.
   myHome.hyprland.enable = true;
 
+  # Host-specific Hyprland configuration.
+  wayland.windowManager.hyprland.settings = {
+    device = [
+      {
+        name = "logitech-g203-lightsync-gaming-mouse";
+        sensitivity = -1;
+      }
+    ];
+  };
+
   # Set up sway, the i3-compatible Wayland compositor.
   myHome.sway.enable = true;
 
