@@ -81,7 +81,7 @@
     ++ [
       "float, ${dolphin-dialogs}"
       "noinitialfocus, ${dolphin-dialogs}"
-      "size 450 200, ${dolphin-dialogs}"
+      "size 450 225, ${dolphin-dialogs}"
       "move 100%-w-10 100%-w-40, ${dolphin-dialogs}"
     ]
 
