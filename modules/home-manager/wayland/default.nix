@@ -25,8 +25,18 @@
 
     '';
 
-    # Enable kanshi.
-    services.kanshi.enable = true;
+    # Install and enable kanshi.
+    services.kanshi = {
+      enable = true;
+      systemdTarget = "graphical-session.target";
+    };
+
+    # Patch the kanshi systemd user unit.
+    systemd.user.services.kanshi = {
+      Unit = {
+        ConditionEnvironment = "WAYLAND_DISPLAY";
+      };
+    };
 
     # Install and configure wofi.
     programs.wofi = {

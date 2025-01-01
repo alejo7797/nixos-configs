@@ -1,7 +1,7 @@
 hyprctl dispatch workspace 4
-hyprctl dispatch exec uwsm app -- dolphin
+hyprctl dispatch exec uwsm-app -- dolphin
 sleep 1.2
-hyprctl dispatch exec uwsm app -- kitty
+hyprctl dispatch exec uwsm-app -- kitty
 sleep 0.6
 hyprctl dispatch hy3:movewindow right
 hyprctl dispatch hy3:makegroup tab

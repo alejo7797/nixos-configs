@@ -32,13 +32,13 @@
         let
           modifier = "Mod4";
           exit = "exit: [s]leep, [h]ibernate, [r]eboot, [p]oweroff";
-          uwsm_app = "${pkgs.uwsm}/bin/uwsm app --";
+          uwsm-app = "${pkgs.uwsm}/bin/uwsm-app";
           systemctl = "${pkgs.systemd}/bin/systemctl";
         in {
 
           inherit modifier;
-          terminal = "${uwsm_app} ${pkgs.kitty}/bin/kitty";
-          menu = "${pkgs.wofi}/bin/wofi | ${pkgs.findutils}/bin/xargs swaymsg exec ${uwsm_app}";
+          terminal = "${uwsm-app} -- ${pkgs.kitty}/bin/kitty";
+          menu = "${pkgs.wofi}/bin/wofi | ${pkgs.findutils}/bin/xargs swaymsg exec ${uwsm-app} --";
           bars = [ ];
 
           # Override automatic Stylix settings.
@@ -84,7 +84,7 @@
 
           startup = [
             { command = "${pkgs.xorg.xrdb}/bin/xrdb -load ~/.Xresources"; }
-            { command = "${uwsm_app} ${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; }
+            { command = "${uwsm-app} -- ${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; }
             { command = "${pkgs.bash}/bin/bash ${./sway-startup}"; }
           ];
 

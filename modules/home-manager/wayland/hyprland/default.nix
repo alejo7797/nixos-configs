@@ -19,23 +19,23 @@
       # Use hy3 for i3-like behaviour.
       plugins = with pkgs.hyprlandPlugins; [ hy3 ];
 
-      # Prevent conflict with UWSM.
+      # Prevent conflicts with UWSM.
       systemd.enable = false;
 
       settings =
 
         let
-          uwsm = "${pkgs.uwsm}/bin/uwsm";
+          uwsm-app = "${pkgs.uwsm}/bin/uwsm-app";
         in {
 
           # Default terminal application.
-          "$terminal" = "${uwsm} app -- ${pkgs.kitty}/bin/kitty";
+          "$terminal" = "${uwsm-app} -- ${pkgs.kitty}/bin/kitty";
 
           # Default application launcher.
           "$menu" = lib.concatStringsSep " " [
             "${pkgs.wofi}/bin/wofi | "
             "${pkgs.findutils}/bin/xargs "
-            "hyprctl dispatch exec ${uwsm} app -- "
+            "hyprctl dispatch exec ${uwsm-app} -- "
           ];
 
           # Autostart.
