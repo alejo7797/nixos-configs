@@ -22,7 +22,6 @@
       # Wayland fixes.
       export _JAVA_AWT_WM_NONREPARENTING=1
       export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
-      export ELECTRON_OZONE_PLATFORM_HINT=auto
 
     '';
 
@@ -90,12 +89,6 @@
         { timeout = 600; command = "loginctl lock-session"; }
         { timeout = 660; command = "systemctl suspend"; }
       ];
-    };
-
-    # Set runtime flags for Electron applications.
-    xdg.configFile = {
-      "spotify-flags.conf".text = "--ozone-platform-hint=auto --enable-wayland-ime";
-      "vesktop-flags.conf".text = "--enable-wayland-ime";
     };
 
   };
