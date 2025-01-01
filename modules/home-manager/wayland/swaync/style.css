@@ -84,6 +84,10 @@ trough {
   background: @base00;
 }
 
+.notification-content .image {
+  margin: 4px 8px 4px 4px;
+}
+
 .floating-notifications.background .notification-row .notification-background {
   background: transparent;
   color: @base05;
@@ -106,9 +110,7 @@ trough {
   background: @base01;
 }
 
-.notification-group.collapsed:hover
-  .notification-row:not(:only-child)
-  .notification {
+.notification-group.collapsed:hover .notification-row:not(:only-child) .notification {
   background: @base01;
 }
 
