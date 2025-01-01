@@ -21,7 +21,7 @@
       "col.inactive" = "0xff1d1f21";
 
       "col.text.active" = "0xffc5c8c6";
-      "col.text.urgent" = "0xffc5c8c6";
+      "col.text.urgent" = "0xff1d1f21";
       "col.text.inactive" = "0xff969896";
     };
 
