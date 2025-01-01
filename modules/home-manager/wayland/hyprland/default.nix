@@ -9,11 +9,19 @@
     # Install and configure a bunch of wayland-specific utilities.
     myHome.wayland.enable = true;
 
-    # Signal graphical-session.target readiness correctly.
-    home.sessionVariables.UWSM_WAIT_VARNAMES = "WAYLAND_DISPLAY";
-
     # Install and configure wlogout.
     myHome.wlogout.enable = true;
+
+    # Increase the time between service start requests.
+    systemd.user.services =
+      let
+        extraDelay = { Service.RestartSec = "400ms"; };
+      in
+      {
+        waybar = extraDelay;
+        kdeconnect = extraDelay;
+        kdeconnect-indicator = extraDelay;
+      };
 
     # Configure Hyprland, the tiling Wayland compositor.
     wayland.windowManager.hyprland = {

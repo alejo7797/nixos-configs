@@ -23,22 +23,25 @@
     # Enable the xsettings daemon.
     services.xsettingsd.enable = true;
 
+    # Enable the mpris-proxy service.
+    services.mpris-proxy.enable = true;
+
     # Start KDE connect as a user service.
     services.kdeconnect = {
       enable = true;
       indicator = true;
     };
 
-    # Custom variety wallpaper script.
-    home.activation.variety = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      cp ${./variety/set_wallpaper} ${config.xdg.configHome}/variety/scripts/set_wallpaper
-    '';
-
     # Install and configure kitty.
     myHome.kitty.enable = true;
 
     # Configure Firefox.
     myHome.firefox.enable = true;
+
+    # Custom variety wallpaper script.
+    home.activation.variety = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      cp ${./variety/set_wallpaper} ${config.xdg.configHome}/variety/scripts/set_wallpaper
+    '';
 
     # XDG autostart.
     myHome.xdgAutostart = with pkgs; [

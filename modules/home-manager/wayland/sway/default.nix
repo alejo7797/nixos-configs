@@ -16,7 +16,7 @@
       export QT_IM_MODULE=fcitx
 
       # Run Electron apps under XWayland.
-      export ELECTRON_OZONE_PLATFORM_HINT=x11
+      export NIXOS_OZONE_WL=
 
     '';
 
