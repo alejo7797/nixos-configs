@@ -2,7 +2,7 @@
 
   imports = [
     ./hyprland ./sway ./waybar
-    ./swaync ./wlogout.nix
+    ./swaync ./wlogout
   ];
 
   options.myHome.wayland.enable = lib.mkEnableOption "Wayland";

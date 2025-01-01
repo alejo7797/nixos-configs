@@ -47,60 +47,53 @@
         }
       ];
 
-      style =
+      style = ''
+        window {
+          background-color: rgba(12,12,12,0.4);
+        }
 
-        let
-          icon-path = "${pkgs.wlogout}/share/wlogout/icons";
-        in
+        button {
+          color: #ffffff;
+          font-size: 18px;
+          background-color: #1d1f21;
+          border-radius: 0;
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: 25%;
+        }
 
-        ''
-          window {
-            background-color: rgba(12,12,12,0.4);
-          }
+        button:focus {
+          outline-style: none;
+        }
 
-          button {
-            color: #c5c8c6;
-            font-size: 18px;
-            background-color: #1d1f21;
-            border-radius: 0;
-            border-color: black;
-          }
+        button:active,
+        button:hover {
+          background-color: #81a2be;
+          outline-style: none;
+        }
+      ''
 
-          button:focus {
-            outline-style: none;
-          }
+      + lib.concatStringsSep "\n" (
 
-          button:active,
-          button:hover {
-            color: #1d1f21;
-            background-color: #81a2be;
-            outline-style: none;
-          }
-        ''
+        map
 
-        # Smart icon-path configuration.
-        + lib.concatStringsSep "\n" (
+          (a:
+            ''
+              #${a} {
+                background-image: image(
+                  url("${./icons}/${a}.png")
+                );
+              }
+            ''
+          )
 
-            map
+          [
+            "lock" "logout"
+            "suspend" "hibernate"
+            "shutdown" "reboot"
+          ]
 
-              (a:
-                ''
-                  #${a} {
-                    background-image: image(
-                      url("${icon-path}/${a}.png")
-                    )
-                  }
-                ''
-              )
-
-              [
-                "lock" "logout"
-                "suspend" "hibernate"
-                "shutdown" "reboot"
-              ]
-
-        );
-
+      );
     };
   };
 }
