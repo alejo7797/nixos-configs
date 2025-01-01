@@ -76,20 +76,21 @@
     };
 
     # Enable and configure swayidle.
-    services.swayidle = let
-      lock = "${pkgs.hyprlock}/bin/hyprlock";
-    in {
-      enable = true;
-      events = [
-        { event = "lock"; command = "${pkgs.playerctl}/bin/playerctl -a pause"; }
-        { event = "lock"; command = "${pkgs.procps}/bin/pidof ${lock} || ${lock}"; }
-        { event = "before-sleep"; command = "loginctl lock-session"; }
-      ];
-      timeouts = [
-        { timeout = 600; command = "loginctl lock-session"; }
-        { timeout = 660; command = "systemctl suspend"; }
-      ];
-    };
+    services.swayidle =
+      let
+        lock = "${pkgs.hyprlock}/bin/hyprlock";
+      in {
+        enable = true;
+        events = [
+          { event = "lock"; command = "${pkgs.playerctl}/bin/playerctl -a pause"; }
+          { event = "lock"; command = "${pkgs.procps}/bin/pidof ${lock} || ${lock}"; }
+          { event = "before-sleep"; command = "loginctl lock-session"; }
+        ];
+        timeouts = [
+          { timeout = 600; command = "loginctl lock-session"; }
+          { timeout = 660; command = "systemctl suspend"; }
+        ];
+      };
 
   };
 }

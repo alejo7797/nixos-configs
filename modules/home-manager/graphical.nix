@@ -7,15 +7,16 @@
     programs.zsh = {
 
       # Define a few more aliases.
-      shellAliases = let
-        variety = "${pkgs.variety}/bin/variety";
-      in {
-        # Interact with Variety.
-        bgnext  = "${variety} --next";
-        bgprev  = "${variety} --previous";
-        bgtrash = "${variety} --trash";
-        bgfav   = "${variety} --favorite";
-      };
+      shellAliases =
+        let
+          variety = "${pkgs.variety}/bin/variety";
+        in {
+          # Interact with Variety.
+          bgnext  = "${variety} --next";
+          bgprev  = "${variety} --previous";
+          bgtrash = "${variety} --trash";
+          bgfav   = "${variety} --favorite";
+        };
 
     };
 

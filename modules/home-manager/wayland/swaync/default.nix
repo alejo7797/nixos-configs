@@ -15,6 +15,8 @@
       fit-to-screen = false;
       control-center-width = 400;
       control-center-height = 480;
+      control-center-margin-right = 10;
+      control-center-margin-bottom = 10;
       notification-icon-size = 32;
       notification-window-width = 360;
     };

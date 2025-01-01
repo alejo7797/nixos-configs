@@ -59,7 +59,7 @@
 
     unstable.spotify steam vesktop zotero
 
-    # Need to specify .desktop file manually.
+    # We need to specify the .desktop file manually.
     (joplin-desktop // { desktopFile = "@joplinapp-desktop.desktop"; })
 
   ];

@@ -46,13 +46,11 @@
       };
 
       extraInstallCommands = ''
-
         # Do not show the auto-generated Windows entry.
         echo "auto-entries false" >>/boot/loader/loader.conf
 
         # Set Windows as the default boot entry.
         ${pkgs.gnused}/bin/sed -i 's/default .*/default windows_11.conf/' /boot/loader/loader.conf
-
       '';
     };
 

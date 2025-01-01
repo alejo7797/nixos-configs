@@ -22,13 +22,15 @@
           ];
         };
 
-        "Preferences" = let
-          lock-false = { Value = false; Status = "locked"; };
-        in {
-          "browser.newtabpage.activity-stream.showSponsored" = lock-false;
-          "browser.newtabpage.activity-stream.showSponsoredTopSites" = lock-false;
-          "browser.newtabpage.activity-stream.feeds.section.topstories" = lock-false;
-        };
+        "Preferences" =
+          let
+            lock-false = { Value = false; Status = "locked"; };
+          in {
+            "browser.newtabpage.activity-stream.showSponsored" = lock-false;
+            "browser.newtabpage.activity-stream.showSponsoredTopSites" = lock-false;
+            "browser.newtabpage.activity-stream.feeds.section.topstories" = lock-false;
+          };
+
       };
     };
 

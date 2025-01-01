@@ -5,38 +5,40 @@
     description = "List of programs to run at system startup.";
   };
 
-  config = let
+  config =
 
-    stripVersion = with lib.strings; (packageName:
-      builtins.elemAt (splitString "-" packageName) 0
-    );
+    let
+      stripVersion = with lib.strings; (packageName:
+        builtins.elemAt (splitString "-" packageName) 0
+      );
+    in {
 
-  in {
+      xdg.configFile = builtins.listToAttrs (
 
-    xdg.configFile = builtins.listToAttrs (
+        map
 
-      map
+          (pkg: {
+            name = "autostart/" + pkg.name + ".desktop";
+            value = if pkg ? desktopItem then
+              # We're happy.
+              { text = pkg.desktopItem.text; }
 
-        (pkg: {
-          name = "autostart/" + pkg.name + ".desktop";
-          value = if pkg ? desktopItem then
-            # We're happy.
-            { text = pkg.desktopItem.text; }
+            else { source = "${pkg}/share/applications/" + "${
 
-          else { source = "${pkg}/share/applications/" + "${
+              if pkg ? desktopFile then
+                # We're confused.
+                "${pkg.desktopFile}"
 
-            if pkg ? desktopFile then
-              # We're confused.
-              "${pkg.desktopFile}"
+              else
+                # We're annoyed.
+                "${stripVersion pkg.name}.desktop"}";
+            };
+          })
 
-            else
-              # We're annoyed.
-              "${stripVersion pkg.name}.desktop"}";
-          };
-        })
+          config.myHome.xdgAutostart
 
-        config.myHome.xdgAutostart
+      );
 
-    );
-  };
+    };
+
 }
