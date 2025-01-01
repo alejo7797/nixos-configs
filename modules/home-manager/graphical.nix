@@ -45,6 +45,9 @@
     # Configure Firefox.
     myHome.firefox.enable = true;
 
+    # Configure thunderbird.
+    myHome.thunderbird.enable = true;
+
     # Custom variety wallpaper script.
     home.activation.variety = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       cp ${./variety/set_wallpaper} ${config.xdg.configHome}/variety/scripts/set_wallpaper
