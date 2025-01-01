@@ -148,13 +148,13 @@
 
     # Actual programs.
     filezilla gimp inkscape
-    joplin-desktop plex-desktop
-    qbittorrent simple-scan
-    ungoogled-chromium variety
-    vesktop yubioath-flutter
+    plex-desktop qbittorrent
+    simple-scan ungoogled-chromium
+    variety vesktop yubioath-flutter
     zathura zoom-us zotero
 
-    # Use --enable-wayland-ime.
+    # Use version from nixpkgs-unstable.
+    unstable.joplin-desktop
     unstable.spotify
 
     # Wine.
