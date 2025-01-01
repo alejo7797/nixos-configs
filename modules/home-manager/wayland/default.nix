@@ -89,7 +89,8 @@
     services.swayidle =
       let
         lock = "${pkgs.hyprlock}/bin/hyprlock";
-      in {
+      in
+      {
         enable = true;
         events = [
           { event = "lock"; command = "${pkgs.playerctl}/bin/playerctl -a pause"; }
@@ -101,6 +102,12 @@
           { timeout = 660; command = "systemctl suspend"; }
         ];
       };
+
+    # Help swayidle start under Hyprland.
+    systemd.user.services.swayidle = {
+      Service.RestartSec = "800ms";
+      Unit.ConditionEnvironment = lib.mkForce "";
+    };
 
   };
 }
