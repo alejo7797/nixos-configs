@@ -30,7 +30,9 @@
     };
 
     # Custom variety wallpaper script.
-    xdg.configFile."variety/scripts/set_wallpaper".source = ./variety/set_wallpaper;
+    home.activation.variety = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      cp ${./variety/set_wallpaper} ${config.xdg.configHome}/variety/scripts/set_wallpaper
+    '';
 
     # Install and configure kitty.
     myHome.kitty.enable = true;
