@@ -92,5 +92,11 @@
       ];
     };
 
+    # Set runtime flags for Electron applications.
+    xdg.configFile = {
+      "spotify-flags.conf".text = "--ozone-platform-hint=auto --enable-wayland-ime";
+      "vesktop-flags.conf".text = "--enable-wayland-ime";
+    };
+
   };
 }
