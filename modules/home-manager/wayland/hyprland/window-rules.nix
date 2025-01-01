@@ -27,7 +27,7 @@
 
     # Floating windows.
     ++ map (w: "float, ${w}") [
-      "class:^(blueman-manager)$"
+      "class:^(.blueman-manager-wrapped)$"
       "class:^(firefox)$, title:^(Picture-in-Picture)$"
       "class:^(hyprland-share-picker)$"
       "class:^(org\\.keepassxc\\.KeePassXC)$"
@@ -46,7 +46,7 @@
     # System tray.
     ++ lib.concatLists (
       map (w: [ "size 600 600, ${w}" "move 100%-w-10 100%-w-40, ${w}" ]) [
-        "class:^(blueman-manager)$, title:^(Bluetooth Devices)$"
+        "class:^(.blueman-manager-wrapped)$, title:^(Bluetooth Devices)$"
         "class:^(nm-connection-editor)$, title:^(Network Connections)$"
         "class:^(nm-openconnect-auth-dialog)$"
         "class:^(thunderbird)$, title:^(Calendar Reminders)$"
@@ -81,7 +81,7 @@
     ++ [
       "float, ${dolphin-dialogs}"
       "noinitialfocus, ${dolphin-dialogs}"
-      "size 450 225, ${dolphin-dialogs}"
+      "size 450 265, ${dolphin-dialogs}"
       "move 100%-w-10 100%-w-40, ${dolphin-dialogs}"
     ]
 
