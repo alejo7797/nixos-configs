@@ -1,6 +1,9 @@
 { pkgs, lib, config, ... }: {
 
-  imports = [ ./hyprland.nix ./sway ./waybar ./swaync ];
+  imports = [
+    ./hyprland ./sway ./waybar
+    ./swaync ./wlogout.nix
+  ];
 
   options.myHome.wayland.enable = lib.mkEnableOption "Wayland";
 
