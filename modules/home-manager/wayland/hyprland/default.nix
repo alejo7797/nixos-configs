@@ -113,7 +113,7 @@
         "$mainMod" = "SUPER";
         bind =
 
-          map (x: "$mainMod, " + x) [
+          map (x: "$mainMod, ${x}") [
             "Return, exec, $terminal"
             "D, exec, $menu"
             "F, fullscreen,"
@@ -150,7 +150,7 @@
             "mouse_up, workspace, e-1"
           ]
 
-          ++ map (x: "$mainMod SHIFT, " + x) [
+          ++ map (x: "$mainMod SHIFT, ${x}") [
             "Q, killactive,"
             "Space, togglefloating,"
 
@@ -193,7 +193,7 @@
           ", XF86MonBrightnessDown, exec, ${brightnessctl} s 2%-"
         ];
 
-        bindm = map (x: "$mainMod, " + x) [
+        bindm = map (x: "$mainMod, ${x}") [
           "mouse:272, movewindow"
           "mouse:273, resize_window"
         ];

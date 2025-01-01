@@ -2,91 +2,101 @@
 
   wayland.windowManager.hyprland.settings.windowrulev2 =
 
+    let
+      dolphin-dialogs = lib.concatStringsSep " "
+        [
+          "class:^(org.kde.dolphin)$,"
+          "title:^(Creating directory|Copying|Moving|Deleting|Progress Dialog) — Dolphin$"
+        ];
+    in
+
     # Default workspaces.
-    map (x: "workspace ${toString x.ws} silent, ${x.criteria}") [
+    map (w: "workspace ${toString w.ws} silent, ${w.criteria}") [
       { ws = 1; criteria = "class:^(firefox)$"; }
+      { ws = 1; criteria = "class:^(firefox)$"; }
+      { ws = 1; criteria = "title:^((Home - )?Mozilla Thunderbird)$"; }
+      { ws = 1; criteria = "class:^(@joplin\\/app-desktop)$"; }
+      { ws = 2; criteria = "class:^(Zotero)$"; }
+      { ws = 3; criteria = "title:^(Minecraft\\* 1\\.\\d{1,2}\\.\\d)$"; }
+      { ws = 3; criteria = "class:^(steam)$"; }
+      { ws = 3; criteria = "class:^(steam_app_\\d*)$"; }
+      { ws = 6; criteria = "class:^(code-oss)$"; }
+      { ws = 8; criteria = "class:^(vesktop)$"; }
+      { ws = 9; criteria = "class:^(spotify)$"; }
     ]
 
     # Floating windows.
-    ++ ["float, class:^(blueman-manager)$"
-    "float, class:^(firefox)$, title:^(Picture-in-Picture)$"
-    "float, class:^(hyprland-share-picker)$"
-    "float, class:^(org\\.keepassxc\\.KeePassXC)$"
-    "float, class:^(net.lutris.Lutris), title:(Log for .*)$"
-    "float, class:^(nm-connection-editor)$"
-    "float, class:^(system-config-printer)$"
-    "float, class:^(org.pulseaudio.pavucontrol)$"
-    "float, class:^(org.prismlauncher.PrismLauncher)$"
-    "float, class:^(qt\\dct)$"
-    "float, class:^(thunderbird)$, title:^(Calendar Reminders)$"
-    "float, class:^(thunderbird)$, title:^(\\d* Reminders?)$"
-    "float, class:^(authenticator)$, title:^(Yubico Authenticator)$"
+    ++ map (w: "float, ${w}") [
+      "class:^(blueman-manager)$"
+      "class:^(firefox)$, title:^(Picture-in-Picture)$"
+      "class:^(hyprland-share-picker)$"
+      "class:^(org\\.keepassxc\\.KeePassXC)$"
+      "class:^(net.lutris.Lutris), title:(Log for .*)$"
+      "class:^(nm-connection-editor)$"
+      "class:^(nm-openconnect-auth-dialog)$"
+      "class:^(system-config-printer)$"
+      "class:^(org.pulseaudio.pavucontrol)$"
+      "class:^(org.prismlauncher.PrismLauncher)$"
+      "class:^(thunderbird)$, title:^(Calendar Reminders)$"
+      "class:^(thunderbird)$, title:^(\\d* Reminders?)$"
+      "class:^(variety)$, title:^(Variety Images)$"
+      "class:^(authenticator)$, title:^(Yubico Authenticator)$"
+    ]
 
     # System tray.
-    "size 600 600, class:^(blueman-manager)$, title:^(Bluetooth Devices)$"
-    "move 100%-w-10 100%-w-40, class:^(blueman-manager)$, title:^(Bluetooth Devices)$"
+    ++ lib.concatLists (
+      map (w: [ "size 600 600, ${w}" "move 100%-w-10 100%-w-40, ${w}" ]) [
+        "class:^(blueman-manager)$, title:^(Bluetooth Devices)$"
+        "class:^(nm-connection-editor)$, title:^(Network Connections)$"
+        "class:^(nm-openconnect-auth-dialog)$"
+        "class:^(thunderbird)$, title:^(Calendar Reminders)$"
+        "class:^(thunderbird)$, title:^(\\d* Reminders?)$"
+      ]
+    )
 
-    "size 600 600, class:^(nm-connection-editor)$, title:^(Network Connections)$"
-    "move 100%-w-10 100%-w-40, class:^(nm-connection-editor)$, title:^(Network Connections)$"
+    # Variety wallpaper selector.
+    ++ map (e: "${e}, class:^(variety)$, title:^(Variety Images)$") [
+      "rounding 0" "size 1920 120" "move 0 100%-w-30"
+    ]
 
-    "float, class:^(nm-openconnect-auth-dialog)$"
-    "size 600 600, class:^(nm-openconnect-auth-dialog)$"
-    "move 100%-w-10 100%-w-40, class:^(nm-openconnect-auth-dialog)$"
+    # Inhibit idle when fullscreen.
+    ++ map (w: "idleinhibit fullscreen, ${w}") [
+      "class:^(firefox)$"
+      "class:^(mpv)$"
+      "class:^(steam_app_\\d*)$"
+    ]
 
-    "size 600 600, class:^(thunderbird)$, title:^(Calendar Reminders)$"
-    "move 100%-w-10 100%-w-40, class:^(thunderbird)$, title:^(Calendar Reminders)$"
-    "size 600 600, class:^(thunderbird)$, title:^(\\d* Reminders?)$"
-    "move 100%-w-10 100%-w-40, class:^(thunderbird)$, title:^(\\d* Reminders?)$"
+    # Inhibit idle always.
+    ++ map (w: "idleinhibit, ${w}") [
+      "title:^(.* - YouTube — Mozilla Firefox)$"
+      "class:^(Zoom Workplace)$"
+    ]
 
-    "float, class:^(variety)$, title:^(Variety Images)$"
-    "rounding 0, class:^(variety)$, title:^(Variety Images)$"
-    "size 1920 120, class:^(variety)$, title:^(Variety Images)$"
-    "move 0 100%-w-30, class:^(variety)$, title:^(Variety Images)$"
-
-    # Inhibit idle.
-    "idleinhibit fullscreen, class:^(firefox)$"
-    "idleinhibit fullscreen, class:^(mpv)$"
-    "idleinhibit fullscreen, class:^(steam_app_\\d*)$"
-
-    "idleinhibit, title:^(.* - YouTube — Mozilla Firefox)$"
-    "idleinhibit, class:^(Zoom Workplace)$"
+    # Dolphin popups.
+    ++ [
+      "move onscreen cursor -50% -50%, class:^(org.kde.dolphin)$, floating:1"
+    ]
 
     # Dolphin dialogs
-    "move onscreen cursor -50% -50%, class:^(org.kde.dolphin)$, floating:1"
+    ++ [
+      "float, ${dolphin-dialogs}"
+      "noinitialfocus, ${dolphin-dialogs}"
+      "size 450 200, ${dolphin-dialogs}"
+      "move 100%-w-10 100%-w-40, ${dolphin-dialogs}"
+    ]
 
-    "float, class:^(org.kde.dolphin)$, title:^(Creating directory — Dolphin)$"
-    "noinitialfocus, class:^(org.kde.dolphin)$, title:^(Creating directory — Dolphin)$"
-    "size 450 200, class:^(org.kde.dolphin)$, title:^(Creating directory — Dolphin)$"
-    "move 100%-w-10 100%-w-52, class:^(org.kde.dolphin)$, title:^(Creating directory — Dolphin)$"
+    ++ [
+      # Ignore maximize requests from apps. You'll probably like this.
+      "suppressevent maximize, class:.*"
 
-    "float, class:^(org.kde.dolphin)$, title:^(Deleting — Dolphin)$"
-    "noinitialfocus, class:^(org.kde.dolphin)$, title:^(Deleting — Dolphin)$"
-    "size 450 160, class:^(org.kde.dolphin)$, title:^(Deleting — Dolphin)$"
-    "move 100%-w-10 100%-w-40, class:^(org.kde.dolphin)$, title:^(Deleting — Dolphin)$"
-
-    "float, class:^(org.kde.dolphin)$, title:^(Deleting — Dolphin)$"
-    "noinitialfocus, class:^(org.kde.dolphin)$, title:^(Copying — Dolphin)$"
-    "size 450 225, class:^(org.kde.dolphin)$, title:^(Copying — Dolphin)$"
-    "move 100%-w-10 100%-w-40, class:^(org.kde.dolphin)$, title:^(Copying — Dolphin)$"
-
-    "float, class:^(org.kde.dolphin)$, title:^(Progress Dialog — Dolphin)$"
-    "noinitialfocus, class:^(org.kde.dolphin)$, title:^(Progress Dialog — Dolphin)$"
-    "size 450 200, class:^(org.kde.dolphin)$, title:^(Progress Dialog — Dolphin)$"
-    "move 100%-w-10 100%-w-52, class:^(org.kde.dolphin)$, title:^(Progress Dialog — Dolphin)$"
-
-    # Ignore maximize requests from apps. You'll probably like this.
-    "suppressevent maximize, class:.*"
-
-    # Fix some dragging issues with XWayland.
-    "nofocus, class:^$, title:^$, xwayland:1, floating:1, fullscreen:0, pinned:0"
+      # Fix some dragging issues with XWayland.
+      "nofocus, class:^$, title:^$, xwayland:1, floating:1, fullscreen:0, pinned:0"
+    ]
 
     # XWaylandVideoBridge
-    "opacity 0.0 override, class:^(xwaylandvideobridge)$"
-    "noanim, class:^(xwaylandvideobridge)$"
-    "noinitialfocus, class:^(xwaylandvideobridge)$"
-    "maxsize 1 1, class:^(xwaylandvideobridge)$"
-    "noblur, class:^(xwaylandvideobridge)$"
-    "nofocus, class:^(xwaylandvideobridge)$"
+    ++ map (e: "${e}, class:^(xwaylandvideobridge)$") [
+      "opacity 0.0 override" "noanim" "noinitialfocus"
+      "maxsize 1 1" "noblur" "nofocus"
+    ];
 
-  ];
 }

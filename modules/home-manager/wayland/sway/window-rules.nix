@@ -29,7 +29,6 @@
         { app_id = "^nm-connection-editor$"; }
         { app_id = "^nm-openconnect-auth-dialog$"; }
         { app_id = "^org\\.pulseaudio\\.pavucontrol$"; }
-        { app_id = "^qt\\dct$"; }
         { class = "^XEyes$"; }
         { title = "^Yubico Authenticator$"; }
 
@@ -68,7 +67,7 @@
         command = "float, no_focus, resize set 450 160, move position 1460 880";
         criteria = {
           app_id = "^org\\.kde\\.dolphin$";
-          title = "^(?:Creating directory|Copying|Moving|Deleting|Progress Dialog) — Dolphin$";
+          title = "^(Creating directory|Copying|Moving|Deleting|Progress Dialog) — Dolphin$";
         };
       }]
 
