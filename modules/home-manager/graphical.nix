@@ -28,6 +28,9 @@
       indicator = true;
     };
 
+    # Custom variety wallpaper script.
+    xdg.configFile."variety/scripts/set_wallpaper".source = ./variety/set_wallpaper;
+
     # Install and configure kitty.
     myHome.kitty.enable = true;
 
