@@ -51,13 +51,16 @@
     };
   };
 
+  # Configure Thunderbird.
+  myHome.thunderbird.enable = true;
+
   # Install and configure joplin-desktop.
   myHome.joplin-desktop.enable = true;
 
   # Autostart applications.
   myHome.xdgAutostart = with pkgs; [
 
-    unstable.spotify steam vesktop zotero
+    unstable.spotify steam thunderbird vesktop zotero
 
     # We need to specify the .desktop file manually.
     (joplin-desktop // { desktopFile = "@joplinapp-desktop.desktop"; })

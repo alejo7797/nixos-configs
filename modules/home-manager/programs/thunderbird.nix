@@ -5,55 +5,70 @@
   config = lib.mkIf config.myHome.thunderbird.enable {
 
     # Configure my email accounts.
-    accounts.email.accounts = lib.mapAttrs
+    accounts.email.accounts =
 
-    (
-      name: settings:
+      let
+        oauth = (id: { "mail.server.server_${id}.authMethod" = 10; });
+      in
+
+      lib.mapAttrs
+
+      (
+        name: settings:
+        lib.recursiveUpdate
+        {
+          realName = "Alex Epelde";
+          userName = settings.address;
+          imap.port = 993;
+          thunderbird.enable = true;
+        }
+        settings
+      )
+
       {
-        realName = "Alex Epelde";
-        userName = settings.address;
-        thunderbird.enable = true;
-      }
-      // settings
-    )
+        Alex = {
+          address = "alex@epelde.net";
+          primary = true;
+          imap.host = "mail.epelde.net";
+          smtp.host = "mail.epelde.net";
+          smtp.tls.useStartTls = true;
+        };
 
-    {
-      Alex = {
-        address = "alex@epelde.net";
-        primary = true;
-        imap.host = "mail.epelde.net";
-        smtp.host = "mail.epelde.net";
-        smtp.tls.useStartTls = true;
-      };
+        Ewan = {
+          address = "ewan@patchoulihq.cc";
+          realName = "ewan";
+          imap.host = "mail.patchoulihq.cc";
+          smtp.host = "mail.patchoulihq.cc";
+          smtp.tls.useStartTls = true;
+        };
 
-      Ewan = {
-        address = "ewan@patchoulihq.cc";
-        realName = "ewan";
-        imap.host = "mail.patchoulihq.cc";
-        smtp.host = "mail.patchoulihq.cc";
-        smtp.tls.useStartTls = true;
-      };
+        Gmail = {
+          address = "alexepelde@gmail.com";
+          flavor = "gmail.com";
+          thunderbird.settings = id: oauth id;
+        };
 
-      Gmail = {
-        address = "alexepelde@gmail.com";
-        flavor = "gmail.com";
-      };
+        Harvard = {
+          address = "epelde@math.harvard.edu";
+          flavor = "outlook.office365.com";
+          folders.trash = "Deleted Items";
+          thunderbird.settings = id: oauth id;
+        };
 
-      Harvard = {
-        address = "epelde@math.harvard.edu";
-        flavor = "outlook.office365.com";
-      };
+        Outlook = {
+          address = "alexepelde@outlook.es";
+          flavor = "outlook.office365.com";
+          folders.trash = "Deleted";
+          thunderbird.settings = id: oauth id;
+        };
 
-      Outlook = {
-        address = "alexepelde@outlook.es";
-        flavor = "outlook.office365.com";
+        Cambridge = {
+          address = "ae433@cantab.ac.uk";
+          flavor = "outlook.office365.com";
+          folders.trash = "Deleted Items";
+          thunderbird.settings = id: oauth id;
+        };
       };
-
-      Cambridge = {
-        address = "ae433@cantab.ac.uk";
-        flavor = "outlook.office365.com";
-      };
-    };
 
     # Configure Thunderbird.
     programs.thunderbird = {
@@ -63,7 +78,8 @@
         isDefault = true;
 
         settings = {
-
+          "places.history.enabled" = false;
+          "privacy.donottrackheader.enabled" = true;
         };
 
       };
