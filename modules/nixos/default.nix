@@ -93,7 +93,7 @@
     curl dig file findutils
     ffmpeg htop imagemagick
     jq libfido2 lm_sensors
-    lsd  neofetch nettools
+    lsd ncdu neofetch nettools
     nmap procps p7zip psmisc
     rsync unrar-free usbutils uv
     wireguard-tools wget yt-dlp
