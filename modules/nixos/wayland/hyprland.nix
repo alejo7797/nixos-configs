@@ -13,5 +13,8 @@
       withUWSM = true;
     };
 
+    # Add swaybg to $PATH.
+    environment.systemPackages = with pkgs; [ swaybg ];
+
   };
 }
