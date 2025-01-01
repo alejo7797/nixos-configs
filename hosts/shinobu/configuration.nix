@@ -149,10 +149,13 @@
     # Actual programs.
     filezilla gimp inkscape
     joplin-desktop plex-desktop
-    qbittorrent simple-scan spotify
+    qbittorrent simple-scan
     ungoogled-chromium variety
     vesktop yubioath-flutter
     zathura zoom-us zotero
+
+    # Use version from nixos-unstable.
+    unstable.spotify
 
     # Wine.
     wineWowPackages.stable

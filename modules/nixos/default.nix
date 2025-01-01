@@ -18,9 +18,21 @@
   # Allow unfree packages.
   nixpkgs.config.allowUnfree = true;
 
-  # Access ilya-fedin's repository.
   nixpkgs.overlays = [
-    (self: super: { ilya-fedin = import inputs.ilya-fedin { pkgs = super; }; })
+    # Access nixpkgs-unstable.
+    (self: super: {
+      unstable = import inputs.nixpkgs-unstable {
+        inherit (super) system;
+        config.allowUnfree = true;
+      };
+    })
+
+    # Access ilya-fedin's repository.
+    (self: super: {
+      ilya-fedin = import inputs.ilya-fedin {
+        pkgs = super;
+      };
+    })
   ];
 
   # Limit the number of generations to keep in the bootloader.
