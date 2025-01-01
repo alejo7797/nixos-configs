@@ -25,6 +25,11 @@
       { ws = 9; criteria = "class:^(spotify)$"; }
     ]
 
+    # Floating window decorations.
+    ++ [
+      "rounding 10, floating:1"
+    ]
+
     # Floating windows.
     ++ map (w: "float, ${w}") [
       "class:^(.blueman-manager-wrapped)$"

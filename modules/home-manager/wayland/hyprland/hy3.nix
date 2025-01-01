@@ -9,8 +9,8 @@
     # Tab group settings.
     tabs = {
       height = 24;
-      padding = 6;
-      rounding = 6;
+      padding = 0;
+      rounding = 0;
       text_height = 12;
       text_padding = 12;
 

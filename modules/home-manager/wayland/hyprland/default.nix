@@ -46,8 +46,8 @@
 
           # Basic look and feel.
           general = {
-            gaps_in = 5;
-            gaps_out = 20;
+            gaps_in = 0;
+            gaps_out = 0;
             border_size = 2;
             resize_on_border = true;
             layout = "hy3";
@@ -55,7 +55,7 @@
 
           # Window decorations.
           decoration = {
-            rounding = 10;
+            rounding = 0;
             active_opacity = 1.0;
             inactive_opacity = 1.0;
 
