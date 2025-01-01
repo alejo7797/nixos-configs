@@ -154,7 +154,7 @@
     vesktop yubioath-flutter
     zathura zoom-us zotero
 
-    # Use version from nixos-unstable.
+    # Use --enable-wayland-ime.
     unstable.spotify
 
     # Wine.

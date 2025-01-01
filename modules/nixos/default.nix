@@ -18,7 +18,9 @@
   # Allow unfree packages.
   nixpkgs.config.allowUnfree = true;
 
+  # Configure nixpkgs overlays.
   nixpkgs.overlays = [
+
     # Access nixpkgs-unstable.
     (self: super: {
       unstable = import inputs.nixpkgs-unstable {
@@ -33,6 +35,7 @@
         pkgs = super;
       };
     })
+
   ];
 
   # Limit the number of generations to keep in the bootloader.
