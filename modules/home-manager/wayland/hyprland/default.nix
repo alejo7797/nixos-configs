@@ -19,6 +19,9 @@
       # Use hy3 for i3-like behaviour.
       plugins = with pkgs.hyprlandPlugins; [ hy3 ];
 
+      # Prevent conflict with UWSM.
+      systemd.enable = false;
+
       settings = let
         uwsm = "${pkgs.uwsm}/bin/uwsm";
       in {
