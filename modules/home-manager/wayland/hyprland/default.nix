@@ -153,9 +153,6 @@
 
             "mouse_down, workspace, e+1"
             "mouse_up, workspace, e-1"
-
-            "mouse:272, movewindow"
-            "mouse:273, resizewindow"
           ]
 
           ++ map (x: "$mainMod SHIFT, " + x) [
@@ -199,6 +196,11 @@
           ", XF86AudioMicMute, exec, ${wpctl} set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
           ", XF86MonBrightnessUp, exec, ${brightnessctl} s 2%+"
           ", XF86MonBrightnessDown, exec, ${brightnessctl} s 2%-"
+        ];
+
+        bindm = map (x: "$mainMod, " + x) [
+          "mouse:272, movewindow"
+          "mouse:273, resize_window"
         ];
 
         bindn = [
