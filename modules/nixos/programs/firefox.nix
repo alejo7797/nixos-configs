@@ -27,7 +27,7 @@
               "h264ify"
               "indie-wiki-buddy"
               "keepassxc-browser"
-              "privacy-badger"
+              "privacy-badger17"
               "ublock-origin"
               "youtube-shorts-block"
             ];
