@@ -96,11 +96,5 @@
         ];
       };
 
-    # Help swayidle start under Hyprland.
-    systemd.user.services.swayidle = {
-      Service.RestartSec = "800ms";
-      Unit.ConditionEnvironment = lib.mkForce "";
-    };
-
   };
 }

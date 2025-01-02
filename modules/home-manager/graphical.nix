@@ -70,6 +70,7 @@
         keepassxc = graphical-service {
           Unit.Description = "KeepassXC password manager";
           Unit.After = [ "graphical-session.target" "waybar.service" ];
+          Service.ExecStartPre = "${pkgs.coreutils}/bin/sleep 5";
           Service.ExecStart = "${pkgs.keepassxc}/bin/keepassxc";
         };
 
