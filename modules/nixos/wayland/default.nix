@@ -18,12 +18,9 @@
     # Let hyprlock authenticate users.
     security.pam.services.hyprlock = {};
 
-    # Make nm-applet more resilient.
+    # Start nm-applet after WAYLAND_DISPLAY is set.
     systemd.user.services.nm-applet = {
-      serviceConfig = {
-        Restart = "on-failure";
-        RestartSec = "800ms";
-      };
+      after = [ "graphical-session.target" ];
     };
 
     # Install some Wayland-specific packages.

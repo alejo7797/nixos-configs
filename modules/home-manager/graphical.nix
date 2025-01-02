@@ -45,7 +45,10 @@
         graphical-service = (
           service:
             lib.recursiveUpdate {
-              Unit.PartOf = [ "graphical-session.target" ];
+              Unit = {
+                After = [ "graphical-session.target" ];
+                PartOf = [ "graphical-session.target" ];
+              };
               Service = {
                 Restart = "on-failure";
                 RestartSec = "800ms";
@@ -57,11 +60,6 @@
       in
 
       {
-        # Make xsettingsd more resilient.
-        xsettingsd = {
-          Service.Restart = lib.mkForce "on-failure";
-        };
-
         # Start polkit-gnome-agent as a user service.
         polkit-gnome-agent = graphical-service {
           Unit.Description = "GNOME polkit authentication daemon";
@@ -71,7 +69,6 @@
         # Start KeepassXC as a user service.
         keepassxc = graphical-service {
           Unit.Description = "KeepassXC password manager";
-          Unit.After = [ "waybar.service" ];
           Service.ExecStart = "${pkgs.keepassxc}/bin/keepassxc";
         };
 

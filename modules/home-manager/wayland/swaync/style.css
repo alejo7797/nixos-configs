@@ -12,7 +12,7 @@
 progress,
 progressbar,
 trough {
-  border: 1px solid @base0D;
+  border: 2px solid @base0D;
 }
 
 trough {
@@ -52,7 +52,7 @@ trough {
 .notification-action {
   color: @base05;
   background: @base01;
-  border: 1px solid @base0D;
+  border: 2px solid @base0D;
 }
 
 .notification-action:hover {
@@ -142,7 +142,7 @@ trough {
 
 .widget-title > button {
   background: @base01;
-  border: 1px solid @base0D;
+  border: 2px solid @base0D;
   color: @base05;
 }
 
@@ -156,7 +156,7 @@ trough {
 
 .widget-dnd > switch {
   background: @base01;
-  border: 1px solid @base0D;
+  border: 2px solid @base0D;
 }
 
 .widget-dnd > switch:hover {
@@ -177,7 +177,7 @@ trough {
 
 .widget-mpris .widget-mpris-player {
   background: @base01;
-  border: 1px solid @base0D;
+  border: 2px solid @base0D;
 }
 
 .widget-mpris .widget-mpris-player button:hover {
@@ -185,10 +185,10 @@ trough {
 }
 
 .widget-mpris .widget-mpris-player > box > button {
-  border: 1px solid @base0D;
+  border: 2px solid @base0D;
 }
 
 .widget-mpris .widget-mpris-player > box > button:hover {
   background: @base01;
-  border: 1px solid @base0D;
+  border: 2px solid @base0D;
 }

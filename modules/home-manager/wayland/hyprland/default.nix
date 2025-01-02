@@ -12,16 +12,17 @@
     # Install and configure wlogout.
     myHome.wlogout.enable = true;
 
-    # Increase the time between service start requests.
+    # Start user units after WAYLAND_DISPLAY gets set.
     systemd.user.services =
       let
-        extraDelay = { Service.RestartSec = "800ms"; };
+        startupDelay = { Unit.After = [ "graphical-session.target" ]; };
       in
       {
-        waybar = extraDelay;
-        kdeconnect = extraDelay;
-        kdeconnect-indicator = extraDelay;
-        xsettingsd = extraDelay;
+        gammastep = startupDelay;
+        kdeconnect = startupDelay;
+        kdeconnect-indicator = startupDelay;
+        waybar = startupDelay;
+        xsettingsd = startupDelay;
       };
 
     # Configure Hyprland, the tiling Wayland compositor.
