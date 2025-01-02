@@ -50,11 +50,7 @@
   };
 
   # Run Syncthing as a user service.
-  services.syncthing = {
-    enable = true;
-    cert = "/run/secrets/syncthing/cert.pem";
-    key = "/run/secrets/syncthing/key.pem";
-  };
+  services.syncthing.enable = true;
 
   # Configure Thunderbird.
   myHome.thunderbird.enable = true;

@@ -5,7 +5,6 @@
     ./zsh ./programs ./style
     ./autostart.nix ./i3.nix
     ./graphical.nix ./wayland
-    ./syncthing.nix
   ];
 
   options.myHome = {
