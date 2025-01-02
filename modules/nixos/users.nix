@@ -41,7 +41,6 @@
 
       # Sane defaults.
       isNormalUser = true;
-      initialPassword = "password";
       linger = true;
       shell = pkgs.zsh;
       extraGroups = [ "networkmanager" "wheel" ];

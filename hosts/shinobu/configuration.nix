@@ -54,6 +54,9 @@
   sops = {
     defaultSopsFile = ./sops.yaml;
     secrets = {
+      "my-password" = {
+        neededForUsers = true;
+      };
       "syncthing/cert.pem" = {
         owner = "ewan";
       };
@@ -68,6 +71,8 @@
     userConfig = ./home.nix;
     userSettings = {
       description = "Alex";
+      hashedPasswordFile =
+        "/run/secrets-for-users/my-password";
     };
   };
 
