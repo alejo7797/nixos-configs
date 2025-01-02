@@ -31,7 +31,7 @@ config = lib.mkIf config.myStyle.enable {
 
       emoji = {
         package = pkgs.noto-fonts-emoji;
-        name = "Noto Color Emoji";
+        name = "Noto Emoji";
       };
     };
 
