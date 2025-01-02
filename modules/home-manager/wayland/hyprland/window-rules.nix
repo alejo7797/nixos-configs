@@ -31,7 +31,7 @@
 
     # Floating window decorations.
     ++ map (e: "${e}, floating:1")[
-      "bordersize 2" "rounding 10"
+      "bordersize 2" "rounding 12"
     ]
 
     # Floating windows.
