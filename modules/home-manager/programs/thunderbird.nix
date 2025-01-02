@@ -91,6 +91,9 @@
 
           # Set a delay before marking messages as read.
           "mailnews.mark_message_read.delay" = true;
+
+          # Disable the start page.
+          "mailnews.start_page.enabled" = false;
         };
 
       };
