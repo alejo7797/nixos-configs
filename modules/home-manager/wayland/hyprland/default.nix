@@ -38,7 +38,7 @@
 
       settings =
         let
-          uwsm-app = "${pkgs.uwsm}/bin/uwsm-app";
+          uwsm-app = "${pkgs.uwsm}/bin/uwsm app";
         in
         {
           # Default terminal application.
