@@ -13,7 +13,6 @@
     programs.neovim = {
 
       coc = {
-
         enable = true;
 
         # Sensible Coc configuration.
@@ -75,7 +74,6 @@
         '';
 
         settings = {};
-
       };
 
       plugins = with pkgs.vimPlugins; [ coc-snippets coc-vimtex ];

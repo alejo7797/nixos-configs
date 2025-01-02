@@ -21,11 +21,13 @@
     services.blueman.enable = true;
     programs.dconf.enable = true;
     services.geoclue2.enable = true;
+    programs.gnome-disks.enable = true;
     services.gnome.gnome-keyring.enable = true;
     programs.kdeconnect.enable = true;
     programs.nm-applet.enable = true;
     services.pcscd.enable = true;
     services.ratbagd.enable = true;
+    services.udisks2.enable = true;
 
     # Enable XDG desktop integration.
     xdg.portal = {
@@ -33,11 +35,7 @@
       xdgOpenUsePortal = true;
     };
 
-    # Manage storage devices.
-    services.udisks2.enable = true;
-    programs.gnome-disks.enable = true;
-
-    # Install the following packages system-wide.
+    # Install the following packages.
     environment.systemPackages = with pkgs; [
 
       # System utilities.
@@ -65,6 +63,5 @@
       source-han-serif
       source-sans
     ];
-
   };
 }

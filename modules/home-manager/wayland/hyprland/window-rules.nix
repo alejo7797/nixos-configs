@@ -3,16 +3,21 @@
   wayland.windowManager.hyprland.settings.windowrulev2 =
 
     let
-      dolphin-dialogs = lib.concatStringsSep " "
+      dolphin-dialogs =
+        "title:^("
+        + lib.concatStringsSep "|"
         [
-          "class:^(org.kde.dolphin)$,"
-          "title:^(Creating directory|Copying|Moving|Deleting|Progress Dialog) — Dolphin$"
-        ];
+          "Creating directory"
+          "Copying"
+          "Moving"
+          "Deleting"
+          "Progress Dialog"
+        ]
+        + ") — Dolphin$";
     in
 
     # Default workspaces.
     map (w: "workspace ${toString w.ws} silent, ${w.criteria}") [
-      { ws = 1; criteria = "class:^(firefox)$"; }
       { ws = 1; criteria = "class:^(firefox)$"; }
       { ws = 1; criteria = "title:^((Home - )?Mozilla Thunderbird)$"; }
       { ws = 1; criteria = "class:^(@joplin\\/app-desktop)$"; }
@@ -20,30 +25,26 @@
       { ws = 3; criteria = "title:^(Minecraft\\* 1\\.\\d{1,2}\\.\\d)$"; }
       { ws = 3; criteria = "class:^(steam)$"; }
       { ws = 3; criteria = "class:^(steam_app_\\d*)$"; }
-      { ws = 6; criteria = "class:^(code-oss)$"; }
       { ws = 8; criteria = "class:^(vesktop)$"; }
       { ws = 9; criteria = "class:^(spotify)$"; }
     ]
 
     # Floating window decorations.
-    ++ [
-      "rounding 10, floating:1"
+    ++ map (e: "${e}, floating:1")[
+      "bordersize 2" "rounding 10"
     ]
 
     # Floating windows.
     ++ map (w: "float, ${w}") [
       "class:^(.blueman-manager-wrapped)$"
       "class:^(firefox)$, title:^(Picture-in-Picture)$"
-      "class:^(hyprland-share-picker)$"
       "class:^(org\\.keepassxc\\.KeePassXC)$"
       "class:^(net.lutris.Lutris), title:(Log for .*)$"
       "class:^(nm-connection-editor)$"
       "class:^(nm-openconnect-auth-dialog)$"
       "class:^(system-config-printer)$"
       "class:^(org.pulseaudio.pavucontrol)$"
-      "class:^(org.prismlauncher.PrismLauncher)$"
-      "class:^(thunderbird)$, title:^(Calendar Reminders)$"
-      "class:^(thunderbird)$, title:^(\\d* Reminders?)$"
+      "class:^(thunderbird)$, title:^(Calendar|\\d*) Reminders?$"
       "class:^(variety)$, title:^(Variety Images)$"
       "class:^(yubioath-flutter)$"
     ]
@@ -61,7 +62,8 @@
 
     # Variety wallpaper selector.
     ++ map (e: "${e}, class:^(variety)$, title:^(Variety Images)$") [
-      "rounding 0" "size 1920 120" "move 0 100%-w-30"
+      "bordersize 0" "rounding 0"
+      "size 1920 120" "move 0 100%-w-30"
     ]
 
     # Inhibit idle when fullscreen.

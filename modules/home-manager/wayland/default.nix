@@ -31,13 +31,6 @@
       systemdTarget = "graphical-session.target";
     };
 
-    # Patch the kanshi systemd user unit.
-    systemd.user.services.kanshi = {
-      Unit = {
-        ConditionEnvironment = "WAYLAND_DISPLAY";
-      };
-    };
-
     # Install and configure wofi.
     programs.wofi = {
       enable = true;

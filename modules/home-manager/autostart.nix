@@ -8,37 +8,38 @@
   config =
 
     let
-      stripVersion = with lib.strings; (packageName:
-        builtins.elemAt (splitString "-" packageName) 0
+      stripVersion = with lib.strings; (
+        packageName:
+          builtins.elemAt (splitString "-" packageName) 0
       );
-    in {
+    in
 
+    {
       xdg.configFile = builtins.listToAttrs (
 
         map
 
           (pkg: {
             name = "autostart/" + pkg.name + ".desktop";
-            value = if pkg ? desktopItem then
-              # We're happy.
-              { text = pkg.desktopItem.text; }
+            value =
+              let
+                desktopFile =
+                  if pkg ? desktopFile then
+                    pkg.desktopFile
+                  else
+                    "${stripVersion pkg.name}.desktop";
+              in
 
-            else { source = "${pkg}/share/applications/" + "${
-
-              if pkg ? desktopFile then
-                # We're confused.
-                "${pkg.desktopFile}"
-
+              if pkg ? desktopItem then
+                { text = pkg.desktopItem.text; }
               else
-                # We're annoyed.
-                "${stripVersion pkg.name}.desktop"}";
+                { source = "${pkg}/share/applications/${desktopFile}";
             };
           })
 
           config.myHome.xdgAutostart
 
       );
-
     };
 
 }

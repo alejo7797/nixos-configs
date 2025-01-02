@@ -45,7 +45,6 @@
 
         # Pretty dmesg output.
         dmesg = "sudo dmesg -H -e --color=always | less";
-
       };
 
       initExtraFirst = ''
@@ -123,6 +122,5 @@
       # Configure lsd, the next-gen ls command.
       "lsd/config.yaml".source = ./lsd-config.yaml;
     };
-
   };
 }

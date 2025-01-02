@@ -10,24 +10,14 @@
     # Manage my profile declaratively.
     profiles."${config.home.username}.default" = {
 
+      # Profile-specific extensions.
       extensions = with pkgs.nur.repos.rycee.firefox-addons; [
         augmented-steam
         betterttv
-        canvasblocker
         darkreader
-        decentraleyes
-        facebook-container
-        h264ify
-        indie-wiki-buddy
-        keepassxc-browser
-        privacy-badger
-        return-youtube-dislikes
         simple-tab-groups
         tampermonkey
-        to-google-translate
-        user-agent-string-switcher
         yomitan
-        youtube-shorts-block
         zotero-connector
       ];
 
@@ -105,9 +95,8 @@
             baseDomain = "ae433.user.srcf.net";
           }
           {
-            label = "archwiki";
-            url = "https://wiki.archlinux.org";
-            customScreenshotURL = "https://img.icons8.com/color/480/arch-linux.png";
+            label = "nixos";
+            url = "https://search.nixos.org";
           }
           {
             label = "patreon";

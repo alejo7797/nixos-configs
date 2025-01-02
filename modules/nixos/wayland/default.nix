@@ -29,12 +29,12 @@
     # Install some Wayland-specific packages.
     environment.systemPackages = with pkgs; [
 
-      bemenu hyprlock
+      bemenu hyprlock swaybg
       wf-recorder wl-clipboard
       libsForQt5.qt5.qtwayland
       kdePackages.qtwayland
+      kdePackages.xwaylandvideobridge
 
     ];
-
   };
 }

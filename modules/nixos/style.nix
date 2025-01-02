@@ -12,6 +12,12 @@
       platformTheme = "qt5ct";
     };
 
+    # Set theme variables early on.
+    environment.variables = {
+      GTK_THEME = "adw-gtk3";
+      QT_FONT_DPI = "120";
+    };
+
     # Enable common theme components.
     myStyle.enable = true;
 
@@ -30,6 +36,5 @@
       ilya-fedin.qt6ct
 
     ];
-
   };
 }

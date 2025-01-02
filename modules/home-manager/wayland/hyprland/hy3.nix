@@ -24,6 +24,5 @@
       "col.text.urgent" = "0xff1d1f21";
       "col.text.inactive" = "0xff969896";
     };
-
   };
 }

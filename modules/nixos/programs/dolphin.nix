@@ -29,7 +29,8 @@
       let
         plasma-applications = builtins.readFile
           "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
-      in {
+      in
+      {
         "/xdg/menus/sway-applications.menu".text = "${plasma-applications}";
         "/xdg/menus/Hyprland-applications.menu".text = "${plasma-applications}";
       };

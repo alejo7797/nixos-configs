@@ -34,8 +34,9 @@
           exit = "exit: [s]leep, [h]ibernate, [r]eboot, [p]oweroff";
           uwsm-app = "${pkgs.uwsm}/bin/uwsm-app";
           systemctl = "${pkgs.systemd}/bin/systemctl";
-        in {
+        in
 
+        {
           inherit modifier;
           terminal = "${uwsm-app} -- ${pkgs.kitty}/bin/kitty";
           menu = "${pkgs.wofi}/bin/wofi | ${pkgs.findutils}/bin/xargs swaymsg exec ${uwsm-app} --";
@@ -84,7 +85,6 @@
 
           startup = [
             { command = "${pkgs.xorg.xrdb}/bin/xrdb -load ~/.Xresources"; }
-            { command = "${uwsm-app} -- ${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; }
             { command = "${pkgs.bash}/bin/bash ${./sway-startup}"; }
           ];
 
@@ -97,7 +97,6 @@
               Escape = "mode default";
             };
           };
-
         };
 
     };

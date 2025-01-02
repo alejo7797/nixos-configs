@@ -21,7 +21,7 @@ trough {
 
 .notification.low,
 .notification.normal {
-  border: 1px solid @base0D;
+  border: 2px solid @base0D;
 }
 
 .notification.low progress,
@@ -30,7 +30,7 @@ trough {
 }
 
 .notification.critical {
-  border: 1px solid @base08;
+  border: 2px solid @base08;
 }
 
 .notification.critical progress {
@@ -116,7 +116,7 @@ trough {
 
 .control-center {
   background: @base00;
-  border: 1px solid @base0D;
+  border: 2px solid @base0D;
   color: @base05;
 }
 

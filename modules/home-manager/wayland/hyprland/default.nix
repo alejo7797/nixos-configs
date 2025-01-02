@@ -35,11 +35,10 @@
       systemd.enable = false;
 
       settings =
-
         let
           uwsm-app = "${pkgs.uwsm}/bin/uwsm-app";
-        in {
-
+        in
+        {
           # Default terminal application.
           "$terminal" = "${uwsm-app} -- ${pkgs.kitty}/bin/kitty";
 
@@ -127,6 +126,10 @@
           "$mainMod" = "SUPER";
           bind =
 
+            let
+              grimblast = "${pkgs.grimblast}/bin/grimblast";
+            in
+
             map (x: "$mainMod, ${x}") [
               "Return, exec, $terminal"
               "D, exec, $menu"
@@ -168,8 +171,8 @@
               "Q, killactive,"
               "Space, togglefloating,"
 
-              "X, exec, ${pkgs.grimblast}/bin/grimblast copysave area"
-              "Z, exec, ${pkgs.grimblast}/bin/grimblast copysave output"
+              "X, exec, ${grimblast} copysave area"
+              "Z, exec, ${grimblast} copysave output"
 
               "left, hy3:movewindow, l"
               "right, hy3:movewindow, r"
@@ -195,17 +198,30 @@
               "S, hy3:movetoworkspace, special:magic"
             ];
 
-          bindel = let
-            wpctl = "${pkgs.wireplumber}/bin/wpctl";
-            brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
-          in [
-            ", XF86AudioRaiseVolume, exec, ${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 4%+"
-            ", XF86AudioLowerVolume, exec, ${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 4%-"
-            ", XF86AudioMute, exec, ${wpctl} set-mute @DEFAULT_AUDIO_SINK@ toggle"
-            ", XF86AudioMicMute, exec, ${wpctl} set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-            ", XF86MonBrightnessUp, exec, ${brightnessctl} s 2%+"
-            ", XF86MonBrightnessDown, exec, ${brightnessctl} s 2%-"
-          ];
+          bindel =
+            let
+              wpctl = "${pkgs.wireplumber}/bin/wpctl";
+              brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
+            in
+            [
+              ", XF86AudioRaiseVolume, exec, ${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 4%+"
+              ", XF86AudioLowerVolume, exec, ${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 4%-"
+              ", XF86AudioMute, exec, ${wpctl} set-mute @DEFAULT_AUDIO_SINK@ toggle"
+              ", XF86AudioMicMute, exec, ${wpctl} set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+              ", XF86MonBrightnessUp, exec, ${brightnessctl} s 2%+"
+              ", XF86MonBrightnessDown, exec, ${brightnessctl} s 2%-"
+            ];
+
+          bindl =
+            let
+              playerctl = "${pkgs.playerctl}/bin/playerctl";
+            in
+            [
+              ", XF86AudioNext, exec, ${playerctl} next"
+              ", XF86AudioPause, exec, ${playerctl} play-pause"
+              ", XF86AudioPlay, exec, ${playerctl} play-pause"
+              ", XF86AudioPrev, exec, ${playerctl} previous"
+            ];
 
           bindm = map (x: "$mainMod, ${x}") [
             "mouse:272, movewindow"
@@ -215,7 +231,6 @@
           bindn = [
             ", mouse:272, hy3:focustab, mouse"
           ];
-
         };
 
     };

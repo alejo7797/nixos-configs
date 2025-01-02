@@ -17,8 +17,9 @@
           urgent = ""; # (!)
         };
       };
-    in {
+    in
 
+    {
       "sway/workspaces" = workspaces;
       "hyprland/workspaces" = workspaces;
 
@@ -120,7 +121,8 @@
       "custom/swaync" =
         let
           swaync-client = "${pkgs.swaynotificationcenter}/bin/swaync-client";
-        in {
+        in
+        {
           tooltip = false;
           format = "{icon}";
           format-icons =
@@ -146,7 +148,6 @@
       tray = {
         spacing = 10;
       };
-
     };
 
 }

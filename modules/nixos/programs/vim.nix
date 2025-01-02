@@ -12,6 +12,5 @@
       DIFFPROG = "vimdiff";
       EDITOR = "vim";
     };
-
   };
 }

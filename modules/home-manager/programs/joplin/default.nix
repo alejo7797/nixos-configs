@@ -33,6 +33,5 @@
       "icons/Papirus-Dark/32x32/apps/@joplinapp-desktop.svg".source =
         "${pkgs.papirus-icon-theme}/share/icons/Papirus-Dark/32x32/apps/joplin.svg";
     };
-
   };
 }

@@ -41,6 +41,5 @@ config = lib.mkIf config.myStyle.enable {
       name = "breeze_cursors";
       size = 24;
     };
-
   };
 }

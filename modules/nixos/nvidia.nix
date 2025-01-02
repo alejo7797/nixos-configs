@@ -25,6 +25,5 @@
       # Enable kernel modesetting.
       modesetting.enable = true;
     };
-
   };
 }

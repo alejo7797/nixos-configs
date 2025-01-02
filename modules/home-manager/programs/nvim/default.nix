@@ -30,8 +30,9 @@
       let
         # Set the <leader> key.
         leader = ",";
-      in {
+      in
 
+      {
         enable = true;
 
         # Symlink vim and vimdiff.
@@ -39,7 +40,6 @@
         vimdiffAlias = true;
 
         extraConfig = ''
-
           " Automatically write out, e.g. when changing buffers.
           set autowriteall
 
@@ -105,15 +105,12 @@
           " Enter insert mode when opening a terminal window.
           autocmd TermOpen * :startinsert
           autocmd BufEnter * if &buftype == 'terminal' | :startinsert | endif
-
         '';
 
+        # Install plugin dependencies.
         extraPackages = with pkgs; [
-
-          # Install plugin dependencies.
           black fd nixfmt-rfc-style
           ripgrep shfmt tree-sitter
-
         ];
 
         plugins = with pkgs.vimPlugins; [
@@ -165,7 +162,6 @@
               let mapleader = "${leader}"
 
               lua << END
-
                 -- Keep the window layout when deleting buffers.
                 require('mini.bufremove').setup()
                 vim.keymap.set("n", "<leader>x", "<cmd> lua MiniBufremove.delete()<CR>")
@@ -179,7 +175,6 @@
                 -- Add surroundings with `sa`.
                 -- More helpful commands available.
                 require('mini.surround').setup()
-
               END
             '';
           }
@@ -193,7 +188,6 @@
             plugin = nvim-tree-lua;
             config = ''
               lua << END
-
                 -- Disable netrw.
                 vim.g.loaded_netrw = 1
                 vim.g.loaded_netrwPlugin = 1
@@ -203,7 +197,6 @@
 
                 -- Open and close nvimtree.
                 vim.keymap.set("n", "<C-n>", "<cmd>NvimTreeToggle<CR>")
-
               END
             '';
           }
@@ -223,12 +216,10 @@
             plugin = nvim-web-devicons;
             config = ''
               lua << END
-
                 -- Do not enable devicons in the linux console.
                 if os.getenv("TERM") ~= linux then
                   require('nvim-web-devicons').setup()
                 end
-
               END
             '';
           }
@@ -272,5 +263,6 @@
           }
         ];
       };
+
   };
 }

@@ -16,16 +16,28 @@
         "DisableSetDesktopBackground" = true;
         "DisableTelemetry" = true;
 
+        # Essential Firefox addons.
         "Extensions" = {
-          "Install" = [
-            "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi"
-          ];
+          "Install" =
+            map (a: "https://addons.mozilla.org/firefox/downloads/latest/${a}/latest.xpi") [
+              "canvasblocker"
+              "decentraleyes"
+              "facebook-container"
+              "font-fingerprint-defender"
+              "h264ify"
+              "indie-wiki-buddy"
+              "keepassxc-browser"
+              "privacy-badger"
+              "ublock-origin"
+              "youtube-shorts-block"
+            ];
         };
 
         "Preferences" =
           let
             lock-false = { Value = false; Status = "locked"; };
-          in {
+          in
+          {
             "browser.newtabpage.activity-stream.showSponsored" = lock-false;
             "browser.newtabpage.activity-stream.showSponsoredTopSites" = lock-false;
             "browser.newtabpage.activity-stream.feeds.section.topstories" = lock-false;

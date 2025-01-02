@@ -42,7 +42,6 @@
         "custom/swaync"
         "tray"
       ];
-
     };
   };
 }

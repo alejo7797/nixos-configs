@@ -15,24 +15,26 @@
     ilya-fedin.url = "github:ilya-fedin/nur-repository";
   };
 
-  outputs = { ... }@inputs: let
+  outputs = { ... }@inputs:
 
-    myLib = import ./my-lib.nix { inherit inputs; };
+    let
+      myLib = import ./my-lib.nix { inherit inputs; };
+    in
 
-  in with myLib; {
+    with myLib; {
 
-    nixosConfigurations = {
-      "nixos-vm" = mkSystem ./hosts/nixos-vm/configuration.nix;
-      "shinobu" = mkSystem ./hosts/shinobu/configuration.nix;
-    };
+      nixosConfigurations = {
+        "nixos-vm" = mkSystem ./hosts/nixos-vm/configuration.nix;
+        "shinobu" = mkSystem ./hosts/shinobu/configuration.nix;
+      };
 
-    homeConfigurations = {
-      "ewan@shinobu" = mkHome "x86_64-linux" ./hosts/shinobu/home.nix;
-      "ewan@satsuki" = mkHome "x86_64-linux" ./hosts/satsuki/home.nix;
-    };
+      homeConfigurations = {
+        "ewan@shinobu" = mkHome "x86_64-linux" ./hosts/shinobu/home.nix;
+        "ewan@satsuki" = mkHome "x86_64-linux" ./hosts/satsuki/home.nix;
+      };
 
-    nixosModules.default = ./modules/nixos;
-    homeManagerModules.default = ./modules/home-manager;
+      nixosModules.default = ./modules/nixos;
+      homeManagerModules.default = ./modules/home-manager;
 
   };
 }

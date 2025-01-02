@@ -20,6 +20,5 @@
         helper = "${pkgs.gitFull}/bin/git-credential-libsecret";
       };
     };
-
   };
 }

@@ -14,7 +14,6 @@
           description = "Settings for the NixOS users module.";
           default = {};
         };
-
       };
     });
   };
@@ -25,14 +24,16 @@
     home-manager = {
       useGlobalPkgs = true;
       extraSpecialArgs = { inherit inputs outputs myLib; };
-      users = builtins.mapAttrs (name: user: { ... }: {
+      users = builtins.mapAttrs ( name: user:
 
-        imports = [
-          outputs.homeManagerModules.default
-          (import user.userConfig)
-        ];
+        { ... }: {
+          imports = [
+            outputs.homeManagerModules.default
+            (import user.userConfig)
+          ];
+        }
 
-      }) (config.myNixOS.home-users);
+      ) config.myNixOS.home-users;
     };
 
     # And define the user accounts themselves.
@@ -45,10 +46,8 @@
       shell = pkgs.zsh;
       extraGroups = [ "networkmanager" "wheel" ];
 
-    # With customisation.
     } // user.userSettings
 
     ) (config.myNixOS.home-users);
-
   };
 }

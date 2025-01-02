@@ -25,6 +25,5 @@
       # Patched to have correct selection colors.
       "kitty/current-theme.conf".source = ./current-theme.conf;
     };
-
   };
 }

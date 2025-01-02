@@ -12,9 +12,5 @@
       enable = true;
       withUWSM = true;
     };
-
-    # Add swaybg to the system PATH.
-    environment.systemPackages = with pkgs; [ swaybg ];
-
   };
 }

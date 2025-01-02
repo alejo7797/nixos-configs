@@ -43,6 +43,7 @@
 
   # Default networking configuration.
   networking = {
+
     # Use standard network interface names.
     usePredictableInterfaceNames = lib.mkDefault false;
 
@@ -98,5 +99,4 @@
     rsync unrar-free usbutils uv
     wireguard-tools wget yt-dlp
   ];
-
 }

@@ -9,14 +9,12 @@
 
     # Install sway, the i3-compatible Wayland compositor.
     programs.sway = {
-
       enable = true;
       wrapperFeatures.gtk = true;
       extraPackages = [ ];
 
       # Let sway now if we are using Nvidia drivers.
       extraOptions = lib.mkIf config.myNixOS.nvidia.enable [ "--unsupported-gpu" ];
-
     };
 
     # Configure UWSM to manage sway.
@@ -28,6 +26,5 @@
         comment = "Sway compositor managed by UWSM";
       };
     };
-
   };
 }
