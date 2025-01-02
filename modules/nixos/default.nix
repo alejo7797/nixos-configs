@@ -4,6 +4,7 @@
     # External modules.
     inputs.home-manager.nixosModules.home-manager
     inputs.nur.modules.nixos.default
+    inputs.sops-nix.nixosModules.sops
     inputs.stylix.nixosModules.stylix
 
     # My personal modules.
@@ -51,6 +52,15 @@
     firewall.checkReversePath = false;
   };
 
+  # Enable OpenSSH.
+  services.openssh = {
+    enable = true;
+    settings = {
+      # Force public-key authentication.
+      PasswordAuthentication = false;
+    };
+  };
+
   # Install and configure zsh.
   programs.zsh = {
     enable = true;
@@ -96,7 +106,7 @@
     jq libfido2 lm_sensors
     lsd ncdu neofetch nettools
     nmap procps p7zip psmisc
-    rsync unrar-free usbutils uv
+    rsync sops unrar usbutils uv
     wireguard-tools wget yt-dlp
   ];
 }

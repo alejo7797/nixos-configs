@@ -1,9 +1,11 @@
 keys:
   - &ewan 8bdb36aa99cc27fe449b6c7ec3d536936a43caa6
-  - &shinobu de0d1db6f7bf2dd1ad9ca9ae15423fecced7e629
+  - &shinobu age13wk7pjxgem2q4twvstmr3dwju7crjhqq5l7gz6g54vav69qjf98qan7s9z
 
-creation-rules:
-  - path_regex: hosts/shinobu/secrets/[^/]\.yaml$
-    pgp:
+creation_rules:
+  - path_regex: hosts/shinobu/secrets/[^/]+\.yaml$
+    key_groups:
+    - pgp:
       - *ewan
+      age:
       - *shinobu

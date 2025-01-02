@@ -19,11 +19,6 @@
         # Appropriate trust level.
         trust = "ultimate";
       }
-      {
-        # Shinobu sops host key.
-        source = ../../../keys/shinobu.asc;
-        trust = "full";
-      }
     ];
 
   };
