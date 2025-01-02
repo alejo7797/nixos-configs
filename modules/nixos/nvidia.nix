@@ -15,6 +15,14 @@
       extraPackages = with pkgs; [ nvidia-vaapi-driver ];
     };
 
+    # Early KMS start.
+    boot.kernelModules = [
+      "nvidia"
+      "nvidia_modeset"
+      "nvidia_uvm"
+      "nvidia_drm"
+    ];
+
     # Use Nvidia drivers in X11.
     services.xserver.videoDrivers = [ "nvidia" ];
 
