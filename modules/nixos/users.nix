@@ -43,10 +43,7 @@
       isNormalUser = true;
       linger = true;
       shell = pkgs.zsh;
-      extraGroups = [
-        "audio" "wheel"
-        "networkmanager"
-      ];
+      extraGroups = [ "networkmanager" "wheel" ];
 
     } // user.userSettings
 
