@@ -1,7 +1,9 @@
-#
-# Round off an image's corner,
+#! /usr/bin/env nix-shell
+#! nix-shell -i bash -p bash imagemagick
+# shellcheck shell=bash
+
+# Round off an image's corners,
 # e.g. to use as a favicon.
-#
 
 l=$(identify -format "%w" "$1")
 r=$(bc <<<"scale=0; $l/${2:-6.4}")

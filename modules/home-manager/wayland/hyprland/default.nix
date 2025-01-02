@@ -50,11 +50,8 @@
             "hyprctl dispatch exec ${uwsm-app} -- "
           ];
 
-          # Autostart.
-          exec-once = [
-            "hyprctl setcursor breeze_cursors 24"
-            "${pkgs.bash}/bin/bash ${./hypr-startup}"
-          ];
+          # Workspace autostart command.
+          exec-once = [ "${./hypr-startup}" ];
 
           # Basic look and feel.
           general = {

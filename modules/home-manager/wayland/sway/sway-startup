@@ -1,3 +1,7 @@
+#! /usr/bin/env nix-shell
+#! nix-shell -i bash -p bash
+# shellcheck shell=bash
+
 swaymsg workspace 4
 swaymsg exec uwsm app -- dolphin
 sleep 1.5

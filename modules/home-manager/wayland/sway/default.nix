@@ -55,6 +55,7 @@
           keybindings = let
 
             brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
+            grimshot = "${pkgs.sway-contrib.grimshot}/bin/grimshot";
             loginctl = "${pkgs.systemd}/bin/loginctl";
             pactl = "${pkgs.pulseaudio}/bin/pactl";
             playerctl = "${pkgs.playerctl}/bin/playerctl";
@@ -63,7 +64,7 @@
 
             "${modifier}+x" = "mode \"${exit}\"";
             "${modifier}+Shift+o" = "exec ${loginctl} lock-session";
-            "${modifier}+Shift+x" = "exec slurpshot";
+            "${modifier}+Shift+x" = "exec ${grimshot} savecopy output";
 
             # Use pactl to adjust volume in PulseAudio.
             "XF86AudioRaiseVolume" = "exec ${pactl} set-sink-volume @DEFAULT_SINK@ +4%";
@@ -84,8 +85,7 @@
           };
 
           startup = [
-            { command = "${pkgs.xorg.xrdb}/bin/xrdb -load ~/.Xresources"; }
-            { command = "${pkgs.bash}/bin/bash ${./sway-startup}"; }
+            { command = "${./sway-startup}"; }
           ];
 
           modes = lib.mkOptionDefault {

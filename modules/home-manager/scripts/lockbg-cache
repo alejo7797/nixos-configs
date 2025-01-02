@@ -1,7 +1,9 @@
-#
+#! /usr/bin/env nix-shell
+#! nix-shell -i bash -p bash imagemagick
+# shellcheck shell=bash
+
 # Solution to apply effects to the lock
 # screen wallpaper when using plain i3lock.
-#
 
 if [[ "$XDG_CURRENT_DESKTOP" = "i3" ]]; then
 

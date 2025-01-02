@@ -2,10 +2,10 @@
 
   imports = [
     # My personal modules.
-    ./zsh ./programs ./scripts
-    ./autostart.nix ./style
-    ./syncthing.nix ./i3.nix
+    ./zsh ./programs ./style
+    ./autostart.nix ./i3.nix
     ./graphical.nix ./wayland
+    ./syncthing.nix
   ];
 
   options.myHome = {
@@ -13,7 +13,6 @@
       description = "The system hostname.";
       example = "satsuki";
     };
-    laptop.enable = lib.mkEnableOption "laptop configuration";
   };
 
   config = {
@@ -34,5 +33,14 @@
 
     # Configure GnuPG.
     myHome.gpg.enable = true;
+
+    # Add our personal scripts to PATH.
+    home.sessionPath = [ "$HOME/.local/bin" ];
+
+    # Link in our personal scripts.
+    home.file.".local/bin" = {
+      source = ./scripts;
+      recursive = true;
+    };
   };
 }

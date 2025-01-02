@@ -1,10 +1,13 @@
-#
-# Wrapper around wttrbar to make it update based on location.
-#
+#! /usr/bin/env nix-shell
+#! nix-shell -i bash -p bash curl dig jq gnused wttrbar
+# shellcheck shell=bash
+
+# Wrapper around wttrbar to make
+# it update based on location.
 
 if [ -z "$1" ]; then
 
-    # Detect location from IP address
+    # Detect location from IP address.
     while true; do
         ip_address=$(dig +short myip.opendns.com @resolver1.opendns.com)
         if [ "$ip_address" = "45.61.48.237" ]; then
@@ -16,18 +19,18 @@ if [ -z "$1" ]; then
 
     location="$(curl -s -f "http://ip-api.com/json/$ip_address?fields=city,region")"
 
-    # Try city and region
+    # Try city and region.
     query=$(echo "$location" | jq -r '.city + "+" + .region' | sed 's/ /+/g')
     if (! curl -s -f "https://wttr.in/$query?format=j1" >/dev/null); then
 
-        # Give up, use only the city
+        # Give up, use only the city.
         query=$(echo "$location" | jq -r '.city' | sed 's/ /+/g')
 
     fi
 
 else
 
-    # Use given location
+    # Use given location.
     query=$1
 
 fi

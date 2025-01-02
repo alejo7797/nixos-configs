@@ -1,9 +1,5 @@
-#
-# Switch pulse audio sinks.
-# Only tested on satsuki.
-#
-
-system "switch-audio-profile >/dev/null"
+#! /usr/bin/env nix-shell
+#! nix-shell -i ruby -p ruby wireplumber
 
 state = IO.popen("wpctl status").read().split("\n")
 
