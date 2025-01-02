@@ -77,9 +77,20 @@
 
         isDefault = true;
 
+        search = {
+          default = "DuckDuckGo";
+          force = true;
+        };
+
         settings = {
+          # Privacy settings.
+          "network.cookie.cookieBehavior" = 1;
           "places.history.enabled" = false;
           "privacy.donottrackheader.enabled" = true;
+          "datareporting.healthreport.uploadEnabled" = false;
+
+          # Set a delay before marking messages as read.
+          "mailnews.mark_message_read.delay" = true;
         };
 
       };
