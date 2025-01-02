@@ -56,11 +56,9 @@
     secrets = {
       "syncthing/cert.pem" = {
         owner = "ewan";
-        mode = "0444";
       };
       "syncthing/key.pem" = {
         owner = "ewan";
-        mode = "0400";
       };
     };
   };
