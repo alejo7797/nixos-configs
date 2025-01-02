@@ -30,7 +30,7 @@
         { app_id = "^nm-openconnect-auth-dialog$"; }
         { app_id = "^org\\.pulseaudio\\.pavucontrol$"; }
         { class = "^XEyes$"; }
-        { title = "^Yubico Authenticator$"; }
+        { app_id = "^yubioath-flutter$"; }
 
     ];
 

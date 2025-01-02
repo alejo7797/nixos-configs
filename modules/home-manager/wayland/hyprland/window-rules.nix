@@ -45,7 +45,7 @@
       "class:^(thunderbird)$, title:^(Calendar Reminders)$"
       "class:^(thunderbird)$, title:^(\\d* Reminders?)$"
       "class:^(variety)$, title:^(Variety Images)$"
-      "class:^(authenticator)$, title:^(Yubico Authenticator)$"
+      "class:^(yubioath-flutter)$"
     ]
 
     # System tray.
