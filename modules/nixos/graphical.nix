@@ -34,6 +34,12 @@
       xdgOpenUsePortal = true;
     };
 
+    # Enable headless bluetooth support.
+    services.pipewire.socketActivation = false;
+    systemd.user.services.wireplumber = {
+      wantedBy = [ "default.target" ];
+    };
+
     # Install the following packages.
     environment.systemPackages = with pkgs; [
 
