@@ -15,7 +15,7 @@
     # Increase the time between service start requests.
     systemd.user.services =
       let
-        extraDelay = { Service.RestartSec = "400ms"; };
+        extraDelay = { Service.RestartSec = "800ms"; };
       in
       {
         waybar = extraDelay;
