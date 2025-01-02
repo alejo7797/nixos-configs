@@ -69,6 +69,7 @@
       source-han-sans
       source-han-serif
       source-sans
+      vistafonts
     ];
   };
 }
