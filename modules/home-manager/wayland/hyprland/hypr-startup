@@ -1,3 +1,4 @@
+sleep 1.2
 hyprctl dispatch workspace 4
 hyprctl dispatch exec uwsm-app -- dolphin
 sleep 1.2
