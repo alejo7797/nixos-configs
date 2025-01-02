@@ -28,10 +28,10 @@
         su = "sudo -i";
 
         # Rebuild NixOS system.
-        nixos-switch = "sudo nixos-rebuild switch --flake ~/.nix";
+        nixos-switch = "sudo nixos-rebuild switch --flake ~/Git/nixconfig";
 
         # Rebuild Home Manager environment.
-        home-switch = "home-manager switch --flake ~/.nix";
+        home-switch = "home-manager switch --flake ~/Git/nixconfig";
 
         # Clean up the Nix store.
         nix-cleanup = "sudo nix-collect-garbage -d";
