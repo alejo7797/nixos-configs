@@ -7,6 +7,9 @@
     # Configure my GnuPG user instance.
     enable = true;
 
+    # Prevent conflicts with pcscd.
+    scdaemonSettings.disable-ccid = true;
+
     # Import public keys into the keyring.
     publicKeys = [
       {
