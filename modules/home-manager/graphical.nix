@@ -69,6 +69,7 @@
         # Start KeepassXC as a user service.
         keepassxc = graphical-service {
           Unit.Description = "KeepassXC password manager";
+          Unit.After = [ "waybar.service" ];
           Service.ExecStart = "${pkgs.keepassxc}/bin/keepassxc";
         };
 

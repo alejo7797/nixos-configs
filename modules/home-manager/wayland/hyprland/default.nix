@@ -21,6 +21,7 @@
         gammastep = startupDelay;
         kdeconnect = startupDelay;
         kdeconnect-indicator = startupDelay;
+        swayidle = startupDelay;
         waybar = startupDelay;
         xsettingsd = startupDelay;
       };
