@@ -3,8 +3,8 @@
   # Did you read the comment?
   system.stateVersion = "24.11";
 
-  # Include the results of the hardware scan.
-  imports = [ ./hardware-configuration.nix ];
+  # Include hardware configuration.
+  imports = [ ./filesystems.nix ./hardware-configuration.nix ];
 
   # Enable swap.
   swapDevices = [ { device = "/var/swapfile"; size = 32768; } ];
@@ -15,23 +15,8 @@
   # Enable Bluetooth.
   hardware.bluetooth.enable = true;
 
-  # Mount extra partitions.
-  fileSystems = {
-
-    "/mnt/windows" = {
-      device = "/dev/disk/by-label/Windows";
-      fsType = "ntfs";
-    };
-
-    "/mnt/vault" = {
-      device = "/dev/disk/by-label/Vault";
-      fsType = "ntfs";
-    };
-  };
-
+  # Configure systemd-boot.
   boot.loader = {
-
-    # Use systemd-boot as our boot loader.
     systemd-boot = {
       enable = true;
 
@@ -59,7 +44,7 @@
 
   };
 
-  # Set the kernel parameters.
+  # Set the kernel command line parameters.
   boot.kernelParams = [ "quiet" "splash" "loglevel=3" "nowatchdog" ];
 
   # Set the hostname.

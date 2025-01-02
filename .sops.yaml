@@ -1,0 +1,9 @@
+keys:
+  - &ewan 8bdb36aa99cc27fe449b6c7ec3d536936a43caa6
+  - &shinobu de0d1db6f7bf2dd1ad9ca9ae15423fecced7e629
+
+creation-rules:
+  - path_regex: hosts/shinobu/secrets/[^/]\.yaml$
+    pgp:
+      - *ewan
+      - *shinobu

@@ -11,13 +11,18 @@
     publicKeys = [
       {
         # My personal OpenPGP public key.
-        source = builtins.fetchurl{
+        source = builtins.fetchurl {
           url = "https://alex.epelde.net/public-key.asc";
           sha256 = "1mijaxbqrc5mbwm9npbaf1vk8zbrrv3f4fc956kj98j7phb284gh";
         };
 
         # Appropriate trust level.
         trust = "ultimate";
+      }
+      {
+        # Shinobu sops host key.
+        source = ../../../keys/shinobu.asc;
+        trust = "full";
       }
     ];
 
