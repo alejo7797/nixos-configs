@@ -27,6 +27,9 @@
       # We install sway via a NixOS module.
       package = null;
 
+      # Avoid conflict with UWSM.
+      systemd.enable = false;
+
       config =
 
         let
