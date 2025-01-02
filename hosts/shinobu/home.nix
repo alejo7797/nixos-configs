@@ -1,7 +1,5 @@
 { pkgs, lib, config, ... }: {
 
-  imports = [ ./syncthing.nix ];
-
   # Set the system hostname.
   myHome.hostname = "shinobu";
 
@@ -49,6 +47,13 @@
         pointer_accel = "-1";
       };
     };
+  };
+
+  # Run Syncthing as a user service.
+  services.syncthing = {
+    enable = true;
+    cert = "/run/secrets/syncthing/cert.pem";
+    key = "/run/secrets/syncthing/key.pem";
   };
 
   # Configure Thunderbird.

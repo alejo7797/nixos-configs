@@ -50,6 +50,21 @@
   # Set the hostname.
   networking.hostName = "shinobu";
 
+  # Configure system secrets using sops-nix.
+  sops = {
+    defaultSopsFile = ./sops.yaml;
+    secrets = {
+      "syncthing/cert.pem" = {
+        owner = "ewan";
+        mode = "0444";
+      };
+      "syncthing/key.pem" = {
+        owner = "ewan";
+        mode = "0400";
+      };
+    };
+  };
+
   # Configure my user account.
   myNixOS.home-users."ewan" = {
     userConfig = ./home.nix;

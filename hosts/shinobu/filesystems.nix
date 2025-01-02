@@ -22,5 +22,6 @@
       device = "/dev/disk/by-label/Vault";
       fsType = "ntfs";
     };
+
   };
 }

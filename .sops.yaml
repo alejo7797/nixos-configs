@@ -3,7 +3,7 @@ keys:
   - &shinobu age13wk7pjxgem2q4twvstmr3dwju7crjhqq5l7gz6g54vav69qjf98qan7s9z
 
 creation_rules:
-  - path_regex: hosts/shinobu/secrets/[^/]+\.yaml$
+  - path_regex: hosts/shinobu/sops.yaml$
     key_groups:
     - pgp:
       - *ewan

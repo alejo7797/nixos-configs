@@ -25,7 +25,6 @@
     services.gnome.gnome-keyring.enable = true;
     programs.kdeconnect.enable = true;
     programs.nm-applet.enable = true;
-    services.pcscd.enable = true;
     services.ratbagd.enable = true;
     services.udisks2.enable = true;
 

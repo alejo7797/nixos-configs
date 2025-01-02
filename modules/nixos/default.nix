@@ -61,6 +61,9 @@
     };
   };
 
+  # Derive sops age key from host SSH key.
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+
   # Install and configure zsh.
   programs.zsh = {
     enable = true;
