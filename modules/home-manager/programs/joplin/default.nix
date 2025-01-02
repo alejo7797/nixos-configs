@@ -33,5 +33,17 @@
       "icons/Papirus-Dark/32x32/apps/@joplinapp-desktop.svg".source =
         "${pkgs.papirus-icon-theme}/share/icons/Papirus-Dark/32x32/apps/joplin.svg";
     };
+
+    # Ugly fix for autostarting joplin-desktop under XWayland.
+    wayland.windowManager =
+      let
+        uwsm-app = "${pkgs.uwsm}/bin/uwsm app";
+        joplin-desktop = "NIXOS_OZONE_WL= ${uwsm-app} -- joplin-desktop";
+      in
+      {
+        sway.config.startup = [ { command = "${joplin-desktop}"; } ];
+        hyprland.settings.exec-once = [ "${joplin-desktop}" ];
+      };
+
   };
 }

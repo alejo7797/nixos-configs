@@ -61,10 +61,8 @@
   # Autostart applications.
   myHome.xdgAutostart = with pkgs; [
 
-    unstable.spotify steam thunderbird vesktop zotero
-
-    # We need to specify the .desktop file manually.
-    (joplin-desktop // { desktopFile = "@joplinapp-desktop.desktop"; })
+    unstable.spotify steam
+    thunderbird vesktop zotero
 
   ];
 
