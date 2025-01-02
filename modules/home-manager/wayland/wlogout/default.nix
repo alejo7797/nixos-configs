@@ -77,14 +77,15 @@
 
         map
 
-          (a:
-            ''
-              #${a} {
-                background-image: image(
-                  url("${./icons}/${a}.png")
-                );
-              }
-            ''
+          (
+            a:
+              ''
+                #${a} {
+                  background-image: image(
+                    url("${./icons}/${a}.png")
+                  );
+                }
+              ''
           )
 
           [

@@ -43,19 +43,16 @@
 
       let
         graphical-service = (
-          u: {
-            Unit = {
-              Description = u.Description;
-              PartOf = [ "graphical-session.target" ];
-              After = [ "graphical-session-pre.target" ];
-            };
-            Service = {
-              ExecStart = u.ExecStart;
-              Restart = "on-failure";
-              RestartSec = "800ms";
-            };
-            Install.WantedBy = [ "graphical-session.target" ];
-          }
+          service:
+            lib.recursiveUpdate {
+              Unit.PartOf = [ "graphical-session.target" ];
+              Service = {
+                Restart = "on-failure";
+                RestartSec = "800ms";
+              };
+              Install.WantedBy = [ "graphical-session.target" ];
+            }
+            service
         );
       in
 
@@ -67,20 +64,21 @@
 
         # Start polkit-gnome-agent as a user service.
         polkit-gnome-agent = graphical-service {
-          Description = "GNOME polkit authentication daemon";
-          ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+          Unit.Description = "GNOME polkit authentication daemon";
+          Service.ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
         };
 
         # Start KeepassXC as a user service.
         keepassxc = graphical-service {
-          Description = "KeepassXC password manager";
-          ExecStart = "${pkgs.keepassxc}/bin/keepassxc";
+          Unit.Description = "KeepassXC password manager";
+          Unit.After = [ "waybar.service" ];
+          Service.ExecStart = "${pkgs.keepassxc}/bin/keepassxc";
         };
 
         # Start Variety as a user service.
         variety = graphical-service {
-          Description = "Variety wallpaper changer";
-          ExecStart = "${pkgs.variety}/bin/variety";
+          Unit.Description = "Variety wallpaper changer";
+          Service.ExecStart = "${pkgs.variety}/bin/variety";
         };
       };
 

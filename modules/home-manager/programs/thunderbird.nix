@@ -15,14 +15,14 @@
 
       (
         name: settings:
-        lib.recursiveUpdate
-        {
-          realName = "Alex Epelde";
-          userName = settings.address;
-          imap.port = 993;
-          thunderbird.enable = true;
-        }
-        settings
+          lib.recursiveUpdate
+          {
+            realName = "Alex Epelde";
+            userName = settings.address;
+            imap.port = 993;
+            thunderbird.enable = true;
+          }
+          settings
       )
 
       {
