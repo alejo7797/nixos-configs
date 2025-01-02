@@ -65,6 +65,7 @@
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-color-emoji
+      noto-fonts-monochrome-emoji
       source-han-sans
       source-han-serif
       source-sans
