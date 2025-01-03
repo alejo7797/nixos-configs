@@ -39,6 +39,7 @@
         width = "36%";
         allow_images = true;
         key_expand = "Ctrl-x";
+        drun-print_desktop_file = true;
       };
     };
 

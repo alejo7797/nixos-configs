@@ -38,7 +38,7 @@
 
       settings =
         let
-          uwsm-app = "${pkgs.uwsm}/bin/uwsm app";
+          uwsm-app = "${pkgs.uwsm}/bin/uwsm-app";
         in
         {
           # Default terminal application.
@@ -48,7 +48,7 @@
           "$menu" = lib.concatStringsSep " " [
             "${pkgs.wofi}/bin/wofi | "
             "${pkgs.findutils}/bin/xargs "
-            "hyprctl dispatch exec ${uwsm-app} -- "
+            "${uwsm-app} -- "
           ];
 
           # Workspace autostart command.
