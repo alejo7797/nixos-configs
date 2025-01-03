@@ -7,7 +7,7 @@
 
         userConfig = lib.mkOption {
           description = "Home Manager configuration path.";
-          default = ../../hosts/satsuki/home.nix;
+          type = lib.types.path;
         };
 
         userSettings = lib.mkOption {
@@ -23,6 +23,7 @@
     # Set up Home Manager given myNixOS.home-users.
     home-manager = {
       useGlobalPkgs = true;
+      backupFileExtension = "backup";
       extraSpecialArgs = { inherit inputs outputs myLib; };
       users = builtins.mapAttrs ( name: user:
 

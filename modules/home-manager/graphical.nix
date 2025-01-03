@@ -1,6 +1,5 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, config, ... }: {
 
-{
   options.myHome.graphical.enable = lib.mkEnableOption "basic graphical utilities";
 
   config = lib.mkIf config.myHome.graphical.enable {
