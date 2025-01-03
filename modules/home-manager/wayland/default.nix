@@ -15,6 +15,9 @@
     # Set environment variables using UWSM.
     xdg.configFile."uwsm/env".text = ''
 
+      # Access local scripts.
+      export PATH="$PATH''${PATH:+:}$HOME/.local/bin"
+
       # Set the cursor size.
       export XCURSOR_SIZE=24
       export HYPRCURSOR_SIZE=24
