@@ -3,8 +3,9 @@
   imports = [
     # External modules.
     inputs.home-manager.nixosModules.home-manager
-    inputs.nur.modules.nixos.default
+    inputs.impermanence.nixosModules.impermanence
     inputs.sops-nix.nixosModules.sops
+    inputs.nur.modules.nixos.default
     inputs.stylix.nixosModules.stylix
 
     # My personal modules.
