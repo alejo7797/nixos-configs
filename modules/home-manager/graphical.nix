@@ -1,5 +1,6 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }:
 
+{
   options.myHome.graphical.enable = lib.mkEnableOption "basic graphical utilities";
 
   config = lib.mkIf config.myHome.graphical.enable {
@@ -33,6 +34,16 @@
     services.kdeconnect = {
       enable = true;
       indicator = true;
+    };
+
+    # Configure Fcitx5.
+    xdg.configFile."fcitx5" = {
+      source = ./fcitx5/config;
+      recursive = true;
+    };
+    xdg.dataFile."fcitx5" = {
+      source = ./fcitx5/data;
+      recursive = true;
     };
 
     # Configure additional user services.
