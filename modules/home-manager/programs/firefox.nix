@@ -97,6 +97,7 @@
           {
             label = "nixos";
             url = "https://search.nixos.org";
+            customScreenshotURL = "https://patchoulihq.cc/nix-logo.png";
           }
           {
             label = "patreon";
