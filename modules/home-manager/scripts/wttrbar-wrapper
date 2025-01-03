@@ -1,5 +1,5 @@
 #! /usr/bin/env nix-shell
-#! nix-shell -i bash -p bash curl dig jq gnused wttrbar
+#! nix-shell -i bash -p bash curl dig jq gnused
 # shellcheck shell=bash
 
 # Wrapper around wttrbar to make

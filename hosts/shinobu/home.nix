@@ -1,5 +1,6 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }:
 
+{
   # Set the system hostname.
   myHome.hostname = "shinobu";
 
@@ -60,10 +61,8 @@
 
   # Autostart applications.
   myHome.xdgAutostart = with pkgs; [
-
     firefox unstable.spotify steam
     thunderbird vesktop zotero
-
   ];
 
   # Set the location used by gammastep manually.
@@ -74,5 +73,4 @@
       lat = 40; lon = -4;
     };
   };
-
 }

@@ -182,6 +182,5 @@
         collection-langcyrillic
         ;
     })
-
   ];
 }
