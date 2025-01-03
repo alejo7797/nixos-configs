@@ -2,7 +2,7 @@
 
   options.myNixOS.nvidia.enable = lib.mkEnableOption "Nvidia";
 
-  config = {
+  config = lib.mkIf config.myNixOS.nvidia.enable {
 
     hardware.graphics = {
       # Enable hardware-accelerated graphics.
