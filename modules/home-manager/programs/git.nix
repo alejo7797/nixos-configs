@@ -4,20 +4,21 @@
 
   config.programs.git = lib.mkIf config.myHome.git.enable {
 
-    # Configure Git.
+    # Configure my Git profile.
     enable = true;
+    package = pkgs.gitFull;
 
-    # Configure my Git identity.
+    # Set my identity.
     userName = "Alex Epelde";
     userEmail = "alex@epelde.net";
 
     # And set some basic options.
     extraConfig = {
-      init = {
-        defaultBranch = "master";
-      };
+      init.defaultBranch = "master";
+      pull.ff = "only";
       credential = {
-        helper = "${pkgs.gitFull}/bin/git-credential-libsecret";
+        helper = "git-credential-libsecret";
+        interactive = true;
       };
     };
   };

@@ -8,19 +8,14 @@
     myNixOS.graphical.enable = true;
 
     # Install dolphin and all that's good with it.
-    environment.systemPackages = with pkgs; [
+    environment.systemPackages = with pkgs.kdePackages; [
 
-      kdePackages.ark
-      kdePackages.dolphin
-      kdePackages.dolphin-plugins
-      kdePackages.ffmpegthumbs
-      kdePackages.gwenview
-      kdePackages.kfind
-      kdePackages.kimageformats
-      kdePackages.kio-admin
-      kdePackages.kio-extras
-      kdePackages.konsole
-      kdePackages.qtsvg
+      ark dolphin dolphin-plugins
+      ffmpegthumbs gwenview
+      kdegraphics-thumbnailers
+      kfind kimageformats
+      kio-admin kio-extras konsole
+      qtimageformats qtsvg taglib
 
     ];
 
