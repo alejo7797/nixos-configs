@@ -26,7 +26,8 @@
         pkgs = pkgsFor sys;
         extraSpecialArgs = { inherit inputs outputs myLib; };
         modules = [ config outputs.homeManagerModules.default ]
-          ++ [ inputs.stylix.homeManagerModules.stylix ];
+          ++ [ inputs.stylix.homeManagerModules.stylix ]
+          ++ [ inputs.nur.modules.homeManager.default ];
       };
 
     # Set an attribute across each of GTK2/3/4.

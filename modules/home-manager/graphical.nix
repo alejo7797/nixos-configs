@@ -59,6 +59,9 @@
         );
       in
 
+      # Satsuki is not ready for this yet.
+      lib.mkIf (config.myHome.hostname != "satsuki")
+
       {
         # Start polkit-gnome-agent as a user service.
         polkit-gnome-agent = graphical-service {

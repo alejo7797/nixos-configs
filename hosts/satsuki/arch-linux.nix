@@ -3,9 +3,13 @@
   # These services get managed natively.
   services.gammastep.enable = lib.mkForce false;
   services.kdeconnect.enable = lib.mkForce false;
+  services.mpris-proxy.enable = lib.mkForce false;
   services.swaync.enable = lib.mkForce false;
   programs.waybar.enable = lib.mkForce false;
   services.xsettingsd.enable = lib.mkForce false;
+  
+  # Let's leave Firefox alone for now.
+  myHome.firefox.enable = lib.mkForce false;
 
   programs.zsh = {
     # Host specific plugins.

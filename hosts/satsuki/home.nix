@@ -1,5 +1,6 @@
 { pkgs, lib, config, ... }: {
 
+  # Arch Linux quirks.
   imports = [ ./arch-linux.nix ];
 
   # Set the system hostname.
