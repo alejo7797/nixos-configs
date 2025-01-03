@@ -14,11 +14,18 @@
     ./wayland ./graphical.nix ./style.nix
   ];
 
-  # Enable flakes support.
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix = {
+    # Enable flakes support.
+    settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # Disable nix-channel.
-  nix.channel.enable = false;
+    # Disable channels.
+    channel.enable = false;
+
+    # Use the version of nixpkgs given by our flake.
+    registry.nixpkgs.flake = inputs.nixpkgs;
+    nixPath = [ "nixpkgs=flake:nixpkgs" ];
+  };
+
 
   # Allow unfree packages.
   nixpkgs.config.allowUnfree = true;

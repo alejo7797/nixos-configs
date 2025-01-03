@@ -33,9 +33,6 @@
         # Rebuild Home Manager environment.
         home-switch = "home-manager switch --flake ~/Git/nixconfig";
 
-        # Clean up the Nix store.
-        nix-cleanup = "sudo nix-collect-garbage -d";
-
         # Manage connection to my VPN server.
         vpnup   = "nmcli c up Koakuma_VPN";
         vpndown = "nmcli c down Koakuma_VPN";
