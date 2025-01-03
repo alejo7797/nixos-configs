@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }: {
+{ inputs, pkgs, lib, config, ... }: {
 
   imports = [
     # My personal modules.
@@ -15,9 +15,6 @@
   };
 
   config = {
-    # Allow unfree packages.
-    nixpkgs.config.allowUnfree = true;
-
     # Let Home Manager install and manage itself.
     programs.home-manager.enable = true;
 
