@@ -38,6 +38,7 @@
     # Configure Fcitx5.
     xdg.configFile."fcitx5" = {
       source = ./fcitx5/config;
+      force = true;
       recursive = true;
     };
     xdg.dataFile."fcitx5" = {

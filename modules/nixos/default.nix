@@ -14,10 +14,10 @@
     ./wayland ./graphical.nix ./style.nix
   ];
 
-  # Enable Nix flakes support.
+  # Enable flakes support.
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # Disable nix-channels.
+  # Disable nix-channel.
   nix.channel.enable = false;
 
   # Allow unfree packages.
