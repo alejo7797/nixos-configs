@@ -17,6 +17,9 @@
   # Enable Nix flakes support.
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  # Disable nix-channels.
+  nix.channel.enable = false;
+
   # Allow unfree packages.
   nixpkgs.config.allowUnfree = true;
 
