@@ -3,6 +3,7 @@
   options.myHome.xdgAutostart = lib.mkOption {
     type = lib.types.listOf lib.types.package;
     description = "List of programs to run at system startup.";
+    default = [ ];
   };
 
   config =

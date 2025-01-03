@@ -23,9 +23,6 @@
     # Configure Firefox.
     myHome.firefox.enable = true;
 
-    # XDG autostart applications.
-    myHome.xdgAutostart = with pkgs; [ firefox ];
-
     # Enable the xsettings daemon.
     services.xsettingsd.enable = true;
 

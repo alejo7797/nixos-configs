@@ -61,7 +61,7 @@
   # Autostart applications.
   myHome.xdgAutostart = with pkgs; [
 
-    unstable.spotify steam
+    firefox unstable.spotify steam
     thunderbird vesktop zotero
 
   ];
