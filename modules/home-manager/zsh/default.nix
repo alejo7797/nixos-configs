@@ -1,6 +1,6 @@
 { pkgs, lib, myLib, config, ... }: {
 
-  options.myHome.zsh.enable = lib.mkEnableOption "zsh configuration";
+  options.myHome.zsh.enable = lib.mkEnableOption "Zsh configuration";
 
   config = lib.mkIf config.myHome.zsh.enable {
 
@@ -9,16 +9,14 @@
       enable = true;
 
       sessionVariables = {
-
         # Configure OhMyZsh.
         DISABLE_AUTO_TITLE="true";
         ENABLE_CORRECTION = "true";
         COMPLETION_WAITING_DOTS = "true";
         HIST_STAMPS = "yyyy-mm-dd";
-
       };
 
-      # Configure some useful aliases.
+      # Some useful aliases.
       shellAliases = {
 
         # https://github.com/lsd-rs/lsd
@@ -30,10 +28,10 @@
         su = "sudo -i";
 
         # Rebuild NixOS system.
-        nixos-switch = "sudo nixos-rebuild switch --flake ~/.nix";
+        nixos-switch = "sudo nixos-rebuild switch --flake ~/Git/nixconfig";
 
         # Rebuild Home Manager environment.
-        home-switch = "home-manager switch --flake ~/.nix";
+        home-switch = "home-manager switch --flake ~/Git/nixconfig";
 
         # Clean up the Nix store.
         nix-cleanup = "sudo nix-collect-garbage -d";
@@ -47,7 +45,6 @@
 
         # Pretty dmesg output.
         dmesg = "sudo dmesg -H -e --color=always | less";
-
       };
 
       initExtraFirst = ''
@@ -58,7 +55,6 @@
       '';
 
       initExtra = ''
-
         # Accept autosuggestion with Shift+Tab
         bindkey '^[[Z' autosuggest-accept
 
@@ -71,7 +67,6 @@
         exit_zsh() { exit }
         zle -N exit_zsh
         bindkey '^D' exit_zsh
-
       '';
 
       # Use OhMyZsh to load useful plugins.
@@ -79,13 +74,13 @@
         enable = true;
 
         plugins = [
-          "alias-finder" "dirhistory" "git"
-          "git-auto-fetch" "history" "python"
-          "rsync" "safe-paste" "sudo" "systemd"
+          "alias-finder" "dirhistory"
+          "git" "git-auto-fetch" "history"
+          "python" "rsync" "safe-paste"
+          "sudo" "systemd" "zbell"
         ];
 
         extraConfig = ''
-
           # Suppress notifications
           zbell_ignore=( dotfiles nix-shell git
                          htop less man powertop
@@ -95,7 +90,6 @@
           zstyle ':omz:plugins:alias-finder' autoload yes
           zstyle ':omz:plugins:alias-finder' exact yes
           zstyle ':omz:plugins:alias-finder' cheaper yes
-
         '';
       };
 
@@ -124,10 +118,9 @@
 
     };
 
-    xdg.configFile = with myLib; {
+    xdg.configFile = {
       # Configure lsd, the next-gen ls command.
       "lsd/config.yaml".source = ./lsd-config.yaml;
     };
-
   };
 }

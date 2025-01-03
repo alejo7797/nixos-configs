@@ -24,10 +24,5 @@
         };
       };
     };
-
-    # As opposed to when using SDDM, we need this
-    # to be available early on in the login process.
-    environment.variables.QT_FONT_DPI = 120;
-
   };
 }

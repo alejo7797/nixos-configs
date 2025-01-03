@@ -1,0 +1,11 @@
+keys:
+  - &ewan 8bdb36aa99cc27fe449b6c7ec3d536936a43caa6
+  - &shinobu age13wk7pjxgem2q4twvstmr3dwju7crjhqq5l7gz6g54vav69qjf98qan7s9z
+
+creation_rules:
+  - path_regex: hosts/shinobu/sops.yaml$
+    key_groups:
+    - pgp:
+      - *ewan
+      age:
+      - *shinobu

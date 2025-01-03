@@ -1,0 +1,14 @@
+#! /usr/bin/env nix-shell
+#! nix-shell -i bash -p bash
+# shellcheck shell=bash
+
+sleep 1.2
+hyprctl dispatch workspace 4
+hyprctl dispatch exec uwsm-app -- dolphin
+sleep 1.2
+hyprctl dispatch exec uwsm-app -- kitty
+sleep 0.6
+hyprctl dispatch hy3:movewindow right
+hyprctl dispatch hy3:makegroup tab
+hyprctl dispatch workspace 5
+hyprctl dispatch workspace 1

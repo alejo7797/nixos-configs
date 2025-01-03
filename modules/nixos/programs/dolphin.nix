@@ -1,11 +1,11 @@
 { pkgs, lib, config, ... }: {
 
-  options.myNixOS.dolphin.enable = lib.mkEnableOption "the dolphin ecosystem";
+  options.myNixOS.dolphin.enable = lib.mkEnableOption "the Dolphin ecosystem";
 
   config = lib.mkIf config.myNixOS.dolphin.enable {
 
     # Pull this in just in case.
-    myNixOS.graphical-environment = true;
+    myNixOS.graphical.enable = true;
 
     # Install dolphin and all that's good with it.
     environment.systemPackages = with pkgs; [
@@ -15,6 +15,7 @@
       kdePackages.dolphin-plugins
       kdePackages.ffmpegthumbs
       kdePackages.gwenview
+      kdePackages.kfind
       kdePackages.kimageformats
       kdePackages.kio-admin
       kdePackages.kio-extras
@@ -24,12 +25,15 @@
     ];
 
     # This fixes the unpopulated MIME menus.
-    environment.etc = let
-      plasma-applications = builtins.readFile
-        "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
-    in {
-      "/xdg/menus/sway-applications.menu".text = "${plasma-applications}";
-      "/xdg/menus/Hyprland-applications.menu".text = "${plasma-applications}";
-    };
+    environment.etc =
+      let
+        plasma-applications = builtins.readFile
+          "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
+      in
+      {
+        "/xdg/menus/sway-applications.menu".text = "${plasma-applications}";
+        "/xdg/menus/Hyprland-applications.menu".text = "${plasma-applications}";
+      };
+
   };
 }

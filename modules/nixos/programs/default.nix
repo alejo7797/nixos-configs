@@ -1,9 +1,9 @@
 { pkgs, lib, config, ... }: {
 
   imports = [
-
-    ./dolphin.nix ./fcitx5.nix ./vim.nix
-
+    ./dolphin.nix ./firefox.nix
+    ./thunderbird.nix
+    ./fcitx5.nix ./vim.nix
   ];
 
 }

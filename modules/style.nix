@@ -6,9 +6,16 @@ config = lib.mkIf config.myStyle.enable {
 
     # Enable and configure Stylix.
     stylix.enable = true;
+
+    # Specifying an image is mandatory.
+    stylix.image = builtins.fetchurl {
+      url = "https://w.wallhaven.cc/full/zy/wallhaven-zye9ry.jpg";
+      sha256 = "16d5pch4544knygndsslmh682fxp6sqwn5b9vnrb35ji7m5zfcm0";
+    };
+
+    # Set the color scheme.
     stylix.polarity = "dark";
-    stylix.image = ./wallpaper.png;
-    stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/tomorrow-night.yaml";
+    stylix.base16Scheme = ./tomorrow-night.yaml;
 
     # Configure our desired fonts.
     stylix.fonts = {
@@ -41,6 +48,5 @@ config = lib.mkIf config.myStyle.enable {
       name = "breeze_cursors";
       size = 24;
     };
-
   };
 }

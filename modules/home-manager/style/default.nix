@@ -9,9 +9,6 @@
     # Enable common theme components.
     myStyle.enable = true;
 
-    # Ensure GTK applications use the correct theme.
-    home.sessionVariables.GTK_THEME = "adw-gtk3";
-
     # Fix the look of QT applications.
     xdg.configFile = {
       "kdeglobals".source = ./kdeglobals;
@@ -23,9 +20,6 @@
     dconf.settings."org/gnome/desktop/interface" = {
       text-scaling-factor = 1.25;
     };
-
-    # And also for QT apps.
-    home.sessionVariables.QT_FONT_DPI = 120;
 
     # Use Papirus as our icon theme.
     stylix.iconTheme = {

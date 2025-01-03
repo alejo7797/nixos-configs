@@ -8,7 +8,6 @@
       {
         plugin = ale;
         config = ''
-
           " Use specific linters for these filetypes.
           let g:ale_linters = {
           \   'python': ['flake8'],
@@ -44,7 +43,6 @@
 
           " Stop latexindent from creating log files in the working directory.
           let g:ale_tex_latexindent_options = '-y="defaultIndent:'''    '''" -c /tmp'
-
         '';
       }
     ];

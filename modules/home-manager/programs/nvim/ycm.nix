@@ -2,11 +2,7 @@
 
   options.myHome.neovim.ycm.enable = lib.mkEnableOption "YouCompleteMe";
 
-  config = let
-
-    cfg = config.myHome.neovim;
-
-  in lib.mkIf cfg.ycm.enable {
+  config = lib.mkIf config.myHome.neovim.ycm.enable {
 
     # Disable nvim-cmp.
     myHome.neovim.nvim-cmp.enable = false;
@@ -15,13 +11,11 @@
       {
         plugin = YouCompleteMe;
         config = ''
-
           " VimTex integration.
           if !exists('g:ycm_semantic_triggers')
             let g:ycm_semantic_triggers = {}
           endif
           au VimEnter * let g:ycm_semantic_triggers.tex=g:vimtex#re#youcompleteme
-
         '';
       }
     ];

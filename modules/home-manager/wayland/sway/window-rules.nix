@@ -9,30 +9,38 @@
         { app_id = "^thunderbird$"; }
         { class = "^Joplin$"; }
       ];
-      "2" = [{ app_id = "^Zotero$"; }];
+
+      "2" = [
+        { app_id = "^Zotero$"; }
+      ];
+
       "3" = [
         { class = "^steam$"; }
         { class = "^steam_app_\d*"; }
         { title = "^Minecraft\* 1\.\d{1,2}\.\d$"; }
       ];
-      "8" = [{ class = "^vesktop$"; }];
-      "9" = [{ class = "^Spotify$"; }];
+
+      "8" = [
+        { class = "^vesktop$"; }
+      ];
+
+      "9" = [
+        { class = "^Spotify$"; }
+      ];
     };
 
     # Floating windows.
     floating.criteria = [
-        { window_type = "dialog"; }
-        { window_role = "dialog"; }
-        { app_id = "^blueman-manager$"; }
-        { app_id = "^org\\.keepassxc\\.KeePassXC$"; }
-        { app_id = "^lutris$"; title = "Log for .*"; }
-        { app_id = "^nm-connection-editor$"; }
-        { app_id = "^nm-openconnect-auth-dialog$"; }
-        { app_id = "^org\\.pulseaudio\\.pavucontrol$"; }
-        { app_id = "^qt\\dct$"; }
-        { class = "^XEyes$"; }
-        { title = "^Yubico Authenticator$"; }
-
+      { window_type = "dialog"; }
+      { window_role = "dialog"; }
+      { app_id = "^blueman-manager$"; }
+      { app_id = "^org\\.keepassxc\\.KeePassXC$"; }
+      { app_id = "^lutris$"; title = "Log for .*"; }
+      { app_id = "^nm-connection-editor$"; }
+      { app_id = "^nm-openconnect-auth-dialog$"; }
+      { app_id = "^org\\.pulseaudio\\.pavucontrol$"; }
+      { class = "^XEyes$"; }
+      { app_id = "^yubioath-flutter$"; }
     ];
 
     window.commands =
@@ -68,7 +76,7 @@
         command = "float, no_focus, resize set 450 160, move position 1460 880";
         criteria = {
           app_id = "^org\\.kde\\.dolphin$";
-          title = "^(?:Creating directory|Copying|Moving|Deleting|Progress Dialog) — Dolphin$";
+          title = "^(Creating directory|Copying|Moving|Deleting|Progress Dialog) — Dolphin$";
         };
       }]
 

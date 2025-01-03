@@ -3,8 +3,8 @@
   # Did you read the comment?
   system.stateVersion = "24.11";
 
-  # Include the results of the hardware scan.
-  imports = [ ./hardware-configuration.nix ];
+  # Include hardware configuration.
+  imports = [ ./filesystems.nix ./hardware-configuration.nix ];
 
   # Enable swap.
   swapDevices = [ { device = "/var/swapfile"; size = 32768; } ];
@@ -15,23 +15,8 @@
   # Enable Bluetooth.
   hardware.bluetooth.enable = true;
 
-  # Mount extra partitions.
-  fileSystems = {
-
-    "/mnt/windows" = {
-      device = "/dev/disk/by-label/Windows";
-      fsType = "ntfs";
-    };
-
-    "/mnt/vault" = {
-      device = "/dev/disk/by-label/Vault";
-      fsType = "ntfs";
-    };
-  };
-
+  # Configure systemd-boot.
   boot.loader = {
-
-    # Use systemd-boot as our boot loader.
     systemd-boot = {
       enable = true;
 
@@ -46,13 +31,11 @@
       };
 
       extraInstallCommands = ''
-
         # Do not show the auto-generated Windows entry.
         echo "auto-entries false" >>/boot/loader/loader.conf
 
         # Set Windows as the default boot entry.
         ${pkgs.gnused}/bin/sed -i 's/default .*/default windows_11.conf/' /boot/loader/loader.conf
-
       '';
     };
 
@@ -61,22 +44,40 @@
 
   };
 
-  # Set the kernel parameters.
+  # Set the kernel command line parameters.
   boot.kernelParams = [ "quiet" "splash" "loglevel=3" "nowatchdog" ];
 
   # Set the hostname.
   networking.hostName = "shinobu";
+
+  # Configure system secrets using sops-nix.
+  sops = {
+    defaultSopsFile = ./sops.yaml;
+    secrets = {
+      "my-password" = {
+        neededForUsers = true;
+      };
+      "syncthing/cert.pem" = {
+        owner = "ewan";
+      };
+      "syncthing/key.pem" = {
+        owner = "ewan";
+      };
+    };
+  };
 
   # Configure my user account.
   myNixOS.home-users."ewan" = {
     userConfig = ./home.nix;
     userSettings = {
       description = "Alex";
+      hashedPasswordFile =
+        "/run/secrets-for-users/my-password";
     };
   };
 
   # Enable YubiKey-based passwordless sudo.
-  myNixOS.passwordlessSudo = true;
+  myNixOS.passwordlessSudo.enable = true;
 
   # Use NetworkManager together with systemd-resolved.
   networking.networkmanager.enable = true;
@@ -91,7 +92,7 @@
     keyMap = "us";
   };
 
-  # Use tuigreet to log us in.
+  # Use tuigreet to log in.
   myNixOS.tuigreet.enable = true;
 
   # Install Hyprland, the tiling Wayland compositor.
@@ -122,13 +123,6 @@
   services.saned.enable = true;
   users.users.ewan.extraGroups = [ "scanner" ];
 
-  # Enable and configure syncthing.
-  services.syncthing = {
-    enable = true;
-    user = "ewan";
-    dataDir = "/home/ewan";
-  };
-
   # Enable my custom system theme.
   myNixOS.style.enable = true;
 
@@ -153,16 +147,16 @@
   # Install the following packages system-wide.
   environment.systemPackages = with pkgs; [
 
-    # Hardware support.
-    ntfs3g
-
     # Actual programs.
     filezilla gimp inkscape
     joplin-desktop plex-desktop
-    qbittorrent simple-scan spotify
+    qbittorrent simple-scan
     ungoogled-chromium variety
     vesktop yubioath-flutter
     zathura zoom-us zotero
+
+    # Wayland IME support.
+    unstable.spotify
 
     # Wine.
     wineWowPackages.stable
@@ -188,6 +182,5 @@
         collection-langcyrillic
         ;
     })
-
   ];
 }

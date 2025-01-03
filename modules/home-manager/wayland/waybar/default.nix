@@ -5,6 +5,11 @@
   # Style waybar ourselves.
   stylix.targets.waybar.enable = false;
 
+  # Module dependencies.
+  home.packages =
+    lib.optionals (config.myHome.hostname == "shinobu")
+    [ pkgs.wttrbar ];
+
   # Install and configure waybar.
   programs.waybar = {
 
@@ -42,7 +47,6 @@
         "custom/swaync"
         "tray"
       ];
-
     };
   };
 }

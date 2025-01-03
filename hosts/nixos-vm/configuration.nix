@@ -9,6 +9,13 @@
   # QEMU guest settings.
   virtualisation.qemu.options = [ "-device virtio-vga" ];
 
+  # Use systemd-boot as our boot loader.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  # Set the kernel parameters.
+  boot.kernelParams = [ "quiet" "splash" "loglevel=3" "nowatchdog" ];
+
   # Set the hostname.
   networking.hostName = "nixos-vm";
 
@@ -19,16 +26,6 @@
       description = "Alex";
     };
   };
-
-  # Enable my custom system theme.
-  myNixOS.style.enable = true;
-
-  # Use systemd-boot as our boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  # Set the kernel parameters.
-  boot.kernelParams = [ "quiet" "splash" "loglevel=3" "nowatchdog" ];
 
   # Use NetworkManager together with systemd-resolved.
   networking.networkmanager.enable = true;
@@ -46,11 +43,11 @@
   # Use tuigreet to log us in.
   myNixOS.tuigreet.enable = true;
 
-  # Install sway, the i3-compatible Wayland compositor.
-  myNixOS.sway.enable = true;
-
   # Install Hyprland, the tiling Wayland compositor.
   myNixOS.hyprland.enable = true;
+
+  # Install sway, the i3-compatible Wayland compositor.
+  myNixOS.sway.enable = true;
 
   # Enable sound support.
   security.rtkit.enable = true;
@@ -64,11 +61,18 @@
   # Configure Fcitx5 as our input method.
   myNixOS.fcitx5.enable = true;
 
-  # Enable printing-related services.
+  # Enable CUPS.
   services.printing.enable = true;
   services.avahi.enable = true;
-  services.saned.enable = true;
   services.system-config-printer.enable = true;
+
+  # Enable SANE.
+  hardware.sane.enable = true;
+  services.saned.enable = true;
+  users.users.ewan.extraGroups = [ "scanner" ];
+
+  # Enable my custom system theme.
+  myNixOS.style.enable = true;
 
   # Install Dolphin and related KDE applications.
   myNixOS.dolphin.enable = true;
@@ -97,9 +101,9 @@
     # Actual programs.
     filezilla gimp inkscape
     joplin-desktop plex-desktop
-    qbittorrent spotify
-    ungoogled-chromium
-    variety yubioath-flutter
+    qbittorrent simple-scan spotify
+    ungoogled-chromium variety
+    vesktop yubioath-flutter
     zathura zoom-us zotero
 
     # Wine.
@@ -108,7 +112,8 @@
 
     # Gaming.
     gamescope lutris
-    prismlauncher vesktop
+    prismlauncher
+    unigine-heaven
 
     # Coding.
     biber black clang

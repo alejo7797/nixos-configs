@@ -1,6 +1,6 @@
 { pkgs, lib, config, ... }: {
 
-  options.myNixOS.fcitx5.enable = lib.mkEnableOption "fcitx5";
+  options.myNixOS.fcitx5.enable = lib.mkEnableOption "Fcitx5";
 
   config = lib.mkIf config.myNixOS.fcitx5.enable {
 
@@ -22,6 +22,5 @@
       SDL_IM_MODULE = "fcitx";
       XMODIFIERS = "@im=fcitx";
     };
-
   };
 }

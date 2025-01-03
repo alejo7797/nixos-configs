@@ -1,0 +1,34 @@
+#!/bin/bash
+
+WP=$1
+
+SIMPLE_WMS=("i3" "i3-with-shmlog")
+if [[ " ${SIMPLE_WMS[*]} " = *" $XDG_CURRENT_DESKTOP "* ]]; then
+    if command -v "feh" >/dev/null 2>&1; then
+        feh --bg-fill "$WP" 2>/dev/null
+    fi
+fi
+
+read -ra PID <<<"$(pidof swaybg)"
+WAYLAND_WMS=("sway" "Hyprland")
+if [[ -n "${PID[0]}" || " ${WAYLAND_WMS[*]} " = *" $XDG_CURRENT_DESKTOP "* ]]; then
+    if command -v "swaybg" >/dev/null 2>&1; then
+        swaybg -i "$WP" -m fill &
+        if [ -n "$PID" ]; then
+            sleep 1
+            kill "${PID[@]}" 2>/dev/null
+        fi
+    else
+        swaymsg output "*" bg "$WP" fill 2>/dev/null
+    fi
+fi
+
+# Hyprland with hyprpaper implementation
+#if [ "$XDG_CURRENT_DESKTOP" == "Hyprland" ]; then
+#    hyprctl hyprpaper reload ", $1"
+#fi
+
+[ -d "$HOME/.config/i3" ] && echo "new_wp" >"$HOME/.config/i3/.wp_status"
+[ -d "$HOME/.config/hypr" ] && magick "$1" "$HOME/.config/hypr/wall.png"
+
+exit 0

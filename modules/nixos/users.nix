@@ -7,14 +7,13 @@
 
         userConfig = lib.mkOption {
           description = "Home Manager configuration path.";
-          default = ../hosts/satsuki/home.nix;
+          type = lib.types.path;
         };
 
         userSettings = lib.mkOption {
           description = "Settings for the NixOS users module.";
           default = {};
         };
-
       };
     });
   };
@@ -24,15 +23,18 @@
     # Set up Home Manager given myNixOS.home-users.
     home-manager = {
       useGlobalPkgs = true;
+      backupFileExtension = "backup";
       extraSpecialArgs = { inherit inputs outputs myLib; };
-      users = builtins.mapAttrs (name: user: { ... }: {
+      users = builtins.mapAttrs ( name: user:
 
-        imports = [
-          outputs.homeManagerModules.default
-          (import user.userConfig)
-        ];
+        { ... }: {
+          imports = [
+            outputs.homeManagerModules.default
+            (import user.userConfig)
+          ];
+        }
 
-      }) (config.myNixOS.home-users);
+      ) config.myNixOS.home-users;
     };
 
     # And define the user accounts themselves.
@@ -40,14 +42,12 @@
 
       # Sane defaults.
       isNormalUser = true;
-      initialPassword = "password";
+      linger = true;
       shell = pkgs.zsh;
       extraGroups = [ "networkmanager" "wheel" ];
 
-    # With customisation.
     } // user.userSettings
 
     ) (config.myNixOS.home-users);
-
   };
 }

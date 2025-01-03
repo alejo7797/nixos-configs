@@ -1,6 +1,6 @@
 { pkgs, lib, config, ... }: {
 
-  options.myNixOS.vim.enable = lib.mkEnableOption "vim";
+  options.myNixOS.vim.enable = lib.mkEnableOption "Vim";
 
   config = lib.mkIf config.myNixOS.vim.enable {
 
@@ -12,6 +12,5 @@
       DIFFPROG = "vimdiff";
       EDITOR = "vim";
     };
-
   };
 }

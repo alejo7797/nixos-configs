@@ -1,18 +1,24 @@
+@define-color base00 #1d1f21; @define-color base01 #282a2e; @define-color base02 #373b41; @define-color base03 #969896;
+@define-color base04 #b4b7b4; @define-color base05 #c5c8c6; @define-color base06 #e0e0e0; @define-color base07 #ffffff;
+
+@define-color base08 #cc6666; @define-color base09 #de935f; @define-color base0A #f0c674; @define-color base0B #b5bd68;
+@define-color base0C #8abeb7; @define-color base0D #81a2be; @define-color base0E #b294bb; @define-color base0F #a3685a;
 
 * {
-  font-family: "Noto Sans", "Font Awesome 6 Free Solid",
+  font-family: "Noto Sans CJK JP", "Font Awesome 6 Free Solid",
     "Font Awesome 6 Brands Regular", "Font Awesome 6 Pro Solid";
   font-weight: 500;
   font-size: 15px;
 }
 
 window#waybar, tooltip {
-  background: #1d1f21;
-  color: #c5c8c6;
+  background: @base00;
+  color: @base05;
 }
 
 tooltip {
-  border-color: #81a2be;
+  border: 2px solid @base0D;
+  border-radius: 12px;
 }
 
 button {
@@ -25,16 +31,16 @@ button {
 
 button:hover {
   background: inherit;
-  box-shadow: inset 0 -3px #c5c8c6;
+  box-shadow: inset 0 -3px @base05;
 }
 
 #workspaces button.focused,
 #workspaces button.active {
-  box-shadow: inset 0 -3px #81a2be;
+  box-shadow: inset 0 -3px @base0D;
 }
 
 #workspaces button.urgent {
-  background-color: #cc6666;
+  background-color: @base08;
 }
 
 #submap,
@@ -65,7 +71,7 @@ button:hover {
 }
 
 #battery.critical:not(.charging) {
-  background-color: #cc6666;
+  background-color: @base08;
   animation-name: blink;
   animation-duration: 0.5s;
   animation-timing-function: steps(12);

@@ -1,0 +1,96 @@
+/* For styling the entire Joplin app (except the rendered Markdown, which is defined in `userstyle.css`) */
+
+body {
+  --background: #1d1f21;
+  --current-line: #282a2e;
+  --selection: #373b41;
+  --foreground: #c5c8c6;
+  --border: #c5c8c64d;
+  --red: #cc6666;
+  --orange: #de935f;
+  --yellow: #f0c674;
+  --green: #b5bd68;
+  --aqua: #8abeb7;
+  --blue: #81a2be;
+  --purple: #b294bb;
+  --primary: var(--blue);
+
+  --joplin-background-color3: var(--background);
+  --joplin-background-color-hover3: var(--selection);
+  --joplin-divider-color: var(--background);
+  --joplin-selected-color: var(--current-line);
+  --joplin-url-color: var(--blue);
+}
+
+.note-list {
+  box-sizing: border-box;
+  width: calc(100% + 50px) !important;
+}
+
+.new-todo-button,
+.new-note-button,
+.sort-order-field-button,
+.sort-order-reverse-button,
+.editor-toolbar,
+.cm-jn-code-block-background,
+.rli-noteList > div > div > div {
+  background: var(--background) !important;
+}
+
+.icon-search,
+.new-todo-button span,
+.new-note-button span,
+.sort-order-field-button span,
+.sort-order-reverse-button span {
+  color: var(--primary) !important;
+}
+
+.new-note-button,
+.search-bar input {
+  border: 1px solid var(--border) !important;
+}
+
+.CodeMirror-cursor {
+  border-left: 1px solid var(--foreground) !important;
+}
+
+.cm-enhancement-finished-task {
+  text-decoration: none !important;
+  opacity: 1 !important;
+}
+
+.cm-header-1 {
+  color: var(--purple) !important;
+}
+
+.cm-header-2 {
+  color: var(--green) !important;
+}
+
+.cm-header-3 {
+  color: var(--aqua) !important;
+}
+
+.cm-header-4 {
+  color: var(--purple) !important;
+}
+
+.cm-rm-link {
+  color: var(--blue) !important;
+}
+
+.cm-link-text,
+.cm-comment {
+  color: var(--foreground) !important;
+}
+
+.cm-link {
+  text-decoration: none !important;
+}
+
+.cm-rm-em-token,
+.cm-rm-header-token,
+.cm-rm-strong-token,
+.cm-rm-backtick-token {
+  display: none;
+}

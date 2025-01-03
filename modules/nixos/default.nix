@@ -1,16 +1,17 @@
 { inputs, pkgs, lib, ... }: {
 
   imports = [
-
     # External modules.
     inputs.home-manager.nixosModules.home-manager
+    inputs.impermanence.nixosModules.impermanence
+    inputs.sops-nix.nixosModules.sops
+    inputs.nur.modules.nixos.default
     inputs.stylix.nixosModules.stylix
 
     # My personal modules.
     ./users.nix ./pam.nix ./locale.nix
     ./tuigreet.nix ./programs ./nvidia.nix
     ./wayland ./graphical.nix ./style.nix
-
   ];
 
   # Enable Nix flakes support.
@@ -19,9 +20,24 @@
   # Allow unfree packages.
   nixpkgs.config.allowUnfree = true;
 
-  # Access ilya-fedin's repository.
+  # Configure nixpkgs overlays.
   nixpkgs.overlays = [
-    (self: super: { ilya-fedin = import inputs.ilya-fedin { pkgs = super; }; })
+
+    # Access nixpkgs-unstable.
+    (self: super: {
+      unstable = import inputs.nixpkgs-unstable {
+        inherit (super) system;
+        config.allowUnfree = true;
+      };
+    })
+
+    # Access ilya-fedin's repository.
+    (self: super: {
+      ilya-fedin = import inputs.ilya-fedin {
+        pkgs = super;
+      };
+    })
+
   ];
 
   # Limit the number of generations to keep in the bootloader.
@@ -35,8 +51,20 @@
 
     # Wireguard trips up rpfilter.
     firewall.checkReversePath = false;
-
   };
+
+  # Enable OpenSSH.
+  services.openssh = {
+    enable = true;
+    settings = {
+      # Force public-key authentication.
+      PasswordAuthentication = false;
+    };
+  };
+
+  # Derive sops age key from host SSH key.
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+  sops.gnupg.sshKeyPaths = [ ];
 
   # Install and configure zsh.
   programs.zsh = {
@@ -60,14 +88,11 @@
   # Enable polkit.
   security.polkit.enable = true;
 
-  # Install git.
+  # Install Git.
   programs.git = {
     enable = true;
     package = pkgs.gitFull;
   };
-
-  # Enable the SSH agent.
-  programs.ssh.startAgent = true;
 
   # Install direnv.
   programs.direnv.enable = true;
@@ -84,10 +109,9 @@
     curl dig file findutils
     ffmpeg htop imagemagick
     jq libfido2 lm_sensors
-    lsd  neofetch nettools
-    nmap procps psmisc rsync
-    unrar usbutils uv
+    lsd ncdu neofetch nettools
+    nmap procps p7zip psmisc
+    rsync sops unrar usbutils uv
     wireguard-tools wget yt-dlp
   ];
-
 }
