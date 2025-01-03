@@ -36,3 +36,5 @@ else
 fi
 
 wttrbar --location "$query" --custom-indicator "{temp_C}°C  {ICON}"
+
+# vim:ft=sh

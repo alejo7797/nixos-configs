@@ -1,5 +1,5 @@
 #! /usr/bin/env nix-shell
-#! nix-shell -i bash -p bash imagemagick
+#! nix-shell -i bash -p bash bc imagemagick
 # shellcheck shell=bash
 
 # Round off an image's corners,
@@ -18,3 +18,5 @@ magick "$1" .__tmp__mask__.png \
     -composite "${1%.*}_rounded_corners.png"
 
 rm .__tmp__mask__.png
+
+# vim:ft=sh

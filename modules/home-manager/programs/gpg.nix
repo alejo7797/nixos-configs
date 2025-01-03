@@ -3,9 +3,13 @@
   options.myHome.gpg.enable = lib.mkEnableOption "GnuPG configuration";
 
   config.programs.gpg = lib.mkIf config.myHome.gpg.enable {
+    enable = true;
 
     # Configure my GnuPG user instance.
-    enable = true;
+    settings = {
+      keyserver = "hkps://keys.openpgp.org";
+      with-keygrip = true;
+    };
 
     # Prevent conflicts with pcscd.
     scdaemonSettings.disable-ccid = true;

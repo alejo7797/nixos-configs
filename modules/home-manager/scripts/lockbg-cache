@@ -7,11 +7,11 @@
 
 if [[ "$XDG_CURRENT_DESKTOP" = "i3" ]]; then
 
-    cd ~/.config/i3 || exit 1
+    cd "$XDG_CONFIG_HOME/i3" || exit 1
 
     if [[ "$(<.wp_status)" = "new_wp" ]]; then
 
-        magick "$(<~/.config/variety/wallpaper/wallpaper.jpg.txt)" \
+        magick "$(<"$XDG_CONFIG_HOME"/variety/wallpaper/wallpaper.jpg.txt)" \
             -resize 1920x1080^ \
             -gravity center \
             -extent 1920x1080 \
@@ -26,3 +26,5 @@ if [[ "$XDG_CURRENT_DESKTOP" = "i3" ]]; then
     fi
 
 fi
+
+# vim:ft=sh

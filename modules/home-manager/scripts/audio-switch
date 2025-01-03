@@ -29,3 +29,5 @@ end
 
 puts "Setting default sink to #{new_sink}"
 system "wpctl set-default #{new_sink}"
+
+# vim:ft=ruby

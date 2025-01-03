@@ -1,5 +1,5 @@
 #! /usr/bin/env nix-shell
-#! nix-shell -i bash -p bash id3v2 openssh
+#! nix-shell -i bash -p bash toybox id3v2 openssh
 # shellcheck shell=bash
 
 # Upload a new episode of the Sleep Deprived Podcast
@@ -10,3 +10,5 @@ ep_no=$(echo "$1" | sed -e 's/[^0-9]/ /g' | xargs | cut -d ' ' -f 1)
 id3v2 -a "Aztro, Mika, Schlatt & pandah" -A "The Sleep Deprived Podcast" -t "Episode $ep_no" -T "$ep_no" -y "2001" -g "Pop" "$1"
 
 scp "$1" "patchouli:/data/natsuhi/media/Music/Aztro, Mika, Schlatt & pandah/The Sleep Deprived Podcast/$ep_no - Episode $ep_no.mp3"
+
+# vim:ft=sh
