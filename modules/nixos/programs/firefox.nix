@@ -1,8 +1,12 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
+
+  cfg = config.myNixOS.firefox;
+
+in {
 
   options.myNixOS.firefox.enable = lib.mkEnableOption "Firefox";
 
-  config = lib.mkIf config.myNixOS.firefox.enable {
+  config = lib.mkIf cfg.enable {
 
     # Install and configure Firefox.
     programs.firefox = {

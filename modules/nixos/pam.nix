@@ -1,6 +1,14 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
 
-  options.myNixOS.pam.sudo.yubikey = lib.mkEnableOption "passwordless sudo";
+  cfg = config.myNixOS.pam;
+
+in {
+
+  options.myNixOS.pam = {
+
+    sudo.yubikey = lib.mkEnableOption "passwordless sudo";
+
+  };
 
   config.security.pam = {
 
@@ -11,7 +19,7 @@
     };
 
     # Enable Yubikey-based passwordless sudo.
-    services.sudo.u2fAuth = config.myNixOS.pam.sudo.yubikey;
+    services.sudo.u2fAuth = cfg.sudo.yubikey;
 
   };
 }

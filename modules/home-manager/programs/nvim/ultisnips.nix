@@ -1,8 +1,12 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
+
+  cfg = config.myHome.neovim.ultisnips;
+
+in {
 
   options.myHome.neovim.ultisnips.enable = lib.mkEnableOption "ultisnips";
 
-  config = lib.mkIf config.myHome.neovim.ultisnips.enable {
+  config = lib.mkIf cfg.enable {
 
     programs.neovim.plugins = with pkgs.vimPlugins; [
       {

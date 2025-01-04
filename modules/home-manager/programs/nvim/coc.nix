@@ -1,8 +1,12 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
+
+  cfg = config.myHome.neovim.coc;
+
+in {
 
   options.myHome.neovim.coc.enable = lib.mkEnableOption "coc";
 
-  config = lib.mkIf config.myHome.neovim.coc.enable {
+  config = lib.mkIf cfg.enable {
 
     # Disable nvim-cmp.
     myHome.neovim.nvim-cmp.enable = false;

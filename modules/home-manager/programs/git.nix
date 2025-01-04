@@ -1,8 +1,12 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
+
+  cfg = config.myHome.git;
+
+in {
 
   options.myHome.git.enable = lib.mkEnableOption "Git configuration";
 
-  config.programs.git = lib.mkIf config.myHome.git.enable {
+  config.programs.git = lib.mkIf cfg.enable {
 
     # Configure my Git profile.
     enable = true;

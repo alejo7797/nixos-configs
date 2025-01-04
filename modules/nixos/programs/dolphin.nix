@@ -1,8 +1,12 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
+
+  cfg = config.myNixOS.dolphin;
+
+in {
 
   options.myNixOS.dolphin.enable = lib.mkEnableOption "the Dolphin ecosystem";
 
-  config = lib.mkIf config.myNixOS.dolphin.enable {
+  config = lib.mkIf cfg.enable {
 
     # Pull this in just in case.
     myNixOS.graphical.enable = true;

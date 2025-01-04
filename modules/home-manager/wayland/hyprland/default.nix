@@ -1,10 +1,14 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
+
+  cfg = config.myHome.hyprland;
+
+in {
 
   imports = [ ./hy3.nix ./window-rules.nix ];
 
   options.myHome.hyprland.enable = lib.mkEnableOption "Hyprland configuration";
 
-  config = lib.mkIf config.myHome.hyprland.enable {
+  config = lib.mkIf cfg.enable {
 
     # Install and configure a bunch of wayland-specific utilities.
     myHome.wayland.enable = true;

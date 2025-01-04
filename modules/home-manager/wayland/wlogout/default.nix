@@ -1,8 +1,12 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
+
+  cfg = config.myHome.wlogout;
+
+in {
 
   options.myHome.wlogout.enable = lib.mkEnableOption "wlogout";
 
-  config = lib.mkIf config.myHome.wlogout.enable {
+  config = lib.mkIf cfg.enable {
 
     # Install and configure wlogout.
     programs.wlogout = {
@@ -53,48 +57,48 @@
         }
 
         button {
-          color: #ffffff;
           font-size: 18px;
           background-color: #1d1f21;
-          border-radius: 0;
-          background-repeat: no-repeat;
           background-position: center;
+          background-repeat: no-repeat;
           background-size: 25%;
+          border-radius: 0;
         }
 
         button:focus {
           outline-style: none;
         }
 
-        button:active,
-        button:hover {
+        button:active, button:hover {
           background-color: #81a2be;
           outline-style: none;
         }
-      ''
 
-      + lib.concatStringsSep "\n" (
+        #lock {
+          background-image: image(url("${./icons}/lock.png"));
+        }
 
-        map
+        #logout {
+          background-image: image(url("${./icons}/logout.png"));
+        }
 
-          (
-            a:
-              ''
-                #${a} {
-                  background-image: image(
-                    url("${./icons}/${a}.png")
-                  );
-                }
-              ''
-          )
+        #suspend {
+          background-image: image(url("${./icons}/suspend.png"));
+        }
 
-          [
-            "lock" "logout"
-            "suspend" "hibernate"
-            "shutdown" "reboot"
-          ]
+        #hibernate {
+          background-image: image(url("${./icons}/hibernate.png"));
+        }
 
-      );
-    };
+        #shutdown {
+          background-image: image(url("${./icons}/shutdown.png"));
+        }
+
+        #reboot {
+          background-image: image(url("${./icons}/reboot.png"));
+        }
+      '';
+
+     };
   };
 }

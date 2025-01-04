@@ -1,8 +1,12 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
+
+  cfg = config.myNixOS.nvidia;
+
+in {
 
   options.myNixOS.nvidia.enable = lib.mkEnableOption "Nvidia";
 
-  config = lib.mkIf config.myNixOS.nvidia.enable {
+  config = lib.mkIf cfg.enable {
 
     hardware.graphics = {
       # Enable hardware-accelerated graphics.

@@ -1,10 +1,14 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
+
+  cfg = config.myNixOS.style;
+
+in {
 
   imports = [ ../style.nix ];
 
   options.myNixOS.style.enable = lib.mkEnableOption "system theme components";
 
-  config = lib.mkIf config.myNixOS.style.enable {
+  config = lib.mkIf cfg.enable {
 
     # Style QT applications consistently.
     qt = {

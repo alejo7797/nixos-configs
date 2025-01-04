@@ -1,8 +1,12 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
+
+  cfg = config.myHome.neovim.nvim-cmp;
+
+in {
 
   options.myHome.neovim.nvim-cmp.enable = lib.mkEnableOption "nvim-cmp";
 
-  config = lib.mkIf config.myHome.neovim.nvim-cmp.enable {
+  config = lib.mkIf cfg.enable {
 
     programs.neovim.plugins = with pkgs.vimPlugins; [
       {

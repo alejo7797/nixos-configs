@@ -1,10 +1,14 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
+
+  cfg = config.myHome.neovim;
+
+in {
 
   imports = [ ./ale.nix ./coc.nix ./nvim-cmp.nix ./ultisnips.nix ./ycm.nix ];
 
   options.myHome.neovim.enable = lib.mkEnableOption "neovim";
 
-  config = lib.mkIf config.myHome.neovim.enable {
+  config = lib.mkIf cfg.enable {
 
     # Ensure the undodir gets created.
     home.file.".cache/nvim/undodir/README".text = "Created by Home Manager.";

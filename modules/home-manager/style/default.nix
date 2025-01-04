@@ -1,4 +1,8 @@
-{ inputs, pkgs, lib, myLib, config, ... }:  {
+{ inputs, pkgs, lib, myLib, config, ... }: let
+
+  cfg = config.myHome.style;
+
+in {
 
   imports = [ ../../style.nix ];
 
@@ -7,7 +11,7 @@
 
   options.myHome.style.enable = lib.mkEnableOption "user theme components";
 
-  config = lib.mkIf config.myHome.style.enable {
+  config = lib.mkIf cfg.enable {
 
     # Enable common theme components.
     myStyle.enable = true;

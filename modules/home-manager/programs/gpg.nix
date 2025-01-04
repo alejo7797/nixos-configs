@@ -1,4 +1,8 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
+
+  cfg = config.myHome.gpg;
+
+in {
 
   options.myHome.gpg.enable = lib.mkEnableOption "GnuPG configuration";
 

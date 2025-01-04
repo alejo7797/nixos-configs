@@ -10,31 +10,37 @@ in {
 
     defaultWebBrowser = lib.mkOption {
       description = "Default web browser application.";
-      type = "lib.types.str";
+      type = lib.types.str;
       default = "firefox.desktop";
     };
 
     defaultTextEditor = lib.mkOption {
       description = "Default text editor application.";
-      type = "lib.types.str";
+      type = lib.types.str;
       default = "nvim.desktop";
     };
 
     defaultImageViewer = lib.mkOption {
       description = "Default text editor application.";
-      type = "lib.types.str";
+      type = lib.types.str;
       default = "nvim.desktop";
     };
 
     defaultMediaPlayer = lib.mkOption {
       description = "Default media player application.";
-      type = "lib.types.str";
+      type = lib.types.str;
       default = "mpv.desktop";
     };
 
   };
 
-  config.xdg.mimeApps.defaultApplications = with myLib;
+  config.xdg.mimeApps = lib.mkIf cfg.enable {
+
+    # Configure filetype associations.
+    enable = true;
+
+    # Set default applications.
+    defaultApplications = with myLib;
 
       setListTo cfg.defaultWebBrowser [
         # Enough to set Firefox as default.
@@ -82,4 +88,5 @@ in {
         "image/svg+xml" = "org.inkscape.Inkscape.desktop";
       };
 
+  };
 }

@@ -1,8 +1,12 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
+
+  cfg = config.myNixOS.graphical;
+
+in {
 
   options.myNixOS.graphical.enable = lib.mkEnableOption "basic graphical utilities";
 
-  config = lib.mkIf config.myNixOS.graphical.enable {
+  config = lib.mkIf cfg.enable {
 
     # Enable the plymouth splash screen.
     boot.plymouth.enable = true;

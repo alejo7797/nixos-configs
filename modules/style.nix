@@ -1,8 +1,12 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
 
-options.myStyle.enable = lib.mkEnableOption "common theme components";
+  cfg = config.myStyle;
 
-config = lib.mkIf config.myStyle.enable {
+in {
+
+  options.myStyle.enable = lib.mkEnableOption "common theme components";
+
+  config = lib.mkIf cfg.enable {
 
     # Enable and configure Stylix.
     stylix.enable = true;

@@ -1,8 +1,12 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
+
+  cfg = config.myHome.neovim.ale;
+
+in {
 
   options.myHome.neovim.ale.enable = lib.mkEnableOption "ALE";
 
-  config = lib.mkIf config.myHome.neovim.ale.enable {
+  config = lib.mkIf cfg.enable {
 
     programs.neovim.plugins = with pkgs.vimPlugins; [
       {

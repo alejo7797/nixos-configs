@@ -1,4 +1,4 @@
-{ inputs, pkgs, lib, ... }: {
+{ inputs, pkgs, lib, config, ... }: {
 
   imports = [
     # External modules.

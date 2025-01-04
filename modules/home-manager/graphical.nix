@@ -1,4 +1,8 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
+
+  cfg = config.myHome.graphical;
+
+in {
 
   imports = [
     ./i3-wm.nix ./wayland ./style
@@ -7,7 +11,7 @@
 
   options.myHome.graphical.enable = lib.mkEnableOption "basic graphical utilities";
 
-  config = lib.mkIf config.myHome.graphical.enable {
+  config = lib.mkIf cfg.enable {
 
     # Define a few more shell aliases.
     programs.zsh.shellAliases =

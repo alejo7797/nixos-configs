@@ -1,8 +1,12 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
+
+  cfg = config.myHome.thunderbird;
+
+in {
 
   options.myHome.thunderbird.enable = lib.mkEnableOption "thunderbird configuration";
 
-  config = lib.mkIf config.myHome.thunderbird.enable {
+  config = lib.mkIf cfg.enable {
 
     # Configure my email accounts.
     accounts.email.accounts =

@@ -1,8 +1,12 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
+
+  cfg = config.myHome.joplin-desktop;
+
+in {
 
   options.myHome.joplin-desktop.enable = lib.mkEnableOption "joplin-desktop";
 
-  config = lib.mkIf config.myHome.joplin-desktop.enable {
+  config = lib.mkIf cfg.enable {
 
     # Install and configure joplin-desktop.
     programs.joplin-desktop = {

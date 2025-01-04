@@ -1,8 +1,12 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
+
+  cfg = config.myHome.neovim.ycm;
+
+in {
 
   options.myHome.neovim.ycm.enable = lib.mkEnableOption "YouCompleteMe";
 
-  config = lib.mkIf config.myHome.neovim.ycm.enable {
+  config = lib.mkIf cfg.enable {
 
     # Disable nvim-cmp.
     myHome.neovim.nvim-cmp.enable = false;

@@ -1,10 +1,14 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
+
+  cfg = config.myHome.sway;
+
+in {
 
   imports = [ ./window-rules.nix ];
 
   options.myHome.sway.enable = lib.mkEnableOption "sway configuration";
 
-  config = lib.mkIf config.myHome.sway.enable {
+  config = lib.mkIf cfg.enable {
 
     # Install and configure a bunch of wayland-specific utilities.
     myHome.wayland.enable = true;

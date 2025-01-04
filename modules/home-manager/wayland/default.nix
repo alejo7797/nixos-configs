@@ -1,4 +1,8 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
+
+  cfg = config.myHome.wayland;
+
+in {
 
   imports = [
     ./hyprland ./sway ./waybar
@@ -7,7 +11,7 @@
 
   options.myHome.wayland.enable = lib.mkEnableOption "Wayland";
 
-  config = lib.mkIf config.myHome.wayland.enable {
+  config = lib.mkIf cfg.enable {
 
     # Configure common graphical applications.
     myHome.graphical.enable = true;

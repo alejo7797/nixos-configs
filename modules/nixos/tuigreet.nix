@@ -1,8 +1,12 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
+
+  cfg = config.myNixOS.tuigreet;
+
+in {
 
   options.myNixOS.tuigreet.enable = lib.mkEnableOption "tuigreet";
 
-  config = lib.mkIf config.myNixOS.tuigreet.enable  {
+  config = lib.mkIf cfg.enable  {
 
     services.greetd = {
       enable = true;
