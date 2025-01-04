@@ -1,5 +1,10 @@
 { pkgs, lib, config, ... }: {
 
+  imports = [
+    ./i3-wm.nix ./wayland ./style
+    ./autostart.nix ./mime.nix
+  ];
+
   options.myHome.graphical.enable = lib.mkEnableOption "basic graphical utilities";
 
   config = lib.mkIf config.myHome.graphical.enable {
@@ -45,6 +50,12 @@
       source = ./fcitx5/data;
       recursive = true;
     };
+
+    # Explicitly disable Baloo.
+    xdg.configFile."baloofilerc".text = ''
+      [Basic Settings]
+      Indexing-Enabled=false
+    '';
 
     # Configure additional user services.
     systemd.user.services =

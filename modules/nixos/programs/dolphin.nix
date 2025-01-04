@@ -10,12 +10,10 @@
     # Install dolphin and all that's good with it.
     environment.systemPackages = with pkgs.kdePackages; [
 
-      ark dolphin dolphin-plugins
-      ffmpegthumbs gwenview
-      kdegraphics-thumbnailers
-      kfind kimageformats
-      kio-admin kio-extras konsole
-      qtimageformats qtsvg taglib
+      ark dolphin dolphin-plugins ffmpegthumbs
+      gwenview kde-cli-tools kdegraphics-thumbnailers
+      kfind kimageformats kio-admin kio-extras
+      konsole qtimageformats qtsvg taglib
 
     ];
 
@@ -26,8 +24,9 @@
           "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
       in
       {
-        "/xdg/menus/sway-applications.menu".text = "${plasma-applications}";
         "/xdg/menus/Hyprland-applications.menu".text = "${plasma-applications}";
+        "/xdg/menus/i3-applications.menu".text = "${plasma-applications}";
+        "/xdg/menus/sway-applications.menu".text = "${plasma-applications}";
       };
 
   };

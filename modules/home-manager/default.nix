@@ -2,14 +2,14 @@
 
   imports = [
     # My personal modules.
-    ./zsh ./programs ./style
-    ./autostart.nix ./i3.nix
-    ./graphical.nix ./wayland
+    ./zsh ./programs
+    ./graphical.nix
   ];
 
   options.myHome = {
     hostname = lib.mkOption {
       description = "The system hostname.";
+      type = lib.types.str;
       example = "satsuki";
     };
   };
