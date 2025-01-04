@@ -28,21 +28,16 @@
 
     '';
 
-    # Install and enable kanshi.
-    services.kanshi = {
-      enable = true;
-      systemdTarget = "graphical-session.target";
-    };
+    # Dynamic output configuration.
+    services.kanshi.enable = true;
 
     # Install and configure wofi.
     programs.wofi = {
       enable = true;
       settings = {
-        show = "drun";
-        width = "36%";
-        allow_images = true;
-        key_expand = "Ctrl-x";
-        drun-print_desktop_file = true;
+        mode = "drun"; drun-print_desktop_file = true;
+        width = "36%"; height = "40%"; allow_images = true;
+        location = "center"; key_expand = "Ctrl-x";
       };
     };
 
@@ -51,19 +46,15 @@
       enable = true;
       settings = {
         general = {
-          grace = 5;
-          hide_cursor = true;
+          grace = 5; hide_cursor = true;
         };
         background = {
           path = "${config.xdg.configHome}/hypr/wall.png";
-          blur_passes = 2;
-          brightness = 0.5;
+          blur_passes = 2; brightness = 0.5;
         };
         input-field = {
-          monitor = "";
-          fade_timeout = 1000;
-          placeholder_text = "";
-          size = "400, 60";
+          fade_timeout = 1000; monitor = "";
+          placeholder_text = ""; size = "400, 60";
         };
       };
     };

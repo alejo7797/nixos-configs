@@ -60,21 +60,13 @@
     # Configure additional user services.
     systemd.user.services =
 
-      let
-        graphical-service = (
-          service:
-            lib.recursiveUpdate {
-              Unit = {
-                After = [ "graphical-session.target" ];
-                PartOf = [ "graphical-session.target" ];
-              };
-              Service = {
-                Restart = "on-failure";
-                RestartSec = "800ms";
-              };
-              Install.WantedBy = [ "graphical-session.target" ];
-            }
-            service
+      let graphical-service = (
+        service:
+          {
+            Unit.PartOf = [ "graphical-session.target" ];
+            Install.WantedBy = [ "graphical-session.target" ];
+          }
+          // service
         );
       in
 
@@ -84,14 +76,14 @@
       {
         # Start polkit-gnome-agent as a user service.
         polkit-gnome-agent = graphical-service {
-          Unit.Description = "GNOME polkit authentication daemon";
+          Unit.Description = "GNOME PolicyKit authentication daemon";
           Service.ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
         };
 
         # Start KeepassXC as a user service.
         keepassxc = graphical-service {
           Unit.Description = "KeepassXC password manager";
-          Unit.After = [ "graphical-session.target" "waybar.service" ];
+          # Prevent quirks with KeepassXC when it starts too early.
           Service.ExecStartPre = "${pkgs.coreutils}/bin/sleep 5";
           Service.ExecStart = "${pkgs.keepassxc}/bin/keepassxc";
         };

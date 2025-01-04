@@ -12,20 +12,6 @@
     # Install and configure wlogout.
     myHome.wlogout.enable = true;
 
-    # Start user units after WAYLAND_DISPLAY gets set.
-    systemd.user.services =
-      let
-        startupDelay = { Unit.After = [ "graphical-session.target" ]; };
-      in
-      {
-        gammastep = startupDelay;
-        kdeconnect = startupDelay;
-        kdeconnect-indicator = startupDelay;
-        swayidle = startupDelay;
-        waybar = startupDelay;
-        xsettingsd = startupDelay;
-      };
-
     # Configure Hyprland, the tiling Wayland compositor.
     wayland.windowManager.hyprland = {
       enable = true;
@@ -48,7 +34,7 @@
           "$menu" = lib.concatStringsSep " " [
             "${pkgs.wofi}/bin/wofi | "
             "${pkgs.findutils}/bin/xargs "
-            "${uwsm-app} -- "
+            "${uwsm-app} -- \${1:?}"
           ];
 
           # Workspace autostart command.
