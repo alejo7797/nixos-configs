@@ -40,7 +40,7 @@
 
       # System utilities.
       dconf-editor font-manager icoutils
-      id3v2 libnotify mesa-demos pavucontrol
+      libnotify mesa-demos pavucontrol
       pdftk piper playerctl polkit_gnome
       seahorse sqlitebrowser yubico-pam
       xorg.xeyes vulkan-tools zenity

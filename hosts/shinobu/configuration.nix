@@ -77,7 +77,7 @@
   };
 
   # Enable YubiKey-based passwordless sudo.
-  myNixOS.passwordlessSudo.enable = true;
+  myNixOS.pam.sudo.yubikey = true;
 
   # Use NetworkManager together with systemd-resolved.
   networking.networkmanager.enable = true;
@@ -169,10 +169,10 @@
 
     # Coding.
     biber black clang
-    gdb jupyter
+    gdb jupyter lldb
     #mathematica-webdoc
     nixfmt-rfc-style
-    ruby sage
+    perl ruby sage
     shellcheck shfmt
 
     # LaTeX.
