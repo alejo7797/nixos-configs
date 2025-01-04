@@ -28,6 +28,9 @@
     # Configure Firefox.
     myHome.firefox.enable = true;
 
+    # Set default applications.
+    myHome.mimeApps.enable = true;
+
     # Enable the xsettings daemon.
     services.xsettingsd.enable = true;
 
