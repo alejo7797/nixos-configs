@@ -32,6 +32,9 @@ in {
     # Configure Firefox.
     myHome.firefox.enable = true;
 
+    # Install and configure Zathura.
+    myHome.zathura.enable = true;
+
     # Set default applications.
     myHome.mimeApps.enable = true;
 

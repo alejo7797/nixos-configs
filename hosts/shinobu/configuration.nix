@@ -151,9 +151,9 @@
     filezilla gimp inkscape
     joplin-desktop plex-desktop
     qbittorrent simple-scan
-    ungoogled-chromium variety
+    ungoogled-chromium
     vesktop yubioath-flutter
-    zathura zoom-us zotero
+    zoom-us zotero
 
     # Wayland IME support.
     unstable.spotify
