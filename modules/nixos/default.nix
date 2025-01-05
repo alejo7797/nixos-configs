@@ -21,12 +21,6 @@
     # Disable channels.
     channel.enable = false;
 
-    # Manage the system's flake registry.
-    registry.nixpkgs.flake = inputs.nixpkgs;
-
-    # And set NIX_PATH appropriately.
-    nixPath = [ "nixpkgs=flake:nixpkgs" ];
-
     # Automatic garbage collection.
     gc = {
       automatic = true;
