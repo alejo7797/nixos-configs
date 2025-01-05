@@ -23,8 +23,17 @@ in {
     # And set NIX_PATH as desired.
     nix.nixPath = [ "nixpkgs=flake:nixpkgs" ];
 
+    # Overlay to specify NixGLIntel's main program.
+    nixpkgs.overlays = [
+      (self: super: {
+        nixgl.nixGLIntel = super.nixgl.nixGLIntel // {
+          meta.mainProgram = "nixGLIntel";
+        };
+      })
+    ];
+
     # Access NixGL in Home Manager.
-    nixGL.packages = inputs.nixGL.packages;
+    nixGL.packages = pkgs.nixgl;
 
     # Wrap programs with NixGL.
     programs.kitty.package = config.lib.nixGL.wrap pkgs.kitty;

@@ -23,7 +23,7 @@
   # Host-specific environment variables.
   xdg.configFile."uwsm/env".text = ''
 
-    # Use integrated graphics.
+    # Use the integrated graphics card for the compositor.
     export __GLX_VENDOR_LIBRARY_NAME=mesa
     export __EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json
 
@@ -153,7 +153,6 @@
   home.packages = with pkgs; [
     nixfmt-rfc-style
     nixos-generators
-    nixgl.nixGLIntel
   ];
 
 }
