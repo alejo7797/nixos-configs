@@ -12,3 +12,5 @@ hyprctl dispatch hy3:movewindow right
 hyprctl dispatch hy3:makegroup tab
 hyprctl dispatch workspace 5
 hyprctl dispatch workspace 1
+
+# vim:ft=sh

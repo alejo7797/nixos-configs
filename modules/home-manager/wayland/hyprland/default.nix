@@ -36,9 +36,10 @@ in {
 
           # Default application launcher.
           "$menu" = lib.concatStringsSep " " [
-            "${pkgs.wofi}/bin/wofi | "
-            "${pkgs.findutils}/bin/xargs "
-            "${uwsm-app} -- \${1:?}"
+            "${pkgs.wofi}/bin/wofi |"
+            "${pkgs.moreutils}/bin/ifne"
+            "${pkgs.findutils}/bin/xargs"
+            "${uwsm-app} --"
           ];
 
           # Workspace autostart command.
