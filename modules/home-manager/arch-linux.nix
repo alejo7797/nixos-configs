@@ -26,9 +26,14 @@ in {
     # Access NixGL in Home Manager.
     nixGL.packages = inputs.nixGL.packages;
 
-    # Wrap a bunch of programs with NixGL.
+    # Wrap programs with NixGL.
     programs.kitty.package = config.lib.nixGL.wrap pkgs.kitty;
-    wayland.windowManager.hyprland.package = config.lib.nixGL.wrap pkgs.hyprland;
+
+    # Load Hyprland plugins using hyprpm.
+    wayland.windowManager.hyprland = {
+      plugins = lib.mkForce [ ];
+      settings.exec-once = [ "hyprpm reload -n" ];
+    };
 
     programs.zsh = {
 
