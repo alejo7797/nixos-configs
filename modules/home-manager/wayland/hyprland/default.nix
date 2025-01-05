@@ -45,10 +45,11 @@ in {
       settings =
         let
           uwsm-app = "${pkgs.uwsm}/bin/uwsm-app";
+          kitty = "${config.programs.kitty.package}/bin/kitty";
         in
         {
           # Default terminal application.
-          "$terminal" = "${uwsm-app} -- ${pkgs.kitty}/bin/kitty";
+          "$terminal" = "${uwsm-app} -- ${kitty}";
 
           # Default application launcher.
           "$menu" = lib.concatStringsSep " " [
