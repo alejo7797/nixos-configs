@@ -123,7 +123,7 @@ in {
         interval = 1800;
         exec = lib.concatStringsSep " " [
           "${pkgs.unstable.wttrbar}/bin/wttrbar"
-          "--custom-indicator \"{temp_C}°C  {ICON}\""
+          "--custom-indicator \"{temp_C}°C {ICON}\""
           "--location \"${cfg.wttr-location}\""
         ];
         return-type = "json";
