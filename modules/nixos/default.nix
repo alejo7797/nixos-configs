@@ -21,8 +21,10 @@
     # Disable channels.
     channel.enable = false;
 
-    # Use the version of nixpkgs given by our flake.
+    # Manage the system's flake registry.
     registry.nixpkgs.flake = inputs.nixpkgs;
+
+    # And set NIX_PATH appropriately.
     nixPath = [ "nixpkgs=flake:nixpkgs" ];
 
     # Automatic garbage collection.
