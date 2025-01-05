@@ -26,8 +26,9 @@ in {
     # Access NixGL in Home Manager.
     nixGL.packages = inputs.nixGL.packages;
 
-    # Wrap a bunch of programs.
+    # Wrap a bunch of programs with NixGL.
     programs.kitty.package = config.lib.nixGL.wrap pkgs.kitty;
+    wayland.windowManager.hyprland.package = config.lib.nixGL.wrap pkgs.hyprland;
 
     programs.zsh = {
 

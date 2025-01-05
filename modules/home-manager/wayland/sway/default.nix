@@ -28,7 +28,7 @@ in {
     wayland.windowManager.sway = {
       enable = true;
 
-      # We install sway via a NixOS module.
+      # We install sway via its NixOS module.
       package = null;
 
       config =
