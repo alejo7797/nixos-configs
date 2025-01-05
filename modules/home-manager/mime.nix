@@ -9,25 +9,25 @@ in {
     enable = lib.mkEnableOption "filetype associations";
 
     defaultWebBrowser = lib.mkOption {
-      description = "Default web browser application.";
+      description = "Default web browser.";
       type = lib.types.str;
       default = "firefox.desktop";
     };
 
     defaultTextEditor = lib.mkOption {
-      description = "Default text editor application.";
-      type = lib.types.str;
-      default = "org.kde.gwenview.desktop";
-    };
-
-    defaultImageViewer = lib.mkOption {
-      description = "Default text editor application.";
+      description = "Default text editor.";
       type = lib.types.str;
       default = "nvim.desktop";
     };
 
+    defaultImageViewer = lib.mkOption {
+      description = "Default image viewer.";
+      type = lib.types.str;
+      default = "org.kde.gwenview.desktop";
+    };
+
     defaultMediaPlayer = lib.mkOption {
-      description = "Default media player application.";
+      description = "Default media player.";
       type = lib.types.str;
       default = "mpv.desktop";
     };
