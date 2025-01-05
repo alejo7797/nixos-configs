@@ -37,13 +37,24 @@ in {
           modifier = "Mod4";
           exit = "exit: [s]leep, [h]ibernate, [r]eboot, [p]oweroff";
           uwsm-app = "${pkgs.uwsm}/bin/uwsm-app";
-          systemctl = "${pkgs.systemd}/bin/systemctl";
+          kitty = "${config.programs.kitty.package}/bin/kitty";
         in
 
         {
           inherit modifier;
-          terminal = "${uwsm-app} -- ${config.programs.kitty.package}/bin/kitty";
-          menu = "${pkgs.wofi}/bin/wofi | ${pkgs.findutils}/bin/xargs swaymsg exec ${uwsm-app} --";
+
+          # Default terminal application.
+          terminal = "${uwsm-app} -- ${kitty}";
+
+          # Default application launcher.
+          menu = lib.concatStringsSep " " [
+            "${pkgs.wofi}/bin/wofi |"
+            "${pkgs.moreutils}/bin/ifne"
+            "${pkgs.findutils}/bin/xargs"
+            "${uwsm-app} --"
+          ];
+
+          # We use waybar instead.
           bars = [ ];
 
           # Override automatic Stylix settings.
@@ -94,10 +105,10 @@ in {
 
           modes = lib.mkOptionDefault {
             ${exit} = {
-              s = "exec ${systemctl} suspend, mode default";
-              h = "exec ${systemctl} hibernate, mode default";
-              p = "exec ${systemctl} poweroff";
-              r = "exec ${systemctl} reboot";
+              s = "exec systemctl suspend, mode default";
+              h = "exec systemctl hibernate, mode default";
+              p = "exec systemctl poweroff";
+              r = "exec systemctl reboot";
               Escape = "mode default";
             };
           };
