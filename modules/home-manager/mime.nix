@@ -17,7 +17,7 @@ in {
     defaultTextEditor = lib.mkOption {
       description = "Default text editor application.";
       type = lib.types.str;
-      default = "nvim.desktop";
+      default = "org.kde.gwenview.desktop";
     };
 
     defaultImageViewer = lib.mkOption {
