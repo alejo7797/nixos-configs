@@ -22,6 +22,9 @@ in {
     # Style waybar ourselves.
     stylix.targets.waybar.enable = false;
 
+    # For the weather indicator.
+    home.packages = [ pkgs.wttrbar ];
+
     # Install and configure waybar.
     programs.waybar = {
 
