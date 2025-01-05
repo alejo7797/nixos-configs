@@ -84,6 +84,7 @@ in {
 
         # And some extra associations.
         "text/html" "application/xml"
+        "application/x-wine-extension-ini"
       ]
 
       // {

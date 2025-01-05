@@ -52,26 +52,28 @@ in {
       ];
 
       style = ''
+        * {
+          background-image: none;
+          box-shadow: none;
+        }
+
         window {
           background-color: rgba(12,12,12,0.4);
         }
 
         button {
           font-size: 18px;
+          color: #ffffff;
           background-color: #1d1f21;
           background-position: center;
           background-repeat: no-repeat;
           background-size: 25%;
           border-radius: 0;
-        }
-
-        button:focus {
-          outline-style: none;
+          border-width: 0;
         }
 
         button:active, button:hover {
           background-color: #81a2be;
-          outline-style: none;
         }
 
         #lock {
