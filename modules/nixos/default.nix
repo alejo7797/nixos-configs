@@ -29,7 +29,6 @@
     };
   };
 
-
   # Allow unfree packages.
   nixpkgs.config.allowUnfree = true;
 
@@ -53,18 +52,29 @@
 
   ];
 
-  # Limit the number of generations to keep in the bootloader.
-  boot.loader.systemd-boot.configurationLimit = 20;
+  # Default boot loader configuration.
+  boot.loader = {
 
-  # Default networking configuration.
-  networking = {
+    # Use systemd-boot by default.
+    systemd-boot = {
+      enable = true;
 
-    # Use standard network interface names.
-    usePredictableInterfaceNames = lib.mkDefault false;
+      # Disable the command line editor.
+      editor = false;
 
-    # Wireguard trips up rpfilter.
-    firewall.checkReversePath = false;
+      # Limit the number of system configurations.
+      configurationLimit = 20;
+    };
+
+    # Allow systemd-boot to modify EFI variables.
+    efi.canTouchEfiVariables = true;
   };
+
+  # Use standard network interface names.
+  networking.usePredictableInterfaceNames = false;
+
+  # Wireguard trips up rpfilter.
+  networking.firewall.checkReversePath = false;
 
   # Enable OpenSSH.
   services.openssh = {

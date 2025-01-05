@@ -21,6 +21,15 @@ in {
     programs.gnupg.agent.enable = true;
     hardware.gpgSmartcards.enable = true;
 
+    # Enable CUPS.
+    services.printing.enable = true;
+    services.avahi.enable = true;
+    services.system-config-printer.enable = true;
+
+    # Enable SANE.
+    hardware.sane.enable = true;
+    services.saned.enable = true;
+
     # Enable the following utilities.
     services.blueman.enable = true;
     programs.dconf.enable = true;

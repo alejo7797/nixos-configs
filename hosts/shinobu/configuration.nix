@@ -18,10 +18,6 @@
   # Configure systemd-boot.
   boot.loader = {
     systemd-boot = {
-      enable = true;
-
-      # Disable the command line editor.
-      editor = false;
 
       # Create our own Windows bootloader entry.
       windows."11" = {
@@ -38,10 +34,6 @@
         ${pkgs.gnused}/bin/sed -i 's/default .*/default windows_11.conf/' /boot/loader/loader.conf
       '';
     };
-
-    # Allow systemd-boot to modify EFI variables.
-    efi.canTouchEfiVariables = true;
-
   };
 
   # Set the kernel command line parameters.
@@ -112,16 +104,6 @@
 
   # Configure Fcitx5 as our input method.
   myNixOS.fcitx5.enable = true;
-
-  # Enable CUPS.
-  services.printing.enable = true;
-  services.avahi.enable = true;
-  services.system-config-printer.enable = true;
-
-  # Enable SANE.
-  hardware.sane.enable = true;
-  services.saned.enable = true;
-  users.users.ewan.extraGroups = [ "scanner" ];
 
   # Enable my custom system theme.
   myNixOS.style.enable = true;
