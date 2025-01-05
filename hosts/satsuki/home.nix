@@ -67,6 +67,7 @@
           criteria = "eDP-1";
           mode = "1920x1080@60.033Hz";
           position = "0,0";
+          scale = 1.0;
         }
       ];
     }

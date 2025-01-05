@@ -87,6 +87,9 @@ in {
       ]
 
       // {
+        # We like to use Zathura for PDF files.
+        "application/pdf" = "org.pwmt.zathura.desktop";
+
         # We like to use Inkscape for SVG files.
         "image/svg+xml" = "org.inkscape.Inkscape.desktop";
       };
