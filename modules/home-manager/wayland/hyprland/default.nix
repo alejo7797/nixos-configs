@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }: let
+{ pkgs, lib, myLib, config, ... }: let
 
   cfg = config.myHome.hyprland;
 
@@ -15,6 +15,22 @@ in {
 
     # Install and configure wlogout.
     myHome.wlogout.enable = true;
+
+    # Start kanshi with Hyprland.
+    services.kanshi.systemdTarget = "graphical-session.target";
+
+    # Start graphical services after WAYLAND_DISPLAY gets set.
+    systemd.user.services =
+
+      myLib.setListTo
+
+        { Unit.After = [ "graphical-session.target" ]; }
+
+        [
+            "gammastep" "hyprpaper"
+            "kdeconnect" "kdeconnect-indicator"
+            "swayidle" "waybar" "xsettingsd"
+        ];
 
     # Configure Hyprland, the tiling Wayland compositor.
     wayland.windowManager.hyprland = {

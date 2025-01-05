@@ -73,11 +73,13 @@ in {
 
       let graphical-service = (
         service:
+          lib.recursiveUpdate
           {
             Unit.PartOf = [ "graphical-session.target" ];
+            Unit.After = [ "graphical-session.target" ];
             Install.WantedBy = [ "graphical-session.target" ];
           }
-          // service
+          service
         );
       in
 
