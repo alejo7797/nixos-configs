@@ -42,6 +42,9 @@ in {
     # Enable the xsettings daemon.
     services.xsettingsd.enable = true;
 
+    # Enable the playerctl daemon.
+    services.playerctld.enable = true;
+
     # Enable the mpris-proxy service.
     services.mpris-proxy.enable = true;
 
@@ -82,9 +85,6 @@ in {
           service
         );
       in
-
-      # Satsuki is not ready for this yet.
-      lib.mkIf (hostName != "satsuki")
 
       {
         # Start polkit-gnome-agent as a user service.
