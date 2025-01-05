@@ -101,13 +101,13 @@
   # Host-specific sway configuration.
   wayland.windowManager.sway.config = {
     input = {
-      "1133:50503:K=Logitech_USB_Receiver" = {
+      "1133:50503:Logitech_USB_Receiver" = {
         pointer_accel = "-1";
       };
       "1133:16471:Logitech_B330/M330/M331" = {
         pointer_accel = "-1";
       };
-      "9354:33639:SYNA329D:00_06CB:CE14_Touchpad" = {
+      "1739:52756:SYNA329D:00_06CB:CE14_Touchpad" = {
         tap = "enabled";
         dwt = "enabled";
       };

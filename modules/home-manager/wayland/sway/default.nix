@@ -42,7 +42,7 @@ in {
 
         {
           inherit modifier;
-          terminal = "${uwsm-app} -- ${pkgs.kitty}/bin/kitty";
+          terminal = "${uwsm-app} -- ${config.programs.kitty.package}/bin/kitty";
           menu = "${pkgs.wofi}/bin/wofi | ${pkgs.findutils}/bin/xargs swaymsg exec ${uwsm-app} --";
           bars = [ ];
 
