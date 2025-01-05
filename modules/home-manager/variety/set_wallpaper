@@ -10,11 +10,10 @@ if [[ " ${SIMPLE_WMS[*]} " = *" $XDG_CURRENT_DESKTOP "* ]]; then
 fi
 
 read -ra PID <<<"$(pidof swaybg)"
-WAYLAND_WMS=("sway" "Hyprland")
-if [[ -n "${PID[0]}" || " ${WAYLAND_WMS[*]} " = *" $XDG_CURRENT_DESKTOP "* ]]; then
+if [ "$XDG_CURRENT_DESKTOP" == "sway" ]; then
     if command -v "swaybg" >/dev/null 2>&1; then
         swaybg -i "$WP" -m fill &
-        if [ -n "$PID" ]; then
+        if [ -n "${PID[0]}" ]; then
             sleep 1
             kill "${PID[@]}" 2>/dev/null
         fi
@@ -23,10 +22,11 @@ if [[ -n "${PID[0]}" || " ${WAYLAND_WMS[*]} " = *" $XDG_CURRENT_DESKTOP "* ]]; t
     fi
 fi
 
-# Hyprland with hyprpaper implementation
-#if [ "$XDG_CURRENT_DESKTOP" == "Hyprland" ]; then
-#    hyprctl hyprpaper reload ", $1"
-#fi
+if [ "$XDG_CURRENT_DESKTOP" == "Hyprland" ]; then
+    if command -v "hyprctl" >/dev/null 2>&1; then
+        hyprctl hyprpaper reload ", $1"
+    fi
+fi
 
 [[ -d "$XDG_CONFIG_HOME/i3" ]] && echo "new_wp" >"$XDG_CONFIG_HOME/i3/.wp_status"
 [[ -d "$XDG_CONFIG_HOME/hypr" ]] && magick "$1" "$XDG_CONFIG_HOME/hypr/wall.png"
