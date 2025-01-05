@@ -33,6 +33,7 @@ in {
       settings.mainBar = {
 
         position = "bottom";
+        height = 30;
         spacing = 5;
 
         modules-left = [
