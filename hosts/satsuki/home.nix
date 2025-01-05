@@ -8,6 +8,9 @@
   # Enable Arch-Linux quirks.
   myHome.arch-linux.enable = true;
 
+  # Specify the system hostname.
+  myHome.hostName = "satsuki";
+
   # Load up our custom theme.
   myHome.style.enable = true;
 
@@ -116,6 +119,9 @@
       ++ map (w: { workspace = "${builtins.toString w}"; output = "eDP-1"; })
         [ 5 7 ];
   };
+
+  # Thermal zone to use in waybar.
+  myHome.waybar.thermal-zone = 7;
 
   # Let's leave Firefox alone for now.
   myHome.firefox.enable = lib.mkForce false;

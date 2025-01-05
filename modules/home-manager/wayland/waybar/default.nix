@@ -1,47 +1,65 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
+
+  cfg = config.myHome.waybar;
+
+in {
 
   imports = [ ./modules.nix ];
 
-  # Style waybar ourselves.
-  stylix.targets.waybar.enable = false;
+  options.myHome.waybar = {
 
-  # Install and configure waybar.
-  programs.waybar = {
+    enable = lib.mkEnableOption "waybar";
 
-    enable = true;
-    systemd.enable = true;
+    thermal-zone = lib.mkOption {
+      description = "Thermal zone to monitor in waybar.";
+      type = lib.types.int;
+    };
 
-    style = ./style.css;
+  };
 
-    settings.mainBar = {
+  config = lib.mkIf cfg.enable {
 
-      position = "bottom";
-      spacing = 5;
+    # Style waybar ourselves.
+    stylix.targets.waybar.enable = false;
 
-      modules-left = [
-        "hyprland/workspaces"
-        "hyprland/submap"
-        "sway/workspaces"
-        "sway/mode"
-        "sway/scratchpad"
-      ];
+    # Install and configure waybar.
+    programs.waybar = {
 
-      modules-right = [
-        "idle_inhibitor"
-        "pulseaudio"
-        "cpu"
-        "memory"
-        "disk"
-        "battery"
-        "temperature"
-        "network"
-        "network#vpn"
-        "network#harvard"
-        "custom/weather"
-        "clock"
-        "custom/swaync"
-        "tray"
-      ];
+      enable = true;
+      systemd.enable = true;
+
+      style = ./style.css;
+
+      settings.mainBar = {
+
+        position = "bottom";
+        spacing = 5;
+
+        modules-left = [
+          "hyprland/workspaces"
+          "hyprland/submap"
+          "sway/workspaces"
+          "sway/mode"
+          "sway/scratchpad"
+        ];
+
+        modules-right = [
+          "idle_inhibitor"
+          "pulseaudio"
+          "cpu"
+          "memory"
+          "disk"
+          "battery"
+          "temperature"
+          "network"
+          "network#vpn"
+          "network#harvard"
+          "custom/weather"
+          "clock"
+          "custom/swaync"
+          "tray"
+        ];
+      };
     };
   };
 }

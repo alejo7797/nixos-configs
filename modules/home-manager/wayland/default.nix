@@ -5,8 +5,9 @@
 in {
 
   imports = [
-    ./hyprland ./sway ./waybar
-    ./swaync ./wlogout
+    ./hyprland ./sway
+    ./waybar ./swaync
+    ./wlogout
   ];
 
   options.myHome.wayland.enable = lib.mkEnableOption "Wayland";
@@ -31,6 +32,12 @@ in {
       export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
 
     '';
+
+    # Install and configure waybar.
+    myHome.waybar.enable = true;
+
+    # Install and configure swaync.
+    myHome.swaync.enable = true;
 
     # Dynamic output configuration.
     services.kanshi.enable = true;

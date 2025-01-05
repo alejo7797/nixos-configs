@@ -1,30 +1,39 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
 
-  # Style swaync ourselves.
-  stylix.targets.swaync.enable = false;
+  cfg = config.myHome.swaync;
 
-  services.swaync = {
+in {
 
-    # Enable the swaync daemon.
-    enable = true;
+  options.myHome.swaync.enable = lib.mkEnableOption "the sway notification center";
 
-    # Configure swaync.
-    settings = {
+  config = lib.mkIf cfg.enable {
 
-      positionX = "right";
-      positionY = "bottom";
-      fit-to-screen = false;
+    # Style swaync ourselves.
+    stylix.targets.swaync.enable = false;
 
-      control-center-width = 400;
-      control-center-height = 480;
-      control-center-margin-right = 10;
-      control-center-margin-bottom = 10;
+    services.swaync = {
 
-      notification-icon-size = 32;
-      notification-window-width = 360;
+      # Enable the swaync daemon.
+      enable = true;
+
+      # Configure swaync.
+      settings = {
+
+        positionX = "right";
+        positionY = "bottom";
+        fit-to-screen = false;
+
+        control-center-width = 400;
+        control-center-height = 480;
+        control-center-margin-right = 10;
+        control-center-margin-bottom = 10;
+
+        notification-icon-size = 32;
+        notification-window-width = 360;
+      };
+
+      # Style swaync.
+      style = ./style.css;
     };
-
-    # Style swaync.
-    style = ./style.css;
   };
 }

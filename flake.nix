@@ -12,7 +12,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     sops-nix.url = "github:Mic92/sops-nix";
-    nixgl.url = "github:nix-community/nixGL";
+    nixGL.url = "github:nix-community/nixGL";
     stylix.url = "github:danth/stylix";
     ilya-fedin.url = "github:ilya-fedin/nur-repository";
   };

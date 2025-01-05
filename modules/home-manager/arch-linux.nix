@@ -4,7 +4,16 @@
 
 in {
 
-  options.myHome.arch-linux.enable = lib.mkEnableOption "Arch-Linux quirks";
+  options.myHome = {
+
+    arch-linux.enable = lib.mkEnableOption "Arch-Linux quirks";
+
+    hostName = lib.mkOption {
+      description = "System hostname";
+      type = lib.types.str;
+    };
+
+  };
 
   config = lib.mkIf cfg.enable {
 

@@ -264,7 +264,7 @@
         "type": "github"
       }
     },
-    "nixgl": {
+    "nixGL": {
       "inputs": {
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs_2"
@@ -405,7 +405,7 @@
         "home-manager": "home-manager",
         "ilya-fedin": "ilya-fedin",
         "impermanence": "impermanence",
-        "nixgl": "nixgl",
+        "nixGL": "nixGL",
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nur": "nur",

@@ -1,6 +1,6 @@
 { pkgs, lib, config, osConfig, ... }:
 
-  let hostName = osConfig.networking.hostName;
+  let cfg = config.myHome.waybar;
 
 in {
 
@@ -77,10 +77,7 @@ in {
       };
 
       temperature = {
-        thermal-zone =
-          if hostName == "satsuki" then 7
-          else if hostName == "shinobu" then 1
-          else null;
+        inherit (cfg) thermal-zone;
         format = "{temperatureC}°C {icon}";
         format-icons = ["" "" ""];
         tooltip = false;

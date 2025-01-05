@@ -47,6 +47,9 @@
     };
   };
 
+  # Thermal zone to use in waybar.
+  myHome.waybar.thermal-zone = 1;
+
   # Run Syncthing as a user service.
   services.syncthing.enable = true;
 
