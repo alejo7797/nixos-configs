@@ -1,9 +1,6 @@
 { pkgs, lib, config, ... }:
 
 {
-  # Set the system hostname.
-  myHome.hostname = "shinobu";
-
   # Basic settings needed by Home Manager.
   home.username = "ewan";
   home.homeDirectory = "/home/ewan";

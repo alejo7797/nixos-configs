@@ -3,9 +3,6 @@
   # Arch Linux quirks.
   imports = [ ./arch-linux.nix ];
 
-  # Set the system hostname.
-  myHome.hostname = "satsuki";
-
   # Basic settings needed by Home Manager.
   home.username = "ewan";
   home.homeDirectory = "/home/ewan";

@@ -1,4 +1,8 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, osConfig, ... }:
+
+  let hostName = osConfig.networking.hostName;
+
+in {
 
   programs.waybar.settings.mainBar =
 
@@ -74,8 +78,8 @@
 
       temperature = {
         thermal-zone =
-          if config.myHome.hostname == "satsuki" then 7
-          else if config.myHome.hostname == "shinobu" then 1
+          if hostName == "satsuki" then 7
+          else if hostName == "shinobu" then 1
           else null;
         format = "{temperatureC}°C {icon}";
         format-icons = ["" "" ""];

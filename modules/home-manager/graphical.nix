@@ -1,6 +1,7 @@
-{ pkgs, lib, config, ... }: let
+{ pkgs, lib, config, osConfig, ... }: let
 
   cfg = config.myHome.graphical;
+  hostName = osConfig.networking.hostName;
 
 in {
 
@@ -81,7 +82,7 @@ in {
       in
 
       # Satsuki is not ready for this yet.
-      lib.mkIf (config.myHome.hostname != "satsuki")
+      lib.mkIf (hostName != "satsuki")
 
       {
         # Start polkit-gnome-agent as a user service.
