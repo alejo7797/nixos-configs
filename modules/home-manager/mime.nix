@@ -81,6 +81,9 @@ in {
         "text/x-java" "text/x-moc"
         "text/x-pascal" "text/x-tex"
         "application/x-shellscript"
+
+        # And some extra associations.
+        "text/html" "application/xml"
       ]
 
       // {
