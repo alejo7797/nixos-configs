@@ -121,7 +121,11 @@ in {
         format = "{}";
         tooltip = true;
         interval = 1800;
-        exec = "wttrbar-wrapper";
+        exec = lib.concatStringsSep " " [
+          "${pkgs.unstable.wttrbar}/bin/wttrbar"
+          "--custom-indicator \"{temp_C}°C  {ICON}\""
+          "--location \"${cfg.wttr-location}\""
+        ];
         return-type = "json";
       };
 

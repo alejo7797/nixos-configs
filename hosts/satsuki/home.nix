@@ -126,6 +126,9 @@
   # Thermal zone to use in waybar.
   myHome.waybar.thermal-zone = 7;
 
+  # Location to show the weather for in waybar.
+  myHome.waybar.wttr-location = "Cambridge, MA";
+
   # Let's leave Firefox alone for now.
   myHome.firefox.enable = lib.mkForce false;
 

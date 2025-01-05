@@ -50,6 +50,9 @@
   # Thermal zone to use in waybar.
   myHome.waybar.thermal-zone = 1;
 
+  # Location to show the weather for in waybar.
+  myHome.waybar.wttr-location = "San Lorenzo de El Escorial";
+
   # Run Syncthing as a user service.
   services.syncthing.enable = true;
 

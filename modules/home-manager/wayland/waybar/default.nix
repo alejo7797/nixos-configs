@@ -13,6 +13,13 @@ in {
     thermal-zone = lib.mkOption {
       description = "Thermal zone to monitor in waybar.";
       type = lib.types.int;
+      default = 2;
+    };
+
+    wttr-location = lib.mkOption {
+      description = "Location to show the weather for in waybar.";
+      type = lib.types.str;
+      default = "Madrid";
     };
 
   };
