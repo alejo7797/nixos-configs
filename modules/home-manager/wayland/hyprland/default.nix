@@ -48,9 +48,6 @@ in {
           kitty = "${config.programs.kitty.package}/bin/kitty";
         in
         {
-          # Debugging.
-          debug.disable_logs = false;
-
           # Default terminal application.
           "$terminal" = "${uwsm-app} -- ${kitty}";
 
