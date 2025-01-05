@@ -4,6 +4,7 @@
     # My personal modules.
     ./zsh ./programs
     ./graphical.nix
+    ./arch-linux.nix
   ];
 
   options.myHome = {

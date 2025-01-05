@@ -1,18 +1,21 @@
 { pkgs, lib, config, ... }: {
 
-  # Arch Linux quirks.
-  imports = [ ./arch-linux.nix ];
-
   # Basic settings needed by Home Manager.
   home.username = "ewan";
   home.homeDirectory = "/home/ewan";
   home.stateVersion = "24.11";
+
+  # Enable Arch-Linux quirks.
+  myHome.arch-linux.enable = true;
 
   # Load up our custom theme.
   myHome.style.enable = true;
 
   # Configure some basic graphical utilities.
   myHome.graphical.enable = true;
+
+  # Let's leave Firefox alone for now.
+  myHome.firefox.enable = false;
 
   # Configure zsh.
   programs.zsh = {
