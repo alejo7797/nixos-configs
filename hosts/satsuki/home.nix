@@ -117,6 +117,9 @@
   # Let's leave Firefox alone for now.
   myHome.firefox.enable = lib.mkForce false;
 
+  # Configure Thunderbird.
+  myHome.thunderbird.enable = true;
+
   # Host-specific Zsh configuration.
   programs.zsh = {
 
