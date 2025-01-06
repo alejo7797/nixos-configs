@@ -26,9 +26,7 @@ rec {
     inputs.home-manager.lib.homeManagerConfiguration {
       pkgs = pkgsFor sys;
       extraSpecialArgs = { inherit inputs outputs myLib; };
-      modules = [ config outputs.homeManagerModules.default ]
-        ++ [ inputs.stylix.homeManagerModules.stylix ]
-        ++ [ inputs.nur.modules.homeManager.default ];
+      modules = [ config outputs.homeManagerModules.default ];
     };
 
   # Build an attribute set with a common value.

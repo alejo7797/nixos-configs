@@ -43,22 +43,19 @@
   networking.hostName = "shinobu";
 
   # Configure system secrets using sops-nix.
-  sops = {
-    defaultSopsFile = ./sops.yaml;
-    secrets = {
-      "my-password" = {
-        neededForUsers = true;
-      };
+  sops.secrets = {
+    "my-password" = {
+      neededForUsers = true;
+    };
 
-      "wireguard/koakuma/private-key" = {};
-      "wireguard/koakuma/preshared-key" = {};
+    "wireguard/koakuma/private-key" = {};
+    "wireguard/koakuma/preshared-key" = {};
 
-      "syncthing/cert.pem" = {
-        owner = "ewan";
-      };
-      "syncthing/key.pem" = {
-        owner = "ewan";
-      };
+    "syncthing/cert.pem" = {
+      owner = "ewan";
+    };
+    "syncthing/key.pem" = {
+      owner = "ewan";
     };
   };
 

@@ -5,8 +5,8 @@
     inputs.home-manager.nixosModules.home-manager
     inputs.impermanence.nixosModules.impermanence
     inputs.sops-nix.nixosModules.sops
-    inputs.nur.modules.nixos.default
     inputs.stylix.nixosModules.stylix
+    inputs.nur.modules.nixos.default
 
     # My personal modules.
     ./users.nix ./pam.nix ./locale.nix
@@ -85,9 +85,14 @@
     };
   };
 
-  # Derive sops age key from host SSH key.
-  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-  sops.gnupg.sshKeyPaths = [ ];
+  sops = {
+    # Default secrets file per host.
+    defaultSopsFile = ../../secrets/${config.networking.hostName}.yaml;
+
+    # Derive sops age key from host SSH key.
+    age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+    gnupg.sshKeyPaths = [ ];
+  };
 
   # Install and configure zsh.
   programs.zsh = {

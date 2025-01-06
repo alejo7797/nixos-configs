@@ -1,16 +1,20 @@
-{ inputs, outputs, pkgs, lib, myLib, config, ... }: {
+{ inputs, outputs, pkgs, lib, myLib, config, ... }:
 
-  options.myNixOS.home-users = with lib.types; lib.mkOption {
+with lib;
+
+{
+
+  options.myNixOS.home-users = mkOption {
     description = "Attribute set containing user accounts.";
-    type = attrsOf (submodule {
+    type = with types; attrsOf (submodule {
       options = {
 
-        userConfig = lib.mkOption {
+        userConfig = mkOption {
           description = "Home Manager configuration path.";
           type = path;
         };
 
-        userSettings = lib.mkOption {
+        userSettings = mkOption {
           description = "Settings for the NixOS users module.";
           default = { };
         };

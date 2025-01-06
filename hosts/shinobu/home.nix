@@ -6,6 +6,12 @@
   home.homeDirectory = "/home/ewan";
   home.stateVersion = "24.11";
 
+  # Manage user secrets with sops-nix.
+  sops.secrets = {
+    "sonarr-apikey" = {};
+    "calendars/harvard-url" = {};
+  };
+
   # Load up our custom theme.
   myHome.style.enable = true;
 
