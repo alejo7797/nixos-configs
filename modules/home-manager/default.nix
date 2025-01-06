@@ -3,7 +3,6 @@
   imports = [
     # External modules.
     inputs.sops-nix.homeManagerModules.sops
-    inputs.stylix.homeManagerModules.stylix
     inputs.nur.modules.homeManager.default
 
     # My personal modules.
