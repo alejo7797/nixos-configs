@@ -2,6 +2,9 @@
 
   cfg = config.myHome.wlogout;
 
+  # Instance of loginctl to use.
+  loginctl = config.myHome.wayland.loginctl;
+
 in {
 
   options.myHome.wlogout.enable = lib.mkEnableOption "wlogout";
@@ -15,7 +18,7 @@ in {
       layout = [
         {
           label = "lock";
-          action = "loginctl lock-session";
+          action = "${loginctl} lock-session";
           text = "Lock";
           keybind = "l";
         }

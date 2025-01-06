@@ -4,16 +4,7 @@
 
 in {
 
-  options.myHome = {
-
-    arch-linux.enable = lib.mkEnableOption "Arch-Linux quirks";
-
-    hostName = lib.mkOption {
-      description = "System hostname";
-      type = lib.types.str;
-    };
-
-  };
+  options.myHome.arch-linux.enable = lib.mkEnableOption "Arch-Linux quirks";
 
   config = lib.mkIf cfg.enable {
 
@@ -41,7 +32,14 @@ in {
     # Load Hyprland plugins using hyprpm.
     wayland.windowManager.hyprland = {
       plugins = lib.mkForce [ ];
+      importantPrefixes = [ "exec-once" ];
       settings.exec-once = [ "hyprpm reload -n" ];
+    };
+
+    # Recover hyprlock functionality.
+    myHome.wayland = {
+      loginctl = "/usr/bin/loginctl";
+      hyprlock = "/usr/bin/hyprlock";
     };
 
     programs.zsh = {

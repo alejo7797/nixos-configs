@@ -9,15 +9,15 @@ in {
     enable = lib.mkEnableOption "filetype associations";
 
     defaultWebBrowser = lib.mkOption {
-      description = "Default web browser.";
       type = lib.types.str;
       default = "firefox.desktop";
+      description = "Default web browser.";
     };
 
     defaultTextEditor = lib.mkOption {
-      description = "Default text editor.";
       type = lib.types.str;
       default = "nvim.desktop";
+      description = "Default text editor.";
     };
 
     defaultImageViewer = lib.mkOption {
@@ -27,9 +27,9 @@ in {
     };
 
     defaultMediaPlayer = lib.mkOption {
-      description = "Default media player.";
       type = lib.types.str;
       default = "mpv.desktop";
+      description = "Default media player.";
     };
 
   };

@@ -10,7 +10,25 @@ in {
     ./wlogout
   ];
 
-  options.myHome.wayland.enable = lib.mkEnableOption "Wayland";
+  options.myHome.wayland = {
+
+    enable = lib.mkEnableOption "Wayland";
+
+    lock = lib.mkOption {
+      type = lib.types.str;
+      default = "${pkgs.hyprlock}/bin/hyprlock";
+      example = "/usr/bin/hyprlock";
+      description = "Screen locker executable";
+    };
+
+    loginctl = lib.mkOption {
+      type = lib.types.str;
+      default = "loginctl";
+      example = "/usr/bin/loginctl";
+      description = "Instance of `loginctl` to run.";
+    };
+
+  };
 
   config = lib.mkIf cfg.enable {
 
@@ -86,18 +104,15 @@ in {
 
     # Enable and configure swayidle.
     services.swayidle =
-      let
-        lock = "${pkgs.hyprlock}/bin/hyprlock";
-      in
       {
         enable = true;
         events = [
           { event = "lock"; command = "${pkgs.playerctl}/bin/playerctl -a pause"; }
-          { event = "lock"; command = "${pkgs.procps}/bin/pidof ${lock} || ${lock}"; }
-          { event = "before-sleep"; command = "loginctl lock-session"; }
+          { event = "lock"; command = "${pkgs.procps}/bin/pidof ${cfg.lock} || ${cfg.lock}"; }
+          { event = "before-sleep"; command = "${cfg.loginctl} lock-session"; }
         ];
         timeouts = [
-          { timeout = 600; command = "loginctl lock-session"; }
+          { timeout = 600; command = "${cfg.loginctl} lock-session"; }
           { timeout = 660; command = "systemctl suspend"; }
         ];
       };
