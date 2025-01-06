@@ -54,8 +54,6 @@
       "ldap_2.servers.${id}.carddav.url" = contact.remote.url;
       "ldap_2.servers.${id}.carddav.username" = contact.remote.userName;
       "ldap_2.servers.${id}.description" = contact.name;
-      "ldap_2.servers.${id}.dirType" = 102;
-      "ldap_2.servers.${id}.filename" = "abook-1.sqlite";
     };
 
   mkUserJs = prefs: lib.concatStrings (
@@ -86,9 +84,9 @@ in
               };
             '';
             description = ''
-              Extra settings to add to this Thunderbird calendar configuration.
-              The {var}`id` given as argument is an automatically
-              generated calendar identifier.
+              Extra settings to add to this Thunderbird calendar
+              configuration. The {var}`id` given as argument is
+              an automatically generated calendar identifier.
             '';
           };
         };
@@ -101,6 +99,20 @@ in
 
           enable = lib.mkEnableOption "Thunderbird for this cardDAV account";
 
+          settings = lib.mkOption {
+            type = with types; functionTo (attrsOf (oneOf [ bool int str ]));
+            default = _: { };
+            example = lib.literalExpression ''
+              id: {
+                "ldap_2.servers.''${id}.dirType" = 102;
+              };
+            '';
+            description = ''
+              Extra settings to add to this Thunderbird cardDAV
+              configuration. The {var}`id` given as argument is
+              an automatically generated account identifier.
+            '';
+          };
         };
       });
     };
@@ -258,17 +270,39 @@ in
         };
       };
 
-    # Configure my cardDAV account.
-    accounts.contact.accounts = {
-      "Contacts" = {
-        remote = {
-          type = "carddav";
-          userName = "ewan";
-          url = "https://cloud.patchoulihq.cc/remote.php/dav/addressbooks/users/ewan/contacts";
+    # Configure my cardDAV accounts.
+    accounts.contact.accounts =
+
+      let
+        nextcloud = ( id: {
+            "ldap_2.servers.${id}.dirType" = 102;
+            "ldap_2.servers.${id}.filename" = "abook-1.sqlite";
+        });
+      in
+
+      builtins.mapAttrs
+
+      (
+        name: value:
+          lib.recursiveUpdate
+          {
+            thunderbird.enable = true;
+          }
+          value
+      )
+
+      {
+        "Contacts" = {
+          remote = {
+            type = "carddav";
+            userName = "ewan";
+            url = "https://cloud.patchoulihq.cc/remote.php/dav/addressbooks/users/ewan/contacts";
+          };
+          thunderbird.settings = id: (
+            nextcloud id
+          );
         };
-        thunderbird.enable = true;
       };
-    };
 
     # Configure Thunderbird.
     programs.thunderbird = {
@@ -295,17 +329,20 @@ in
           # Disable the start page.
           "mailnews.start_page.enabled" = false;
 
-          # Disable event category colors.
-          "calendar.categories.names" = "Holidays";
-          "calendar.category.color.holidays" = "";
+          # Show 11 hours in the calendar view.
+          "calendar.view.visiblehours" = 11;
 
           # Do not show week numbers.
           "calendar.view-minimonth.showWeekNumber" = false;
+
+          # Disable event category colors.
+          "calendar.categories.names" = "Holidays";
+          "calendar.category.color.holidays" = "";
         };
       };
     };
 
-    # Configure Thunderbird calendar accounts.
+    # Configure Thunderbird calendar and cardDAV accounts.
     home.file = lib.mkMerge (
 
       lib.mapAttrsToList (name: profile: {
