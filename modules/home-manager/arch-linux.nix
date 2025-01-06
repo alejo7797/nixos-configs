@@ -53,7 +53,7 @@ in {
     # Recover hyprlock functionality.
     myHome.wayland = {
       loginctl = "/usr/bin/loginctl";
-      hyprlock = "/usr/bin/hyprlock";
+      lock = "/usr/bin/hyprlock";
     };
 
     programs.zsh = {
