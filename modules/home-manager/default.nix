@@ -27,7 +27,7 @@
       defaultSopsFile = ../../secrets/${config.home.username}.yaml;
 
       # Specify path where age key is kept.
-      age.keyFile = "${config.home.homeDirectory}/.age-key.txt";
+      age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
     };
 
     # Configure Zsh.

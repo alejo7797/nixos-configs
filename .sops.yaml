@@ -1,19 +1,15 @@
 keys:
-  - &admin_ewan 8bdb36aa99cc27fe449b6c7ec3d536936a43caa6
-  - &home_user_ewan age1nzdckw575d6dtk0k032vgh8kg9q2ekm80dqzxs5fjq5dj8ump5zs6f93vk
+  - &admin_ewan age1nzdckw575d6dtk0k032vgh8kg9q2ekm80dqzxs5fjq5dj8ump5zs6f93vk
   - &server_shinobu age13wk7pjxgem2q4twvstmr3dwju7crjhqq5l7gz6g54vav69qjf98qan7s9z
 
 creation_rules:
   - path_regex: secrets/ewan.yaml$
     key_groups:
-      - pgp:
+      - age:
         - *admin_ewan
-        age:
-        - *home_user_ewan
 
   - path_regex: secrets/shinobu.yaml$
     key_groups:
-    - pgp:
+    - age:
       - *admin_ewan
-      age:
       - *server_shinobu
