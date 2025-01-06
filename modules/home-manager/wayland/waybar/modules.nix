@@ -118,7 +118,7 @@ in {
       };
 
       "custom/updates" = {
-        format = "{}  {icon}";
+        format = "{} {icon}";
         return-type = "json";
         format-icons = {
           has-updates = "";
