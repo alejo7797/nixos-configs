@@ -27,10 +27,13 @@
 
         su = "sudo -i";
 
-        # Rebuild NixOS system.
+        # Build NixOS configuration.
+        nixos-build = "nixos-rebuild build --flake ~/Git/nixconfig";
+
+        # Build and activate NixOS configuration.
         nixos-switch = "sudo nixos-rebuild switch --flake ~/Git/nixconfig";
 
-        # Rebuild Home Manager environment.
+        # Build and activate Home Manager environment.
         home-switch = "home-manager switch --flake ~/Git/nixconfig";
 
         # Manage connection to my VPN server.
