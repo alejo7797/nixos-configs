@@ -117,6 +117,17 @@ in {
         tooltip = false;
       };
 
+      "custom/updates" = {
+        format = "{}  {icon}";
+        return-type = "json";
+        format-icons = {
+          has-updates = "";
+          updated = "";
+        };
+        exec-if = "which waybar-pacman-updates";
+        exec = "waybar-pacman-updates";
+      };
+
       "custom/weather" = {
         format = "{}";
         tooltip = true;

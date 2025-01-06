@@ -65,6 +65,7 @@ in {
           "network"
           "network#vpn"
           "network#harvard"
+          "custom/updates"
           "custom/weather"
           "clock"
           "custom/swaync"

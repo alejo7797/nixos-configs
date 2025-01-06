@@ -12,9 +12,6 @@
     "calendars/harvard-url" = {};
   };
 
-  # Load up our custom theme.
-  myHome.style.enable = true;
-
   # Set up Hyprland, the tiling Wayland compositor.
   myHome.hyprland.enable = true;
 
