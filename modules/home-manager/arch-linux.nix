@@ -46,7 +46,7 @@ in {
     # Load Hyprland plugins using hyprpm.
     wayland.windowManager.hyprland = {
       plugins = lib.mkForce [ ];
-      importantPrefixes = [ "exec-once" ];
+      importantPrefixes = lib.mkOptionDefault [ "exec-once" ];
       settings.exec-once = [ "hyprpm reload -n" ];
     };
 
