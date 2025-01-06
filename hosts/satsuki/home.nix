@@ -144,6 +144,7 @@
   home.packages = with pkgs; [
     nixfmt-rfc-style
     nixos-generators
+    yubioath-flutter
   ];
 
 }
