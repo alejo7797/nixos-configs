@@ -13,10 +13,16 @@
     thunderbirdConfigPath;
 
   enabledCalendars = builtins.attrValues
-    (lib.filterAttrs (_: a: a.thunderbird.enable) config.accounts.calendar.accounts);
+    (lib.filterAttrs (_: c: c.thunderbird.enable) config.accounts.calendar.accounts);
 
   enabledCalendarsWithId =
-    map (a: a // { id = builtins.hashString "sha256" a.name; }) enabledCalendars;
+    map (c: c // { id = builtins.hashString "sha256" c.name; }) enabledCalendars;
+
+  enabledContacts = builtins.attrValues
+    (lib.filterAttrs (_: c: c.thunderbird.enable) config.accounts.contact.accounts);
+
+  enabledContactsWithId =
+    map (c: c // { id = builtins.hashString "sha256" c.name; }) enabledContacts;
 
   toThunderbirdCalendar = calendar:
     let
@@ -40,6 +46,18 @@
     }
     // calendar.thunderbird.settings id;
 
+  toThunderbirdContacts = contact:
+    let
+      id = contact.id;
+    in
+    {
+      "ldap_2.servers.${id}.carddav.url" = contact.remote.url;
+      "ldap_2.servers.${id}.carddav.username" = contact.remote.userName;
+      "ldap_2.servers.${id}.description" = contact.name;
+      "ldap_2.servers.${id}.dirType" = 102;
+      "ldap_2.servers.${id}.filename" = "abook-1.sqlite";
+    };
+
   mkUserJs = prefs: lib.concatStrings (
     lib.mapAttrsToList (name: value: ''
       user_pref("${name}", ${builtins.toJSON value});
@@ -54,40 +72,37 @@ in
     myHome.thunderbird.enable = lib.mkEnableOption "Thunderbird configuration";
 
     accounts.calendar.accounts = lib.mkOption {
-      type = with lib.types;
-        attrsOf (submodule {
-          options.thunderbird = {
+      type = with lib.types; attrsOf (submodule {
+        options.thunderbird = {
 
-            enable =
-              lib.mkEnableOption "Thunderbird for this calendar";
+          enable = lib.mkEnableOption "Thunderbird for this calendar";
 
-            profiles = lib.mkOption {
-              type = with types; listOf str;
-              default = [ ];
-              description = ''
-                List of Thunderbird profiles for which this calendar should be
-                enabled. If this list is empty (the default), this calendar will
-                be enabled for all declared profiles.
-              '';
-            };
-
-            settings = lib.mkOption {
-              type = with types; functionTo (attrsOf (oneOf [ bool int str ]));
-              default = _: { };
-              example = lib.literalExpression ''
-                id: {
-                  "calendar.registry.''${id}.readOnly" = true;
-                };
-              '';
-              description = ''
-                Extra settings to add to this Thunderbird calendar configuration.
-                The {var}`id` given as argument is an automatically
-                generated calendar identifier.
-              '';
-            };
+          settings = lib.mkOption {
+            type = with types; functionTo (attrsOf (oneOf [ bool int str ]));
+            default = _: { };
+            example = lib.literalExpression ''
+              id: {
+                "calendar.registry.''${id}.readOnly" = true;
+              };
+            '';
+            description = ''
+              Extra settings to add to this Thunderbird calendar configuration.
+              The {var}`id` given as argument is an automatically
+              generated calendar identifier.
+            '';
           };
-        });
+        };
+      });
+    };
 
+    accounts.contact.accounts = lib.mkOption {
+      type = with lib.types; attrsOf (submodule {
+        options.thunderbird = {
+
+          enable = lib.mkEnableOption "Thunderbird for this cardDAV account";
+
+        };
+      });
     };
   };
 
@@ -231,18 +246,29 @@ in
         };
 
         "Holidays" = {
-        remote = {
+          remote = {
             type = "caldav";
             userName = "ewan";
             url = "https://cloud.patchoulihq.cc/remote.php/dav/calendars/ewan/holidays";
           };
           thunderbird.settings = id: (
             color "#0b7f39" id
-            // readOnly id
             // identity "Alex" id
           );
         };
       };
+
+    # Configure my cardDAV account.
+    accounts.contact.accounts = {
+      "Contacts" = {
+        remote = {
+          type = "carddav";
+          userName = "ewan";
+          url = "https://cloud.patchoulihq.cc/remote.php/dav/addressbooks/users/ewan/contacts";
+        };
+        thunderbird.enable = true;
+      };
+    };
 
     # Configure Thunderbird.
     programs.thunderbird = {
@@ -286,9 +312,10 @@ in
 
         "${thunderbirdProfilesPath}/${name}/user.js".text =
 
-          mkUserJs (builtins.foldl' (a: b: a // b) { }
+          mkUserJs (builtins.foldl' (a: b: a // b) { } (
             (map (c: toThunderbirdCalendar c) enabledCalendarsWithId)
-          );
+            ++ (map (c: toThunderbirdContacts c) enabledContactsWithId)
+          ));
 
       }) config.programs.thunderbird.profiles
     );
