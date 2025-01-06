@@ -76,8 +76,6 @@ in {
           command! -nargs=? Fold :call CocAction('fold', <f-args>)
 
         '';
-
-        settings = {};
       };
 
       plugins = with pkgs.vimPlugins; [ coc-snippets coc-vimtex ];

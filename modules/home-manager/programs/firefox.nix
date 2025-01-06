@@ -63,9 +63,9 @@ in {
         "privacy.sanitize.sanitizeOnShutdown" = true;
         "privacy.sanitize.pending" = [
           {
-            "id"="shutdown";
+            "id" = "shutdown";
             "itemsToClear" = [ "cache" "cookiesAndStorage" ];
-            "options" ={};
+            "options" = { };
           }
         ];
 

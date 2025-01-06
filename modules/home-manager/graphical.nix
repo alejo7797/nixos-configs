@@ -17,6 +17,7 @@ in {
     workspaces = lib.mkOption {
       description = "Workspace output assignments.";
       type = attrsOf (listOf (oneOf [ int str ]));
+      default = { };
       example = {
         "DP-1" = [ "web" "dev" ];
         "eDP-1" = [ "chat" ];
