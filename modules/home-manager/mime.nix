@@ -84,6 +84,7 @@ in {
 
         # And some extra associations.
         "text/html" "application/xml"
+        "text/yaml" "application/json"
         "application/x-wine-extension-ini"
       ]
 
@@ -93,6 +94,9 @@ in {
 
         # We like to use Inkscape for SVG files.
         "image/svg+xml" = "org.inkscape.Inkscape.desktop";
+
+        # Use WINE for Windows executables.
+        "application/x-ms-dos-executable" = "wine.desktop";
       };
 
   };
