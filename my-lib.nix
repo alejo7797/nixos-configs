@@ -27,8 +27,7 @@ rec {
       pkgs = pkgsFor sys;
       extraSpecialArgs = { inherit inputs outputs myLib; };
       modules = [ config outputs.homeManagerModules.default ]
-        ++ [ inputs.stylix.homeManagerModules.stylix ]
-        ++ [ inputs.nur.modules.homeManager.default ];
+        ++ [ inputs.stylix.homeManagerModules.stylix ];
     };
 
   # Build an attribute set with a common value.

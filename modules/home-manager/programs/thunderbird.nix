@@ -4,7 +4,11 @@
 
 in {
 
-  options.myHome.thunderbird.enable = lib.mkEnableOption "thunderbird configuration";
+  options = with lib.types; {
+
+    myHome.thunderbird.enable = lib.mkEnableOption "thunderbird configuration";
+
+  };
 
   config = lib.mkIf cfg.enable {
 
@@ -18,15 +22,15 @@ in {
       builtins.mapAttrs
 
       (
-        name: settings:
+        name: value:
           lib.recursiveUpdate
           {
             realName = "Alex Epelde";
-            userName = settings.address;
+            userName = value.address;
             imap.port = 993;
             thunderbird.enable = true;
           }
-          settings
+          value
       )
 
       {
@@ -71,6 +75,77 @@ in {
           flavor = "outlook.office365.com";
           folders.trash = "Deleted Items";
           thunderbird.settings = id: oauth id;
+        };
+      };
+
+    # Configure my calendars.
+    accounts.calendar.accounts =
+
+      let
+        identity = (email: id: {
+          "calendar.registry.${id}.imip.identity.key" =
+            "id_${builtins.hashString "sha256" email}";
+        });
+
+        readOnly = (id: { "calendar.registry.${id}.readOnly" = true; });
+      in
+
+      builtins.mapAttrs
+
+      (name: value: value // { thunderbird.enable = true; })
+
+      {
+        "Nextcloud" = {
+          primary = true;
+          remote = {
+            type = "caldav";
+            userName = "ewan";
+            url = "https://cloud.patchoulihq.cc/remote.php/dav/calendars/ewan/personal";
+          };
+          thunderbird.settings = id: identity "Alex" id;
+        };
+
+        "Boston Topology"= {
+          remote = {
+            type = "http";
+            url = "https://calendar.google.com/calendar/ical/028i07liimdqltnn999mpdqek4%40group.calendar.google.com/public/basic.ics";
+          };
+          thunderbird.settings = id: (readOnly id // identity "Harvard" id);
+        };
+
+        "Contact Birthdays" = {
+          remote = {
+            type = "caldav";
+            userName = "ewan";
+            url = "https://cloud.patchoulihq.cc/remote.php/dav/calendars/ewan/contact_birthdays";
+            readOnly = true;
+          };
+          thunderbird.settings = id: (readOnly id // identity "Alex" id);
+        };
+
+        "Harvard Outlook" = {
+          remote = {
+            type = "http";
+            url = "https://outlook.office365.com/owa/calendar/***REMOVED***@math.harvard.edu/***REMOVED***/calendar.ics";
+          };
+          thunderbird.settings = id: (readOnly id // identity "Harvard" id);
+        };
+
+        "Sonarr" = {
+          remote = {
+            type = "http";
+            url = "https://patchoulihq.cc/sonarr/feed/v3/calendar/Sonarr.ics?apikey=***REMOVED***";
+          };
+          thunderbird.settings = id: (readOnly id // identity "Ewan" id);
+        };
+
+        "Holidays" = {
+        remote = {
+            type = "caldav";
+            userName = "ewan";
+            url = "https://cloud.patchoulihq.cc/remote.php/dav/calendars/ewan/holidays";
+          };
+          thunderbird.settings = id: (readOnly id // identity "Alex" id);
         };
       };
 

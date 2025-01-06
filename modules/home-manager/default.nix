@@ -1,6 +1,10 @@
 { inputs, pkgs, lib, config, ... }: {
 
   imports = [
+    # External modules.
+    inputs.sops-nix.homeManagerModules.sops
+    inputs.nur.modules.homeManager.default
+
     # My personal modules.
     ./zsh ./programs
     ./graphical.nix
@@ -17,6 +21,14 @@
 
     # Let Home Manager install and manage itself.
     programs.home-manager.enable = true;
+
+    sops = {
+      # Default sops file for user secrets.
+      defaultSopsFile = ../../secrets/${config.home.username}.yaml;
+
+      # Specify path where age key is kept.
+      age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
+    };
 
     # Configure Zsh.
     myHome.zsh.enable = true;

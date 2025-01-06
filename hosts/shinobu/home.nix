@@ -6,7 +6,16 @@
   home.homeDirectory = "/home/ewan";
   home.stateVersion = "24.11";
 
-  # Set up Hyprland, an intelligent dynamic tiling Wayland compositor.
+  # Manage user secrets with sops-nix.
+  sops.secrets = {
+    "sonarr-apikey" = {};
+    "calendars/harvard-url" = {};
+  };
+
+  # Load up our custom theme.
+  myHome.style.enable = true;
+
+  # Set up Hyprland, the tiling Wayland compositor.
   myHome.hyprland.enable = true;
 
   # Set up sway, an i3-compatible Wayland compositor.
