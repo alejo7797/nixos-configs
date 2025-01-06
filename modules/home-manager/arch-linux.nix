@@ -34,14 +34,14 @@ in {
 
       # Overlay to wrap user packages.
       (self: super:
-        builtins.listToAttrs (map
-          (name: {
-            inherit name;
-            value = config.lib.nixGL.wrap super.${name};
-          })
-          [
-            "yubioath-flutter"
-          ])
+        builtins.listToAttrs (
+          map
+            (name: {
+              inherit name;
+              value = config.lib.nixGL.wrap super.${name};
+            })
+            [ "yubioath-flutter" ]
+        )
       )
 
     ];
