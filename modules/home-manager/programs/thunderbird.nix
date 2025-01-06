@@ -2,9 +2,94 @@
 
   cfg = config.myHome.thunderbird;
 
-in {
+  inherit (pkgs.stdenv.hostPlatform) isDarwin;
 
-  options.myHome.thunderbird.enable = lib.mkEnableOption "Thunderbird configuration";
+  thunderbirdConfigPath =
+    if isDarwin then "Library/Thunderbird" else ".thunderbird";
+
+  thunderbirdProfilesPath = if isDarwin then
+    "${thunderbirdConfigPath}/Profiles"
+  else
+    thunderbirdConfigPath;
+
+  enabledCalendars = builtins.attrValues
+    (lib.filterAttrs (_: a: a.thunderbird.enable) config.accounts.calendar.accounts);
+
+  enabledCalendarsWithId =
+    map (a: a // { id = builtins.hashString "sha256" a.name; }) enabledCalendars;
+
+  toThunderbirdCalendar = calendar:
+    let
+      id = calendar.id;
+    in
+    {
+      "calendar.registry.${id}.cache.enabled" = true;
+      "calendar.registry.${id}.main-in-composite" = true;
+      "calendar.registry.${id}.name" = calendar.name;
+      "calendar.registry.${id}.uri" = calendar.remote.url;
+    }
+    // lib.optionalAttrs (calendar.remote.type == "caldav") {
+      "calendar.registry.${id}.type" = "caldav";
+      "calendar.registry.${id}.username" = calendar.remote.userName;
+    }
+    // lib.optionalAttrs (calendar.remote.type == "http") {
+      "calendar.registry.${id}.type" = "ics";
+    }
+    // lib.optionalAttrs calendar.primary {
+      "calendar.registry.${id}.calendar-main-default" = true;
+    }
+    // calendar.thunderbird.settings id;
+
+  mkUserJs = prefs: lib.concatStrings (
+    lib.mapAttrsToList (name: value: ''
+      user_pref("${name}", ${builtins.toJSON value});
+    '') prefs);
+
+in
+
+{
+
+  options = {
+
+    myHome.thunderbird.enable = lib.mkEnableOption "Thunderbird configuration";
+
+    accounts.calendar.accounts = lib.mkOption {
+      type = with lib.types;
+        attrsOf (submodule {
+          options.thunderbird = {
+
+            enable =
+              lib.mkEnableOption "Thunderbird for this calendar";
+
+            profiles = lib.mkOption {
+              type = with types; listOf str;
+              default = [ ];
+              description = ''
+                List of Thunderbird profiles for which this calendar should be
+                enabled. If this list is empty (the default), this calendar will
+                be enabled for all declared profiles.
+              '';
+            };
+
+            settings = lib.mkOption {
+              type = with types; functionTo (attrsOf (oneOf [ bool int str ]));
+              default = _: { };
+              example = lib.literalExpression ''
+                id: {
+                  "calendar.registry.''${id}.readOnly" = true;
+                };
+              '';
+              description = ''
+                Extra settings to add to this Thunderbird calendar configuration.
+                The {var}`id` given as argument is an automatically
+                generated calendar identifier.
+              '';
+            };
+          };
+        });
+
+    };
+  };
 
   config = lib.mkIf cfg.enable {
 
@@ -76,6 +161,35 @@ in {
 
     # Configure my calendars.
     accounts.calendar.accounts =
+
+      let
+        color = (color: id: {
+          "calendar.registry.${id}.color" = color;
+        });
+
+        identity = (email: id: {
+          "calendar.registry.${id}.imip.identity.key" =
+            "id_${builtins.hashString "sha256" email}";
+        });
+
+        readOnly = (id: { "calendar.registry.${id}.readOnly" = true; });
+
+        refreshInterval = (interval: id: {
+          "calendar.registry.${id}.refreshInterval" = interval;
+        });
+      in
+
+      builtins.mapAttrs
+
+      (
+        name: value:
+          lib.recursiveUpdate
+          {
+            thunderbird.enable = true;
+          }
+          value
+      )
+
       {
         "Nextcloud" = {
           primary = true;
@@ -84,14 +198,24 @@ in {
             userName = "ewan";
             url = "https://cloud.patchoulihq.cc/remote.php/dav/calendars/ewan/personal";
           };
-         };
+          thunderbird.settings = id: (
+            color "#2d72be" id
+            // refreshInterval 1 id
+            // identity "Alex" id
+          );
+        };
 
         "Boston Topology"= {
           remote = {
             type = "http";
             url = "https://calendar.google.com/calendar/ical/028i07liimdqltnn999mpdqek4%40group.calendar.google.com/public/basic.ics";
           };
-         };
+          thunderbird.settings = id: (
+            color "#0b7f39" id
+            // readOnly id
+            // identity "Harvard" id
+          );
+        };
 
         "Contact Birthdays" = {
           remote = {
@@ -99,6 +223,11 @@ in {
             userName = "ewan";
             url = "https://cloud.patchoulihq.cc/remote.php/dav/calendars/ewan/contact_birthdays";
           };
+          thunderbird.settings = id: (
+            color "#d81b60" id
+            // readOnly id
+            // identity "Alex" id
+          );
         };
 
         "Holidays" = {
@@ -107,6 +236,11 @@ in {
             userName = "ewan";
             url = "https://cloud.patchoulihq.cc/remote.php/dav/calendars/ewan/holidays";
           };
+          thunderbird.settings = id: (
+            color "#0b7f39" id
+            // readOnly id
+            // identity "Alex" id
+          );
         };
       };
 
@@ -134,8 +268,29 @@ in {
 
           # Disable the start page.
           "mailnews.start_page.enabled" = false;
+
+          # Disable event category colors.
+          "calendar.categories.names" = "Holidays";
+          "calendar.category.color.holidays" = "";
+
+          # Do not show week numbers.
+          "calendar.view-minimonth.showWeekNumber" = false;
         };
       };
     };
+
+    # Configure Thunderbird calendar accounts.
+    home.file = lib.mkMerge (
+
+      lib.mapAttrsToList (name: profile: {
+
+        "${thunderbirdProfilesPath}/${name}/user.js".text =
+
+          mkUserJs (builtins.foldl' (a: b: a // b) { }
+            (map (c: toThunderbirdCalendar c) enabledCalendarsWithId)
+          );
+
+      }) config.programs.thunderbird.profiles
+    );
   };
 }
