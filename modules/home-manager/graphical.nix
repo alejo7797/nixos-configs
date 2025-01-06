@@ -10,7 +10,20 @@ in {
     ./autostart.nix ./mime.nix
   ];
 
-  options.myHome.graphical.enable = lib.mkEnableOption "basic graphical utilities";
+  options.myHome = with lib.types; {
+
+    graphical.enable = lib.mkEnableOption "basic graphical utilities";
+
+    workspaces = lib.mkOption {
+      description = "Workspace output assignments.";
+      type = attrsOf (listOf (oneOf [ int str ]));
+      example = {
+        "DP-1" = [ "web" "dev" ];
+        "eDP-1" = [ "chat" ];
+      };
+    };
+
+  };
 
   config = lib.mkIf cfg.enable {
 
@@ -26,6 +39,9 @@ in {
         bgtrash = "${variety} --trash";
         bgfav   = "${variety} --favorite";
       };
+
+    # Load up our custom theme.
+    myHome.style.enable = true;
 
     # Install and configure kitty.
     myHome.kitty.enable = true;

@@ -67,6 +67,12 @@ in {
           workspaceLayout = "tabbed";
           window.border = lib.mkForce 1;
 
+          workspaceOutputAssign = builtins.concatLists (
+            lib.mapAttrsToList
+              (o: ws: map (w: { workspace = toString w; output = o; }) ws)
+              config.myHome.workspaces
+          );
+
           keybindings = let
 
             brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";

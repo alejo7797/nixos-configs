@@ -22,6 +22,7 @@
       { ws = 2; criteria = "class:^(Zotero)$"; }
       { ws = 3; criteria = "title:^(Minecraft\\* 1\\.\\d{1,2}\\.\\d)$"; }
       { ws = 3; criteria = "class:^(steam)$"; }
+      { ws = 4; criteria = "class:^(xwaylandvideobridge)$"; }
       { ws = 3; criteria = "class:^(steam_app_\\d*)$"; }
       { ws = 8; criteria = "class:^(vesktop)$"; }
       { ws = 9; criteria = "class:^(spotify)$"; }

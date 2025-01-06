@@ -8,16 +8,10 @@
   # Enable Arch-Linux quirks.
   myHome.arch-linux.enable = true;
 
-  # Specify the system hostname.
-  myHome.hostName = "satsuki";
-
-  # Load up our custom theme.
-  myHome.style.enable = true;
-
-  # Set up Hyprland, the tiling Wayland compositor.
+  # Set up Hyprland, an intelligent dynamic tiling Wayland compositor.
   myHome.hyprland.enable = true;
 
-  # Set up sway, the i3-compatible Wayland compositor.
+  # Set up sway, an i3-compatible Wayland compositor.
   myHome.sway.enable = true;
 
   # Host-specific environment variables.
@@ -29,7 +23,7 @@
 
   '';
 
-  # Configure displays.
+  # Configure outputs.
   services.kanshi.settings =
 
     let
@@ -73,6 +67,12 @@
       }
     ];
 
+  # Configure workspace output assignments.
+  myHome.workspaces = {
+    "DP-1" = [ 1 2 3 4 6 8 9 10 ];
+    "eDP-1" = [ 5 7 ];
+  };
+
   # Host-specific Hyprland configuration.
   wayland.windowManager.hyprland.settings = {
     device = [
@@ -89,11 +89,6 @@
       ", switch:on:Lid Switch, exec, hyprctl keyword monitor \"eDP-1, disable\""
       ", switch:off:Lid Switch, exec, hyprctl keyword monitor \"eDP-1, preferred, 1\""
     ];
-    workspace =
-      map (w: "${builtins.toString w}, monitor:DP-1")
-        [ 1 2 3 4 6 8 9 10 ]
-      ++ map (w: "${builtins.toString w}, monitor:eDP-1")
-        [ 5 7 ];
   };
 
   # Host-specific sway configuration.
@@ -110,15 +105,7 @@
         dwt = "enabled";
       };
     };
-    startup = [{
-      always = true;
-      command = "${./clamshell}";
-    }];
-    workspaceOutputAssign =
-      map (w: { workspace = "${builtins.toString w}"; output = "DP-1"; })
-        [ 1 2 3 4 6 8 9 10 ]
-      ++ map (w: { workspace = "${builtins.toString w}"; output = "eDP-1"; })
-        [ 5 7 ];
+    startup = [{ always = true; command = "${./clamshell}"; }];
   };
 
   # Thermal zone to use in waybar.

@@ -123,6 +123,13 @@ in {
             ];
           };
 
+          # Assign workspaces to outputs.
+          workspace = builtins.concatLists (
+            lib.mapAttrsToList
+              (o: ws: map (w: "${toString w}, monitor:${o}") ws)
+              config.myHome.workspaces
+          );
+
           # Miscellaneous.
           misc = {
             force_default_wallpaper = 2;
@@ -230,11 +237,13 @@ in {
               ", XF86AudioPrev, exec, ${playerctl} previous"
             ];
 
+          # Move and resize windows with the mouse.
           bindm = map (x: "$mainMod, ${x}") [
             "mouse:272, movewindow"
             "mouse:273, resize_window"
           ];
 
+          # Click on a window's titlebar to focus on it.
           bindn = [
             ", mouse:272, hy3:focustab, mouse"
           ];

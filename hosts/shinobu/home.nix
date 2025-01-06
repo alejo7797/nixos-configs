@@ -6,13 +6,10 @@
   home.homeDirectory = "/home/ewan";
   home.stateVersion = "24.11";
 
-  # Load up our custom theme.
-  myHome.style.enable = true;
-
-  # Set up Hyprland, the tiling Wayland compositor.
+  # Set up Hyprland, an intelligent dynamic tiling Wayland compositor.
   myHome.hyprland.enable = true;
 
-  # Set up sway, the i3-compatible Wayland compositor.
+  # Set up sway, an i3-compatible Wayland compositor.
   myHome.sway.enable = true;
 
   # Configure outputs.

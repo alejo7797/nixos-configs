@@ -122,7 +122,7 @@ in {
         tooltip = true;
         interval = 1800;
         exec = builtins.concatStringsSep " " [
-          "${pkgs.unstable.wttrbar}/bin/wttrbar"
+          "${pkgs.wttrbar}/bin/wttrbar"
           "--custom-indicator \"{temp_C}°C {ICON}\""
           "--location \"${cfg.wttr-location}\""
         ];

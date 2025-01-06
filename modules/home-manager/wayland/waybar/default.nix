@@ -6,19 +6,19 @@ in {
 
   imports = [ ./modules.nix ];
 
-  options.myHome.waybar = {
+  options.myHome.waybar = with lib.types; {
 
     enable = lib.mkEnableOption "waybar";
 
     thermal-zone = lib.mkOption {
       description = "Thermal zone to monitor in waybar.";
-      type = lib.types.int;
+      type = int;
       default = 2;
     };
 
     wttr-location = lib.mkOption {
       description = "Location to show the weather for in waybar.";
-      type = lib.types.str;
+      type = str;
       default = "Madrid";
     };
 
