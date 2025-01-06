@@ -76,6 +76,10 @@ in {
           background-color: #81a2be;
         }
 
+        button:focus {
+          outline-style: none;
+        }
+
         #lock {
           background-image: image(url("${./icons}/lock.png"));
         }
