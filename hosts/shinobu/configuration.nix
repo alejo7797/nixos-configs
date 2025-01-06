@@ -49,6 +49,10 @@
       "my-password" = {
         neededForUsers = true;
       };
+
+      "wireguard/koakuma/private-key" = {};
+      "wireguard/koakuma/preshared-key" = {};
+
       "syncthing/cert.pem" = {
         owner = "ewan";
       };
@@ -78,12 +82,6 @@
   # Set the system time zone.
   time.timeZone = "Europe/Madrid";
 
-  # Customise the tty.
-  console = {
-    font = "Lat2-Terminus16";
-    keyMap = "us";
-  };
-
   # Use tuigreet to log in.
   myNixOS.tuigreet.enable = true;
 
@@ -92,21 +90,6 @@
 
   # Install sway, the i3-compatible Wayland compositor.
   myNixOS.sway.enable = true;
-
-  # Enable sound support.
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
-
-  # Configure Fcitx5 as our input method.
-  myNixOS.fcitx5.enable = true;
-
-  # Enable my custom system theme.
-  myNixOS.style.enable = true;
 
   # Install Dolphin and related KDE applications.
   myNixOS.dolphin.enable = true;

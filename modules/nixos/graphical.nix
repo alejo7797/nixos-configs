@@ -4,12 +4,18 @@
 
 in {
 
-  options.myNixOS.graphical.enable = lib.mkEnableOption "basic graphical utilities";
+  options.myNixOS.graphical.enable = lib.mkEnableOption "common graphical environment settings";
 
   config = lib.mkIf cfg.enable {
 
+    # Customise the tty.
+    console.font = "Lat2-Terminus16";
+
     # Enable the plymouth splash screen.
     boot.plymouth.enable = true;
+
+    # Enable my custom system theme.
+    myNixOS.style.enable = true;
 
     # Install and configure firefox.
     myNixOS.firefox.enable = true;
@@ -21,6 +27,9 @@ in {
     programs.gnupg.agent.enable = true;
     hardware.gpgSmartcards.enable = true;
 
+    # Install and configure Fcitx5.
+    myNixOS.fcitx5.enable = true;
+
     # Enable CUPS.
     services.printing.enable = true;
     services.avahi.enable = true;
@@ -29,6 +38,15 @@ in {
     # Enable SANE.
     hardware.sane.enable = true;
     services.saned.enable = true;
+
+    # Enable sound support.
+    security.rtkit.enable = true;
+    services.pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+    };
 
     # Enable the following utilities.
     services.blueman.enable = true;
