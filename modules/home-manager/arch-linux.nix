@@ -23,13 +23,27 @@ in {
     # And set NIX_PATH as desired.
     nix.nixPath = [ "nixpkgs=flake:nixpkgs" ];
 
-    # Overlay to specify NixGLIntel's main program.
     nixpkgs.overlays = [
+
+      # Overlay to specify NixGLIntel's main program.
       (self: super: {
         nixgl.nixGLIntel = super.nixgl.nixGLIntel // {
           meta.mainProgram = "nixGLIntel";
         };
       })
+
+      # Overlay to wrap user packages.
+      (self: super:
+        builtins.listToAttrs (map
+          (name: {
+            inherit name;
+            value = config.lib.nixGL.wrap super.${name};
+          })
+          [
+            "yubioath-flutter"
+          ])
+      )
+
     ];
 
     # Access NixGL in Home Manager.
