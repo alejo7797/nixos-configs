@@ -3,10 +3,14 @@
 # shellcheck shell=bash
 
 swaymsg workspace 4
-swaymsg exec uwsm app -- dolphin
+uwsm app dolphin
+
 sleep 1.5
-swaymsg exec uwsm app -- kitty
+uwsm app kitty
+
 sleep 0.5
 swaymsg move right
 swaymsg workspace 5
 swaymsg workspace 1
+
+# vim:ft=sh
