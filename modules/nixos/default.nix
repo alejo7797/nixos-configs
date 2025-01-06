@@ -106,7 +106,7 @@
   programs.neovim.enable = true;
 
   # Enable systemd-timesyncd.
-  services.timesyncd.enable = lib.mkDefault true;
+  services.timesyncd.enable = true;
 
   # Enable polkit.
   security.polkit.enable = true;

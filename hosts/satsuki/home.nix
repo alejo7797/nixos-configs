@@ -29,51 +29,49 @@
 
   '';
 
-  # Configure outputs.
-  services.kanshi.settings = [
-    {
-      profile.name = "home";
-      profile.outputs = [
-        {
-          criteria = "ASUSTek COMPUTER INC ASUS VA27EHE N3LMTF145950";
-          mode = "1920x1080@74.986Hz";
-          position = "0,0";
-        }
-        {
-          criteria = "eDP-1";
-          mode = "1920x1080@60.033Hz";
-          position = "1920,0";
-          scale = 1.0;
-        }
-      ];
-    }     {
-      profile.name = "office";
-      profile.outputs = [
-        {
-          criteria = "Samsung Electric Company S27R65 H4TT101982";
-          mode = "1920x1080@74.973Hz";
-          position = "0,0";
-        }
-        {
-          criteria = "eDP-1";
-          mode = "1920x1080@60.033Hz";
-          position = "1920,0";
-          scale = 1.0;
-        }
-      ];
-    }
-   {
-      profile.name = "mobile";
-      profile.outputs = [
-        {
-          criteria = "eDP-1";
-          mode = "1920x1080@60.033Hz";
-          position = "0,0";
-          scale = 1.0;
-        }
-      ];
-    }
-  ];
+  # Configure displays.
+  services.kanshi.settings =
+
+    let
+      laptop_screen = {
+        criteria = "eDP-1";
+        mode = "1920x1080@60.033Hz";
+        scale = 1.0;
+      };
+
+      home_monitor = {
+        criteria = "ASUSTek COMPUTER INC ASUS VA27EHE N3LMTF145950";
+        mode = "1920x1080@74.986Hz";
+      };
+
+      office_monitor = {
+        criteria = "Samsung Electric Company S27R65 H4TT101982";
+        mode = "1920x1080@74.973Hz";
+      };
+    in
+
+    [
+      {
+        profile.name = "home";
+        profile.outputs = [
+          (home_monitor // { position = "0,0"; })
+          (laptop_screen // { position = "1920,0"; })
+        ];
+      }
+      {
+        profile.name = "office";
+        profile.outputs = [
+          (office_monitor // { position = "0,0"; })
+          (laptop_screen // { position = "1920,0"; })
+        ];
+      }
+      {
+        profile.name = "mobile";
+        profile.outputs = [
+          (laptop_screen // { position = "0,0"; })
+        ];
+      }
+    ];
 
   # Host-specific Hyprland configuration.
   wayland.windowManager.hyprland.settings = {

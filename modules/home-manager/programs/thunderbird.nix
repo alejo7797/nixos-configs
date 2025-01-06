@@ -15,7 +15,7 @@ in {
         oauth = (id: { "mail.server.server_${id}.authMethod" = 10; });
       in
 
-      lib.mapAttrs
+      builtins.mapAttrs
 
       (
         name: settings:

@@ -13,7 +13,7 @@ in {
       settings = {
         default_session = {
 
-          command = lib.concatStringsSep " " [
+          command = builtins.concatStringsSep " " [
 
             # Use tuigreet as our greeter.
             "${pkgs.greetd.tuigreet}/bin/tuigreet"

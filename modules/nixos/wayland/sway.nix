@@ -4,7 +4,7 @@
 
   config = lib.mkIf config.myNixOS.sway.enable {
 
-    # Install a bunch of Wayland-specific goodies.
+    # Configure a bunch of Wayland-specific goodies.
     myNixOS.wayland.enable = true;
 
     # Install sway, the i3-compatible Wayland compositor.

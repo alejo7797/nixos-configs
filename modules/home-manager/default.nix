@@ -7,14 +7,6 @@
     ./arch-linux.nix
   ];
 
-  options.myHome = {
-    hostname = lib.mkOption {
-      description = "The system hostname.";
-      type = lib.types.str;
-      example = "satsuki";
-    };
-  };
-
   config = {
     # Automatic garbage collection.
     nix.gc = {

@@ -5,12 +5,10 @@
     let
       dolphin-dialogs =
         "title:^("
-        + lib.concatStringsSep "|"
+        + builtins.concatStringsSep "|"
         [
+          "Copying" "Moving" "Deleting"
           "Creating directory"
-          "Copying"
-          "Moving"
-          "Deleting"
           "Progress Dialog"
         ]
         + ") — Dolphin$";
@@ -50,7 +48,7 @@
     ]
 
     # System tray.
-    ++ lib.concatLists (
+    ++ builtins.concatLists (
       map (w: [ "size 600 600, ${w}" "move 100%-w-10 100%-w-40, ${w}" ]) [
         "class:^(.blueman-manager-wrapped)$, title:^(Bluetooth Devices)$"
         "class:^(nm-connection-editor)$, title:^(Network Connections)$"

@@ -52,7 +52,7 @@ in {
           "$terminal" = "${uwsm-app} -- ${kitty}";
 
           # Default application launcher.
-          "$menu" = lib.concatStringsSep " " [
+          "$menu" = builtins.concatStringsSep " " [
             "${pkgs.wofi}/bin/wofi |"
             "${pkgs.moreutils}/bin/ifne"
             "${pkgs.findutils}/bin/xargs"
