@@ -13,8 +13,9 @@ in
   options.myHome.style.enable = lib.mkEnableOption "user theme components";
 
   config = lib.mkIf cfg.enable {
+
     # Enable common theme components.
-    myStyle.enable = true;
+    myStylix.enable = true;
 
     xdg = {
       # Fix the look of QT applications.

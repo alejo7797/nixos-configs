@@ -13,17 +13,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    impermanence.url = "github:nix-community/impermanence";
-    sops-nix.url = "github:Mic92/sops-nix";
-
     ilya-fedin.url = "github:ilya-fedin/nur-repository";
-    nur.url = "github:nix-community/NUR";
-
+    impermanence.url = "github:nix-community/impermanence";
     nixgl.url = "github:nix-community/nixGL";
+    nur.url = "github:nix-community/NUR";
+    sops-nix.url = "github:Mic92/sops-nix";
     stylix.url = "github:danth/stylix";
   };
 
-  outputs = {...} @ inputs:
+  outputs =
+    { ... }@inputs:
 
     let
       myLib = import ./my-lib.nix { inherit inputs; };

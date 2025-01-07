@@ -1,9 +1,10 @@
-{ pkgs, lib, config, ... }: let
+{ pkgs, lib, config, ... }:
 
+let
   cfg = config.myNixOS.style;
+in
 
-in {
-
+{
   imports = [ ../style.nix ];
 
   options.myNixOS.style.enable = lib.mkEnableOption "system theme components";
@@ -23,7 +24,7 @@ in {
     };
 
     # Enable common theme components.
-    myStyle.enable = true;
+    myStylix.enable = true;
 
     # Install necessary theme packages.
     environment.systemPackages = with pkgs; [

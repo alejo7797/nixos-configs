@@ -1,17 +1,25 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 
 let
   cfg = config.myHome.neovim;
 in
 
 {
-  imports = [ ./ale.nix ];
+  imports = [ ./latex.nix ];
 
-  options.myHome.neovim.enable = lib.mkEnableOption "neovim";
+  options.myHome.neovim.enable = lib.mkEnableOption "NeoVim";
 
   config = lib.mkIf cfg.enable {
-     # Load in our personal snippets.
-    xdg.configFile."nvim/snippets".source = ./snippets;
+    # Load in our personal snippets.
+    xdg.configFile."nvf/snippets".source = ./snippets;
+
+    # Enable LaTeX support.
+    myHome.neovim.latex.enable = true;
 
     # Install and configure neovim using nvf.
     programs.nvf = {
@@ -20,14 +28,12 @@ in
       settings = {
         vim = {
           # Install plugin dependencies.
-          extraPackages = with pkgs; [
-            fd fzf ripgrep
-          ];
+          extraPackages = with pkgs; [ ripgrep ];
 
           # Don't leave search highlights lying around.
           hideSearchHighlight = true;
 
-          # Don't show line numbers by default.
+          # Don't show line numbers.
           lineNumberMode = "none";
 
           # Use the system clipboard.
@@ -35,6 +41,46 @@ in
 
           # Enable persistent undo.
           undoFile.enable = true;
+
+          # Extra options to set.
+          options = {
+            # Set the terminal window title.
+            title = true;
+
+            # Set a faster update time.
+            updatetime = 100;
+
+            # Traverse line breaks.
+            whichwrap = "b,s,<,>,[,]";
+
+            # Disable line wrapping.
+            wrap = false;
+          };
+
+          # Handy terminal autocommands.
+          luaConfigRC.terminal = ''
+            vim.cmd([[
+              " Enter insert mode when focusing on the terminal.
+              autocmd TermOpen * :startinsert
+              autocmd BufEnter * if &buftype == 'terminal' | :startinsert | endif
+            ]])
+          '';
+
+          # Custom keybindings.
+          keymaps = [
+            {
+              key = "<leader>t";
+              mode = "n";
+              action = "<cmd>Neotree toggle reveal<CR>";
+              desc = "Toggle the neo-tree window.";
+            }
+            {
+              key = "<C-t>";
+              mode = "n";
+              action = "<cmd>rightb vertical terminal<CR>";
+              desc = "Open a terminal window.";
+            }
+          ];
 
           # Enable nvim-autopairs.
           autopairs.nvim-autopairs.enable = true;
@@ -46,12 +92,10 @@ in
             # Completion sources.
             sourcePlugins = with pkgs.vimPlugins; [
               cmp-buffer
-              cmp-nvim-lsp
-              cmp_luasnip
-              cmp-path
               cmp-cmdline
               cmp-git
-              cmp-vimtex
+              cmp-nvim-lsp
+              cmp-path
             ];
           };
 
@@ -60,19 +104,14 @@ in
             cheatsheet.enable = true;
             whichKey.enable = true;
           };
-          
+
           # Enable comment-nvim.
           comments.comment-nvim.enable = true;
 
-          # Enable and configure nvim-tree-lua.
-          filetree.nvimTree = {
-            enable = true;
-            setupOpts = {
-              git.enable = true;
-            };
-          };
+          # Enable neo-tree.nvim.
+          filetree.neo-tree.enable = true;
 
-          # Enable git integration.
+          # Enable Git integration.
           git.enable = true;
 
           # Highlight to-do comments.
@@ -88,7 +127,7 @@ in
               "friendly-snippets"
             ];
           };
-          
+
           # Enable and configure lualine.
           statusline.lualine = {
             enable = true;
@@ -97,30 +136,35 @@ in
               options.theme = "base16";
             };
           };
-            
-          # Enable bufferline.
+
+          # Enable bufferline.nvim.
           tabline.nvimBufferline.enable = true;
 
-          # Enable telescope.
+          # Enable telescope.nvim.
           telescope.enable = true;
-
-          # Enable and configure toggleterm.
-          terminal.toggleterm = {
-            enable = true;
-            lazygit.enable = true;
-            setupOpts.direction = "vertical";
-          };
 
           # Configure nvim-treesitter.
           treesitter = {
-            context.enable = true;
-
-            # Extra treesitter grammars to install.
-            grammars =
-              with pkgs.vimPlugins.nvim-treesitter-parsers;
-              [
-                gitcommit hyprlang latex nginx
-              ];
+            # Code context support.
+            context = {
+              enable = true;
+              # Limit the amount of space to take up.
+              setupOpts.max_lines = 6;
+            };
+            # Install additional treesitter grammars.
+            grammars = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+              dockerfile
+              gitcommit
+              hyprlang
+              javascript
+              json
+              make
+              nginx
+              php
+              ruby
+              scss
+              yaml
+            ];
           };
 
           ui = {
@@ -129,37 +173,43 @@ in
 
             # Enable nvim-colorizer.
             colorizer.enable = true;
-            
+
             # Enable fastaction.nvim.
             fastaction.enable = true;
 
-            # Enable noice.nvim.
-            noice.enable = true;
+            # Enable and configure noice.nvim.
+            noice = {
+              enable = true;
+              setupOpts = {
+                # Enable signature help.
+                lsp.signature.enabled = true;
+              };
+            };
           };
 
           # Enable nvim-surround.
           utility.surround.enable = true;
 
           visuals = {
-            # Smooth scrolling.
-            cinnamon-nvim.enable = true;
-
-            # Highlight changes when using undo.
+            # Enable highlight-undo.nvim.
             highlight-undo.enable = true;
 
-            # Enable indentation guides.
-            indent-blankline.enable = true;
+            # Enable and configure indent-blankline.nvim.
+            indent-blankline = {
+              enable = true;
+              setupOpts = {
+                # Disable scope highlighting in Nix.
+                scope.exclude.language = [ "nix" ];
+              };
+            };
 
-            # Enable nvim-cursorline.
-            nvim-cursorline.enable = true;
-
-            # Enable devicons.
+            # Enable nvim-web-devicons.
             nvim-web-devicons.enable = true;
           };
 
           lsp = {
-            # Do not autoformat files.
-            formatOnSave = false;
+            # Format files automatically.
+            formatOnSave = true;
 
             # Enable nvim-lightbulb.
             lightbulb.enable = true;
@@ -173,33 +223,55 @@ in
 
           # Language configuration.
           languages = {
+            # Features to enable by default.
             enableExtraDiagnostics = true;
             enableFormat = true;
             enableLSP = true;
             enableTreesitter = true;
 
+            # C/C++.
+            clang = {
+              enable = true;
+              # Debugging support.
+              dap.enable = true;
+            };
+
+            # Nix.
+            nix = {
+              enable = true;
+              # Use the official Nix formatter.
+              format.type = "nixfmt";
+            };
+
+            # Python.
+            python = {
+              enable = true;
+              # Debugging support.
+              dap.enable = true;
+              # Use the Black formatter.
+              format.type = "black";
+            };
+
+            # Other languages to support.
             bash.enable = true;
-            clang.enable = true;
             css.enable = true;
             html.enable = true;
             markdown.enable = true;
-            nix.enable = true;
-            python.enable = true;
           };
 
-          # Extra plugin configuration.
+          # Install additional plugins.
           extraPlugins = with pkgs.vimPlugins; {
+            # Good base16 support.
             base16-nvim = {
               package = base16-nvim;
               setup = ''
-                vim.cmd("colorscheme base16-tomorrow-night")
+                vim.cmd.colorscheme('base16-tomorrow-night');
               '';
             };
-            vimtex = {
-              package = vimtex;
-              setup = ''
-                vim.g.vimtex_view_method = "zathura_simple"
-              '';
+
+            # Highlight trailing whitespace.
+            vim-better-whitespace = {
+              package = vim-better-whitespace;
             };
           };
         };

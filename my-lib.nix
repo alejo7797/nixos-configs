@@ -1,12 +1,11 @@
 { inputs }:
 
 let
-  outputs = inputs.self.outputs;
+  inherit (inputs.self) outputs;
   myLib = (import ./my-lib.nix) { inherit inputs; };
 in
 
 rec {
-
   # Return the appropriate Nixpkgs instance.
   pkgsFor = system:
     import inputs.nixpkgs {
@@ -41,5 +40,4 @@ rec {
     gtk3.extraConfig.${name} = value;
     gtk4.extraConfig.${name} = value;
   };
-
 }
