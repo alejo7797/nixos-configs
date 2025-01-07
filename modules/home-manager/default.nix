@@ -1,9 +1,10 @@
-{ inputs, pkgs, lib, config, ... }: {
+{ inputs, config, ... }: {
 
   imports = [
     # External modules.
     inputs.sops-nix.homeManagerModules.sops
     inputs.nur.modules.homeManager.default
+    inputs.nvf.homeManagerModules.default
 
     # My personal modules.
     ./zsh ./programs
@@ -30,17 +31,19 @@
       age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
     };
 
-    # Configure Zsh.
-    myHome.zsh.enable = true;
+    myHome = {
+      # Configure Zsh.
+      zsh.enable = true;
 
-    # Configure Neovim.
-    myHome.neovim.enable = true;
+      # Configure Neovim.
+      neovim.enable = true;
 
-    # Configure Git.
-    myHome.git.enable = true;
+      # Configure Git.
+      git.enable = true;
 
-    # Configure GnuPG.
-    myHome.gpg.enable = true;
+      # Configure GnuPG.
+      gpg.enable = true;
+    };
 
     # Add our personal scripts to PATH.
     home.sessionPath = [ "$HOME/.local/bin" ];

@@ -4,14 +4,9 @@
 
 in {
 
-  imports = [
-    ./hyprland ./sway
-    ./waybar ./swaync
-    ./wlogout
-  ];
+  imports = [ ./hyprland ./sway ./swaync ./waybar ./wlogout ];
 
   options.myHome.wayland = {
-
     enable = lib.mkEnableOption "Wayland";
 
     lock = lib.mkOption {
@@ -23,17 +18,23 @@ in {
 
     loginctl = lib.mkOption {
       type = lib.types.str;
-      default = "loginctl";
+      default = "${pkgs.systemd}/bin/loginctl";
       example = "/usr/bin/loginctl";
       description = "Instance of `loginctl` to run.";
     };
-
   };
 
   config = lib.mkIf cfg.enable {
+    myHome = {
+      # Configure common graphical utilities.
+      graphical.enable = true;
 
-    # Configure common graphical applications.
-    myHome.graphical.enable = true;
+      # Install and configure waybar.
+      waybar.enable = true;
+
+      # Install and configure swaync.
+      swaync.enable = true;
+    };
 
     # Set environment variables using UWSM.
     xdg.configFile."uwsm/env".text = ''
@@ -50,25 +51,6 @@ in {
       export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
 
     '';
-
-    # Install and configure waybar.
-    myHome.waybar.enable = true;
-
-    # Install and configure swaync.
-    myHome.swaync.enable = true;
-
-    # Dynamic output configuration.
-    services.kanshi.enable = true;
-
-    # Install and configure wofi.
-    programs.wofi = {
-      enable = true;
-      settings = {
-        mode = "drun"; drun-print_command = true;
-        width = "36%"; height = "40%"; allow_images = true;
-        location = "center"; key_expand = "Ctrl-x";
-      };
-    };
 
     # Install and configure hyprlock.
     programs.hyprlock = {
@@ -88,23 +70,36 @@ in {
       };
     };
 
-    # Stylix wants to set the wallpaper too.
-    stylix.targets.hyprlock.enable = false;
-
-    # Enable and configure gammastep.
-    services.gammastep = {
+    # Install and configure wofi.
+    programs.wofi = {
       enable = true;
-      tray = true;
-      provider = lib.mkDefault "geoclue2";
-      settings.general = {
-        fade = 1; gamma = 0.8;
-        adjustment-method = "wayland";
+      settings = {
+        mode = "drun"; drun-print_command = true;
+        width = "36%"; height = "40%"; allow_images = true;
+        location = "center"; key_expand = "Ctrl-x";
       };
     };
 
-    # Enable and configure swayidle.
-    services.swayidle =
-      {
+    # Stylix wants to set the wallpaper too.
+    stylix.targets.hyprlock.enable = false;
+
+    services = {
+      # Enable the kanshi daemon.
+      kanshi.enable = true;
+
+      # Enable and configure gammastep.
+      gammastep = {
+        enable = true;
+        tray = true;
+        provider = lib.mkDefault "geoclue2";
+        settings.general = {
+          fade = 1; gamma = 0.8;
+          adjustment-method = "wayland";
+        };
+      };
+
+      # Enable and configure swayidle.
+      swayidle = {
         enable = true;
         events = [
           { event = "lock"; command = "${pkgs.playerctl}/bin/playerctl -a pause"; }
@@ -116,6 +111,6 @@ in {
           { timeout = 660; command = "systemctl suspend"; }
         ];
       };
-
+    };
   };
 }

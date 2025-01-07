@@ -1,272 +1,209 @@
-{ pkgs, lib, config, ... }: let
+{ pkgs, lib, config, ... }:
 
+let
   cfg = config.myHome.neovim;
+in
 
-in {
-
-  imports = [ ./ale.nix ./coc.nix ./nvim-cmp.nix ./ultisnips.nix ./ycm.nix ];
+{
+  imports = [ ./ale.nix ];
 
   options.myHome.neovim.enable = lib.mkEnableOption "neovim";
 
   config = lib.mkIf cfg.enable {
+     # Load in our personal snippets.
+    xdg.configFile."nvim/snippets".source = ./snippets;
 
-    # Ensure the undodir gets created.
-    home.file.".cache/nvim/undodir/README".text = "Created by Home Manager.";
+    # Install and configure neovim using nvf.
+    programs.nvf = {
+      enable = true;
 
-    # Manage theming ourselves.
-    stylix.targets.neovim.enable = false;
+      settings = {
+        vim = {
+          # Install plugin dependencies.
+          extraPackages = with pkgs; [
+            fd fzf ripgrep
+          ];
 
-    # Install ALE by default.
-    myHome.neovim.ale.enable = lib.mkDefault true;
+          # Don't leave search highlights lying around.
+          hideSearchHighlight = true;
 
-    # Use nvim-cmp as our completion engine by default.
-    myHome.neovim.nvim-cmp.enable = lib.mkDefault true;
+          # Don't show line numbers by default.
+          lineNumberMode = "none";
 
-    # Install UltiSnips by default.
-    myHome.neovim.ultisnips.enable = lib.mkDefault true;
+          # Use the system clipboard.
+          useSystemClipboard = true;
 
-    # Load in our personal snippets.
-    xdg.configFile."nvim/UltiSnips".source = ./UltiSnips;
+          # Enable persistent undo.
+          undoFile.enable = true;
 
-    # Install and configure neovim.
-    programs.neovim =
+          # Enable nvim-autopairs.
+          autopairs.nvim-autopairs.enable = true;
 
-      let
-        # Set the <leader> key.
-        leader = ",";
-      in
+          # Enable nvim-cmp.
+          autocomplete.nvim-cmp = {
+            enable = true;
 
-      {
-        enable = true;
+            # Completion sources.
+            sourcePlugins = with pkgs.vimPlugins; [
+              cmp-buffer
+              cmp-nvim-lsp
+              cmp_luasnip
+              cmp-path
+              cmp-cmdline
+              cmp-git
+              cmp-vimtex
+            ];
+          };
 
-        # Symlink vim and vimdiff.
-        vimAlias = true;
-        vimdiffAlias = true;
+          # Help find keybindings.
+          binds = {
+            cheatsheet.enable = true;
+            whichKey.enable = true;
+          };
+          
+          # Enable comment-nvim.
+          comments.comment-nvim.enable = true;
 
-        extraConfig = ''
-          " Automatically write out, e.g. when changing buffers.
-          set autowriteall
+          # Enable and configure nvim-tree-lua.
+          filetree.nvimTree = {
+            enable = true;
+            setupOpts = {
+              git.enable = true;
+            };
+          };
 
-          " Automatically set the working directory.
-          set autochdir
+          # Enable git integration.
+          git.enable = true;
 
-          " Set the terminal window title.
-          set title
+          # Highlight to-do comments.
+          notes.todo-comments.enable = true;
 
-          " Set a lower update time.
-          set updatetime=100
+          # Enable notifications.
+          notify.nvim-notify.enable = true;
 
-          " Always show the sign column.
-          set signcolumn=yes
+          # Enable luasnip.
+          snippets.luasnip = {
+            enable = true;
+            providers = [
+              "friendly-snippets"
+            ];
+          };
+          
+          # Enable and configure lualine.
+          statusline.lualine = {
+            enable = true;
+            refresh.statusline = 100;
+            setupOpts = {
+              options.theme = "base16";
+            };
+          };
+            
+          # Enable bufferline.
+          tabline.nvimBufferline.enable = true;
 
-          " Show whitespace with `set list`.
-          set lcs+=space:·
+          # Enable telescope.
+          telescope.enable = true;
 
-          " Color support in the linux console.
-          set termguicolors
+          # Enable and configure toggleterm.
+          terminal.toggleterm = {
+            enable = true;
+            lazygit.enable = true;
+            setupOpts.direction = "vertical";
+          };
 
-          " Set the <leader> key.
-          let mapleader = "${leader}"
-          let maplocalleader = "${leader}"
+          # Configure nvim-treesitter.
+          treesitter = {
+            context.enable = true;
 
-          " Clear highlights.
-          nnoremap <silent> <Esc> :noh<cr>
+            # Extra treesitter grammars to install.
+            grammars =
+              with pkgs.vimPlugins.nvim-treesitter-parsers;
+              [
+                gitcommit hyprlang latex nginx
+              ];
+          };
 
-          " Use the system clipboard.
-          vnoremap <C-c> "+y
-          nnoremap <C-v> "+p
+          ui = {
+            # Enable borders.
+            borders.enable = true;
 
-          " Configure the behaviour of tabs.
-          set expandtab
-          set shiftwidth=4
+            # Enable nvim-colorizer.
+            colorizer.enable = true;
+            
+            # Enable fastaction.nvim.
+            fastaction.enable = true;
 
-          " In C.
-          autocmd FileType c setlocal shiftwidth=2
+            # Enable noice.nvim.
+            noice.enable = true;
+          };
 
-          " In nix.
-          autocmd FileType nix setlocal shiftwidth=2
+          # Enable nvim-surround.
+          utility.surround.enable = true;
 
-          " Traverse line breaks with the arrow keys.
-          set whichwrap=b,s,<,>,[,]
+          visuals = {
+            # Smooth scrolling.
+            cinnamon-nvim.enable = true;
 
-          " Visually indent wrapped lines.
-          set breakindent
+            # Highlight changes when using undo.
+            highlight-undo.enable = true;
 
-          " Leave folds open by default.
-          set foldmethod=syntax
-          set foldlevelstart=99
+            # Enable indentation guides.
+            indent-blankline.enable = true;
 
-          " Enable persistent undo.
-          set undofile
-          set undodir=${config.home.homeDirectory}/.cache/nvim/undodir
+            # Enable nvim-cursorline.
+            nvim-cursorline.enable = true;
 
-          " Open a new empty buffer.
-          nnoremap <leader>b :enew<cr>
+            # Enable devicons.
+            nvim-web-devicons.enable = true;
+          };
 
-          " Split the window vertically and open a terminal.
-          nnoremap <silent> <C-`> <cmd>rightb vertical terminal<CR>
+          lsp = {
+            # Do not autoformat files.
+            formatOnSave = false;
 
-          " Enter insert mode when opening a terminal window.
-          autocmd TermOpen * :startinsert
-          autocmd BufEnter * if &buftype == 'terminal' | :startinsert | endif
-        '';
+            # Enable nvim-lightbulb.
+            lightbulb.enable = true;
 
-        # Install plugin dependencies.
-        extraPackages = with pkgs; [
-          black fd nixfmt-rfc-style
-          ripgrep shfmt tree-sitter
-        ];
+            # Enable lsp_signature.
+            lspSignature.enable = true;
 
-        plugins = with pkgs.vimPlugins; [
-          {
-            plugin = base16-nvim;
-            config = ''
-              colorscheme base16-tomorrow-night
-            '';
-          }
-          {
-            plugin = gitsigns-nvim;
-            config = ''
-              lua << END
-                require('gitsigns').setup()
-              END
-            '';
-          }
-          {
-            plugin = lualine-nvim;
-            config = ''
-              lua << END
-                require('lualine').setup {
+            # Enable trouble.
+            trouble.enable = true;
+          };
 
-                  options = {
+          # Language configuration.
+          languages = {
+            enableExtraDiagnostics = true;
+            enableFormat = true;
+            enableLSP = true;
+            enableTreesitter = true;
 
-                    -- Follow base16-nvim.
-                    theme = 'base16',
+            bash.enable = true;
+            clang.enable = true;
+            css.enable = true;
+            html.enable = true;
+            markdown.enable = true;
+            nix.enable = true;
+            python.enable = true;
+          };
 
-                  },
-
-                  -- Set up the tabline.
-                  tabline = {
-                    lualine_a = {'buffers'},
-                    lualine_b = {'branch'},
-                    lualine_c = {'filename'},
-                    lualine_x = {},
-                    lualine_y = {},
-                    lualine_z = {'tabs'}
-                  },
-
-                }
-              END
-            '';
-          }
-          {
-            plugin = mini-nvim;
-            config = ''
-              " Make sure the <leader> key is correctly set.
-              let mapleader = "${leader}"
-
-              lua << END
-                -- Keep the window layout when deleting buffers.
-                require('mini.bufremove').setup()
-                vim.keymap.set("n", "<leader>x", "<cmd> lua MiniBufremove.delete()<CR>")
-
-                -- Toggle comments with `gc`.
-                require('mini.comment').setup()
-
-                -- Automatically match pairs.
-                require('mini.pairs').setup()
-
-                -- Add surroundings with `sa`.
-                -- More helpful commands available.
-                require('mini.surround').setup()
-              END
-            '';
-          }
-          {
-            plugin = nvim-lspconfig;
-            config = ''
-
-            '';
-          }
-          {
-            plugin = nvim-tree-lua;
-            config = ''
-              lua << END
-                -- Disable netrw.
-                vim.g.loaded_netrw = 1
-                vim.g.loaded_netrwPlugin = 1
-
-                -- Load nvimtree.
-                require('nvim-tree').setup()
-
-                -- Open and close nvimtree.
-                vim.keymap.set("n", "<C-n>", "<cmd>NvimTreeToggle<CR>")
-              END
-            '';
-          }
-          {
-            plugin = nvim-treesitter;
-            config = ''
-
-            '';
-          }
-          {
-            plugin = nvim-treesitter-parsers.latex;
-            config = ''
-
-            '';
-          }
-          {
-            plugin = nvim-web-devicons;
-            config = ''
-              lua << END
-                -- Do not enable devicons in the linux console.
-                if os.getenv("TERM") ~= linux then
-                  require('nvim-web-devicons').setup()
-                end
-              END
-            '';
-          }
-          {
-            plugin = telescope-nvim;
-            config = ''
-              " Make sure the <leader> key is correctly set.
-              let mapleader = "${leader}"
-
-              " Find files using Telescope command-line sugar.
-              nnoremap <leader>ff <cmd>Telescope find_files<CR>
-              nnoremap <leader>fg <cmd>Telescope live_grep<CR>
-              nnoremap <leader>fb <cmd>Telescope buffers<CR>
-              nnoremap <leader>fh <cmd>Telescope help_tags<CR>
-            '';
-          }
-          {
-            plugin = vim-better-whitespace;
-            config = ''
-
-            '';
-          }
-          {
-            plugin = vim-css-color;
-            config = ''
-
-            '';
-          }
-          {
-            plugin = vim-snippets;
-            config = ''
-
-            '';
-          }
-          {
-            plugin = vimtex;
-            config = ''
-              " Use Zathura as the VimTeX PDF viewer.
-              let g:vimtex_view_method='zathura_simple'
-            '';
-          }
-        ];
+          # Extra plugin configuration.
+          extraPlugins = with pkgs.vimPlugins; {
+            base16-nvim = {
+              package = base16-nvim;
+              setup = ''
+                vim.cmd("colorscheme base16-tomorrow-night")
+              '';
+            };
+            vimtex = {
+              package = vimtex;
+              setup = ''
+                vim.g.vimtex_view_method = "zathura_simple"
+              '';
+            };
+          };
+        };
       };
-
+    };
   };
 }
