@@ -26,7 +26,7 @@
 
   toThunderbirdCalendar = calendar:
     let
-      id = calendar.id;
+      inherit (calendar) id;
     in
     {
       "calendar.registry.${id}.cache.enabled" = true;
@@ -48,7 +48,7 @@
 
   toThunderbirdContacts = contact:
     let
-      id = contact.id;
+      inherit (contact) id;
     in
     {
       "ldap_2.servers.${id}.carddav.url" = contact.remote.url;
@@ -120,189 +120,195 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    # Configure my email accounts.
-    accounts.email.accounts =
+    accounts = {
 
-      let
-        oauth = (id: { "mail.server.server_${id}.authMethod" = 10; });
-      in
+      # Configure my email accounts.
+      email.accounts =
 
-      builtins.mapAttrs
+        let
+          oauth = id: { "mail.server.server_${id}.authMethod" = 10; };
+        in
 
-      (
-        name: value:
-          lib.recursiveUpdate
-          {
-            realName = "Alex Epelde";
-            userName = value.address;
-            imap.port = 993;
-            thunderbird.enable = true;
-          }
-          value
-      )
+        builtins.mapAttrs
 
-      {
-        Alex = {
-          address = "alex@epelde.net";
-          primary = true;
-          imap.host = "mail.epelde.net";
-          smtp.host = "mail.epelde.net";
-          smtp.tls.useStartTls = true;
-        };
+        (
+          _: value:
+            lib.recursiveUpdate
+            {
+              realName = "Alex Epelde";
+              userName = value.address;
+              imap.port = 993;
+              thunderbird.enable = true;
+              thunderbird.perIdentitySettings =
+                id: { "mail.identity.id_${id}.reply_on_top" = 1; };
+            }
+            value
+        )
 
-        Ewan = {
-          address = "ewan@patchoulihq.cc";
-          realName = "ewan";
-          imap.host = "mail.patchoulihq.cc";
-          smtp.host = "mail.patchoulihq.cc";
-          smtp.tls.useStartTls = true;
-        };
-
-        Gmail = {
-          address = "alexepelde@gmail.com";
-          flavor = "gmail.com";
-          thunderbird.settings = id: oauth id;
-        };
-
-        Harvard = {
-          address = "epelde@math.harvard.edu";
-          flavor = "outlook.office365.com";
-          folders.trash = "Deleted Items";
-          thunderbird.settings = id: oauth id;
-        };
-
-        Outlook = {
-          address = "alexepelde@outlook.es";
-          flavor = "outlook.office365.com";
-          folders.trash = "Deleted";
-          thunderbird.settings = id: oauth id;
-        };
-
-        Cambridge = {
-          address = "ae433@cantab.ac.uk";
-          flavor = "outlook.office365.com";
-          folders.trash = "Deleted Items";
-          thunderbird.settings = id: oauth id;
-        };
-      };
-
-    # Configure my calendars.
-    accounts.calendar.accounts =
-
-      let
-        color = (color: id: {
-          "calendar.registry.${id}.color" = color;
-        });
-
-        identity = (email: id: {
-          "calendar.registry.${id}.imip.identity.key" =
-            "id_${builtins.hashString "sha256" email}";
-        });
-
-        readOnly = (id: { "calendar.registry.${id}.readOnly" = true; });
-
-        refreshInterval = (interval: id: {
-          "calendar.registry.${id}.refreshInterval" = interval;
-        });
-      in
-
-      builtins.mapAttrs
-
-      (
-        name: value:
-          lib.recursiveUpdate
-          {
-            thunderbird.enable = true;
-          }
-          value
-      )
-
-      {
-        "Nextcloud" = {
-          primary = true;
-          remote = {
-            type = "caldav";
-            userName = "ewan";
-            url = "https://cloud.patchoulihq.cc/remote.php/dav/calendars/ewan/personal";
+        {
+          Alex = {
+            address = "alex@epelde.net";
+            primary = true;
+            imap.host = "mail.epelde.net";
+            smtp.host = "mail.epelde.net";
+            smtp.tls.useStartTls = true;
           };
-          thunderbird.settings = id: (
-            color "#2d72be" id
-            // refreshInterval 1 id
-            // identity "Alex" id
-          );
-        };
 
-        "Boston Topology"= {
-          remote = {
-            type = "http";
-            url = "https://calendar.google.com/calendar/ical/028i07liimdqltnn999mpdqek4%40group.calendar.google.com/public/basic.ics";
+          Ewan = {
+            address = "ewan@patchoulihq.cc";
+            realName = "ewan";
+            imap.host = "mail.patchoulihq.cc";
+            smtp.host = "mail.patchoulihq.cc";
+            smtp.tls.useStartTls = true;
           };
-          thunderbird.settings = id: (
-            color "#0b7f39" id
-            // readOnly id
-            // identity "Harvard" id
-          );
-        };
 
-        "Contact Birthdays" = {
-          remote = {
-            type = "caldav";
-            userName = "ewan";
-            url = "https://cloud.patchoulihq.cc/remote.php/dav/calendars/ewan/contact_birthdays";
+          Gmail = {
+            address = "alexepelde@gmail.com";
+            flavor = "gmail.com";
+            thunderbird.settings = oauth;
           };
-          thunderbird.settings = id: (
-            color "#d81b60" id
-            // readOnly id
-            // identity "Alex" id
-          );
-        };
 
-        "Holidays" = {
-          remote = {
-            type = "caldav";
-            userName = "ewan";
-            url = "https://cloud.patchoulihq.cc/remote.php/dav/calendars/ewan/holidays";
+          Harvard = {
+            address = "epelde@math.harvard.edu";
+            flavor = "outlook.office365.com";
+            folders.trash = "Deleted Items";
+            thunderbird.settings = oauth;
           };
-          thunderbird.settings = id: (
-            color "#0b7f39" id
-            // identity "Alex" id
-          );
-        };
-      };
 
-    # Configure my cardDAV accounts.
-    accounts.contact.accounts =
-
-      let
-        nextcloud = ( id: {
-            "ldap_2.servers.${id}.dirType" = 102;
-            "ldap_2.servers.${id}.filename" = "abook-1.sqlite";
-        });
-      in
-
-      builtins.mapAttrs
-
-      (
-        name: value:
-          lib.recursiveUpdate
-          {
-            thunderbird.enable = true;
-          }
-          value
-      )
-
-      {
-        "Contacts" = {
-          remote = {
-            type = "carddav";
-            userName = "ewan";
-            url = "https://cloud.patchoulihq.cc/remote.php/dav/addressbooks/users/ewan/contacts";
+          Outlook = {
+            address = "alexepelde@outlook.es";
+            flavor = "outlook.office365.com";
+            folders.trash = "Deleted";
+            thunderbird.settings = oauth;
           };
-          thunderbird.settings = id: (
-            nextcloud id
-          );
+
+          Cambridge = {
+            address = "ae433@cantab.ac.uk";
+            flavor = "outlook.office365.com";
+            folders.trash = "Deleted Items";
+            thunderbird.settings = oauth;
+          };
         };
-      };
+
+      # Configure my calendars.
+      calendar.accounts =
+
+        let
+          color = color: id: {
+            "calendar.registry.${id}.color" = color;
+          };
+
+          identity = email: id: {
+            "calendar.registry.${id}.imip.identity.key" =
+              "id_${builtins.hashString "sha256" email}";
+          };
+
+          readOnly = id: { "calendar.registry.${id}.readOnly" = true; };
+
+          refreshInterval = interval: id: {
+            "calendar.registry.${id}.refreshInterval" = interval;
+          };
+        in
+
+        builtins.mapAttrs
+
+        (
+          _: value:
+            lib.recursiveUpdate
+            {
+              thunderbird.enable = true;
+            }
+            value
+        )
+
+        {
+          "Nextcloud" = {
+            primary = true;
+            remote = {
+              type = "caldav";
+              userName = "ewan";
+              url = "https://cloud.patchoulihq.cc/remote.php/dav/calendars/ewan/personal";
+            };
+            thunderbird.settings = id: (
+              color "#2d72be" id
+              // refreshInterval 1 id
+              // identity "Alex" id
+            );
+          };
+
+          "Boston Topology"= {
+            remote = {
+              type = "http";
+              url = "https://calendar.google.com/calendar/ical/028i07liimdqltnn999mpdqek4%40group.calendar.google.com/public/basic.ics";
+            };
+            thunderbird.settings = id: (
+              color "#0b7f39" id
+              // readOnly id
+              // identity "Harvard" id
+            );
+          };
+
+          "Contact Birthdays" = {
+            remote = {
+              type = "caldav";
+              userName = "ewan";
+              url = "https://cloud.patchoulihq.cc/remote.php/dav/calendars/ewan/contact_birthdays";
+            };
+            thunderbird.settings = id: (
+              color "#d81b60" id
+              // readOnly id
+              // identity "Alex" id
+            );
+          };
+
+          "Holidays" = {
+            remote = {
+              type = "caldav";
+              userName = "ewan";
+              url = "https://cloud.patchoulihq.cc/remote.php/dav/calendars/ewan/holidays";
+            };
+            thunderbird.settings = id: (
+              color "#0b7f39" id
+              // identity "Alex" id
+            );
+          };
+        };
+
+      # Configure my cardDAV accounts.
+      contact.accounts =
+
+        let
+          nextcloud = id: {
+              "ldap_2.servers.${id}.dirType" = 102;
+              "ldap_2.servers.${id}.filename" = "abook-1.sqlite";
+          };
+        in
+
+        builtins.mapAttrs
+
+        (
+          _: value:
+            lib.recursiveUpdate
+            {
+              thunderbird.enable = true;
+            }
+            value
+        )
+
+        {
+          "Contacts" = {
+            remote = {
+              type = "carddav";
+              userName = "ewan";
+              url = "https://cloud.patchoulihq.cc/remote.php/dav/addressbooks/users/ewan/contacts";
+            };
+            thunderbird.settings = id: (
+              nextcloud id
+            );
+          };
+        };
+
+    };
 
     # Configure Thunderbird.
     programs.thunderbird = {
@@ -345,13 +351,13 @@ in
     # Configure Thunderbird calendar and cardDAV accounts.
     home.file = lib.mkMerge (
 
-      lib.mapAttrsToList (name: profile: {
+      lib.mapAttrsToList (name: _: {
 
         "${thunderbirdProfilesPath}/${name}/user.js".text =
 
           mkUserJs (builtins.foldl' (a: b: a // b) { } (
-            (map (c: toThunderbirdCalendar c) enabledCalendarsWithId)
-            ++ (map (c: toThunderbirdContacts c) enabledContactsWithId)
+            (map toThunderbirdCalendar enabledCalendarsWithId)
+            ++ (map toThunderbirdContacts enabledContactsWithId)
           ));
 
       }) config.programs.thunderbird.profiles
