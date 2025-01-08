@@ -126,7 +126,9 @@ in
       email.accounts =
 
         let
-          oauth = id: { "mail.server.server_${id}.authMethod" = 10; };
+          oauth_imap = id: { "mail.server.server_${id}.authMethod" = 10; };
+          oauth_smtp = id: { "mail.smtpserver.smtp_${id}.authMethod" = 10; };
+          reply_on_top = id: { "mail.identity.id_${id}.reply_on_top" = 1; };
         in
 
         builtins.mapAttrs
@@ -140,7 +142,7 @@ in
               imap.port = 993;
               thunderbird.enable = true;
               thunderbird.perIdentitySettings =
-                id: { "mail.identity.id_${id}.reply_on_top" = 1; };
+                id: (reply_on_top id) // (oauth_smtp id);
             }
             value
         )
@@ -152,6 +154,7 @@ in
             imap.host = "mail.epelde.net";
             smtp.host = "mail.epelde.net";
             smtp.tls.useStartTls = true;
+            thunderbird.perIdentitySettings = reply_on_top;
           };
 
           Ewan = {
@@ -160,33 +163,34 @@ in
             imap.host = "mail.patchoulihq.cc";
             smtp.host = "mail.patchoulihq.cc";
             smtp.tls.useStartTls = true;
+            thunderbird.perIdentitySettings = reply_on_top;
           };
 
           Gmail = {
             address = "alexepelde@gmail.com";
             flavor = "gmail.com";
-            thunderbird.settings = oauth;
+            thunderbird.settings = oauth_imap;
           };
 
           Harvard = {
             address = "epelde@math.harvard.edu";
             flavor = "outlook.office365.com";
             folders.trash = "Deleted Items";
-            thunderbird.settings = oauth;
+            thunderbird.settings = oauth_imap;
           };
 
           Outlook = {
             address = "alexepelde@outlook.es";
             flavor = "outlook.office365.com";
             folders.trash = "Deleted";
-            thunderbird.settings = oauth;
+            thunderbird.settings = oauth_imap;
           };
 
           Cambridge = {
             address = "ae433@cantab.ac.uk";
             flavor = "outlook.office365.com";
             folders.trash = "Deleted Items";
-            thunderbird.settings = oauth;
+            thunderbird.settings = oauth_imap;
           };
         };
 
