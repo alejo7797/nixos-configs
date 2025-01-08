@@ -1,13 +1,15 @@
-{ inputs, config, ... }: {
+{ inputs, config, ... }:
 
+{
   imports = [
     # External modules.
-    inputs.sops-nix.homeManagerModules.sops
+    inputs.nixvim.homeManagerModules.nixvim
     inputs.nur.modules.homeManager.default
-    inputs.nvf.homeManagerModules.default
+    inputs.sops-nix.homeManagerModules.sops
 
     # My personal modules.
-    ./zsh ./programs
+    ./zsh
+    ./programs
     ./graphical.nix
     ./arch-linux.nix
   ];

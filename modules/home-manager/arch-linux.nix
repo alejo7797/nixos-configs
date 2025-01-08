@@ -1,9 +1,16 @@
-{ inputs, pkgs, lib, config, ... }: let
+{
+  inputs,
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
+let
   cfg = config.myHome.arch-linux;
+in
 
-in {
-
+{
   options.myHome.arch-linux.enable = lib.mkEnableOption "Arch-Linux quirks";
 
   config = lib.mkIf cfg.enable {
@@ -17,21 +24,20 @@ in {
     nixpkgs.overlays = [
 
       # Overlay to specify NixGLIntel's main program.
-      (self: super: {
-        nixgl.nixGLIntel = super.nixgl.nixGLIntel // {
+      (_: prev: {
+        nixgl.nixGLIntel = prev.nixgl.nixGLIntel // {
           meta.mainProgram = "nixGLIntel";
         };
       })
 
       # Overlay to wrap user packages.
-      (self: super:
+      (
+        _: prev:
         builtins.listToAttrs (
-          map
-            (name: {
-              inherit name;
-              value = config.lib.nixGL.wrap super.${name};
-            })
-            [ "yubioath-flutter" ]
+          map (name: {
+            inherit name;
+            value = config.lib.nixGL.wrap prev.${name};
+          }) [ "yubioath-flutter" ]
         )
       )
 

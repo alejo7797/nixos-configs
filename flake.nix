@@ -8,8 +8,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nvf = {
-      url = "github:notashelf/nvf";
+    nixvim = {
+      url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -22,26 +22,48 @@
   };
 
   outputs =
-    { ... }@inputs:
+    {
+      nixpkgs,
+      home-manager,
+      self,
+      ...
+    }@inputs:
 
     let
-      myLib = import ./my-lib.nix { inherit inputs; };
-    in
+      mkSystem =
+        config:
+        nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs self; };
+          modules = [
+            config
+            self.nixosModules.default
+          ];
+        };
 
-    with myLib;
+      mkHome =
+        system: config:
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.${system};
+          extraSpecialArgs = { inherit inputs self; };
+          modules = [
+            config
+            self.homeManagerModules.default
+          ];
+        };
+    in
 
     {
       nixosConfigurations = {
-        "nixos-vm" = mkSystem ./hosts/nixos-vm/configuration.nix;
-        "shinobu" = mkSystem ./hosts/shinobu/configuration.nix;
+        "qemu" = mkSystem hosts/qemu/configuration.nix;
+        "shinobu" = mkSystem hosts/shinobu/configuration.nix;
       };
 
       homeConfigurations = {
-        "ewan@satsuki" = mkHome "x86_64-linux" ./hosts/satsuki/home.nix;
+        "ewan@satsuki" = mkHome "x86_64-linux" hosts/satsuki/configuration.nix;
       };
 
-      nixosModules.default = ./modules/nixos;
-      homeManagerModules.default = ./modules/home-manager;
+      nixosModules.default = modules/nixos;
+      homeManagerModules.default = modules/home-manager;
     };
 
 }

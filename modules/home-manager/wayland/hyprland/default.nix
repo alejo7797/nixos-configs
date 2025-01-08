@@ -1,10 +1,20 @@
-{ pkgs, lib, myLib, config, ... }: let
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+let
 
   cfg = config.myHome.hyprland;
 
-in {
+in
+{
 
-  imports = [ ./hy3.nix ./window-rules.nix ];
+  imports = [
+    ./hy3.nix
+    ./window-rules.nix
+  ];
 
   options.myHome.hyprland.enable = lib.mkEnableOption "Hyprland configuration";
 
@@ -22,15 +32,25 @@ in {
     # Start graphical services after WAYLAND_DISPLAY gets set.
     systemd.user.services =
 
-      myLib.setListTo
+      builtins.listToAttrs (
+        map
+          (name: {
+            inherit name;
+            value = {
+              Unit.After = [ "graphical-session.target" ];
+            };
+          })
 
-        { Unit.After = [ "graphical-session.target" ]; }
-
-        [
-            "gammastep" "hyprpaper"
-            "kdeconnect" "kdeconnect-indicator"
-            "swayidle" "waybar" "xsettingsd"
-        ];
+          [
+            "gammastep"
+            "hyprpaper"
+            "kdeconnect"
+            "kdeconnect-indicator"
+            "swayidle"
+            "waybar"
+            "xsettingsd"
+          ]
+      );
 
     # Configure Hyprland, the tiling Wayland compositor.
     wayland.windowManager.hyprland = {
@@ -126,9 +146,7 @@ in {
 
           # Assign workspaces to outputs.
           workspace = builtins.concatLists (
-            lib.mapAttrsToList
-              (o: ws: map (w: "${toString w}, monitor:${o}") ws)
-              config.myHome.workspaces
+            lib.mapAttrsToList (o: ws: map (w: "${toString w}, monitor:${o}") ws) config.myHome.workspaces
           );
 
           # Miscellaneous.
