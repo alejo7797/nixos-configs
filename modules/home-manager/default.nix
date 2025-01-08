@@ -35,7 +35,7 @@
       # Configure Zsh.
       zsh.enable = true;
 
-      # Configure Neovim.
+      # Configure NeoVim.
       neovim.enable = true;
 
       # Configure Git.

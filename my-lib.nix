@@ -33,11 +33,4 @@ rec {
   setListTo = value: list: builtins.listToAttrs (
     map (name: { inherit name value; }) list
   );
-
-  # Set an attribute across each of GTK2/3/4.
-  gtkExtra = name: value: {
-    gtk2.extraConfig = "${name} = ${value}";
-    gtk3.extraConfig.${name} = value;
-    gtk4.extraConfig.${name} = value;
-  };
 }
