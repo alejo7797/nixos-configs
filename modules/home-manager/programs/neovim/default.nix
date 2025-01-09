@@ -44,8 +44,10 @@ in
       };
 
       opts = {
+        autochdir = true;
         breakindent = true;
         expandtab = true;
+        foldlevelstart = 99;
         hlsearch = false;
         signcolumn = "yes";
         title = true;
@@ -486,7 +488,7 @@ in
                 if term.direction == "horizontal" then
                   return 15
                 elseif term.direction == "vertical" then
-                  return vim.o.columns * 0.25
+                  return vim.o.columns * 0.4
                 end
               end
             '';
@@ -618,9 +620,9 @@ in
 
         cmp-git.enable = true;
 
-        # Tree-sitter.
         treesitter = {
           enable = true;
+          folding = true;
           settings = {
             highlight.enable = true;
             indent.enable = true;
@@ -629,7 +631,6 @@ in
 
         treesitter-textobjects.enable = true;
 
-        # LSP.
         lsp = {
           enable = true;
           inlayHints = true;
@@ -719,11 +720,38 @@ in
                 formatting.command = [ "${pkgs.nixfmt-rfc-style}/bin/nixfmt" ];
               };
             };
+
+            # LaTeX.
+            texlab = {
+              enable = true;
+              settings.texlab = {
+                bibtexFormatter = "texlab";
+                chktex = {
+                  onEdit = true;
+                  onOpenAndSave = true;
+                };
+                latexFormatter = "latexindent";
+              };
+            };
           };
         };
 
         lsp-format = {
           enable = true;
+        };
+
+        none-ls = {
+          enable = true;
+          settings = {
+            diagnostics_format = "[#{m}] #{s} (#{c})";
+          };
+          sources = {
+            diagnostics = {
+              # Nix.
+              deadnix.enable = true;
+              statix.enable = true;
+            };
+          };
         };
 
         nvim-lightbulb = {
@@ -733,19 +761,8 @@ in
           };
         };
 
-        none-ls = {
-          enable = true;
-          sources.diagnostics = {
-            # Nix.
-            deadnix.enable = true;
-            statix.enable = true;
-          };
-        };
-
-        # Diagnostics.
         trouble.enable = true;
 
-        # LaTeX.
         vimtex = {
           enable = true;
           settings = {
