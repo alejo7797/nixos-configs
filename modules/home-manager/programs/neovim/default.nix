@@ -355,7 +355,7 @@ in
 
         # lspconfig
         {
-          action = ":FormatToggle";
+          action = ":FormatToggle<CR>";
           key = "<leader>ltf";
           mode = "n";
           options = {
@@ -733,6 +733,12 @@ in
             };
           };
           servers = {
+            # Shellscript.
+            bashls.enable = true;
+
+            # Python.
+            basedpyright.enable = true;
+
             # Nix.
             nil_ls = {
               enable = true;
@@ -751,7 +757,7 @@ in
                   onOpenAndSave = true;
                 };
                 latexFormatter = "latexindent";
-                latexindent.local = (pkgs.writeText "latexindent.yaml" "defaultIndent: \"    \"");
+                latexindent.local = pkgs.writeText "latexindent.yaml" "defaultIndent: \"    \"";
               };
             };
           };
@@ -775,6 +781,7 @@ in
               zsh.enable = true;
             };
             formatting = {
+              black.enable = true;
               prettier.enable = true;
             };
           };
