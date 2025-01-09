@@ -56,9 +56,16 @@ in
       };
 
       highlightOverride = with stylix-colors; {
-        NormalFloat.bg = base00;
-        WhichKeySeparator.bg = base00;
+        # Fixing some colors.
         MiniIconsBlue.fg = base0D;
+        MiniIconsGrey.fg = base04;
+
+        # Which-Key.
+        WhichKeyGroup.fg = base05;
+        WhichKeySeparator.bg = base00;
+
+        # General look.
+        NormalFloat.bg = base00;
         SignColumn = {
           fg = base04;
           bg = base00;
@@ -357,6 +364,15 @@ in
           };
         }
         {
+          action.__raw = "vim.lsp.buf.format";
+          key = "<leader>lf";
+          mode = "v";
+          options = {
+            desc = "Format selection";
+            silent = true;
+          };
+        }
+        {
           action.__raw = ''
             function()
               vim.notify(vim.inspect(vim.lsp.buf.list_workspace_folders()))
@@ -520,6 +536,14 @@ in
               {
                 __unkeyed = "<leader>h";
                 group = "+Gitsigns";
+              }
+              {
+                __unkeyed = "<leader>lr";
+                desc = "LSP References [trouble]";
+                icon = {
+                  icon = " ";
+                  color = "green";
+                };
               }
               {
                 __unkeyed = "<leader>lw";
@@ -727,6 +751,7 @@ in
                   onOpenAndSave = true;
                 };
                 latexFormatter = "latexindent";
+                latexindent.local = (pkgs.writeText "latexindent.yaml" "defaultIndent: \"    \"");
               };
             };
           };
@@ -743,9 +768,14 @@ in
           };
           sources = {
             diagnostics = {
-              # Nix.
               deadnix.enable = true;
+              proselint.enable = true;
               statix.enable = true;
+              stylelint.enable = true;
+              zsh.enable = true;
+            };
+            formatting = {
+              prettier.enable = true;
             };
           };
         };
