@@ -58,6 +58,7 @@ in
       highlightOverride = with stylix-colors; {
         NormalFloat.bg = base00;
         WhichKeySeparator.bg = base00;
+        MiniIconsBlue.fg = base0D;
         SignColumn = {
           fg = base04;
           bg = base00;
