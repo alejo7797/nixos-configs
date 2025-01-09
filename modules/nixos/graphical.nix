@@ -1,8 +1,15 @@
-{ pkgs, lib, config, ... }: let
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+let
 
   cfg = config.myNixOS.graphical;
 
-in {
+in
+{
 
   options.myNixOS.graphical.enable = lib.mkEnableOption "common graphical environment settings";
 
@@ -70,15 +77,29 @@ in {
     environment.systemPackages = with pkgs; [
 
       # System utilities.
-      dconf-editor font-manager icoutils
-      libnotify mesa-demos pavucontrol
-      pdftk piper playerctl polkit_gnome
-      seahorse sqlitebrowser yubico-pam
-      xorg.xeyes vulkan-tools zenity
+      dconf-editor
+      font-manager
+      icoutils
+      libnotify
+      mesa-demos
+      pavucontrol
+      pdftk
+      piper
+      playerctl
+      polkit_gnome
+      seahorse
+      sqlitebrowser
+      yubico-pam
+      xorg.xeyes
+      vulkan-tools
+      zenity
 
       # Essential applications.
-      keepassxc kitty mpv
-      libreoffice variety
+      keepassxc
+      kitty
+      mpv
+      libreoffice
+      variety
 
     ];
 

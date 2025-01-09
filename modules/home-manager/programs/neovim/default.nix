@@ -521,28 +521,20 @@ in
                 group = "+Gitsigns";
               }
               {
-                __unkeyed = "<leader>l";
-                group = "+LSP";
-              }
-              {
-                __unkeyed = "<leader>lg";
-                group = "+GoTo";
-              }
-              {
-                __unkeyed = "<leader>lt";
-                group = "+Toggle";
-              }
-              {
                 __unkeyed = "<leader>lw";
                 group = "+Workspace";
-              }
-              {
-                __unkeyed = "<leader>t";
-                group = "+Toggle";
+                icon = {
+                  icon = " ";
+                  color = "blue";
+                };
               }
               {
                 __unkeyed = "<leader>x";
                 group = "+Trouble";
+                icon = {
+                  icon = "󱖫 ";
+                  color = "green";
+                };
               }
             ];
             preset = "modern";
@@ -624,7 +616,10 @@ in
           enable = true;
           folding = true;
           settings = {
-            highlight.enable = true;
+            highlight = {
+              enable = true;
+              disable = [ "latex" ];
+            };
             indent.enable = true;
           };
         };
