@@ -13,6 +13,7 @@
       # inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    flake-utils.url = "github:numtide/flake-utils";
     ilya-fedin.url = "github:ilya-fedin/nur-repository";
     impermanence.url = "github:nix-community/impermanence";
     nixgl.url = "github:nix-community/nixGL";

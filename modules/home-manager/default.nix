@@ -1,7 +1,6 @@
 {
   inputs,
   config,
-  pkgs,
   ...
 }:
 
@@ -50,15 +49,6 @@
 
       # Configure GnuPG.
       gpg.enable = true;
-    };
-
-    # Add our personal scripts to PATH.
-    home.sessionPath = [ "$HOME/.local/bin" ];
-
-    # Link in our personal scripts.
-    home.file.".local/bin" = {
-      source = ./scripts;
-      recursive = true;
     };
   };
 }

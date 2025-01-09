@@ -65,6 +65,7 @@ in
         WhichKeySeparator.bg = base00;
 
         # General look.
+        MatchParen.fg = base0A;
         NormalFloat.bg = base00;
         SignColumn = {
           fg = base04;
@@ -355,7 +356,7 @@ in
 
         # lspconfig
         {
-          action = ":FormatToggle<CR>";
+          action = ":FormatToggle <CR>";
           key = "<leader>ltf";
           mode = "n";
           options = {
@@ -443,7 +444,30 @@ in
         gitsigns.enable = true;
 
         # Tab line.
-        bufferline.enable = true;
+        bufferline = {
+          enable = true;
+          settings.options = {
+            close_command.__raw = ''
+              function()
+                require('bufdelete').bufdelete(bufnum, false)
+              end
+            '';
+            left_mouse_command = "buffer %d";
+            right_mouse_command = "vertical sbuffer %d";
+            diagnostics = "nvim_lsp";
+            diagnostics_indicator.__raw = ''
+              function(count, level, diagnostics_dict, context)
+                local s = " "
+                  for e, n in pairs(diagnostics_dict) do
+                    local sym = e == "error" and "   "
+                      or (e == "warning" and "   " or "  " )
+                    s = s .. n .. sym
+                  end
+                return s
+              end
+            '';
+          };
+        };
 
         # Status line.
         lualine = {
