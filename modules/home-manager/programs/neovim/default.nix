@@ -11,7 +11,7 @@ let
 in
 
 {
-  options.myHome.neovim.enable = lib.mkEnableOption "Neovim config";
+  options.myHome.neovim.enable = lib.mkEnableOption "Neovim";
 
   config = lib.mkIf cfg.enable {
 
@@ -39,7 +39,6 @@ in
       };
 
       globals = {
-        formatsave = true;
         mapleader = " ";
         maplocalleader = " ";
       };
@@ -56,6 +55,7 @@ in
 
       highlightOverride = with stylix-colors; {
         NormalFloat.bg = base00;
+        WhichKeySeparator.bg = base00;
         SignColumn = {
           fg = base04;
           bg = base00;
@@ -345,11 +345,7 @@ in
 
         # lspconfig
         {
-          action.__raw = ''
-            function()
-              vim.b.disableFormatSave = not vim.b.disableFormatSave
-            end
-          '';
+          action = ":FormatToggle";
           key = "<leader>ltf";
           mode = "n";
           options = {
@@ -386,7 +382,12 @@ in
         web-devicons.enable = true;
 
         # UI.
-        fastaction.enable = true;
+        fastaction = {
+          enable = true;
+          settings = {
+            register_ui_select = true;
+          };
+        };
         noice = {
           enable = true;
           settings = {
@@ -417,7 +418,6 @@ in
         };
         notify.enable = true;
         nui.enable = true;
-        nvim-lightbulb.enable = true;
 
         # Git.
         fugitive.enable = true;
@@ -719,6 +719,26 @@ in
                 formatting.command = [ "${pkgs.nixfmt-rfc-style}/bin/nixfmt" ];
               };
             };
+          };
+        };
+
+        lsp-format = {
+          enable = true;
+        };
+
+        nvim-lightbulb = {
+          enable = true;
+          settings = {
+            autocmd.enabled = true;
+          };
+        };
+
+        none-ls = {
+          enable = true;
+          sources.diagnostics = {
+            # Nix.
+            deadnix.enable = true;
+            statix.enable = true;
           };
         };
 
