@@ -774,7 +774,6 @@ in
           enable = true;
           settings = {
             diagnostics_format = "[#{m}] #{s} (#{c})";
-            debug = true;
           };
           sources = {
             diagnostics = {
