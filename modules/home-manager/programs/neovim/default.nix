@@ -384,20 +384,6 @@ in
             silent = true;
           };
         }
-        {
-          action.__raw = ''
-            function()
-              local client = vim.lsp.get_active_clients({ name = 'nil_ls' })[1]
-              local ns = vim.lsp.diagnostic.get_namespace(client.id)
-              vim.diagnostic.disable(nil, ns)
-            end
-          '';
-          key = "<leader>ltn";
-          options = {
-            desc = "Toggle nil_ls diagnostics";
-            silent = true;
-          };
-        }
       ];
 
       plugins = {
@@ -788,11 +774,14 @@ in
           enable = true;
           settings = {
             diagnostics_format = "[#{m}] #{s} (#{c})";
+            debug = true;
           };
           sources = {
             diagnostics = {
+              checkmake.enable = true;
               deadnix.enable = true;
               proselint.enable = true;
+              rubocop.enable = true;
               selene.enable = true;
               statix.enable = true;
               stylelint.enable = true;
@@ -801,6 +790,7 @@ in
             };
             formatting = {
               black.enable = true;
+              rubocop.enable = true;
               stylua.enable = true;
               prettier = {
                 enable = true;
