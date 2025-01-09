@@ -384,6 +384,20 @@ in
             silent = true;
           };
         }
+        {
+          action.__raw = ''
+            function()
+              local client = vim.lsp.get_active_clients({ name = 'nil_ls' })[1]
+              local ns = vim.lsp.diagnostic.get_namespace(client.id)
+              vim.diagnostic.disable(nil, ns)
+            end
+          '';
+          key = "<leader>ltn";
+          options = {
+            desc = "Toggle nil_ls diagnostics";
+            silent = true;
+          };
+        }
       ];
 
       plugins = {
@@ -739,6 +753,9 @@ in
             # Python.
             basedpyright.enable = true;
 
+            # C/C++.
+            clangd.enable = true;
+
             # Nix.
             nil_ls = {
               enable = true;
@@ -776,13 +793,23 @@ in
             diagnostics = {
               deadnix.enable = true;
               proselint.enable = true;
+              selene.enable = true;
               statix.enable = true;
               stylelint.enable = true;
+              yamllint.enable = true;
               zsh.enable = true;
             };
             formatting = {
               black.enable = true;
-              prettier.enable = true;
+              stylua.enable = true;
+              prettier = {
+                enable = true;
+                settings = {
+                  disabled_filetypes = [
+                    "python" "lua" "sh"
+                  ];
+                };
+              };
             };
           };
         };
