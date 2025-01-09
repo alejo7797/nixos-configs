@@ -7,12 +7,15 @@
 
 let
   cfg = config.myHome.neovim;
+  stylix-colors = config.lib.stylix.colors.withHashtag;
 in
 
 {
   options.myHome.neovim.enable = lib.mkEnableOption "Neovim config";
 
   config = lib.mkIf cfg.enable {
+
+    home.packages = with pkgs; [ fd ];
 
     programs.nixvim = {
       enable = true;
@@ -29,7 +32,7 @@ in
       colorschemes.base16 = {
         enable = true;
         colorscheme = {
-          inherit (config.lib.stylix.colors.withHashtag)
+          inherit (stylix-colors)
             base00 base01 base02 base03 base04 base05 base06 base07
             base08 base09 base0A base0B base0C base0D base0E base0F;
         };
@@ -44,6 +47,7 @@ in
       opts = {
         breakindent = true;
         hlsearch = false;
+        signcolumn = "yes";
         title = true;
         undofile = true;
         updatetime = 100;
@@ -55,6 +59,18 @@ in
 
       highlight = {
         ExtraWhitespace.bg = "red";
+      };
+
+      highlightOverride = with stylix-colors; {
+        NormalFloat.bg = base00;
+        SignColumn = {
+          fg = base04;
+          bg = base00;
+        };
+        WinSeparator = {
+          fg = base05;
+          bg = base00;
+        };
       };
 
       keymaps = [
@@ -138,6 +154,7 @@ in
             function()
               if vim.wo.diff then vim.cmd.normal(']c')
               else require('gitsigns').next_hunk()
+              end
             end
           '';
           key = "]c";
@@ -152,6 +169,7 @@ in
             function()
               if vim.wo.diff then vim.cmd.normal('[c')
               else require('gitsigns').prev_hunk()
+              end
             end
           '';
           key = "[c";
@@ -243,7 +261,7 @@ in
           };
         }
         {
-          action.__raw = "function() require('gitsigns').diffthis(~) end";
+          action.__raw = "function() require('gitsigns').diffthis('~') end";
           key = "<leader>hD";
           mode = "n";
           options = {
@@ -316,6 +334,33 @@ in
             silent = true;
           };
         }
+
+        # lspconfig
+        {
+          action.__raw = ''
+            function()
+              vim.b.disableFormatSave = not vim.b.disableFormatSave
+            end
+          '';
+          key = "<leader>ltf";
+          mode = "n";
+          options = {
+            desc = "Toggle format on save";
+            silent = true;
+          };
+        }
+        {
+          action.__raw = ''
+            function()
+              vim.notify(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+            end
+          '';
+          key = "<leader>lwl";
+          options = {
+            desc = "List workspace folders";
+            silent = true;
+          };
+        }
       ];
 
       plugins = {
@@ -327,14 +372,30 @@ in
         todo-comments.enable = true;
 
         # Visuals.
+        colorizer.enable = true;
         indent-blankline.enable = true;
-        nvim-colorizer.enable = true;
         web-devicons.enable = true;
 
         # UI.
         fastaction.enable = true;
-        noice.enable = true;
+        noice = {
+          enable = true;
+          settings = {
+            lsp.override = {
+              "cmp.entry.get_documentation" = true;
+              "vim.lsp.util.convert_input_to_markdown_lines" = true;
+              "vim.lsp.util.stylize_markdown" = true;
+            };
+            presets = {
+              bottom_search = true;
+              command_palette = true;
+              long_message_to_split = true;
+              lsp_doc_border = true;
+            };
+          };
+        };
         notify.enable = true;
+        nui.enable = true;
         nvim-lightbulb.enable = true;
 
         # Git.
@@ -345,7 +406,14 @@ in
         bufferline.enable = true;
 
         # Status line.
-        lualine.enable = true;
+        lualine = {
+          enable = true;
+          settings = {
+            options = {
+              globalstatus = true;
+            };
+          };
+        };
 
         # File tree.
         neo-tree.enable = true;
@@ -386,47 +454,72 @@ in
           enable = true;
           settings = {
             direction = "vertical";
-            open_mapping = "[[C-t]]";
+            open_mapping = "[[<C-t>]]";
+            size = ''
+              function(term)
+                if term.direction == "horizontal" then
+                  return 15
+                elseif term.direction == "vertical" then
+                  return vim.o.columns * 0.25
+                end
+              end
+            '';
           };
         };
 
         # Keybindings.
         which-key = {
           enable = true;
-          settings.spec = [
-            {
-              __unkeyed = "<leader>b";
-              group = "+Buffer";
-            }
-            {
-              __unkeyed = "<leader>bm";
-              group = "+BufferLineMove";
-            }
-            {
-              __unkeyed = "<leader>bs";
-              group = "+BufferLineSort";
-            }
-            {
-              __unkeyed = "<leader>f";
-              group = "+Telescope";
-            }
-            {
-              __unkeyed = "<leader>h";
-              group = "+Gitsigns";
-            }
-            {
-              __unkeyed = "<leader>l";
-              group = "+LSP";
-            }
-            {
-              __unkeyed = "<leader>lw";
-              group = "+Workspace";
-            }
-            {
-              __unkeyed = "<leader>x";
-              group = "+Trouble";
-            }
-          ];
+          settings = {
+            spec = [
+              {
+                __unkeyed = "<leader>b";
+                group = "+Buffer";
+              }
+              {
+                __unkeyed = "<leader>bm";
+                group = "+BufferLineMove";
+              }
+              {
+                __unkeyed = "<leader>bs";
+                group = "+BufferLineSort";
+              }
+              {
+                __unkeyed = "<leader>f";
+                group = "+Telescope";
+              }
+              {
+                __unkeyed = "<leader>h";
+                group = "+Gitsigns";
+              }
+              {
+                __unkeyed = "<leader>l";
+                group = "+LSP";
+              }
+              {
+                __unkeyed = "<leader>lg";
+                group = "+GoTo";
+              }
+              {
+                __unkeyed = "<leader>lt";
+                group = "+Toggle";
+              }
+              {
+                __unkeyed = "<leader>lw";
+                group = "+Workspace";
+              }
+              {
+                __unkeyed = "<leader>t";
+                group = "+Toggle";
+              }
+              {
+                __unkeyed = "<leader>x";
+                group = "+Trouble";
+              }
+            ];
+            preset = "modern";
+            win.border = "rounded";
+          };
         };
 
         # Autocomplete.
@@ -446,7 +539,8 @@ in
               "<CR>" = "cmp.mapping.confirm({ select = true })";
 
               "<Tab>" = ''
-                cmp.mapping(function(fallback)                  if cmp.visible() then
+                cmp.mapping(function(fallback)
+                  if cmp.visible() then
                     cmp.select_next_item()
                   elseif luasnip.locally_jumpable(1) then
                     luasnip.jump(1)
@@ -474,6 +568,10 @@ in
               { name = "path"; }
               { name = "buffer"; }
             ];
+            window = {
+              completion.border = "rounded";
+              documentation.border = "rounded";
+            };
           };
           cmdline = {
             "/" = {
@@ -511,93 +609,77 @@ in
             diagnostic = {
               "<leader>lgn" = {
                 action = "goto_next";
-                options.desc = "Go to next diagnostic";
+                desc = "Go to next diagnostic";
               };
               "<leader>lgp" = {
                 action = "goto_prev";
-                options.desc = "Go to previous diagnostic";
+                desc = "Go to previous diagnostic";
               };
               "<leader>le" = {
                 action = "open_float";
-                options.desc = "Open diagnostic float";
+                desc = "Open diagnostic float";
               };
             };
             lspBuf = {
               "<leader>lgd" = {
                 action = "definition";
-                options.desc = "Go to definition";
+                desc = "Go to definition";
               };
               "<leader>lgD" = {
                 action = "declaration";
-                options.desc = "Go to declaration";
+                desc = "Go to declaration";
               };
               "<leader>lgt" = {
                 action = "type_definition";
-                options.desc = "Go to type";
+                desc = "Go to type";
               };
               "<leader>lgi" =  {
                 action = "implementation";
-                options.desc = "List implementations";
+                desc = "List implementations";
               };
               "<leader>lgr" = {
                 action = "references";
-                options.desc = "List references";
+                desc = "List references";
               };
               "<leader>lH" = {
                 action = "document_highlight";
-                options.desc = "Document highlight";
+                desc = "Document highlight";
               };
               "<leader>lS" = {
                 action = "document_symbol";
-                options.desc = "Document symbols";
+                desc = "Document symbols";
               };
               "<leader>lwa" = {
                 action = "add_workspace_folder";
-                options.desc = "Add workspace folder";
+                desc = "Add workspace folder";
               };
               "<leader>lwr" = {
-                action = "remove_workspace folder";
-                options.desc = "Remove workspace folder";
-              };
-              "<leader>lwl" = {
-                action = ''
-                  function()
-                    vim.notify(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-                  end
-                '';
-                options.desc = "List workspace folders";
+                action = "remove_workspace_folder";
+                desc = "Remove workspace folder";
               };
               "<leader>lws" = {
                 action = "workspace_symbol";
-                options.desc = "List workspace symbols";
+                desc = "List workspace symbols";
               };
               "<leader>lh" = {
                 action = "hover";
-                options.desc = "Trigger hover";
+                desc = "Trigger hover";
               };
               "<leader>ls" = {
                 action = "signature_help";
-                options.desc = "Signature help";
+                desc = "Signature help";
               };
               "<leader>ln" = {
                 action = "rename";
-                options.desc = "Rename symbol";
+                desc = "Rename symbol";
               };
               "<leader>la" = {
                 action = "code_action";
-                options.desc = "Code action";
+                desc = "Code action";
               };
               "<leader>lf" = {
                 action = "format";
-                options.desc = "Format";
-              };
-              "<leader>ltf" = {
-                action = ''
-                  function()
-                    vim.b.disableFormatSave = not vim.b.disableFormatSave
-                  end
-                '';
-                options.desc = "Toggle format on save";
+                desc = "Format";
               };
             };
           };
