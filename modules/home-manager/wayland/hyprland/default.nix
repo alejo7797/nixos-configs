@@ -1,16 +1,13 @@
 {
-  pkgs,
   lib,
   config,
+  pkgs,
   ...
 }:
 let
-
   cfg = config.myHome.hyprland;
-
 in
 {
-
   imports = [
     ./hy3.nix
     ./window-rules.nix
@@ -86,7 +83,7 @@ in
           general = {
             gaps_in = 0;
             gaps_out = 0;
-            border_size = 0;
+            border_size = 2;
             resize_on_border = true;
             layout = "hy3";
           };
@@ -158,11 +155,9 @@ in
           # Keybindings.
           "$mainMod" = "SUPER";
           bind =
-
             let
               grimblast = "${pkgs.grimblast}/bin/grimblast";
             in
-
             map (x: "$mainMod, ${x}") [
               "Return, exec, $terminal"
               "D, exec, $menu"
@@ -199,7 +194,6 @@ in
               "mouse_down, workspace, e+1"
               "mouse_up, workspace, e-1"
             ]
-
             ++ map (x: "$mainMod SHIFT, ${x}") [
               "Q, killactive,"
               "Space, togglefloating,"

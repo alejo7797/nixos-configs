@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }: {
+{ lib, pkgs, ... }: {
 
   # Basic settings needed by Home Manager.
   home.username = "ewan";
@@ -31,7 +31,6 @@
 
   # Configure outputs.
   services.kanshi.settings =
-
     let
       laptop_screen = {
         criteria = "eDP-1";
@@ -49,7 +48,6 @@
         mode = "1920x1080@74.973Hz";
       };
     in
-
     [
       {
         profile.name = "home";
@@ -148,7 +146,6 @@
 
   # Install packages to the user profile.
   home.packages = with pkgs; [
-    nixfmt-rfc-style
     nixos-generators
     yubioath-flutter
   ];

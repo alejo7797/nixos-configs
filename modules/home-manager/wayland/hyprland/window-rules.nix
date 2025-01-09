@@ -1,7 +1,5 @@
-{ pkgs, lib, config, ... }: {
-
+{
   wayland.windowManager.hyprland.settings.windowrulev2 =
-
     let
       dolphin-dialogs =
         "title:^("
@@ -13,7 +11,6 @@
         ]
         + ") — Dolphin$";
     in
-
     # Default workspaces.
     map (w: "workspace ${toString w.ws} silent, ${w.criteria}") [
       { ws = 1; criteria = "class:^(firefox)$"; }
@@ -27,12 +24,12 @@
       { ws = 8; criteria = "class:^(vesktop)$"; }
       { ws = 9; criteria = "class:^(spotify)$"; }
     ]
-
-    # Floating window decorations.
-    ++ map (e: "${e}, floating:1")[
-      "bordersize 2" "rounding 12"
+    # Smart borders.
+    ++ [
+      "bordersize 0, floating:0, onworkspace:w[tv1]"
+      "bordersize 0, floating:0, onworkspace:f[1]"
+      "rounding 12, floating:1"
     ]
-
     # Floating windows.
     ++ map (w: "float, ${w}") [
       "class:^(.blueman-manager-wrapped)$"
@@ -47,7 +44,6 @@
       "class:^(variety)$, title:^(Variety Images)$"
       "class:^(yubioath-flutter)$"
     ]
-
     # System tray.
     ++ builtins.concatLists (
       map (w: [ "size 600 600, ${w}" "move 100%-w-10 100%-w-40, ${w}" ]) [
@@ -58,31 +54,26 @@
         "class:^(thunderbird)$, title:^(\\d* Reminders?)$"
       ]
     )
-
     # Variety wallpaper selector.
     ++ map (e: "${e}, class:^(variety)$, title:^(Variety Images)$") [
       "bordersize 0" "rounding 0"
       "size 1920 120" "move 0 100%-w-30"
     ]
-
     # Inhibit idle when fullscreen.
     ++ map (w: "idleinhibit fullscreen, ${w}") [
       "class:^(firefox)$"
       "class:^(mpv)$"
       "class:^(steam_app_\\d*)$"
     ]
-
     # Inhibit idle always.
     ++ map (w: "idleinhibit, ${w}") [
       "title:^(.* - YouTube — Mozilla Firefox)$"
       "class:^(Zoom Workplace)$"
     ]
-
     # Dolphin popups.
     ++ [
       "move onscreen cursor -50% -50%, class:^(org.kde.dolphin)$, floating:1"
     ]
-
     # Dolphin dialogs
     ++ [
       "float, ${dolphin-dialogs}"
@@ -90,7 +81,6 @@
       "size 450 265, ${dolphin-dialogs}"
       "move 100%-w-10 100%-w-40, ${dolphin-dialogs}"
     ]
-
     ++ [
       # Ignore maximize requests from apps. You'll probably like this.
       "suppressevent maximize, class:.*"
@@ -98,7 +88,6 @@
       # Fix some dragging issues with XWayland.
       "nofocus, class:^$, title:^$, xwayland:1, floating:1, fullscreen:0, pinned:0"
     ]
-
     # XWaylandVideoBridge
     ++ map (e: "${e}, class:^(xwaylandvideobridge)$") [
       "opacity 0.0 override" "noanim" "noinitialfocus"
