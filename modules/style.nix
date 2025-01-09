@@ -1,13 +1,17 @@
-{ pkgs, lib, config, ... }:
-
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 let
   cfg = config.myStylix;
 in
-
 {
   options.myStylix.enable = lib.mkEnableOption "common theme components";
 
   config.stylix = lib.mkIf cfg.enable {
+		# Enable Stylix.
     enable = true;
 
     # Specifying an image is mandatory.
@@ -16,9 +20,11 @@ in
       sha256 = "16d5pch4544knygndsslmh682fxp6sqwn5b9vnrb35ji7m5zfcm0";
     };
 
-    # Set the color scheme.
+    # Set the colorscheme.
+		base16Scheme = "${pkgs.base16-schemes}/share/themes/tomorrow-night.yaml";
+
+		# Specify that we are using a dark colorscheme.
     polarity = "dark";
-    base16Scheme = ./tomorrow-night.yaml;
 
     # Configure our desired fonts.
     fonts = {
@@ -35,7 +41,7 @@ in
       };
 
       monospace = {
-        package = pkgs.nerdfonts.override {fonts = ["Hack"];};
+        package = pkgs.nerdfonts.override { fonts = [ "Hack" ]; };
         name = "Hack Nerd Font";
       };
 

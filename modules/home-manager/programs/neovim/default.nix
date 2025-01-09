@@ -15,11 +15,11 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    home.packages = with pkgs; [ fd ];
-
     programs.nixvim = {
       enable = true;
       vimAlias = true;
+
+      extraPackages = with pkgs; [ fd ];
 
       clipboard = {
         register = "unnamedplus";
@@ -46,19 +46,12 @@ in
 
       opts = {
         breakindent = true;
+        expandtab = true;
         hlsearch = false;
         signcolumn = "yes";
         title = true;
         undofile = true;
         updatetime = 100;
-      };
-
-      match = {
-        ExtraWhitespace = "\\s\\+$";
-      };
-
-      highlight = {
-        ExtraWhitespace.bg = "red";
       };
 
       highlightOverride = with stylix-colors; {
@@ -72,6 +65,21 @@ in
           bg = base00;
         };
       };
+
+      autoCmd = [
+        {
+          event = "FileType";
+          pattern = "nix";
+          callback.__raw = ''
+            function(opts)
+              local bo = vim.bo[opts.buf]
+              bo.tabstop = 2
+              bo.shiftwidth = 2
+              bo.softtabstop = 2
+            end
+          '';
+        }
+      ];
 
       keymaps = [
         # bufferline.nvim
@@ -234,7 +242,7 @@ in
           };
         }
         {
-          action.__raw = "function() gitsigns.blame_line{full=true} end";
+          action.__raw = "function() require('gitsigns').blame_line{full=true} end";
           key = "<leader>hb";
           mode = "n";
           options = {
@@ -370,6 +378,7 @@ in
         nvim-autopairs.enable = true;
         nvim-surround.enable = true;
         todo-comments.enable = true;
+        trim.enable = true;
 
         # Visuals.
         colorizer.enable = true;
@@ -392,6 +401,18 @@ in
               long_message_to_split = true;
               lsp_doc_border = true;
             };
+            routes = [
+              {
+                filter = {
+                  event = "msg_show";
+                  kind = "";
+                  find = "written";
+                };
+                opts = {
+                  skip = true;
+                };
+              }
+            ];
           };
         };
         notify.enable = true;
@@ -416,7 +437,12 @@ in
         };
 
         # File tree.
-        neo-tree.enable = true;
+        neo-tree = {
+          enable = true;
+          filesystem = {
+            useLibuvFileWatcher = true;
+          };
+        };
 
         # Snippets.
         friendly-snippets.enable = true;
@@ -601,6 +627,8 @@ in
           };
         };
 
+        treesitter-textobjects.enable = true;
+
         # LSP.
         lsp = {
           enable = true;
@@ -633,7 +661,7 @@ in
                 action = "type_definition";
                 desc = "Go to type";
               };
-              "<leader>lgi" =  {
+              "<leader>lgi" = {
                 action = "implementation";
                 desc = "List implementations";
               };
