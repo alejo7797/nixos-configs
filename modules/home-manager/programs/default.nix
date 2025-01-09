@@ -5,7 +5,7 @@
     ./git.nix
     ./gpg.nix
     ./kitty
-    ./nvim
+    ./neovim
     ./joplin
     ./zathura.nix
     ./firefox.nix

@@ -129,6 +129,8 @@ in
           oauth_imap = id: { "mail.server.server_${id}.authMethod" = 10; };
           oauth_smtp = id: { "mail.smtpserver.smtp_${id}.authMethod" = 10; };
           reply_on_top = id: { "mail.identity.id_${id}.reply_on_top" = 1; };
+          sent_no_copy = id: { "mail.identity.id_${id}.fcc" = false; };
+          outlook_smtp = id: (oauth_smtp id) // (sent_no_copy id) // (reply_on_top id);
         in
 
         builtins.mapAttrs
@@ -141,8 +143,6 @@ in
               userName = value.address;
               imap.port = 993;
               thunderbird.enable = true;
-              thunderbird.perIdentitySettings =
-                id: (reply_on_top id) // (oauth_smtp id);
             }
             value
         )
@@ -170,6 +170,8 @@ in
             address = "alexepelde@gmail.com";
             flavor = "gmail.com";
             thunderbird.settings = oauth_imap;
+            thunderbird.perIdentitySettings =
+              id: (oauth_smtp id) // (reply_on_top id);
           };
 
           Harvard = {
@@ -177,6 +179,7 @@ in
             flavor = "outlook.office365.com";
             folders.trash = "Deleted Items";
             thunderbird.settings = oauth_imap;
+            thunderbird.perIdentitySettings = outlook_smtp;
           };
 
           Outlook = {
@@ -184,6 +187,7 @@ in
             flavor = "outlook.office365.com";
             folders.trash = "Deleted";
             thunderbird.settings = oauth_imap;
+            thunderbird.perIdentitySettings = outlook_smtp;
           };
 
           Cambridge = {
@@ -191,6 +195,7 @@ in
             flavor = "outlook.office365.com";
             folders.trash = "Deleted Items";
             thunderbird.settings = oauth_imap;
+            thunderbird.perIdentitySettings = outlook_smtp;
           };
         };
 
