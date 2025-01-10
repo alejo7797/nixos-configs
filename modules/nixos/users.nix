@@ -1,13 +1,13 @@
 {
-  inputs,
-  self,
-  pkgs,
   lib,
+  self,
+  inputs,
   config,
+  pkgs,
   ...
 }:
-{
 
+{
   options.myNixOS.home-users = lib.mkOption {
     description = "Attribute set containing user accounts.";
     type =
@@ -52,8 +52,8 @@
     # And define the user accounts themselves.
     users.users = builtins.mapAttrs (
       _: user:
-      {
 
+      {
         # Sane defaults.
         isNormalUser = true;
         linger = true;
@@ -63,7 +63,6 @@
           "scanner"
           "wheel"
         ];
-
       }
       // user.userSettings
 

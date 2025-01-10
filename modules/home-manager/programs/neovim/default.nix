@@ -65,8 +65,11 @@ in
         WhichKeySeparator.bg = base00;
 
         # General look.
-        MatchParen.fg = base0A;
         NormalFloat.bg = base00;
+        MatchParen = {
+          fg = base0A;
+          bg = base02;
+        };
         SignColumn = {
           fg = base04;
           bg = base00;

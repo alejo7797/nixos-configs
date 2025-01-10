@@ -1,7 +1,7 @@
 {
-  pkgs,
   inputs,
   config,
+  pkgs,
   ...
 }:
 
@@ -54,12 +54,8 @@
         };
       })
 
-      # Access ilya-fedin's repository.
-      (_: prev: {
-        ilya-fedin = import inputs.ilya-fedin {
-          pkgs = prev;
-        };
-      })
+      # Access my personal scripts.
+      inputs.my-scripts.overlays.default
 
     ];
   };

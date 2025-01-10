@@ -8,15 +8,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      # inputs.nixpkgs.follows = "nixpkgs";
+    my-scripts = {
+      url = "gitlab:alex/shell-scripts?host=git.patchoulihq.cc";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     flake-utils.url = "github:numtide/flake-utils";
     ilya-fedin.url = "github:ilya-fedin/nur-repository";
     impermanence.url = "github:nix-community/impermanence";
     nixgl.url = "github:nix-community/nixGL";
+    nixvim.url = "github:nix-community/nixvim";
     nur.url = "github:nix-community/NUR";
     sops-nix.url = "github:Mic92/sops-nix";
     stylix.url = "github:danth/stylix";
@@ -35,10 +36,7 @@
         config:
         nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs self; };
-          modules = [
-            config
-            self.nixosModules.default
-          ];
+          modules = [ config ] ++ [ self.nixosModules.default ];
         };
 
       mkHome =
@@ -46,10 +44,7 @@
         home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.${system};
           extraSpecialArgs = { inherit inputs self; };
-          modules = [
-            config
-            self.homeManagerModules.default
-          ];
+          modules = [ config ] ++ [ self.homeManagerModules.default ];
         };
     in
 
