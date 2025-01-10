@@ -1,6 +1,7 @@
 {
   inputs,
   config,
+  pkgs,
   ...
 }:
 
@@ -50,5 +51,14 @@
       # Configure GnuPG.
       gpg.enable = true;
     };
+
+    # Install my scripts.
+    home.packages = with pkgs; [
+      audio-switch
+      favicon-generator
+      lockbg-cache
+      round-corners
+      sleep-deprived
+    ];
   };
 }
