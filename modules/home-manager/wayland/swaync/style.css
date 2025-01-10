@@ -89,6 +89,7 @@ trough {
 
 .floating-notifications.background .notification-row .notification-background {
   background: transparent;
+  padding: 0 10px 10px;
   color: @base05;
 }
 
