@@ -1,52 +1,25 @@
 {
-  inputs,
-  pkgs,
   lib,
+  inputs,
   config,
+  pkgs,
   ...
 }:
-
 let
   cfg = config.myHome.arch-linux;
 in
-
 {
   options.myHome.arch-linux.enable = lib.mkEnableOption "Arch-Linux quirks";
 
   config = lib.mkIf cfg.enable {
 
-    # Manage a user-level flake registry.
-    nix.registry.nixpkgs.flake = inputs.nixpkgs;
+    nix = {
+      registry.nixpkgs.flake = inputs.nixpkgs;
+      nixPath = [ "nixpkgs=flake:nixpkgs" ];
+    };
 
-    # And set NIX_PATH as desired.
-    nix.nixPath = [ "nixpkgs=flake:nixpkgs" ];
-
-    nixpkgs.overlays = [
-
-      # Overlay to specify NixGLIntel's main program.
-      (_: prev: {
-        nixgl.nixGLIntel = prev.nixgl.nixGLIntel // {
-          meta.mainProgram = "nixGLIntel";
-        };
-      })
-
-      # Overlay to wrap user packages.
-      (
-        _: prev:
-        builtins.listToAttrs (
-          map (name: {
-            inherit name;
-            value = config.lib.nixGL.wrap prev.${name};
-          }) [ "yubioath-flutter" ]
-        )
-      )
-
-    ];
-
-    # Access NixGL in Home Manager.
+    # Wrap Home Manager-insttalled programs with NixGL.
     nixGL.packages = pkgs.nixgl;
-
-    # Wrap programs with NixGL.
     programs.kitty.package = config.lib.nixGL.wrap pkgs.kitty;
 
     # Load Hyprland plugins using hyprpm.
@@ -63,11 +36,7 @@ in
     };
 
     programs.zsh = {
-
-      # Host specific plugins.
       oh-my-zsh.plugins = [ "archlinux" ];
-
-      # We need to pull these manually from the Nix store.
       plugins = [
         {
           name = "zsh-syntax-highlighting";
@@ -85,6 +54,5 @@ in
         }
       ];
     };
-
   };
 }

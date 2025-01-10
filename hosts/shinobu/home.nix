@@ -1,37 +1,62 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, ... }:
 
 {
-  # Basic settings needed by Home Manager.
-  home.username = "ewan";
-  home.homeDirectory = "/home/ewan";
-  home.stateVersion = "24.11";
-
-  # Manage user secrets with sops-nix.
-  sops.secrets = {
-    "sonarr-apikey" = {};
-    "calendars/harvard-url" = {};
+  home = {
+    username = "ewan";
+    homeDirectory = "/home/ewan";
+    stateVersion = "24.11";
   };
 
-  # Set up Hyprland, the tiling Wayland compositor.
-  myHome.hyprland.enable = true;
+  sops.secrets = {
+    "sonarr-apikey" = { };
+    "calendars/harvard-url" = { };
+  };
 
-  # Set up sway, an i3-compatible Wayland compositor.
-  myHome.sway.enable = true;
+  myHome = {
+    hyprland.enable = true;
+    sway.enable = true;
 
-  # Configure outputs.
-  services.kanshi.settings = [
-    {
-      profile.name = "default";
-      profile.outputs = [
-        {
-          criteria = "Microstep MSI MP273A PB4HC14702300";
-          mode = "1920x1080@99.999Hz";
-        }
-      ];
-    }
-  ];
+    thunderbird.enable = true;
+    joplin-desktop.enable = true;
 
-  # Host-specific Hyprland configuration.
+    waybar.thermal-zone = 1;
+    waybar.wttr-location = "San Lorenzo de El Escorial";
+
+    xdgAutostart = with pkgs; [
+      firefox
+      spotify
+      steam
+      thunderbird
+      vesktop
+      zotero
+    ];
+  };
+
+  services = {
+    kanshi.settings = [
+      {
+        profile.name = "default";
+        profile.outputs = [
+          {
+            criteria = "Microstep MSI MP273A PB4HC14702300";
+            mode = "1920x1080@99.999Hz";
+          }
+        ];
+      }
+    ];
+
+    # Set the location used by gammastep manually.
+    # https://github.com/NixOS/nixpkgs/issues/321121
+    gammastep = {
+      provider = "manual";
+      settings.manual = {
+        lat = 40; lon = -4;
+      };
+    };
+
+    syncthing.enable = true;
+  };
+
   wayland.windowManager.hyprland.settings = {
     device = [
       {
@@ -41,42 +66,11 @@
     ];
   };
 
-  # Host-specific sway configuration.
   wayland.windowManager.sway.config = {
     input = {
       "1133:49298:Logitech_G203_LIGHTSYNC_Gaming_Mouse" = {
         pointer_accel = "-1";
       };
-    };
-  };
-
-  # Thermal zone to use in waybar.
-  myHome.waybar.thermal-zone = 1;
-
-  # Location to show the weather for in waybar.
-  myHome.waybar.wttr-location = "San Lorenzo de El Escorial";
-
-  # Run Syncthing as a user service.
-  services.syncthing.enable = true;
-
-  # Configure Thunderbird.
-  myHome.thunderbird.enable = true;
-
-  # Install and configure joplin-desktop.
-  myHome.joplin-desktop.enable = true;
-
-  # Autostart applications.
-  myHome.xdgAutostart = with pkgs; [
-    firefox unstable.spotify steam
-    thunderbird vesktop zotero
-  ];
-
-  # Set the location used by gammastep manually.
-  # https://github.com/NixOS/nixpkgs/issues/321121
-  services.gammastep = {
-    provider = "manual";
-    settings.manual = {
-      lat = 40; lon = -4;
     };
   };
 }

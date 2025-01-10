@@ -1,14 +1,15 @@
 { ... }:
-
 {
   imports = [
+    ./joplin
+    ./kitty
+    ./zsh
+
+    ./firefox.nix
     ./git.nix
     ./gpg.nix
-    ./kitty
     ./neovim
-    ./joplin
-    ./zathura.nix
-    ./firefox.nix
     ./thunderbird.nix
+    ./zathura.nix
   ];
 }

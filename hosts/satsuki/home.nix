@@ -1,35 +1,45 @@
-{ lib, pkgs, ... }: {
+{ pkgs, ... }:
 
-  # Basic settings needed by Home Manager.
-  home.username = "ewan";
-  home.homeDirectory = "/home/ewan";
-  home.stateVersion = "24.11";
+{
+  home = {
+    username = "ewan";
+    homeDirectory = "/home/ewan";
+    stateVersion = "24.11";
 
-  # Manage user secrets with sops-nix.
-  sops.secrets = {
-    "sonarr-apikey" = {};
-    "calendars/harvard-url" = {};
+    packages = with pkgs; [
+      nixos-generators
+      yubioath-flutter
+    ];
   };
 
-  # Enable Arch-Linux quirks.
-  myHome.arch-linux.enable = true;
+  sops.secrets = {
+    "sonarr-apikey" = { };
+    "shell-scripts-token" = { };
+    "calendars/harvard-url" = { };
+  };
 
-  # Set up Hyprland, an intelligent dynamic tiling Wayland compositor.
-  myHome.hyprland.enable = true;
+  myHome = {
+    arch-linux.enable = true;
+    hyprland.enable = true;
+    sway.enable = true;
 
-  # Set up sway, an i3-compatible Wayland compositor.
-  myHome.sway.enable = true;
+    firefox.enable = false;
+    thunderbird.enable = true;
 
-  # Host-specific environment variables.
+    workspaces = {
+      "DP-1" = [ 1 2 3 4 6 8 9 10 ];
+      "eDP-1" = [ 5 7 ];
+    };
+
+    waybar.thermal-zone = 7;
+    waybar.wttr-location = "Cambridge, MA";
+  };
+
   xdg.configFile."uwsm/env".text = ''
-
-    # Use the integrated graphics card for the compositor.
-    export __GLX_VENDOR_LIBRARY_NAME=mesa
     export __EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json
-
+    export __GLX_VENDOR_LIBRARY_NAME=mesa
   '';
 
-  # Configure outputs.
   services.kanshi.settings =
     let
       laptop_screen = {
@@ -37,12 +47,10 @@
         mode = "1920x1080@60.033Hz";
         scale = 1.0;
       };
-
       home_monitor = {
         criteria = "ASUSTek COMPUTER INC ASUS VA27EHE N3LMTF145950";
         mode = "1920x1080@74.986Hz";
       };
-
       office_monitor = {
         criteria = "Samsung Electric Company S27R65 H4TT101982";
         mode = "1920x1080@74.973Hz";
@@ -71,13 +79,6 @@
       }
     ];
 
-  # Configure workspace output assignments.
-  myHome.workspaces = {
-    "DP-1" = [ 1 2 3 4 6 8 9 10 ];
-    "eDP-1" = [ 5 7 ];
-  };
-
-  # Host-specific Hyprland configuration.
   wayland.windowManager.hyprland.settings = {
     device = [
       {
@@ -95,7 +96,6 @@
     ];
   };
 
-  # Host-specific sway configuration.
   wayland.windowManager.sway.config = {
     input = {
       "1133:50503:Logitech_USB_Receiver" = {
@@ -112,42 +112,17 @@
     startup = [{ always = true; command = "${./clamshell}"; }];
   };
 
-  # Thermal zone to use in waybar.
-  myHome.waybar.thermal-zone = 7;
+  programs.zsh.shellAliases =
+    let
+      what-is-my-ip = "${pkgs.dig}/bin/dig +short myip.opendns.com";
+    in
+    {
+      dotfiles = "${pkgs.git}/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME";
 
-  # Location to show the weather for in waybar.
-  myHome.waybar.wttr-location = "Cambridge, MA";
+      # These rely on a custom firewall rule.
+      pubip = "${what-is-my-ip} @resolver1.opendns.com";
+      vpnip = "${what-is-my-ip} @resolver2.opendns.com";
 
-  # Let's leave Firefox alone for now.
-  myHome.firefox.enable = lib.mkForce false;
-
-  # Configure Thunderbird.
-  myHome.thunderbird.enable = true;
-
-  # Host-specific Zsh configuration.
-  programs.zsh = {
-
-    # Host-specific aliases.
-    shellAliases =
-      let
-        what-is-my-ip = "${pkgs.dig}/bin/dig +short myip.opendns.com";
-      in {
-        # Legacy dotfiles implementation.
-        dotfiles = "${pkgs.git}/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME";
-
-        # These rely on a custom firewall rule.
-        pubip = "${what-is-my-ip} @resolver1.opendns.com";
-        vpnip = "${what-is-my-ip} @resolver2.opendns.com";
-
-        # Manage the wonderful toolchain.
-        wf-pacman = "sudo -u wonderful /opt/wonderful/bin/wf-pacman";
-      };
-  };
-
-  # Install packages to the user profile.
-  home.packages = with pkgs; [
-    nixos-generators
-    yubioath-flutter
-  ];
-
+      wf-pacman = "sudo -u wonderful /opt/wonderful/bin/wf-pacman";
+    };
 }

@@ -4,55 +4,41 @@
   pkgs,
   ...
 }:
-
 {
   imports = [
-    # External modules.
     inputs.nixvim.homeManagerModules.nixvim
     inputs.nur.modules.homeManager.default
     inputs.sops-nix.homeManagerModules.sops
 
-    # My personal modules.
-    ./zsh
-    ./programs
-    ./graphical.nix
     ./arch-linux.nix
+    ./graphical.nix
+    ./programs
   ];
 
   config = {
-    # Automatic garbage collection.
     nix.gc = {
       automatic = true;
       frequency = "weekly";
-      options = "--delete-older-than 7d";
+      options = "--delete-older-than 30d";
     };
 
-    # Let Home Manager install and manage itself.
-    programs.home-manager.enable = true;
-
     sops = {
-      # Default sops file for user secrets.
       defaultSopsFile = ../../secrets/${config.home.username}.yaml;
-
-      # Specify path where age key is kept.
       age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
     };
 
     myHome = {
-      # Configure Zsh.
-      zsh.enable = true;
-
-      # Configure NeoVim.
-      neovim.enable = true;
-
-      # Configure Git.
       git.enable = true;
-
-      # Configure GnuPG.
       gpg.enable = true;
+      neovim.enable = true;
+      zsh.enable = true;
     };
 
-    # Install my scripts.
+    programs = {
+      home-manager.enable = true;
+    };
+
+    # My personal shell scripts.
     home.packages = with pkgs; [
       audio-switch
       favicon-generator
