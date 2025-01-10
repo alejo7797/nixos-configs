@@ -9,6 +9,7 @@
 
   sops.secrets = {
     "sonarr-apikey" = { };
+    "shell-scripts-token" = { };
     "calendars/harvard-url" = { };
   };
 
