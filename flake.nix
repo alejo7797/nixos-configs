@@ -48,25 +48,13 @@
           specialArgs = { inherit inputs self; };
           modules = [ config ] ++ [ self.nixosModules.default ];
         };
-
-      mkHome =
-        system: config:
-        home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.${system};
-          extraSpecialArgs = { inherit inputs self; };
-          modules = [ config ] ++ [ self.homeManagerModules.default ]
-            ++ [ inputs.stylix.homeManagerModules.stylix ];
-        };
     in
 
     {
       nixosConfigurations = {
         "qemu" = mkSystem hosts/qemu/configuration.nix;
+        "satsuki" = mkSystem hosts/satsuki/configuration.nix;
         "shinobu" = mkSystem hosts/shinobu/configuration.nix;
-      };
-
-      homeConfigurations = {
-        "ewan@satsuki" = mkHome "x86_64-linux" hosts/satsuki/home.nix;
       };
 
       nixosModules.default = modules/nixos;

@@ -10,7 +10,10 @@ let
 in
 
 {
-  options.myNixOS.graphical.enable = lib.mkEnableOption "common graphical utilities";
+  options.myNixOS = {
+    graphical.enable = lib.mkEnableOption "common graphical utilities";
+    laptop.enable = lib.mkEnableOption "laptop-specific configuration";
+  };
 
   config = lib.mkIf cfg.enable {
 
@@ -53,6 +56,7 @@ in
       };
 
       blueman.enable = true;
+      libinput.enable = true;
       geoclue2.enable = true;
       gnome.gnome-keyring.enable = true;
       pcscd.enable = true;

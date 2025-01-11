@@ -13,15 +13,15 @@
     inputs.stylix.nixosModules.stylix
     inputs.nur.modules.nixos.default
 
-    ./users.nix
-    ./pam.nix
-    ./locale.nix
-    ./tuigreet.nix
-    ./programs
-    ./nvidia.nix
-    ./wayland
     ./graphical.nix
+    ./locale.nix
+    ./nvidia.nix
+    ./pam.nix
+    ./programs
     ./style.nix
+    ./tuigreet.nix
+    ./users.nix
+    ./wayland
   ];
 
   nix = {
@@ -45,7 +45,6 @@
     config.allowUnfree = true;
 
     overlays = [
-
       # Access nixpkgs-unstable.
       (_: prev: {
         unstable = import inputs.nixpkgs-unstable {
@@ -56,7 +55,6 @@
 
       # Access my personal scripts.
       inputs.my-scripts.overlays.default
-
     ];
   };
 
@@ -104,7 +102,6 @@
   # For zsh completion.
   environment.pathsToLink = [ "/share/zsh" ];
 
-  # Install vim.
   myNixOS.vim.enable = true;
 
   security.polkit.enable = true;
@@ -117,43 +114,28 @@
       };
     };
 
-    timesyncd.enable = true;
-
-    # Install plocate.
     locate = {
       enable = true;
       localuser = null;
       package = pkgs.plocate;
     };
+
+    timesyncd.enable = true;
   };
 
-  # Install the following essential packages.
   environment.systemPackages = with pkgs; [
-    curl
-    dig
-    file
-    findutils
-    ffmpeg
-    htop
-    imagemagick
-    jq
-    libfido2
-    lm_sensors
-    lsd
-    ncdu
-    neofetch
-    nettools
-    nmap
-    procps
-    p7zip
-    psmisc
-    rsync
-    sops
-    unrar
-    usbutils
-    uv
+
+    curl dig file
+    findutils ffmpeg
+    htop imagemagick
+    lm_sensors lsd ncdu
+    neofetch nettools
+    nixos-generators
+    nmap procps p7zip
+    psmisc rsync sops
+    unrar usbutils uv
     wireguard-tools
-    wget
-    yt-dlp
+    wget yt-dlp
+
   ];
 }

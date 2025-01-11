@@ -8,12 +8,6 @@
     username = "ewan";
     homeDirectory = "/home/ewan";
     stateVersion = "24.11";
-
-    packages = with pkgs; [
-      nixos-generators
-      nixos-install-tools
-      yubioath-flutter
-    ];
   };
 
   sops.secrets = {

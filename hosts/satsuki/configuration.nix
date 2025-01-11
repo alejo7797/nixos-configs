@@ -9,51 +9,18 @@
     ./hardware-configuration.nix
   ];
 
-  swapDevices = [ { device = "/var/swapfile"; size = 32768; } ];
+  swapDevices = [ { device = "/var/swapfile"; size = 16384; } ];
 
   hardware.bluetooth.enable = true;
-
-  boot.loader = {
-    systemd-boot = {
-      # Create our own Windows bootloader entry.
-      windows."11" = {
-        title = "Windows 11";
-        sortKey = "a_windows";
-        efiDeviceHandle = "HD0b";
-      };
-
-      extraInstallCommands = ''
-        # Do not show the auto-generated Windows entry.
-        echo "auto-entries false" >>/boot/loader/loader.conf
-
-        # Set Windows as the default boot entry.
-        ${pkgs.gnused}/bin/sed -i 's/default .*/default windows_11.conf/' /boot/loader/loader.conf
-      '';
-    };
-  };
 
   boot.kernelParams = [
     "quiet"
     "nowatchdog"
   ];
 
-  networking.hostName = "shinobu";
+  networking.hostName = "satsuki";
 
-  sops.secrets = {
-    "my-password" = {
-      neededForUsers = true;
-    };
-
-    "wireguard/koakuma/private-key" = { };
-    "wireguard/koakuma/preshared-key" = { };
-
-    "syncthing/cert.pem" = {
-      owner = "ewan";
-    };
-    "syncthing/key.pem" = {
-      owner = "ewan";
-    };
-  };
+  sops.secrets = { };
 
   myNixOS = {
 
@@ -61,14 +28,12 @@
       userConfig = ./home.nix;
       userSettings = {
         description = "Alex";
-        hashedPasswordFile = "/run/secrets-for-users/my-password";
+        initialPassword = "password";
       };
     };
 
     dolphin.enable = true;
     hyprland.enable = true;
-    nvidia.enable = true;
-    pam.sudo.yubikey = true;
     sway.enable = true;
     tuigreet.enable = true;
 
@@ -77,7 +42,7 @@
   networking.networkmanager.enable = true;
   services.resolved.enable = true;
 
-  time.timeZone = "Europe/Madrid";
+  time.timeZone = "America/New_York";
 
   programs = {
     gamemode.enable = true;
