@@ -106,8 +106,7 @@
     filezilla
     gimp inkscape
     joplin-desktop
-    vesktop zoom-us
-    zotero
+    vesktop zotero
 
     # Wayland IME support.
     unstable.spotify
