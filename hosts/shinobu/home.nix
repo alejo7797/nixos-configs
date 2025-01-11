@@ -17,6 +17,7 @@
     hyprland.enable = true;
     sway.enable = true;
 
+    firefox.enable = true;
     thunderbird.enable = true;
     joplin-desktop.enable = true;
 

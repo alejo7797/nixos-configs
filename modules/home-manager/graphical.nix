@@ -36,7 +36,6 @@ in
 
     myHome = {
       kitty.enable = true;
-      firefox.enable = true;
       mimeApps.enable = true;
       style.enable = true;
       zathura.enable = true;
