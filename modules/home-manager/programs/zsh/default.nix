@@ -1,29 +1,39 @@
-{ pkgs, lib, myLib, config, ... }: {
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
+let
+  cfg = config.myHome.zsh;
+in
+
+{
   options.myHome.zsh.enable = lib.mkEnableOption "Zsh configuration";
 
-  config = lib.mkIf config.myHome.zsh.enable {
+  config = lib.mkIf cfg.enable {
 
-    # Configure zsh.
     programs.zsh = {
       enable = true;
+      autocd = true;
 
       sessionVariables = {
         # Configure OhMyZsh.
-        DISABLE_AUTO_TITLE="true";
+        DISABLE_AUTO_TITLE = "true";
         ENABLE_CORRECTION = "true";
         COMPLETION_WAITING_DOTS = "true";
         HIST_STAMPS = "yyyy-mm-dd";
       };
 
-      # Some useful aliases.
       shellAliases = {
-
         # https://github.com/lsd-rs/lsd
         ls = "lsd \${=lsd_params}";
 
-        l = "ls -l"; lt = "ls --tree";
-        la = "ls -a"; lla = "ls -la";
+        l = "ls -l";
+        lt = "ls --tree";
+        la = "ls -a";
+        lla = "ls -la";
 
         su = "sudo -i";
 
@@ -37,7 +47,7 @@
         home-switch = "home-manager switch --flake ~/Git/nixconfig";
 
         # Manage connection to my VPN server.
-        vpnup   = "nmcli c up Koakuma_VPN";
+        vpnup = "nmcli c up Koakuma_VPN";
         vpndown = "nmcli c down Koakuma_VPN";
 
         # Use standard syntax.
