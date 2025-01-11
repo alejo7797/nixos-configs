@@ -32,7 +32,7 @@ in
             OnBootSec = "10min";
             OnUnitActiveSec = "10min";
           };
-          Install.WantedBy = "timers.target";
+          Install.WantedBy = [ "timers.target" ];
         };
       };
     };
