@@ -320,14 +320,12 @@ in
         none-ls = {
           enable = true;
           settings = {
-            debug = true;
             diagnostics_format = "[#{m}] #{s} (#{c})";
           };
           sources = {
             diagnostics = {
               checkmake.enable = true;
               deadnix.enable = true;
-              proselint.enable = true;
               rubocop.enable = true;
               selene.enable = true;
               statix.enable = true;
