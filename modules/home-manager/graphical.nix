@@ -55,10 +55,13 @@ in
 
     xdg.configFile = {
       "fcitx5" = {
-        source = ./fcitx5/config;
+        source = ./programs/fcitx5/config;
         force = true;
         recursive = true;
       };
+
+      "chktexrc".source = ./programs/latex/chktexrc;
+      "latexmk/latexmkrc".source = ./programs/latex/latexmkrc;
 
       "baloofilerc".text = ''
         [Basic Settings]
@@ -68,7 +71,7 @@ in
 
     xdg.dataFile = {
       "fcitx5" = {
-        source = ./fcitx5/data;
+        source = ./programs/fcitx5/data;
         recursive = true;
       };
     };
