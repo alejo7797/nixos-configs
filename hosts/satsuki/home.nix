@@ -8,6 +8,7 @@
 
     packages = with pkgs; [
       nixos-generators
+      nixos-install-tools
       yubioath-flutter
     ];
   };
