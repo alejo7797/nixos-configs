@@ -1,15 +1,19 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
+
+  cfg = config.myNixOS.tuigreet;
+
+in {
 
   options.myNixOS.tuigreet.enable = lib.mkEnableOption "tuigreet";
 
-  config = lib.mkIf config.myNixOS.tuigreet.enable  {
+  config = lib.mkIf cfg.enable  {
 
     services.greetd = {
       enable = true;
       settings = {
         default_session = {
 
-          command = lib.concatStringsSep " " [
+          command = builtins.concatStringsSep " " [
 
             # Use tuigreet as our greeter.
             "${pkgs.greetd.tuigreet}/bin/tuigreet"

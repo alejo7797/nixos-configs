@@ -1,52 +1,77 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
+
+  cfg = config.myHome.waybar;
+
+in {
 
   imports = [ ./modules.nix ];
 
-  # Style waybar ourselves.
-  stylix.targets.waybar.enable = false;
+  options.myHome.waybar = with lib.types; {
 
-  # Module dependencies.
-  home.packages =
-    lib.optionals (config.myHome.hostname == "shinobu")
-    [ pkgs.wttrbar ];
+    enable = lib.mkEnableOption "waybar";
 
-  # Install and configure waybar.
-  programs.waybar = {
+    thermal-zone = lib.mkOption {
+      description = "Thermal zone to monitor in waybar.";
+      type = int;
+      default = 2;
+    };
 
-    enable = true;
-    systemd.enable = true;
+    wttr-location = lib.mkOption {
+      description = "Location to show the weather for in waybar.";
+      type = str;
+      default = "Madrid";
+    };
 
-    style = ./style.css;
+  };
 
-    settings.mainBar = {
+  config = lib.mkIf cfg.enable {
 
-      position = "bottom";
-      spacing = 5;
+    # Style waybar ourselves.
+    stylix.targets.waybar.enable = false;
 
-      modules-left = [
-        "hyprland/workspaces"
-        "hyprland/submap"
-        "sway/workspaces"
-        "sway/mode"
-        "sway/scratchpad"
-      ];
+    # For the weather indicator.
+    home.packages = [ pkgs.wttrbar ];
 
-      modules-right = [
-        "idle_inhibitor"
-        "pulseaudio"
-        "cpu"
-        "memory"
-        "disk"
-        "battery"
-        "temperature"
-        "network"
-        "network#vpn"
-        "network#harvard"
-        "custom/weather"
-        "clock"
-        "custom/swaync"
-        "tray"
-      ];
+    # Install and configure waybar.
+    programs.waybar = {
+
+      enable = true;
+      systemd.enable = true;
+
+      style = ./style.css;
+
+      settings.mainBar = {
+
+        position = "bottom";
+        height = 30;
+        spacing = 5;
+
+        modules-left = [
+          "hyprland/workspaces"
+          "hyprland/submap"
+          "sway/workspaces"
+          "sway/mode"
+          "sway/scratchpad"
+        ];
+
+        modules-right = [
+          "idle_inhibitor"
+          "pulseaudio"
+          "cpu"
+          "memory"
+          "disk"
+          "battery"
+          "temperature"
+          "network"
+          "network#vpn"
+          "network#harvard"
+          "custom/updates"
+          "custom/weather"
+          "clock"
+          "custom/swaync"
+          "tray"
+        ];
+      };
     };
   };
 }

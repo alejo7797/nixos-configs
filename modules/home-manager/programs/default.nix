@@ -1,9 +1,15 @@
-{ pkgs, lib, config, ... }: {
-
+{ ... }:
+{
   imports = [
-    ./git.nix ./gpg.nix
-    ./kitty ./nvim ./joplin
-    ./firefox.nix ./thunderbird.nix
-  ];
+    ./joplin
+    ./kitty
+    ./zsh
 
+    ./firefox.nix
+    ./git.nix
+    ./gpg.nix
+    ./neovim
+    ./thunderbird.nix
+    ./zathura.nix
+  ];
 }

@@ -1,19 +1,39 @@
-{ pkgs, lib, myLib, config, ... }:  {
+{
+  pkgs,
+  inputs,
+  config,
+  lib,
+  ...
+}:
 
+let
+  cfg = config.myHome.style;
+in
+
+{
   imports = [ ../../style.nix ];
+
+  # Not available in our current version of Home Manager.
+  disabledModules = [ "${inputs.stylix}/modules/ghostty/hm.nix" ];
 
   options.myHome.style.enable = lib.mkEnableOption "user theme components";
 
-  config = lib.mkIf config.myHome.style.enable {
+  config = lib.mkIf cfg.enable {
 
     # Enable common theme components.
-    myStyle.enable = true;
+    myStylix.enable = true;
 
-    # Fix the look of QT applications.
-    xdg.configFile = {
-      "kdeglobals".source = ./kdeglobals;
-      "qt5ct/qt5ct.conf".source = ./qt5ct.conf;
-      "qt6ct/qt6ct.conf".source = ./qt6ct.conf;
+    xdg = {
+      # Fix the look of QT applications.
+      configFile = {
+        "kdeglobals".source = ./kdeglobals;
+        "qt5ct/qt5ct.conf".source = ./qt5ct.conf;
+        "qt6ct/qt6ct.conf".source = ./qt6ct.conf;
+      };
+
+      # Make our theme available to Konsole.
+      configFile."konsolerc".source = ./konsole/konsolerc;
+      dataFile."konsole".source = ./konsole/data;
     };
 
     # Set our desired font DPI.
@@ -30,7 +50,11 @@
     };
 
     # Use the default KDE sound theme.
-    gtk = myLib.gtkExtra "gtk-sound-theme-name" "ocean";
+    gtk = {
+      gtk2.extraConfig = "gtk-sound-theme-name = ocean";
+      gtk3.extraConfig.gtk-sound-theme-name = "ocean";
+      gtk4.extraConfig.gtk-sound-theme-name = "ocean";
+    };
     dconf.settings."org/gnome/desktop/sound".theme-name = "ocean";
 
     # Pass our settings to xsettingsd.
@@ -41,10 +65,5 @@
       "Gtk/CursorThemeName" = "breeze_cursors";
       "Xft/DPI" = 122880;
     };
-
-    # Make our theme available to Konsole.
-    xdg.dataFile."konsole".source = ./konsole/data;
-    xdg.configFile."konsolerc".source = ./konsole/konsolerc;
-
   };
 }

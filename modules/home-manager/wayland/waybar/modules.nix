@@ -1,4 +1,8 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, osConfig, ... }:
+
+  let cfg = config.myHome.waybar;
+
+in {
 
   programs.waybar.settings.mainBar =
 
@@ -72,11 +76,20 @@
         path = "/";
       };
 
+      battery = {
+        states = {
+          warning = 30;
+          critical = 15;
+        };
+        format = "{capacity}% {icon}";
+        format-charging = "{capacity}% ";
+        format-plugged = "{capacity}% ";
+        format-alt = "{time} {icon}";
+        format-icons = [ "" "" "" "" "" ];
+      };
+
       temperature = {
-        thermal-zone =
-          if config.myHome.hostname == "satsuki" then 7
-          else if config.myHome.hostname == "shinobu" then 1
-          else null;
+        inherit (cfg) thermal-zone;
         format = "{temperatureC}°C {icon}";
         format-icons = ["" "" ""];
         tooltip = false;
@@ -104,11 +117,26 @@
         tooltip = false;
       };
 
+      "custom/updates" = {
+        format = "{} {icon}";
+        return-type = "json";
+        format-icons = {
+          has-updates = "";
+          updated = "";
+        };
+        exec-if = "which waybar-pacman-updates";
+        exec = "waybar-pacman-updates";
+      };
+
       "custom/weather" = {
         format = "{}";
         tooltip = true;
         interval = 1800;
-        exec = "wttrbar-wrapper";
+        exec = builtins.concatStringsSep " " [
+          "${pkgs.wttrbar}/bin/wttrbar"
+          "--custom-indicator \"{temp_C}°C {ICON}\""
+          "--location \"${cfg.wttr-location}\""
+        ];
         return-type = "json";
       };
 

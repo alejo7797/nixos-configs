@@ -1,10 +1,14 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
+
+  cfg = config.myHome.sway;
+
+in {
 
   imports = [ ./window-rules.nix ];
 
   options.myHome.sway.enable = lib.mkEnableOption "sway configuration";
 
-  config = lib.mkIf config.myHome.sway.enable {
+  config = lib.mkIf cfg.enable {
 
     # Install and configure a bunch of wayland-specific utilities.
     myHome.wayland.enable = true;
@@ -24,7 +28,7 @@
     wayland.windowManager.sway = {
       enable = true;
 
-      # We install sway via a NixOS module.
+      # We install sway via its NixOS module.
       package = null;
 
       config =
@@ -32,14 +36,25 @@
         let
           modifier = "Mod4";
           exit = "exit: [s]leep, [h]ibernate, [r]eboot, [p]oweroff";
-          uwsm-app = "${pkgs.uwsm}/bin/uwsm-app";
-          systemctl = "${pkgs.systemd}/bin/systemctl";
+          uwsm-app = "${pkgs.uwsm}/bin/uwsm app";
+          kitty = "${config.programs.kitty.package}/bin/kitty";
         in
 
         {
           inherit modifier;
-          terminal = "${uwsm-app} -- ${pkgs.kitty}/bin/kitty";
-          menu = "${pkgs.wofi}/bin/wofi | ${pkgs.findutils}/bin/xargs swaymsg exec ${uwsm-app} --";
+
+          # Default terminal application.
+          terminal = "${uwsm-app} -- ${kitty}";
+
+          # Default application launcher.
+          menu = lib.concatStringsSep " " [
+            "${pkgs.wofi}/bin/wofi |"
+            "${pkgs.moreutils}/bin/ifne"
+            "${pkgs.findutils}/bin/xargs"
+            "${uwsm-app} --"
+          ];
+
+          # We use waybar instead.
           bars = [ ];
 
           # Override automatic Stylix settings.
@@ -51,6 +66,12 @@
           gaps = { inner = 0; outer = 0; };
           workspaceLayout = "tabbed";
           window.border = lib.mkForce 1;
+
+          workspaceOutputAssign = builtins.concatLists (
+            lib.mapAttrsToList
+              (o: ws: map (w: { workspace = toString w; output = o; }) ws)
+              config.myHome.workspaces
+          );
 
           keybindings = let
 
@@ -69,18 +90,18 @@
             # Use pactl to adjust volume in PulseAudio.
             "XF86AudioRaiseVolume" = "exec ${pactl} set-sink-volume @DEFAULT_SINK@ +4%";
             "XF86AudioLowerVolume" = "exec ${pactl} set-sink-volume @DEFAULT_SINK@ -4%";
-            "XF86AudioMute"        = "exec ${pactl} set-sink-mute @DEFAULT_SINK@ toggle";
-            "XF86AudioMicMute"     = "exec ${pactl} set-source-mute @DEFAULT_SOURCE@ toggle";
+            "XF86AudioMute" = "exec ${pactl} set-sink-mute @DEFAULT_SINK@ toggle";
+            "XF86AudioMicMute" = "exec ${pactl} set-source-mute @DEFAULT_SOURCE@ toggle";
 
             # Bind the media keys to playerctl actions.
-            "XF86AudioPlay"  = "exec ${playerctl} play-pause";
+            "XF86AudioPlay" = "exec ${playerctl} play-pause";
             "XF86AudioPause" = "exec ${playerctl} pause";
-            "XF86AudioNext"  = "exec ${playerctl} next";
-            "XF86AudioPrev"  = "exec ${playerctl} previous";
+            "XF86AudioNext" = "exec ${playerctl} next";
+            "XF86AudioPrev" = "exec ${playerctl} previous";
 
             # Control the screen brightness.
             "XF86MonBrightnessDown" = "exec ${brightnessctl} set 2%-";
-            "XF86MonBrightnessUp"   = "exec ${brightnessctl} set 2%+";
+            "XF86MonBrightnessUp" = "exec ${brightnessctl} set 2%+";
 
           };
 
@@ -90,10 +111,10 @@
 
           modes = lib.mkOptionDefault {
             ${exit} = {
-              s = "exec ${systemctl} suspend, mode default";
-              h = "exec ${systemctl} hibernate, mode default";
-              p = "exec ${systemctl} poweroff";
-              r = "exec ${systemctl} reboot";
+              s = "exec systemctl suspend, mode default";
+              h = "exec systemctl hibernate, mode default";
+              p = "exec systemctl poweroff";
+              r = "exec systemctl reboot";
               Escape = "mode default";
             };
           };

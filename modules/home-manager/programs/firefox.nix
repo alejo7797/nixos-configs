@@ -1,8 +1,12 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
+
+  cfg = config.myHome.firefox;
+
+in {
 
   options.myHome.firefox.enable = lib.mkEnableOption "firefox profile configuration";
 
-  config.programs.firefox = lib.mkIf config.myHome.firefox.enable {
+  config.programs.firefox = lib.mkIf cfg.enable {
 
     # Enable Firefox configuration.
     enable = true;
@@ -59,9 +63,9 @@
         "privacy.sanitize.sanitizeOnShutdown" = true;
         "privacy.sanitize.pending" = [
           {
-            "id"="shutdown";
+            "id" = "shutdown";
             "itemsToClear" = [ "cache" "cookiesAndStorage" ];
-            "options" ={};
+            "options" = { };
           }
         ];
 

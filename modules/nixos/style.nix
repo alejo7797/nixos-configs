@@ -1,10 +1,30 @@
-{ pkgs, lib, config, ... }: {
+{
+  lib,
+  inputs,
+  config,
+  pkgs,
+  ...
+}:
 
+let
+  cfg = config.myNixOS.style;
+in
+
+{
   imports = [ ../style.nix ];
 
   options.myNixOS.style.enable = lib.mkEnableOption "system theme components";
 
-  config = lib.mkIf config.myNixOS.style.enable {
+  config = lib.mkIf cfg.enable {
+
+    nixpkgs.overlays = [
+      # Access ilya-fedin's repository.
+      (_: prev: {
+        ilya-fedin = import inputs.ilya-fedin {
+          pkgs = prev;
+        };
+      })
+    ];
 
     # Style QT applications consistently.
     qt = {
@@ -19,7 +39,7 @@
     };
 
     # Enable common theme components.
-    myStyle.enable = true;
+    myStylix.enable = true;
 
     # Install necessary theme packages.
     environment.systemPackages = with pkgs; [
@@ -31,9 +51,9 @@
       # The default KDE sound theme.
       kdePackages.ocean-sound-theme
 
-      # Great fork for compatibility with KDE apps.
-      ilya-fedin.qt5ct
-      ilya-fedin.qt6ct
+      # From ilya-fedin's repository.
+      pkgs.ilya-fedin.qt5ct
+      pkgs.ilya-fedin.qt6ct
 
     ];
   };

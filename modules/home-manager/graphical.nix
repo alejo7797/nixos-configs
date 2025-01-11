@@ -1,100 +1,126 @@
-{ pkgs, lib, config, ... }: {
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+let
+  cfg = config.myHome.graphical;
+in
+{
+  imports = [
+    ./style
+    ./wayland
 
-  options.myHome.graphical.enable = lib.mkEnableOption "basic graphical utilities";
+    ./autostart.nix
+    ./i3-wm.nix
+    ./mime.nix
+  ];
 
-  config = lib.mkIf config.myHome.graphical.enable {
+  options.myHome = {
 
-    # Define a few more shell aliases.
+    graphical.enable = lib.mkEnableOption "basic graphical utilities";
+
+    workspaces = lib.mkOption {
+      description = "Workspace output assignments.";
+      type = with lib.types; attrsOf ( listOf (oneOf [ int str ]) );
+      default = { };
+      example = {
+        "DP-1" = [ "web" "dev" ];
+        "eDP-1" = [ "chat" ];
+      };
+    };
+  };
+
+  config = lib.mkIf cfg.enable {
+
+    myHome = {
+      kitty.enable = true;
+      firefox.enable = true;
+      mimeApps.enable = true;
+      style.enable = true;
+      zathura.enable = true;
+    };
+
+    services = {
+      mpris-proxy.enable = true;
+      playerctld.enable = true;
+      xsettingsd.enable = true;
+
+      kdeconnect = {
+        enable = true;
+        indicator = true;
+      };
+    };
+
+    xdg.configFile = {
+      "fcitx5" = {
+        source = ./fcitx5/config;
+        force = true;
+        recursive = true;
+      };
+
+      "baloofilerc".text = ''
+        [Basic Settings]
+        Indexing-Enabled=false
+      '';
+    };
+
+    xdg.dataFile = {
+      "fcitx5" = {
+        source = ./fcitx5/data;
+        recursive = true;
+      };
+    };
+
+    systemd.user.services =
+
+      lib.mapAttrs
+        (_: value: {
+          Install = {
+            WantedBy = [ "graphical-session.target" ];
+          };
+          Unit = {
+            inherit (value.Unit) Description;
+            PartOf = [ "graphical-session.target" ];
+            After = [ "graphical-session.target" ];
+          };
+          inherit (value) Service;
+        })
+
+        {
+          polkit-gnome-agent = {
+            Unit.Description = "GNOME PolicyKit authentication daemon";
+            Service.ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+          };
+
+          keepassxc = {
+            Unit.Description = "KeepassXC password manager";
+            # Prevent quirks with KeepassXC when it starts too early.
+            Service.ExecStartPre = "${pkgs.coreutils}/bin/sleep 5";
+            Service.ExecStart = "${pkgs.keepassxc}/bin/keepassxc";
+          };
+
+          variety = {
+            Unit.Description = "Variety wallpaper changer";
+            Service.ExecStart = "${pkgs.variety}/bin/variety";
+          };
+        };
+
     programs.zsh.shellAliases =
       let
         variety = "${pkgs.variety}/bin/variety";
       in
       {
-        # Interact with Variety.
-        bgnext  = "${variety} --next";
-        bgprev  = "${variety} --previous";
+        bgnext = "${variety} --next";
+        bgprev = "${variety} --previous";
         bgtrash = "${variety} --trash";
-        bgfav   = "${variety} --favorite";
+        bgfav = "${variety} --favorite";
       };
 
-    # Install and configure kitty.
-    myHome.kitty.enable = true;
-
-    # Configure Firefox.
-    myHome.firefox.enable = true;
-
-    # Enable the xsettings daemon.
-    services.xsettingsd.enable = true;
-
-    # Enable the mpris-proxy service.
-    services.mpris-proxy.enable = true;
-
-    # Start KDE connect as a user service.
-    services.kdeconnect = {
-      enable = true;
-      indicator = true;
-    };
-
-    # Configure Fcitx5.
-    xdg.configFile."fcitx5" = {
-      source = ./fcitx5/config;
-      recursive = true;
-    };
-    xdg.dataFile."fcitx5" = {
-      source = ./fcitx5/data;
-      recursive = true;
-    };
-
-    # Configure additional user services.
-    systemd.user.services =
-
-      let
-        graphical-service = (
-          service:
-            lib.recursiveUpdate {
-              Unit = {
-                After = [ "graphical-session.target" ];
-                PartOf = [ "graphical-session.target" ];
-              };
-              Service = {
-                Restart = "on-failure";
-                RestartSec = "800ms";
-              };
-              Install.WantedBy = [ "graphical-session.target" ];
-            }
-            service
-        );
-      in
-
-      # Satsuki is not ready for this yet.
-      lib.mkIf (config.myHome.hostname != "satsuki")
-
-      {
-        # Start polkit-gnome-agent as a user service.
-        polkit-gnome-agent = graphical-service {
-          Unit.Description = "GNOME polkit authentication daemon";
-          Service.ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-        };
-
-        # Start KeepassXC as a user service.
-        keepassxc = graphical-service {
-          Unit.Description = "KeepassXC password manager";
-          Unit.After = [ "graphical-session.target" "waybar.service" ];
-          Service.ExecStartPre = "${pkgs.coreutils}/bin/sleep 5";
-          Service.ExecStart = "${pkgs.keepassxc}/bin/keepassxc";
-        };
-
-        # Start Variety as a user service.
-        variety = graphical-service {
-          Unit.Description = "Variety wallpaper changer";
-          Service.ExecStart = "${pkgs.variety}/bin/variety";
-        };
-      };
-
-    # Include our custom Variety wallpaper script.
+    # The script cannot be read-only, otherwise Variety won't run.
     home.activation.variety = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      cp ${./variety/set_wallpaper} ${config.xdg.configHome}/variety/scripts/set_wallpaper
+      cp ${./programs/variety/set_wallpaper} ${config.xdg.configHome}/variety/scripts/set_wallpaper
     '';
-
   };
 }

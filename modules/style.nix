@@ -1,24 +1,33 @@
-{ pkgs, lib, config, ... }: {
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+let
+  cfg = config.myStylix;
+in
+{
+  options.myStylix.enable = lib.mkEnableOption "common theme components";
 
-options.myStyle.enable = lib.mkEnableOption "common theme components";
-
-config = lib.mkIf config.myStyle.enable {
-
-    # Enable and configure Stylix.
-    stylix.enable = true;
+  config.stylix = lib.mkIf cfg.enable {
+		# Enable Stylix.
+    enable = true;
 
     # Specifying an image is mandatory.
-    stylix.image = builtins.fetchurl {
+    image = builtins.fetchurl {
       url = "https://w.wallhaven.cc/full/zy/wallhaven-zye9ry.jpg";
       sha256 = "16d5pch4544knygndsslmh682fxp6sqwn5b9vnrb35ji7m5zfcm0";
     };
 
-    # Set the color scheme.
-    stylix.polarity = "dark";
-    stylix.base16Scheme = ./tomorrow-night.yaml;
+    # Set the colorscheme.
+		base16Scheme = "${pkgs.base16-schemes}/share/themes/tomorrow-night.yaml";
+
+		# Specify that we are using a dark colorscheme.
+    polarity = "dark";
 
     # Configure our desired fonts.
-    stylix.fonts = {
+    fonts = {
       sizes = {
         applications = 10;
         terminal = 11;
@@ -32,7 +41,7 @@ config = lib.mkIf config.myStyle.enable {
       };
 
       monospace = {
-        package = (pkgs.nerdfonts.override { fonts = [ "Hack" ]; });
+        package = pkgs.nerdfonts.override { fonts = [ "Hack" ]; };
         name = "Hack Nerd Font";
       };
 
@@ -43,7 +52,7 @@ config = lib.mkIf config.myStyle.enable {
     };
 
     # Use the default KDE cursor theme.
-    stylix.cursor = {
+    cursor = {
       package = pkgs.kdePackages.breeze;
       name = "breeze_cursors";
       size = 24;

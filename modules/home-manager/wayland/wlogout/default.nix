@@ -1,8 +1,15 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
+
+  cfg = config.myHome.wlogout;
+
+  # Instance of loginctl to use.
+  loginctl = config.myHome.wayland.loginctl;
+
+in {
 
   options.myHome.wlogout.enable = lib.mkEnableOption "wlogout";
 
-  config = lib.mkIf config.myHome.wlogout.enable {
+  config = lib.mkIf cfg.enable {
 
     # Install and configure wlogout.
     programs.wlogout = {
@@ -11,7 +18,7 @@
       layout = [
         {
           label = "lock";
-          action = "loginctl lock-session";
+          action = "${loginctl} lock-session";
           text = "Lock";
           keybind = "l";
         }
@@ -48,53 +55,59 @@
       ];
 
       style = ''
+        * {
+          background-image: none;
+          box-shadow: none;
+        }
+
         window {
           background-color: rgba(12,12,12,0.4);
         }
 
         button {
-          color: #ffffff;
           font-size: 18px;
+          color: #ffffff;
           background-color: #1d1f21;
-          border-radius: 0;
-          background-repeat: no-repeat;
           background-position: center;
+          background-repeat: no-repeat;
           background-size: 25%;
+          border-radius: 0;
+          border-width: 0;
+        }
+
+        button:active, button:hover {
+          background-color: #81a2be;
         }
 
         button:focus {
           outline-style: none;
         }
 
-        button:active,
-        button:hover {
-          background-color: #81a2be;
-          outline-style: none;
+        #lock {
+          background-image: image(url("${./icons}/lock.png"));
         }
-      ''
 
-      + lib.concatStringsSep "\n" (
+        #logout {
+          background-image: image(url("${./icons}/logout.png"));
+        }
 
-        map
+        #suspend {
+          background-image: image(url("${./icons}/suspend.png"));
+        }
 
-          (
-            a:
-              ''
-                #${a} {
-                  background-image: image(
-                    url("${./icons}/${a}.png")
-                  );
-                }
-              ''
-          )
+        #hibernate {
+          background-image: image(url("${./icons}/hibernate.png"));
+        }
 
-          [
-            "lock" "logout"
-            "suspend" "hibernate"
-            "shutdown" "reboot"
-          ]
+        #shutdown {
+          background-image: image(url("${./icons}/shutdown.png"));
+        }
 
-      );
-    };
+        #reboot {
+          background-image: image(url("${./icons}/reboot.png"));
+        }
+      '';
+
+     };
   };
 }

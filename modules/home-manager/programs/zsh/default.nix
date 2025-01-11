@@ -1,43 +1,53 @@
-{ pkgs, lib, myLib, config, ... }: {
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
+let
+  cfg = config.myHome.zsh;
+in
+
+{
   options.myHome.zsh.enable = lib.mkEnableOption "Zsh configuration";
 
-  config = lib.mkIf config.myHome.zsh.enable {
+  config = lib.mkIf cfg.enable {
 
-    # Configure zsh.
     programs.zsh = {
       enable = true;
+      autocd = true;
 
       sessionVariables = {
         # Configure OhMyZsh.
-        DISABLE_AUTO_TITLE="true";
+        DISABLE_AUTO_TITLE = "true";
         ENABLE_CORRECTION = "true";
         COMPLETION_WAITING_DOTS = "true";
         HIST_STAMPS = "yyyy-mm-dd";
       };
 
-      # Some useful aliases.
       shellAliases = {
-
         # https://github.com/lsd-rs/lsd
         ls = "lsd \${=lsd_params}";
 
-        l = "ls -l"; lt = "ls --tree";
-        la = "ls -a"; lla = "ls -la";
+        l = "ls -l";
+        lt = "ls --tree";
+        la = "ls -a";
+        lla = "ls -la";
 
         su = "sudo -i";
 
-        # Rebuild NixOS system.
+        # Build NixOS configuration.
+        nixos-build = "nixos-rebuild build --flake ~/Git/nixconfig";
+
+        # Build and activate NixOS configuration.
         nixos-switch = "sudo nixos-rebuild switch --flake ~/Git/nixconfig";
 
-        # Rebuild Home Manager environment.
+        # Build and activate Home Manager environment.
         home-switch = "home-manager switch --flake ~/Git/nixconfig";
 
-        # Clean up the Nix store.
-        nix-cleanup = "sudo nix-collect-garbage -d";
-
         # Manage connection to my VPN server.
-        vpnup   = "nmcli c up Koakuma_VPN";
+        vpnup = "nmcli c up Koakuma_VPN";
         vpndown = "nmcli c down Koakuma_VPN";
 
         # Use standard syntax.

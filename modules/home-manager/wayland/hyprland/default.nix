@@ -1,10 +1,21 @@
-{ pkgs, lib, config, ... }: {
-
-  imports = [ ./hy3.nix ./window-rules.nix ];
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+let
+  cfg = config.myHome.hyprland;
+in
+{
+  imports = [
+    ./hy3.nix
+    ./window-rules.nix
+  ];
 
   options.myHome.hyprland.enable = lib.mkEnableOption "Hyprland configuration";
 
-  config = lib.mkIf config.myHome.hyprland.enable {
+  config = lib.mkIf cfg.enable {
 
     # Install and configure a bunch of wayland-specific utilities.
     myHome.wayland.enable = true;
@@ -12,19 +23,31 @@
     # Install and configure wlogout.
     myHome.wlogout.enable = true;
 
-    # Start user units after WAYLAND_DISPLAY gets set.
+    # Start kanshi with Hyprland.
+    services.kanshi.systemdTarget = "graphical-session.target";
+
+    # Start graphical services after WAYLAND_DISPLAY gets set.
     systemd.user.services =
-      let
-        startupDelay = { Unit.After = [ "graphical-session.target" ]; };
-      in
-      {
-        gammastep = startupDelay;
-        kdeconnect = startupDelay;
-        kdeconnect-indicator = startupDelay;
-        swayidle = startupDelay;
-        waybar = startupDelay;
-        xsettingsd = startupDelay;
-      };
+
+      builtins.listToAttrs (
+        map
+          (name: {
+            inherit name;
+            value = {
+              Unit.After = [ "graphical-session.target" ];
+            };
+          })
+
+          [
+            "gammastep"
+            "hyprpaper"
+            "kdeconnect"
+            "kdeconnect-indicator"
+            "swayidle"
+            "waybar"
+            "xsettingsd"
+          ]
+      );
 
     # Configure Hyprland, the tiling Wayland compositor.
     wayland.windowManager.hyprland = {
@@ -38,17 +61,19 @@
 
       settings =
         let
-          uwsm-app = "${pkgs.uwsm}/bin/uwsm-app";
+          uwsm-app = "${pkgs.uwsm}/bin/uwsm app";
+          kitty = "${config.programs.kitty.package}/bin/kitty";
         in
         {
           # Default terminal application.
-          "$terminal" = "${uwsm-app} -- ${pkgs.kitty}/bin/kitty";
+          "$terminal" = "${uwsm-app} -- ${kitty}";
 
           # Default application launcher.
-          "$menu" = lib.concatStringsSep " " [
-            "${pkgs.wofi}/bin/wofi | "
-            "${pkgs.findutils}/bin/xargs "
-            "${uwsm-app} -- "
+          "$menu" = builtins.concatStringsSep " " [
+            "${pkgs.wofi}/bin/wofi |"
+            "${pkgs.moreutils}/bin/ifne"
+            "${pkgs.findutils}/bin/xargs"
+            "${uwsm-app} --"
           ];
 
           # Workspace autostart command.
@@ -58,7 +83,7 @@
           general = {
             gaps_in = 0;
             gaps_out = 0;
-            border_size = 0;
+            border_size = 2;
             resize_on_border = true;
             layout = "hy3";
           };
@@ -109,11 +134,17 @@
               "layersOut, 1, 1.5, linear, fade"
               "fadeLayersIn, 1, 1.79, almostLinear"
               "fadeLayersOut, 1, 1.39, almostLinear"
-              "workspaces, 1, 1.94, almostLinear, fade"
-              "workspacesIn, 1, 1.21, almostLinear, fade"
-              "workspacesOut, 1, 1.94, almostLinear, fade"
+              "workspaces, 1, 1.94, almostLinear, slide"
+              "workspacesIn, 1, 1.21, almostLinear, slide"
+              "workspacesOut, 1, 1.94, almostLinear, slide"
+              "specialWorkspace, 1, 1.94, almostLinear, fade"
             ];
           };
+
+          # Assign workspaces to outputs.
+          workspace = builtins.concatLists (
+            lib.mapAttrsToList (o: ws: map (w: "${toString w}, monitor:${o}") ws) config.myHome.workspaces
+          );
 
           # Miscellaneous.
           misc = {
@@ -124,11 +155,9 @@
           # Keybindings.
           "$mainMod" = "SUPER";
           bind =
-
             let
               grimblast = "${pkgs.grimblast}/bin/grimblast";
             in
-
             map (x: "$mainMod, ${x}") [
               "Return, exec, $terminal"
               "D, exec, $menu"
@@ -165,7 +194,6 @@
               "mouse_down, workspace, e+1"
               "mouse_up, workspace, e-1"
             ]
-
             ++ map (x: "$mainMod SHIFT, ${x}") [
               "Q, killactive,"
               "Space, togglefloating,"
@@ -222,11 +250,13 @@
               ", XF86AudioPrev, exec, ${playerctl} previous"
             ];
 
+          # Move and resize windows with the mouse.
           bindm = map (x: "$mainMod, ${x}") [
             "mouse:272, movewindow"
             "mouse:273, resize_window"
           ];
 
+          # Click on a window's titlebar to focus on it.
           bindn = [
             ", mouse:272, hy3:focustab, mouse"
           ];

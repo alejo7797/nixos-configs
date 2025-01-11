@@ -1,8 +1,12 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: let
+
+  cfg = config.myNixOS.fcitx5;
+
+in {
 
   options.myNixOS.fcitx5.enable = lib.mkEnableOption "Fcitx5";
 
-  config = lib.mkIf config.myNixOS.fcitx5.enable {
+  config = lib.mkIf cfg.enable {
 
     # Enable and configure Fcitx5.
     i18n.inputMethod = {

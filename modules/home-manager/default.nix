@@ -1,45 +1,50 @@
-{ pkgs, lib, config, ... }: {
-
+{
+  inputs,
+  config,
+  pkgs,
+  ...
+}:
+{
   imports = [
-    # My personal modules.
-    ./zsh ./programs ./style
-    ./autostart.nix ./i3.nix
-    ./graphical.nix ./wayland
+    inputs.nixvim.homeManagerModules.nixvim
+    inputs.nur.modules.homeManager.default
+    inputs.sops-nix.homeManagerModules.sops
+
+    ./arch-linux.nix
+    ./graphical.nix
+    ./programs
   ];
 
-  options.myHome = {
-    hostname = lib.mkOption {
-      description = "The system hostname.";
-      example = "satsuki";
-    };
-  };
-
   config = {
-    # Allow unfree packages.
-    nixpkgs.config.allowUnfree = true;
-
-    # Let Home Manager install and manage itself.
-    programs.home-manager.enable = true;
-
-    # Configure Zsh.
-    myHome.zsh.enable = true;
-
-    # Configure Neovim.
-    myHome.neovim.enable = true;
-
-    # Configure Git.
-    myHome.git.enable = true;
-
-    # Configure GnuPG.
-    myHome.gpg.enable = true;
-
-    # Add our personal scripts to PATH.
-    home.sessionPath = [ "$HOME/.local/bin" ];
-
-    # Link in our personal scripts.
-    home.file.".local/bin" = {
-      source = ./scripts;
-      recursive = true;
+    nix.gc = {
+      automatic = true;
+      frequency = "weekly";
+      options = "--delete-older-than 30d";
     };
+
+    sops = {
+      defaultSopsFile = ../../secrets/${config.home.username}.yaml;
+      age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
+    };
+
+    myHome = {
+      git.enable = true;
+      gpg.enable = true;
+      neovim.enable = true;
+      zsh.enable = true;
+    };
+
+    programs = {
+      home-manager.enable = true;
+    };
+
+    # My personal shell scripts.
+    home.packages = with pkgs; [
+      audio-switch
+      favicon-generator
+      lockbg-cache
+      round-corners
+      sleep-deprived
+    ];
   };
 }
