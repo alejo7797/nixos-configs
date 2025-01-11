@@ -52,7 +52,7 @@
 
     {
       nixosConfigurations = {
-        "qemu" = mkSystem hosts/qemu/configuration.nix;
+        "qemu-vm" = mkSystem hosts/qemu-vm/configuration.nix;
         "satsuki" = mkSystem hosts/satsuki/configuration.nix;
         "shinobu" = mkSystem hosts/shinobu/configuration.nix;
       };
