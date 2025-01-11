@@ -1,24 +1,30 @@
-{ pkgs, lib, config, osConfig, ... }:
+{
+  config,
+  pkgs,
+  ...
+}:
 
-  let cfg = config.myHome.waybar;
+let
+  cfg = config.myHome.waybar;
+  stylix-colors = config.lib.stylix.colors;
+in
 
-in {
-
+{
   programs.waybar.settings.mainBar =
 
     let
       workspaces = {
         format = "{icon}";
         format-icons = {
-          "1" = "";    # firefox
-          "2" = "";    # library
-          "3" = "";    # steam
-          "4" = "";    # terminal
-          "6" = "";    # git
-          "8" = "";    # discord
-          "9" = "";    # spotify
-          "10" = "";   # extra
-          urgent = ""; # (!)
+          "1" = ""; # firefox
+          "2" = ""; # library
+          "3" = ""; # steam
+          "4" = ""; # terminal
+          "6" = ""; # git
+          "8" = ""; # discord
+          "9" = ""; # spotify
+          "10" = ""; # extra
+          "urgent" = ""; # (!)
         };
       };
     in
@@ -58,7 +64,7 @@ in {
           default = ["" "" ""];
         };
         on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
-        on-click-right = "audio-switch";
+        on-click-right = "${pkgs.audio-switch}/bin/audio-switch";
       };
 
       cpu = {
@@ -132,11 +138,11 @@ in {
         format = "{}";
         tooltip = true;
         interval = 1800;
-        exec = builtins.concatStringsSep " " [
-          "${pkgs.wttrbar}/bin/wttrbar"
-          "--custom-indicator \"{temp_C}°C {ICON}\""
-          "--location \"${cfg.wttr-location}\""
-        ];
+        exec = ''
+          ${pkgs.wttrbar}/bin/wttrbar \
+          --custom-indicator "{temp_C}°C {ICON}" \
+          --location "${cfg.wttr-location}"
+        '';
         return-type = "json";
       };
 
@@ -144,7 +150,7 @@ in {
         interval = 5;
         format-alt = "{:%Y-%m-%d %H:%M:%S}";
         tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
-     };
+      };
 
       "custom/swaync" =
         let
@@ -155,8 +161,9 @@ in {
           format = "{icon}";
           format-icons =
             let
-              alert = "<span foreground='#cc6666'><sup></sup></span>";
-            in {
+              alert = "<span foreground='#${stylix-colors.base08}'><sup></sup></span>";
+            in
+            {
               notification = "${alert}";
               none = "";
               dnd-notification = "${alert}";
@@ -177,5 +184,4 @@ in {
         spacing = 10;
       };
     };
-
 }
