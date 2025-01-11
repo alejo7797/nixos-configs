@@ -90,57 +90,40 @@
   time.timeZone = "Europe/Madrid";
 
   programs = {
-
+    gamemode.enable = true;
     thunderbird.enable = true;
-
     wireshark.enable = true;
 
     steam = {
       enable = true;
       protontricks.enable = true;
     };
-
-    gamemode.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
 
     # Actual programs.
     filezilla
-    gimp
-    inkscape
+    gimp inkscape
     joplin-desktop
-    plex-desktop
-    qbittorrent
-    simple-scan
-    ungoogled-chromium
-    vesktop
-    yubioath-flutter
-    zoom-us
+    vesktop zoom-us
     zotero
 
     # Wayland IME support.
     unstable.spotify
 
-    # Wine.
     wineWowPackages.stable
     winetricks
 
-    # Gaming.
     gamescope
     lutris
     prismlauncher
     unigine-heaven
 
-    # Coding.
-    biber
-    clang
-    gdb
-    jupyter
-    lldb
-    perl
-    ruby
-    sage
+    biber clang
+    gdb jupyter
+    lldb perl
+    ruby sage
 
     # LaTeX.
     (texliveMedium.withPackages
