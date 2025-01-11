@@ -134,25 +134,17 @@
 
     # Coding.
     biber
-    black
     clang
     gdb
     jupyter
     lldb
-    #mathematica-webdoc
-    nixfmt-rfc-style
     perl
     ruby
     sage
-    shellcheck
-    shfmt
 
     # LaTeX.
-    (texlive.combine {
-      inherit (texlive)
-        scheme-medium
-        collection-langcyrillic
-        ;
-    })
+    (texliveMedium.withPackages
+    (ps: with ps; [ collection-langcyrillic ]))
+
   ];
 }
