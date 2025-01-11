@@ -23,12 +23,13 @@
   };
 
   myHome = {
-    arch-linux.enable = true;
+    laptop.enable = true;
+
     hyprland.enable = true;
     sway.enable = true;
     i3.enable = true;
 
-    firefox.enable = false;
+    firefox.enable = true;
     thunderbird.enable = true;
 
     workspaces = {
@@ -95,10 +96,6 @@
         sensitivity = -1;
       }
     ];
-    bindl = [
-      ", switch:on:Lid Switch, exec, hyprctl keyword monitor \"eDP-1, disable\""
-      ", switch:off:Lid Switch, exec, hyprctl keyword monitor \"eDP-1, preferred, 1\""
-    ];
   };
 
   wayland.windowManager.sway.config = {
@@ -114,7 +111,6 @@
         dwt = "enabled";
       };
     };
-    startup = [{ always = true; command = "${./clamshell}"; }];
   };
 
   programs.zsh.shellAliases =

@@ -20,6 +20,7 @@ in
   options.myHome = {
 
     graphical.enable = lib.mkEnableOption "basic graphical utilities";
+    laptop.enable = lib.mkEnableOption "laptop-specific configuration";
 
     workspaces = lib.mkOption {
       description = "Workspace output assignments.";

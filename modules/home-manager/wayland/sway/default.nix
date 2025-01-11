@@ -1,9 +1,15 @@
-{ pkgs, lib, config, ... }: let
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
+let
   cfg = config.myHome.sway;
+in
 
-in {
-
+{
   imports = [ ./window-rules.nix ];
 
   options.myHome.sway.enable = lib.mkEnableOption "sway configuration";
@@ -73,41 +79,45 @@ in {
               config.myHome.workspaces
           );
 
-          keybindings = let
+          keybindings =
 
-            brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
-            grimshot = "${pkgs.sway-contrib.grimshot}/bin/grimshot";
-            loginctl = "${pkgs.systemd}/bin/loginctl";
-            pactl = "${pkgs.pulseaudio}/bin/pactl";
-            playerctl = "${pkgs.playerctl}/bin/playerctl";
+            let
+              brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
+              grimshot = "${pkgs.sway-contrib.grimshot}/bin/grimshot";
+              loginctl = "${pkgs.systemd}/bin/loginctl";
+              pactl = "${pkgs.pulseaudio}/bin/pactl";
+              playerctl = "${pkgs.playerctl}/bin/playerctl";
+            in
 
-          in lib.mkOptionDefault {
+            lib.mkOptionDefault {
 
-            "${modifier}+x" = "mode \"${exit}\"";
-            "${modifier}+Shift+o" = "exec ${loginctl} lock-session";
-            "${modifier}+Shift+x" = "exec ${grimshot} savecopy output";
+              "${modifier}+x" = "mode \"${exit}\"";
+              "${modifier}+Shift+o" = "exec ${loginctl} lock-session";
+              "${modifier}+Shift+x" = "exec ${grimshot} savecopy output";
 
-            # Use pactl to adjust volume in PulseAudio.
-            "XF86AudioRaiseVolume" = "exec ${pactl} set-sink-volume @DEFAULT_SINK@ +4%";
-            "XF86AudioLowerVolume" = "exec ${pactl} set-sink-volume @DEFAULT_SINK@ -4%";
-            "XF86AudioMute" = "exec ${pactl} set-sink-mute @DEFAULT_SINK@ toggle";
-            "XF86AudioMicMute" = "exec ${pactl} set-source-mute @DEFAULT_SOURCE@ toggle";
+              # Use pactl to adjust volume in PulseAudio.
+              "XF86AudioRaiseVolume" = "exec ${pactl} set-sink-volume @DEFAULT_SINK@ +4%";
+              "XF86AudioLowerVolume" = "exec ${pactl} set-sink-volume @DEFAULT_SINK@ -4%";
+              "XF86AudioMute" = "exec ${pactl} set-sink-mute @DEFAULT_SINK@ toggle";
+              "XF86AudioMicMute" = "exec ${pactl} set-source-mute @DEFAULT_SOURCE@ toggle";
 
-            # Bind the media keys to playerctl actions.
-            "XF86AudioPlay" = "exec ${playerctl} play-pause";
-            "XF86AudioPause" = "exec ${playerctl} pause";
-            "XF86AudioNext" = "exec ${playerctl} next";
-            "XF86AudioPrev" = "exec ${playerctl} previous";
+              # Bind the media keys to playerctl actions.
+              "XF86AudioPlay" = "exec ${playerctl} play-pause";
+              "XF86AudioPause" = "exec ${playerctl} pause";
+              "XF86AudioNext" = "exec ${playerctl} next";
+              "XF86AudioPrev" = "exec ${playerctl} previous";
 
-            # Control the screen brightness.
-            "XF86MonBrightnessDown" = "exec ${brightnessctl} set 2%-";
-            "XF86MonBrightnessUp" = "exec ${brightnessctl} set 2%+";
+              # Control the screen brightness.
+              "XF86MonBrightnessDown" = "exec ${brightnessctl} set 2%-";
+              "XF86MonBrightnessUp" = "exec ${brightnessctl} set 2%+";
 
-          };
+            };
 
-          startup = [
-            { command = "${./sway-startup}"; }
-          ];
+          startup =
+            [
+              { command = "${./sway-startup}"; }
+              { command = "${./clamshell}"; always = true; }
+            ];
 
           modes = lib.mkOptionDefault {
             ${exit} = {
