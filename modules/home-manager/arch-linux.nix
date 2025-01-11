@@ -20,8 +20,10 @@ in
       nixPath = [ "nixpkgs=flake:nixpkgs" ];
     };
 
-    # Gain access to nixGL packages.
-    nixpkgs.overlays = [ inputs.nixgl.overlay ];
+    nixpkgs.overlays = [
+      inputs.my-scripts.overlays.default
+      inputs.nixgl.overlays.default
+    ];
 
     # Wrap Home Manager-insttalled programs with NixGL.
     nixGL.packages = pkgs.nixgl;
