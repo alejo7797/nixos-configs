@@ -320,6 +320,7 @@ in
         none-ls = {
           enable = true;
           settings = {
+            debug = true;
             diagnostics_format = "[#{m}] #{s} (#{c})";
           };
           sources = {
