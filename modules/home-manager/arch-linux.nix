@@ -5,9 +5,11 @@
   pkgs,
   ...
 }:
+
 let
   cfg = config.myHome.arch-linux;
 in
+
 {
   options.myHome.arch-linux.enable = lib.mkEnableOption "Arch-Linux quirks";
 
@@ -17,6 +19,9 @@ in
       registry.nixpkgs.flake = inputs.nixpkgs;
       nixPath = [ "nixpkgs=flake:nixpkgs" ];
     };
+
+    # Gain access to nixGL packages.
+    nixpkgs.overlays = [ inputs.nixgl.overlay ];
 
     # Wrap Home Manager-insttalled programs with NixGL.
     nixGL.packages = pkgs.nixgl;
