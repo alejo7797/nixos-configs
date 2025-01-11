@@ -4,12 +4,17 @@
   pkgs,
   ...
 }:
+
 let
   cfg = config.myHome.neovim;
   stylix-colors = config.lib.stylix.colors.withHashtag;
 in
+
 {
-  imports = [ ./keymaps.nix ];
+  imports = [
+    ./keymaps.nix
+    ./latex.nix
+  ];
 
   options.myHome.neovim.enable = lib.mkEnableOption "Neovim";
 
@@ -49,6 +54,7 @@ in
         expandtab = true;
         foldlevelstart = 99;
         hlsearch = false;
+        shiftwidth = 4;
         signcolumn = "yes";
         title = true;
         undofile = true;
@@ -83,7 +89,7 @@ in
       autoCmd = [
         {
           event = "FileType";
-          pattern = "nix";
+          pattern = [ "nix" ];
           callback.__raw = ''
             function(opts)
               local bo = vim.bo[opts.buf]
@@ -304,22 +310,6 @@ in
                 formatting.command = [ "${pkgs.nixfmt-rfc-style}/bin/nixfmt" ];
               };
             };
-
-            # LaTeX.
-            texlab = {
-              enable = true;
-              settings.texlab = {
-                bibtexFormatter = "texlab";
-                chktex = {
-                  onEdit = true;
-                  onOpenAndSave = true;
-                };
-                latexFormatter = "latexindent";
-                latexindent.local = pkgs.writeText "latexindent.yaml" ''
-                  defaultIndent: "    "
-                '';
-              };
-            };
           };
         };
 
@@ -361,13 +351,6 @@ in
         };
 
         trouble.enable = true;
-
-        vimtex = {
-          enable = true;
-          settings = {
-            view_method = "zathura_simple";
-          };
-        };
       };
     };
   };

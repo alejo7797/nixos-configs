@@ -349,7 +349,7 @@
           __unkeyed = "<leader>lr";
           desc = "LSP References [trouble]";
           icon = {
-            icon = " ";
+            icon = "󱖫 ";
             color = "green";
           };
         }
