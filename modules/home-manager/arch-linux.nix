@@ -29,18 +29,18 @@ in
     nixGL.packages = pkgs.nixgl;
     programs.kitty.package = config.lib.nixGL.wrap pkgs.kitty;
 
-    # Load Hyprland plugins using hyprpm.
+    # Important Hyprland configuration overrides.
     wayland.windowManager.hyprland = {
       plugins = lib.mkForce [ ];
       importantPrefixes = lib.mkOptionDefault [ "exec-once" ];
-      settings.exec-once = [ "hyprpm reload -n" ];
+      settings.exec-once = [
+        "hyprpm reload -n"
+        "uwsm app swayidle "
+      ];
     };
 
-    # Recover hyprlock functionality.
-    myHome.wayland = {
-      loginctl = "/usr/bin/loginctl";
-      lock = "/usr/bin/hyprlock";
-    };
+    # We run swayidle natively.
+    services.swayidle.enable = lib.mkForce false;
 
     programs.zsh = {
       oh-my-zsh.plugins = [ "archlinux" ];

@@ -1,28 +1,24 @@
-{ pkgs, lib, config, ... }: let
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
+let
   cfg = config.myHome.wayland;
+in
 
-in {
+{
+  imports = [
+    ./hyprland
+    ./sway
+    ./swaync
+    ./waybar
+    ./wlogout
+  ];
 
-  imports = [ ./hyprland ./sway ./swaync ./waybar ./wlogout ];
-
-  options.myHome.wayland = {
-    enable = lib.mkEnableOption "Wayland";
-
-    lock = lib.mkOption {
-      type = lib.types.str;
-      default = "${pkgs.hyprlock}/bin/hyprlock";
-      example = "/usr/bin/hyprlock";
-      description = "Screen locker executable";
-    };
-
-    loginctl = lib.mkOption {
-      type = lib.types.str;
-      default = "${pkgs.systemd}/bin/loginctl";
-      example = "/usr/bin/loginctl";
-      description = "Instance of `loginctl` to run.";
-    };
-  };
+  options.myHome.wayland.enable = lib.mkEnableOption "Wayland";
 
   config = lib.mkIf cfg.enable {
     myHome = {
@@ -38,9 +34,6 @@ in {
 
     # Set environment variables using UWSM.
     xdg.configFile."uwsm/env".text = ''
-
-      # Access local scripts.
-      export PATH="$PATH''${PATH:+:}$HOME/.local/bin"
 
       # Set the cursor size.
       export XCURSOR_SIZE=24
@@ -99,18 +92,24 @@ in {
       };
 
       # Enable and configure swayidle.
-      swayidle = {
-        enable = true;
-        events = [
-          { event = "lock"; command = "${pkgs.playerctl}/bin/playerctl -a pause"; }
-          { event = "lock"; command = "${pkgs.procps}/bin/pidof ${cfg.lock} || ${cfg.lock}"; }
-          { event = "before-sleep"; command = "${cfg.loginctl} lock-session"; }
-        ];
-        timeouts = [
-          { timeout = 600; command = "${cfg.loginctl} lock-session"; }
-          { timeout = 660; command = "systemctl suspend"; }
-        ];
-      };
+      swayidle =
+        let
+          hyprlock = "${pkgs.hyprlock}/bin/hyprlock";
+          loginctl = "${pkgs.systemd}/bin/loginctl";
+          systemctl = "${pkgs.systemd}/bin/systemctl";
+        in
+        {
+          enable = true;
+          events = [
+            { event = "lock"; command = "${pkgs.playerctl}/bin/playerctl -a pause"; }
+            { event = "lock"; command = "${pkgs.procps}/bin/pidof ${hyprlock} || ${hyprlock}"; }
+            { event = "before-sleep"; command = "${loginctl} lock-session"; }
+          ];
+          timeouts = [
+            { timeout = 600; command = "${loginctl} lock-session"; }
+            { timeout = 660; command = "${systemctl} suspend"; }
+          ];
+        };
     };
   };
 }
