@@ -57,7 +57,7 @@
       };
 
       homeConfigurations = {
-        "ewan@satsuki" = mkHome "x86_64-linux" hosts/satsuki/configuration.nix;
+        "ewan@satsuki" = mkHome "x86_64-linux" hosts/satsuki/home.nix;
       };
 
       nixosModules.default = modules/nixos;
