@@ -13,9 +13,6 @@ in
 {
   imports = [ ../../style.nix ];
 
-  # Not available in our current version of Home Manager.
-  disabledModules = [ "${inputs.stylix}/modules/ghostty/hm.nix" ];
-
   options.myHome.style.enable = lib.mkEnableOption "user theme components";
 
   config = lib.mkIf cfg.enable {
