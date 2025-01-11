@@ -79,8 +79,10 @@
       {
         action.__raw = ''
           function()
-            if vim.wo.diff then vim.cmd.normal(']c')
-            else require('gitsigns').next_hunk()
+            if vim.wo.diff then
+              vim.cmd.normal({']c', bang = true})
+            else
+              require('gitsigns').next_hunk()
             end
           end
         '';
@@ -94,8 +96,10 @@
       {
         action.__raw = ''
           function()
-            if vim.wo.diff then vim.cmd.normal('[c')
-            else require('gitsigns').prev_hunk()
+            if vim.wo.diff then
+              vim.cmd.normal({'[c', bang = true})
+            else
+              require('gitsigns').prev_hunk()
             end
           end
         '';
