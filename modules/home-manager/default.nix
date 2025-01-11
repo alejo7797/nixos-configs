@@ -41,7 +41,6 @@
     # My personal shell scripts.
     home.packages = with pkgs; [
       favicon-generator
-      lockbg-cache
       round-corners
       sleep-deprived
     ];

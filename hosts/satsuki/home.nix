@@ -1,4 +1,7 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  ...
+}:
 
 {
   home = {
@@ -23,6 +26,7 @@
     arch-linux.enable = true;
     hyprland.enable = true;
     sway.enable = true;
+    i3.enable = true;
 
     firefox.enable = false;
     thunderbird.enable = true;
