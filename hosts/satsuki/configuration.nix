@@ -35,7 +35,14 @@
     dolphin.enable = true;
     hyprland.enable = true;
     sway.enable = true;
-    tuigreet.enable = true;
+
+    tuigreet = {
+      enable = true;
+      autologin = {
+        enable = true;
+        user = "ewan";
+      };
+    };
 
   };
 
