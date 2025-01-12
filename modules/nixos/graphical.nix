@@ -19,8 +19,6 @@ in
 
     boot.plymouth.enable = true;
 
-    console.font = "${pkgs.kbd}/share/consolefonts/Lat2-Terminus16.psfu.gz";
-
     myNixOS = {
       style.enable = true;
       firefox.enable = true;
