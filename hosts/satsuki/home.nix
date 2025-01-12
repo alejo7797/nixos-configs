@@ -33,6 +33,12 @@
 
     waybar.thermal-zone = 7;
     waybar.wttr-location = "Cambridge, MA";
+
+    xdgAutostart = with pkgs; [
+      firefox
+      thunderbird
+      zotero
+    ];
   };
 
   xdg.configFile."uwsm/env".text = ''
