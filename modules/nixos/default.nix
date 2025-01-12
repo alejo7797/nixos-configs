@@ -13,15 +13,16 @@
     inputs.stylix.nixosModules.stylix
     inputs.nur.modules.nixos.default
 
+    ./nvidia
+    ./programs
+    ./wayland
+
     ./graphical.nix
     ./locale.nix
-    ./nvidia.nix
     ./pam.nix
-    ./programs
     ./style.nix
     ./tuigreet.nix
     ./users.nix
-    ./wayland
   ];
 
   nix = {
@@ -60,7 +61,6 @@
 
   boot = {
     consoleLogLevel = 3;
-
     loader = {
       systemd-boot = {
         enable = true;
