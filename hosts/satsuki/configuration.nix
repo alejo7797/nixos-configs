@@ -51,6 +51,7 @@
     dolphin.enable = true;
     hyprland.enable = true;
     laptop.enable = true;
+    pam.auth.yubikey = true;
     sway.enable = true;
 
     nvidia = {
