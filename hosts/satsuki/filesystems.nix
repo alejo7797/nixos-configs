@@ -1,7 +1,7 @@
 {
   boot.initrd = {
     # For systemd-cryptenroll support.
-    # systemd.enable = true;
+    systemd.enable = true;
 
     luks.devices."root" = {
       device = "/dev/disk/by-uuid/3546cba5-44de-4a24-8d75-61912baebd31";

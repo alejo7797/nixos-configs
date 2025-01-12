@@ -4,9 +4,6 @@
   # Did you read the comment?
   system.stateVersion = "24.11";
 
-  # Lock the root account ASAP!
-  users.users.root.initialHashedPassword = "";
-
   imports = [
     ./filesystems.nix
     ./hardware-configuration.nix
