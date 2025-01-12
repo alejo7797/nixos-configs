@@ -1,12 +1,17 @@
-{ pkgs, lib, config, ... }: let
+{
+  lib,
+  config,
+  ...
+}:
 
+let
   cfg = config.myHome.gpg;
+in
 
-in {
-
+{
   options.myHome.gpg.enable = lib.mkEnableOption "GnuPG configuration";
 
-  config.programs.gpg = lib.mkIf config.myHome.gpg.enable {
+  config.programs.gpg = lib.mkIf cfg.enable {
     enable = true;
 
     # Configure my GnuPG user instance.
@@ -31,6 +36,5 @@ in {
         trust = "ultimate";
       }
     ];
-
   };
 }

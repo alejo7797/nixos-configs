@@ -1,9 +1,14 @@
-{ pkgs, lib, config, ... }: let
+{
+  lib,
+  config,
+  ...
+}:
 
+let
   cfg = config.myHome.kitty;
+in
 
-in {
-
+{
   options.myHome.kitty.enable = lib.mkEnableOption "kitty";
 
   config = lib.mkIf cfg.enable {
@@ -23,7 +28,7 @@ in {
     };
 
     # Set the color theme ourselves.
-      stylix.targets.kitty.enable = false;
+    stylix.targets.kitty.enable = false;
 
     xdg.configFile = {
       # Patched to have correct selection colors.

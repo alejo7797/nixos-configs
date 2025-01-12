@@ -1,9 +1,15 @@
-{ pkgs, lib, config, ... }: let
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
+let
   cfg = config.myHome.git;
+in
 
-in {
-
+{
   options.myHome.git.enable = lib.mkEnableOption "Git configuration";
 
   config.programs.git = lib.mkIf cfg.enable {

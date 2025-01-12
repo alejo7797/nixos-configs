@@ -35,16 +35,11 @@ in
         la = "ls -a";
         lla = "ls -la";
 
-        su = "sudo -i";
-
         # Build NixOS configuration.
         nixos-build = "nixos-rebuild build --flake ~/Git/nixconfig";
 
         # Build and activate NixOS configuration.
         nixos-switch = "sudo nixos-rebuild switch --flake ~/Git/nixconfig";
-
-        # Build and activate Home Manager environment.
-        home-switch = "home-manager switch --flake ~/Git/nixconfig";
 
         # Manage connection to my VPN server.
         vpnup = "nmcli c up Koakuma_VPN";

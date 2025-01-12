@@ -1,9 +1,15 @@
-{ pkgs, lib, config, ... }: let
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
+let
   cfg = config.myHome.joplin-desktop;
+in
 
-in {
-
+{
   options.myHome.joplin-desktop.enable = lib.mkEnableOption "joplin-desktop";
 
   config = lib.mkIf cfg.enable {
@@ -14,15 +20,15 @@ in {
 
       extraConfig = {
         # Basic settings.
-	"locale" = "en_US";
-	"dateFormat" = "YYYY-MM-DD";
-	"themeAutoDetect" = true;
-	"notes.sortOrder.field" = "title";
+        "locale" = "en_US";
+        "dateFormat" = "YYYY-MM-DD";
+        "themeAutoDetect" = true;
+        "notes.sortOrder.field" = "title";
 
         # Font configuration.
-	"style.editor.fontSize" = 14;
-	"style.editor.fontFamily" = "Noto Sans CJK JP";
-	"style.editor.monospaceFontFamily" = "Hack Nerd Font Mono";
+        "style.editor.fontSize" = 14;
+        "style.editor.fontFamily" = "Noto Sans CJK JP";
+        "style.editor.monospaceFontFamily" = "Hack Nerd Font Mono";
       };
     };
 
