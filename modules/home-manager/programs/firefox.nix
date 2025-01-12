@@ -1,9 +1,15 @@
-{ pkgs, lib, config, ... }: let
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
+let
   cfg = config.myHome.firefox;
+in
 
-in {
-
+{
   options.myHome.firefox.enable = lib.mkEnableOption "firefox profile configuration";
 
   config.programs.firefox = lib.mkIf cfg.enable {
@@ -36,7 +42,7 @@ in {
 
       settings = {
         # Restore previous session.
-        "broswer.startup.page" = 3;
+        "browser.startup.page" = 3;
 
         # Always ask where to save downloaded files.
         "browser.download.useDownloadDir" = false;
@@ -61,13 +67,8 @@ in {
         # Clear cookies on browser shutdown.
         "privacy.history.custom" = true;
         "privacy.sanitize.sanitizeOnShutdown" = true;
-        "privacy.sanitize.pending" = [
-          {
-            "id" = "shutdown";
-            "itemsToClear" = [ "cache" "cookiesAndStorage" ];
-            "options" = { };
-          }
-        ];
+        "privacy.sanitize.clearOnShutdown.hasMigratedToNewPrefs2" = true;
+        "privacy.clearOnShutdown_v2.historyFormDataAndDownloads" = false;
 
         # Pinned sites.
         "browser.newtabpage.pinned" = [
