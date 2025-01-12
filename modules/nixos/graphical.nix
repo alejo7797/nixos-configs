@@ -107,12 +107,15 @@ in
       dejavu_fonts
       font-awesome
       noto-fonts
-      noto-fonts-cjk-sans
       noto-fonts-color-emoji
-      source-han-sans
-      source-han-serif
       source-sans
       vistafonts
+
+      kanji-stroke-order-font
+      kochi-substitute
+      noto-fonts-cjk-sans
+      source-han-sans
+      source-han-serif
 
     ];
   };
