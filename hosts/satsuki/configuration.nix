@@ -100,6 +100,7 @@
     wineWowPackages.stable
     winetricks
 
+    dosbox-x
     easyrpg-player
     gamescope
     prismlauncher
