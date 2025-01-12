@@ -11,6 +11,8 @@
 
   swapDevices = [ { device = "/var/swapfile"; size = 16384; } ];
 
+  boot.loader.timeout = 0;
+
   hardware.bluetooth.enable = true;
 
   boot.kernelParams = [
@@ -20,7 +22,21 @@
 
   networking.hostName = "satsuki";
 
-  sops.secrets = { };
+  sops.secrets = {
+    "my-password" = {
+      neededForUsers = true;
+    };
+
+    "wireguard/koakuma/private-key" = { };
+    "wireguard/koakuma/preshared-key" = { };
+
+    "syncthing/cert.pem" = {
+      owner = "ewan";
+    };
+    "syncthing/key.pem" = {
+      owner = "ewan";
+    };
+  };
 
   myNixOS = {
 
@@ -28,7 +44,7 @@
       userConfig = ./home.nix;
       userSettings = {
         description = "Alex";
-        initialPassword = "password";
+        hashedPasswordFile = "/run/secrets-for-users/my-password";
       };
     };
 

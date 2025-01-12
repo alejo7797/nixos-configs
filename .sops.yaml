@@ -1,15 +1,27 @@
+---
+
 keys:
-  - &admin_ewan age1nzdckw575d6dtk0k032vgh8kg9q2ekm80dqzxs5fjq5dj8ump5zs6f93vk
-  - &server_shinobu age13wk7pjxgem2q4twvstmr3dwju7crjhqq5l7gz6g54vav69qjf98qan7s9z
+  - &admin_ewan >
+      age1nzdckw575d6dtk0k032vgh8kg9q2ekm80dqzxs5fjq5dj8ump5zs6f93vk
+  - &server_satsuki >
+      age1v97eer9wgcmrqvf449pgk73f2j55leq5ydma2w9kfqk7dmpwe5fqmy9lq8
+  - &server_shinobu >
+      age13wk7pjxgem2q4twvstmr3dwju7crjhqq5l7gz6g54vav69qjf98qan7s9z
 
 creation_rules:
   - path_regex: secrets/ewan.yaml$
     key_groups:
       - age:
-        - *admin_ewan
+          - *admin_ewan
+
+  - path_regex: secrets/satsuki.yaml$
+    key_groups:
+      - age:
+          - *admin_ewan
+          - *server_satsuki
 
   - path_regex: secrets/shinobu.yaml$
     key_groups:
-    - age:
-      - *admin_ewan
-      - *server_shinobu
+      - age:
+          - *admin_ewan
+          - *server_shinobu
