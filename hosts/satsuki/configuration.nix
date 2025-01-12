@@ -93,14 +93,15 @@
     joplin-desktop
     vesktop zotero
 
-    # Wayland IME support.
+    # Newer features.
+    unstable.lutris
     unstable.spotify
 
     wineWowPackages.stable
     winetricks
 
+    easyrpg-player
     gamescope
-    lutris
     prismlauncher
     unigine-heaven
 
