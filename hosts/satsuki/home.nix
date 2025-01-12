@@ -40,44 +40,48 @@
     export __GLX_VENDOR_LIBRARY_NAME=mesa
   '';
 
-  services.kanshi.settings =
-    let
-      laptop_screen = {
-        criteria = "eDP-1";
-        mode = "1920x1080@60.033Hz";
-        scale = 1.0;
-      };
-      home_monitor = {
-        criteria = "ASUSTek COMPUTER INC ASUS VA27EHE N3LMTF145950";
-        mode = "1920x1080@74.986Hz";
-      };
-      office_monitor = {
-        criteria = "Samsung Electric Company S27R65 H4TT101982";
-        mode = "1920x1080@74.973Hz";
-      };
-    in
-    [
-      {
-        profile.name = "home";
-        profile.outputs = [
-          (home_monitor // { position = "0,0"; })
-          (laptop_screen // { position = "1920,0"; })
-        ];
-      }
-      {
-        profile.name = "office";
-        profile.outputs = [
-          (office_monitor // { position = "0,0"; })
-          (laptop_screen // { position = "1920,0"; })
-        ];
-      }
-      {
-        profile.name = "mobile";
-        profile.outputs = [
-          (laptop_screen // { position = "0,0"; })
-        ];
-      }
-    ];
+  services = {
+    syncthing.enable = true;
+
+    kanshi.settings =
+      let
+        laptop-screen = {
+          criteria = "eDP-1";
+          mode = "1920x1080@60.033Hz";
+          scale = 1.0;
+        };
+        home-monitor = {
+          criteria = "ASUSTek COMPUTER INC ASUS VA27EHE N3LMTF145950";
+          mode = "1920x1080@74.986Hz";
+        };
+        office-monitor = {
+          criteria = "Samsung Electric Company S27R65 H4TT101982";
+          mode = "1920x1080@74.973Hz";
+        };
+      in
+      [
+        {
+          profile.name = "home";
+          profile.outputs = [
+            (home-monitor // { position = "0,0"; })
+            (laptop-screen // { position = "1920,0"; })
+          ];
+        }
+        {
+          profile.name = "office";
+          profile.outputs = [
+            (office-monitor // { position = "0,0"; })
+            (laptop-screen // { position = "1920,0"; })
+          ];
+        }
+        {
+          profile.name = "mobile";
+          profile.outputs = [
+            (laptop-screen // { position = "0,0"; })
+          ];
+        }
+      ];
+  };
 
   wayland.windowManager.hyprland.settings = {
     device = [
