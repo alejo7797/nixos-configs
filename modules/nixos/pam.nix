@@ -16,22 +16,19 @@ in
 
   config.security.pam = {
 
-    yubico =
-      {
-        # Use pam_yubico in HMAC-SHA-1 Challenge-Response mode.
-        id = [ "26559201" ];
-        mode = "challenge-response";
-        challengeResponsePath = "/var/lib/yubico";
-      }
+    yubico = {
+      # Use pam_yubico in HMAC-SHA-1 Challenge-Response mode.
+      mode = "challenge-response";
+      challengeResponsePath = "/var/lib/yubico";
+    };
 
-      // lib.mkIf cfg.auth.yubikey {
-        # Enforce Yubikey-based 2-factor authentication.
-        enable = true;
-        control = "requisite";
-      };
-
-    # Enable Yubikey-based passwordless sudo.
+    # Configure Yubikey-based passwordless sudo.
     services.sudo.u2fAuth = cfg.sudo.yubikey;
 
+    # Configure Yubikey-based 2-factor authentication.
+    u2f = lib.mkIf cfg.auth.yubikey {
+      enable = true;
+      control = "requisite";
+    };
   };
 }
