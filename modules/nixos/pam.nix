@@ -23,7 +23,9 @@ in
     };
 
     # Configure Yubikey-based passwordless sudo.
-    services.sudo.u2fAuth = cfg.sudo.yubikey;
+    services.sudo = lib.mkIf cfg.sudo.yubikey {
+      u2fAuth = true;
+    };
 
     # Configure Yubikey-based 2-factor authentication.
     u2f = lib.mkIf cfg.auth.yubikey {
