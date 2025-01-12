@@ -1,34 +1,28 @@
-{ pkgs, lib, config, ... }: let
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
+let
   cfg = config.myNixOS.nvidia;
+in
 
-in {
+{
+  imports = [ ./prime.nix ];
 
   options.myNixOS.nvidia.enable = lib.mkEnableOption "Nvidia";
 
   config = lib.mkIf cfg.enable {
 
+    # Install Nvidia graphics drivers.
+    services.xserver.videoDrivers = [ "nvidia" ];
+
     hardware.graphics = {
-      # Enable hardware-accelerated graphics.
-      enable = true;
-
-      # 32-bit support, e.g. for Wine.
-      enable32Bit=true;
-
-      # Additional graphics drivers.
+      # Additional driver packages.
       extraPackages = with pkgs; [ nvidia-vaapi-driver ];
     };
-
-    # Early KMS start.
-    boot.kernelModules = [
-      "nvidia"
-      "nvidia_modeset"
-      "nvidia_uvm"
-      "nvidia_drm"
-    ];
-
-    # Use Nvidia drivers in X11.
-    services.xserver.videoDrivers = [ "nvidia" ];
 
     hardware.nvidia = {
       # Use open source Nvidia drivers.
@@ -36,6 +30,9 @@ in {
 
       # Enable kernel modesetting.
       modesetting.enable = true;
+
+      # Access the Nvidia settings menu.
+      nvidiaSettings = true;
     };
   };
 }

@@ -34,7 +34,13 @@
 
     dolphin.enable = true;
     hyprland.enable = true;
+    laptop.enable = true;
     sway.enable = true;
+
+    nvidia = {
+      enable = true;
+      prime.enable = true;
+    };
 
     tuigreet = {
       enable = true;
