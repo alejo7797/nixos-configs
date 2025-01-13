@@ -22,8 +22,10 @@ in
         # Basic settings.
         "locale" = "en_US";
         "dateFormat" = "YYYY-MM-DD";
+	      "editor.codeView" = true;
         "themeAutoDetect" = true;
         "notes.sortOrder.field" = "title";
+      	"notes.sortOrder.reverse" = false;
 
         # Font configuration.
         "style.editor.fontSize" = 14;
