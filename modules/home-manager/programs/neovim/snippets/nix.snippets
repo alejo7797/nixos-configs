@@ -9,7 +9,7 @@ snippet module
         }:
 
         let
-          cfg = config.${1|myNixOS|myHome}.${2};
+          cfg = config.${1:myNixOS}.${2};
         in
 
         {
