@@ -52,7 +52,6 @@ in
     services = {
       printing.enable = true;
       avahi.enable = true;
-      system-config-printer.enable = true;
       saned.enable = true;
 
       pipewire = {
@@ -64,6 +63,7 @@ in
 
       blueman.enable = true;
       libinput.enable = true;
+      flatpak.enable = true;
       geoclue2.enable = true;
       gnome.gnome-keyring.enable = true;
       pcscd.enable = true;

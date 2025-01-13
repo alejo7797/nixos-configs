@@ -106,10 +106,9 @@
     prismlauncher
     unigine-heaven
 
-    biber clang
-    gdb jupyter
-    lldb perl
-    ruby sage
+    biber clang jupyter
+    mathematica-webdoc
+    lldb perl ruby sage
 
     # LaTeX.
     (texliveMedium.withPackages
