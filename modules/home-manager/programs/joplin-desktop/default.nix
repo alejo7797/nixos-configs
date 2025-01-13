@@ -50,7 +50,7 @@ in
     wayland.windowManager =
       let
         uwsm-app = "${pkgs.uwsm}/bin/uwsm app";
-        joplin-desktop = "NIXOS_OZONE_WL= ${uwsm-app} -- joplin-desktop";
+        joplin-desktop = "${uwsm-app} -- joplin-desktop";
       in
       {
         sway.config.startup = [ { command = "${joplin-desktop}"; } ];

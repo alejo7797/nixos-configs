@@ -34,6 +34,7 @@
       { window_type = "dialog"; }
       { window_role = "dialog"; }
       { app_id = "^blueman-manager$"; }
+      { app_id = "^org.kde.kdeconnect.handler$"; }
       { app_id = "^org\\.keepassxc\\.KeePassXC$"; }
       { app_id = "^lutris$"; title = "Log for .*"; }
       { app_id = "^nm-connection-editor$"; }
@@ -48,6 +49,7 @@
       # System tray.
       map (w: w // { command = "resize set 600 600, move position 1320 448"; }) [
         { criteria = { app_id = "^blueman-manager$"; title = "^Bluetooth Devices$"; }; }
+        { criteria = { app_id = "^org.kde.kdeconnect.handler$"; title = "^KDE Connect URL handler$"; }; }
         { criteria = { app_id = "^nm-connection-editor$"; title = "^Network Connections$"; }; }
         { criteria.app_id = "^nm-openconnect-auth-dialog$"; }
       ]
