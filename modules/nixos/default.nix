@@ -96,13 +96,16 @@
       package = pkgs.gitFull;
     };
 
+    vim = {
+      enable = true;
+      defaultEditor = true;
+    };
+
     direnv.enable = true;
   };
 
-  # For zsh completion.
+  # For zsh shell completion.
   environment.pathsToLink = [ "/share/zsh" ];
-
-  myNixOS.vim.enable = true;
 
   security.polkit.enable = true;
 

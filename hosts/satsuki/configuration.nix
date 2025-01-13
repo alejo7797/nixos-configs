@@ -105,6 +105,4 @@
     (ps: with ps; [ collection-langcyrillic ]))
 
   ];
-
-  environment.pathsToLink = [ "share/jupyter/kernels" ];
 }
