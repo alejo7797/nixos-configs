@@ -13,15 +13,13 @@
     inputs.stylix.nixosModules.stylix
     inputs.nur.modules.nixos.default
 
-    ./nvidia
+    ./graphical
     ./programs
     ./wayland
 
-    ./graphical.nix
     ./locale.nix
     ./pam.nix
     ./style.nix
-    ./tuigreet.nix
     ./users.nix
   ];
 
@@ -69,11 +67,13 @@
     };
   };
 
-  # Use standard network interface names.
-  networking.usePredictableInterfaceNames = false;
+  networking = {
+    # Use standard network interface names.
+    usePredictableInterfaceNames = false;
 
-  # Wireguard trips up rpfilter.
-  networking.firewall.checkReversePath = false;
+    # Wireguard trips up rpfilter.
+    firewall.checkReversePath = false;
+  };
 
   sops = {
     # Default secrets file per host.

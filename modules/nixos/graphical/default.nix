@@ -10,6 +10,8 @@ let
 in
 
 {
+  imports = [ ./nvidia ./tuigreet.nix ];
+
   options.myNixOS = {
     graphical.enable = lib.mkEnableOption "common graphical utilities";
     laptop.enable = lib.mkEnableOption "laptop-specific configuration";
