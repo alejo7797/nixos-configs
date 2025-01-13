@@ -20,6 +20,8 @@ in
 
   config = lib.mkIf cfg.enable {
 
+    xdg.configFile."nvim/snippets".source = ./snippets;
+
     programs.nixvim = {
       enable = true;
       vimAlias = true;
@@ -203,7 +205,11 @@ in
 
         # Snippets.
         friendly-snippets.enable = true;
-        luasnip.enable = true;
+        luasnip = {
+          enable = true;
+          # Load custom snippets.
+          fromSnipmate = [ { } ];
+        };
 
         # Telescope.
         telescope.enable = true;
