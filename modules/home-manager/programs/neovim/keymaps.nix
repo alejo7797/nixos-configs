@@ -385,7 +385,7 @@
             else
               fallback()
             end
-          end)
+          end, { "i", "s" })
         '';
 
         "<S-Tab>" = ''
@@ -397,7 +397,7 @@
             else
               fallback()
             end
-          end)
+          end, { "i", "s" })
         '';
       };
 
