@@ -15,10 +15,7 @@
 
   hardware.bluetooth.enable = true;
 
-  boot.kernelParams = [
-    "quiet"
-    "nowatchdog"
-  ];
+  boot.kernelParams = [ "quiet" "nowatchdog" ];
 
   networking.hostName = "satsuki";
 
@@ -42,10 +39,6 @@
 
     home-users."ewan" = {
       userConfig = ./home.nix;
-      userSettings = {
-        description = "Alex";
-        hashedPasswordFile = "/run/secrets-for-users/my-password";
-      };
     };
 
     dolphin.enable = true;
@@ -97,14 +90,11 @@
     unstable.lutris
     unstable.spotify
 
-    wineWowPackages.stable
-    winetricks
-
     dosbox-x
     easyrpg-player
     gamescope
     prismlauncher
-    unigine-heaven
+    wine winetricks
 
     biber clang jupyter
     mathematica-webdoc
@@ -115,4 +105,6 @@
     (ps: with ps; [ collection-langcyrillic ]))
 
   ];
+
+  environment.pathsToLink = [ "share/jupyter/kernels" ];
 }

@@ -32,10 +32,7 @@
     };
   };
 
-  boot.kernelParams = [
-    "quiet"
-    "nowatchdog"
-  ];
+  boot.kernelParams = [ "quiet" "nowatchdog" ];
 
   networking.hostName = "shinobu";
 
@@ -59,10 +56,6 @@
 
     home-users."ewan" = {
       userConfig = ./home.nix;
-      userSettings = {
-        description = "Alex";
-        hashedPasswordFile = "/run/secrets-for-users/my-password";
-      };
     };
 
     dolphin.enable = true;
@@ -98,16 +91,14 @@
     joplin-desktop
     vesktop zotero
 
-    # Wayland IME support.
+    # Newer fetures.
+    unstable.lutris
     unstable.spotify
 
-    wineWowPackages.stable
-    winetricks
-
     gamescope
-    lutris
     prismlauncher
     unigine-heaven
+    wine winetricks
 
     biber clang
     gdb jupyter

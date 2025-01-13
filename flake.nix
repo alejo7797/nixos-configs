@@ -34,19 +34,14 @@
   };
 
   outputs =
-    {
-      nixpkgs,
-      home-manager,
-      self,
-      ...
-    }@inputs:
+    { nixpkgs, self, ... }@inputs:
 
     let
       mkSystem =
         config:
         nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs self; };
-          modules = [ config ] ++ [ self.nixosModules.default ];
+          modules = [ config self.nixosModules.default ];
         };
     in
 
