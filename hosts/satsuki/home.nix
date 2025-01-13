@@ -25,6 +25,7 @@
 
     firefox.enable = true;
     thunderbird.enable = true;
+    joplin-desktop.enable = true;
 
     workspaces = {
       "DP-1" = [ 1 2 3 4 6 8 9 10 ];
