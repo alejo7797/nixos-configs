@@ -97,9 +97,9 @@
     prismlauncher
     wine winetricks
 
-    biber clang jupyter
+    biber clang lldb
     mathematica-webdoc
-    lldb perl ruby sage
+    perl ruby sage
 
     # LaTeX.
     (texliveMedium.withPackages

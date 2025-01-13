@@ -100,10 +100,9 @@
     unigine-heaven
     wine winetricks
 
-    biber clang
-    gdb jupyter
-    lldb perl
-    ruby sage
+    biber clang lldb
+    # mathematica-webdoc
+    perl ruby sage
 
     # LaTeX.
     (texliveMedium.withPackages
