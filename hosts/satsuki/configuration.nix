@@ -43,6 +43,7 @@
 
     dolphin.enable = true;
     hyprland.enable = true;
+    jupyter.enable = true;
     laptop.enable = true;
     pam.auth.yubikey = true;
     sway.enable = true;
