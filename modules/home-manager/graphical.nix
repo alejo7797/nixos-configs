@@ -4,9 +4,11 @@
   pkgs,
   ...
 }:
+
 let
   cfg = config.myHome.graphical;
 in
+
 {
   imports = [
     ./style
