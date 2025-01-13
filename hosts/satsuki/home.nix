@@ -97,7 +97,7 @@
         sensitivity = -1;
       }
       {
-        name = "logitech-b330/mm330/m331-1";
+        name = "logitech-b330/m330/m331-1";
         sensitivity = -1;
       }
     ];
