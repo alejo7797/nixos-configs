@@ -38,13 +38,10 @@ in
           })
 
           [
-            "gammastep"
-            "hyprpaper"
-            "kdeconnect"
+            "gammastep" "hypridle"
+            "hyprpaper" "kdeconnect"
             "kdeconnect-indicator"
-            "swayidle"
-            "waybar"
-            "xsettingsd"
+            "waybar" "xsettingsd"
           ]
       );
 
