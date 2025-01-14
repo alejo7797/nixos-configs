@@ -36,9 +36,8 @@
     waybar.wttr-location = "Cambridge, MA";
 
     xdgAutostart = with pkgs; [
-      firefox
-      thunderbird
-      zotero
+      firefox joplin-desktop
+      thunderbird zotero
     ];
   };
 

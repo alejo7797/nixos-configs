@@ -28,12 +28,9 @@
     waybar.wttr-location = "San Lorenzo de El Escorial";
 
     xdgAutostart = with pkgs; [
-      firefox
-      spotify
-      steam
-      thunderbird
-      vesktop
-      zotero
+      firefox joplin-desktop
+      spotify steam thunderbird
+      vesktop zotero
     ];
   };
 

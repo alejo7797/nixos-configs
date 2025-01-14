@@ -15,7 +15,7 @@
     map (w: "workspace ${toString w.ws} silent, ${w.criteria}") [
       { ws = 1; criteria = "class:^(firefox)$"; }
       { ws = 1; criteria = "title:^(Home - )?Mozilla Thunderbird$"; }
-      { ws = 1; criteria = "class:^(Joplin)$"; }
+      { ws = 1; criteria = "class:^(@joplin\\/app-desktop)$"; }
       { ws = 2; criteria = "class:^(Zotero)$"; }
       { ws = 3; criteria = "title:^(Minecraft\\* 1\\.\\d{1,2}\\.\\d)$"; }
       { ws = 3; criteria = "class:^(steam)$"; }

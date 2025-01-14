@@ -53,6 +53,13 @@
 
       # Access my personal scripts.
       inputs.my-scripts.overlays.default
+
+      # Specify desktop file locations.
+      (_: prev: {
+        joplin-desktop = prev.joplin-desktop // {
+          desktopFile = "@joplinapp-desktop.desktop";
+        };
+      })
     ];
   };
 

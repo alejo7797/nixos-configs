@@ -6,7 +6,7 @@
       "1" = [
         { app_id = "^firefox$"; }
         { app_id = "^thunderbird$"; }
-        { class = "^Joplin$"; }
+        { app_id = "^@joplin\\/app-desktop$"; }
       ];
 
       "2" = [

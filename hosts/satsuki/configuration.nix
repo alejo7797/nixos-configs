@@ -97,9 +97,8 @@
     joplin-desktop
     vesktop zotero
 
-    # Newer features.
+    # Newer versions.
     unstable.lutris
-    unstable.sbctl
     unstable.spotify
 
     dosbox-x
