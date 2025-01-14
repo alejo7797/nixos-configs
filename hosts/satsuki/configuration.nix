@@ -11,13 +11,24 @@
 
   swapDevices = [ { device = "/var/swapfile"; size = 16384; } ];
 
-  boot.loader.timeout = 0;
+  boot = {
+    loader.timeout = 0;
+    kernelParams = [ "quiet" "nowatchdog" ];
+  };
 
   hardware.bluetooth.enable = true;
 
-  boot.kernelParams = [ "quiet" "nowatchdog" ];
+  networking = {
+    hostName = "satsuki";
+    networkmanager.enable = true;
+  };
 
-  networking.hostName = "satsuki";
+  services = {
+    printing.drivers = [ pkgs.hplip ];
+    resolved.enable = true;
+  };
+
+  time.timeZone = "America/New_York";
 
   sops.secrets = {
     "my-password" = {
@@ -62,11 +73,6 @@
     };
 
   };
-
-  networking.networkmanager.enable = true;
-  services.resolved.enable = true;
-
-  time.timeZone = "America/New_York";
 
   programs = {
     gamemode.enable = true;

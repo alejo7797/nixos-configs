@@ -11,30 +11,39 @@
 
   swapDevices = [ { device = "/var/swapfile"; size = 32768; } ];
 
-  hardware.bluetooth.enable = true;
+  boot = {
+    kernelParams = [ "quiet" "nowatchdog" ];
 
-  boot.loader = {
-    systemd-boot = {
-      # Create our own Windows bootloader entry.
-      windows."11" = {
-        title = "Windows 11";
-        sortKey = "a_windows";
-        efiDeviceHandle = "HD0b";
+    loader = {
+      systemd-boot = {
+        # Our own Windows bootloader entry.
+        windows."11" = {
+          title = "Windows 11";
+          sortKey = "a_windows";
+          efiDeviceHandle = "HD0b";
+        };
+
+        extraInstallCommands = ''
+          # Do not show the auto-generated Windows entry.
+          echo "auto-entries false" >>/boot/loader/loader.conf
+
+          # Set Windows as the default boot entry.
+          ${pkgs.gnused}/bin/sed -i 's/default .*/default windows_11.conf/' /boot/loader/loader.conf
+        '';
       };
-
-      extraInstallCommands = ''
-        # Do not show the auto-generated Windows entry.
-        echo "auto-entries false" >>/boot/loader/loader.conf
-
-        # Set Windows as the default boot entry.
-        ${pkgs.gnused}/bin/sed -i 's/default .*/default windows_11.conf/' /boot/loader/loader.conf
-      '';
     };
   };
 
-  boot.kernelParams = [ "quiet" "nowatchdog" ];
+  hardware.bluetooth.enable = true;
 
-  networking.hostName = "shinobu";
+  networking = {
+    hostName = "shinobu";
+    networkmanager.enable = true;
+  };
+
+  services.resolved.enable = true;
+
+  time.timeZone = "Europe/Madrid";
 
   sops.secrets = {
     "my-password" = {
@@ -66,11 +75,6 @@
     tuigreet.enable = true;
 
   };
-
-  networking.networkmanager.enable = true;
-  services.resolved.enable = true;
-
-  time.timeZone = "Europe/Madrid";
 
   programs = {
     gamemode.enable = true;
