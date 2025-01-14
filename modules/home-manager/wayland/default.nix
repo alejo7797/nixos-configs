@@ -12,7 +12,7 @@ in
 {
   imports = [
     ./hyprland
-    ./sway
+    ./sway-wm
     ./swaync
     ./waybar
     ./wlogout
@@ -21,14 +21,10 @@ in
   options.myHome.wayland.enable = lib.mkEnableOption "Wayland";
 
   config = lib.mkIf cfg.enable {
+
     myHome = {
-      # Configure common graphical utilities.
       graphical.enable = true;
-
-      # Install and configure waybar.
       waybar.enable = true;
-
-      # Install and configure swaync.
       swaync.enable = true;
     };
 
@@ -45,7 +41,9 @@ in
 
     '';
 
-    # Install and configure hyprlock.
+    # Stylix wants to set the wallpaper too.
+    stylix.targets.hyprlock.enable = false;
+
     programs.hyprlock = {
       enable = true;
       settings = {
@@ -63,7 +61,6 @@ in
       };
     };
 
-    # Install and configure wofi.
     programs.wofi = {
       enable = true;
       settings = {
@@ -73,14 +70,9 @@ in
       };
     };
 
-    # Stylix wants to set the wallpaper too.
-    stylix.targets.hyprlock.enable = false;
-
     services = {
-      # Enable the kanshi daemon.
       kanshi.enable = true;
 
-      # Enable and configure gammastep.
       gammastep = {
         enable = true;
         tray = true;
@@ -91,25 +83,33 @@ in
         };
       };
 
-      # Enable and configure swayidle.
-      swayidle =
-        let
-          hyprlock = "${pkgs.hyprlock}/bin/hyprlock";
-          loginctl = "${pkgs.systemd}/bin/loginctl";
-          systemctl = "${pkgs.systemd}/bin/systemctl";
-        in
-        {
-          enable = true;
-          events = [
-            { event = "lock"; command = "${pkgs.playerctl}/bin/playerctl -a pause"; }
-            { event = "lock"; command = "${pkgs.procps}/bin/pidof ${hyprlock} || ${hyprlock}"; }
-            { event = "before-sleep"; command = "${loginctl} lock-session"; }
-          ];
-          timeouts = [
-            { timeout = 600; command = "${loginctl} lock-session"; }
-            { timeout = 660; command = "${systemctl} suspend"; }
-          ];
-        };
+      hypridle = {
+        enable = true;
+        settings =
+          let
+            hyprlock = "${pkgs.hyprlock}/bin/hyprlock";
+            loginctl = "${pkgs.systemd}/bin/loginctl";
+            playerctl = "${pkgs.playerctl}/bin/playerctl";
+            systemctl = "${pkgs.systemd}/bin/systemctl";
+          in
+          {
+            general = {
+              lock_cmd = "${playerctl} -a pause && ${hyprlock}";
+              unlock_cmd = "${pkgs.procps}/bin/pkill -USR1 hyprlock";
+              before_sleep_cmd = "${loginctl} lock-session";
+            };
+            listener = [
+              {
+                timeout = 600;
+                on-timeout = "${loginctl} lock-session";
+              }
+              {
+                timeout = 720;
+                on-timeout = "${systemctl} suspend";
+              }
+            ];
+          };
+      };
     };
   };
 }

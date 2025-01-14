@@ -314,6 +314,7 @@ in
               enable = true;
               settings = {
                 formatting.command = [ "${pkgs.nixfmt-rfc-style}/bin/nixfmt" ];
+                nix.flake.autoArchive = true;
               };
             };
           };
