@@ -30,6 +30,7 @@
     impermanence.url = "github:nix-community/impermanence";
     nixgl.url = "github:nix-community/nixGL";
     openconnect-sso.url = "github:vlaci/openconnect-sso";
+    poetry2nix.url = "github:nix-community/poetry2nix";
     sops-nix.url = "github:Mic92/sops-nix";
     stylix.url = "github:danth/stylix/release-24.11";
   };

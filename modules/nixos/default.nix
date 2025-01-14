@@ -57,6 +57,12 @@
 
       # Bug with the native SSO web browser dialog.
       inputs.openconnect-sso.overlay
+      inputs.poetry2nix.overlays.default
+      (final: prev: {
+        openconnect-sso = prev.openconnect-sso.override {
+          python3Packages = final.python312Packages;
+        };
+      })
     ];
   };
 
