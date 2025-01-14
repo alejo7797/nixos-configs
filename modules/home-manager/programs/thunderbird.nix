@@ -51,7 +51,8 @@ let
       "ldap_2.servers.${id}.carddav.url" = contacts.remote.url;
       "ldap_2.servers.${id}.carddav.username" = contacts.remote.userName;
       "ldap_2.servers.${id}.description" = contacts.name;
-    };
+    }
+    // contacts.thunderbird.settings id;
 
   mkUserJs =
     prefs:
