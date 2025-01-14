@@ -9,9 +9,10 @@
   imports = [
     inputs.home-manager.nixosModules.home-manager
     inputs.impermanence.nixosModules.impermanence
+    inputs.lanzaboote.nixosModules.lanzaboote
+    inputs.nur.modules.nixos.default
     inputs.sops-nix.nixosModules.sops
     inputs.stylix.nixosModules.stylix
-    inputs.nur.modules.nixos.default
 
     ./graphical
     ./programs
@@ -26,16 +27,14 @@
   nix = {
     settings = {
       experimental-features = [
-        "nix-command"
-        "flakes"
+        "nix-command" "flakes"
       ];
     };
 
     channel.enable = false;
 
     gc = {
-      automatic = true;
-      dates = "weekly";
+      automatic = true; dates = "weekly";
       options = "--delete-older-than 30d";
     };
   };
@@ -57,15 +56,7 @@
     ];
   };
 
-  boot = {
-    consoleLogLevel = 3;
-    loader = {
-      systemd-boot = {
-        enable = true;
-        editor = false;
-      };
-    };
-  };
+  boot.consoleLogLevel = 3;
 
   networking = {
     # Use standard network interface names.

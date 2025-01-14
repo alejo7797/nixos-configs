@@ -16,7 +16,9 @@
 
     loader = {
       systemd-boot = {
-        # Our own Windows bootloader entry.
+        enable = true;
+
+        # Create our own Windows bootloader entry.
         windows."11" = {
           title = "Windows 11";
           sortKey = "a_windows";

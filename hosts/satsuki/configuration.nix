@@ -12,6 +12,10 @@
   swapDevices = [ { device = "/var/swapfile"; size = 16384; } ];
 
   boot = {
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/var/lib/sbctl";
+    };
     loader.timeout = 0;
     kernelParams = [ "quiet" "nowatchdog" ];
   };
