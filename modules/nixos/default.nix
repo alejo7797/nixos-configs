@@ -136,7 +136,6 @@
     htop imagemagick
     lm_sensors lsd ncdu
     neofetch nettools
-    nixos-generators
     nmap procps p7zip
     psmisc rsync sops
     unrar usbutils uv

@@ -74,6 +74,7 @@
     nvidia.enable = true;
     pam.sudo.yubikey = true;
     sway.enable = true;
+    texlive.enable = true;
     tuigreet.enable = true;
 
   };
@@ -109,10 +110,6 @@
     biber clang lldb
     # mathematica-webdoc
     perl ruby sage
-
-    # LaTeX.
-    (texliveMedium.withPackages
-    (ps: with ps; [ collection-langcyrillic ]))
 
   ];
 }
