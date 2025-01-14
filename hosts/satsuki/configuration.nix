@@ -62,7 +62,6 @@
     laptop.enable = true;
     pam.auth.yubikey = true;
     sway.enable = true;
-    texlive.enable = true;
 
     nvidia = {
       enable = true;
@@ -110,7 +109,7 @@
 
     biber clang lldb
     mathematica-webdoc
-    perl ruby sage
+    perl texliveFull
 
   ];
 }

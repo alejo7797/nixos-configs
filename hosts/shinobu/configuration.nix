@@ -74,7 +74,6 @@
     nvidia.enable = true;
     pam.sudo.yubikey = true;
     sway.enable = true;
-    texlive.enable = true;
     tuigreet.enable = true;
 
   };
@@ -108,8 +107,8 @@
     wine winetricks
 
     biber clang lldb
-    # mathematica-webdoc
-    perl ruby sage
+    mathematica-webdoc
+    perl texliveFull
 
   ];
 }
