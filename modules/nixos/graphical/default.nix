@@ -63,9 +63,9 @@ in
 
       blueman.enable = true;
       libinput.enable = true;
-      flatpak.enable = true;
       geoclue2.enable = true;
       gnome.gnome-keyring.enable = true;
+      gvfs.enable = true;
       pcscd.enable = true;
       ratbagd.enable = true;
       udisks2.enable = true;
