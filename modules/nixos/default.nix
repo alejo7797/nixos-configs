@@ -55,11 +55,8 @@
       # Access my personal scripts.
       inputs.my-scripts.overlays.default
 
-      # Bug with SSO web browser dialog.
-      (final: prev: {
-        networkmanager-openconnect = prev.networkmanager-openconnect.overrideAttrs
-          (old: { nativeBuildInputs = old.nativeBuildInputs ++ [ final.gvfs ]; });
-      })
+      # Bug with the native SSO web browser dialog.
+      inputs.openconnect-sso.overlay
     ];
   };
 
@@ -77,8 +74,13 @@
     # Use standard network interface names.
     usePredictableInterfaceNames = false;
 
-    # Wireguard trips up rpfilter.
-    firewall.checkReversePath = false;
+    firewall = {
+      # Wireguard trips up rpfilter.
+      checkReversePath = false;
+
+      # Prevent dmesg spam.
+      logRefusedConnections = false;
+    };
   };
 
   sops = {

@@ -91,6 +91,7 @@
     filezilla
     gimp inkscape
     joplin-desktop
+    openconnect-sso
     vesktop zotero
 
     # Newer features.
