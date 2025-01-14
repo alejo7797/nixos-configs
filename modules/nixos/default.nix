@@ -54,6 +54,12 @@
 
       # Access my personal scripts.
       inputs.my-scripts.overlays.default
+
+      # Bug with SSO web browser dialog.
+      (final: prev: {
+        networkmanager-openconnect = prev.networkmanager-openconnect.overrideAttrs
+          (old: { buildInputs = old.buildInputs ++ [ final.gvfs ]; });
+      })
     ];
   };
 

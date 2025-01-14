@@ -1,5 +1,4 @@
-{ pkgs, lib, config, ... }: {
-
+{
   wayland.windowManager.sway.config = {
 
     # Workspace assignments.
