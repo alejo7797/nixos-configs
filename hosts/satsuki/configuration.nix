@@ -95,6 +95,7 @@
 
     # Newer features.
     unstable.lutris
+    unstable.sbctl
     unstable.spotify
 
     dosbox-x
