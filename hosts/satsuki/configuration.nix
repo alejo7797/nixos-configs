@@ -25,13 +25,19 @@
   networking = {
     hostName = "satsuki";
     networkmanager.enable = true;
+
+    firewall.extraCommands = ''
+      iptables -t mangle -A OUTPUT -d 208.67.222.222 -p udp --dport 53 -j MARK --set-mark 0xcbca
+      iptables -t nat -A POSTROUTING -d 208.67.222.222 -p udp --dport 53 -j MASQUERADE
+    '';
   };
 
   services = {
     printing.drivers = [ pkgs.hplip ];
     resolved.enable = true;
-    tzupdate.enable = true;
   };
+
+  time.timeZone = "America/New_York";
 
   sops.secrets = {
     "my-password" = {
