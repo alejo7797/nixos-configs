@@ -30,9 +30,8 @@
   services = {
     printing.drivers = [ pkgs.hplip ];
     resolved.enable = true;
+    tzupdate.enable = true;
   };
-
-  time.timeZone = "America/New_York";
 
   sops.secrets = {
     "my-password" = {
