@@ -25,6 +25,9 @@ in
           # Copy text to the clipboard.
           selection-clipboard = "clipboard";
 
+          # Show scrollbars.
+          guioptions = "shv";
+
           # The default Stylix look is not great.
           statusbar-fg = lib.mkForce (rgb "base06");
           statusbar-bg = lib.mkForce (rgb "base00");
