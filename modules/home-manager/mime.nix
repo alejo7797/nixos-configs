@@ -46,8 +46,17 @@ in
 
     enable = true;
 
-    associations.added = {
-      "application/pdf" = cfg.defaultWebBrowser;
+    associations = {
+      added = {
+        "application/pdf" = cfg.defaultWebBrowser;
+      };
+
+      removed = {
+        "application/pdf" = [
+          "draw.desktop" "krita_pdf.desktop"
+          "gimp.desktop" "org.inkscape.Inkscape.desktop"
+        ];
+      };
     };
 
     defaultApplications =
@@ -101,7 +110,7 @@ in
 
       // {
         # We like to use Zathura for PDF files.
-        "application/pdf" = "org.pwmt.zathura.desktop";
+        "application/pdf" = "org.pwmt.zathura-pdf-mupdf.desktop";
 
         # We like to use Inkscape for SVG files.
         "image/svg+xml" = "org.inkscape.Inkscape.desktop";
