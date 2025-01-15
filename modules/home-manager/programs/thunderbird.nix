@@ -166,7 +166,7 @@ in
 
           Gmail = {
             address = "alexepelde@gmail.com";
-            flavor = "gmail.com";
+            flavor = "gmail.com"; smtp.port = 465;
             thunderbird.settings = oauth_imap;
             thunderbird.perIdentitySettings = gmail_smtp;
           };
