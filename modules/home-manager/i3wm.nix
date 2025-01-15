@@ -17,7 +17,7 @@ in
     systemd.user = {
       services = {
         lockbg-cache = {
-          Unit.Description = "Cache the lockscreen wallpaper";
+          Unit.Description = "Lockscreen wallpaper cache utility";
           Service = {
             Type = "oneshot";
             ExecStart = "${pkgs.lockbg-cache}/bin/lockbg-cache";

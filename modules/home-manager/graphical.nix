@@ -15,7 +15,7 @@ in
     ./wayland
 
     ./autostart.nix
-    ./i3-wm.nix
+    ./i3wm.nix
     ./mime.nix
   ];
 

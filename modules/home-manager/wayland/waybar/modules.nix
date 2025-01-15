@@ -116,25 +116,14 @@ in
       };
 
       "network#harvard" = {
-        interface = "vpn0";
+        interface = "tun0";
         format = "Harvard VPN ";
         format-disconnected = "";
         format-alt = "{ifname}: {ipaddr}/{cidr}";
         tooltip = false;
       };
 
-      "custom/updates" = {
-        format = "{} {icon}";
-        return-type = "json";
-        format-icons = {
-          has-updates = "";
-          updated = "";
-        };
-        exec-if = "which waybar-pacman-updates";
-        exec = "waybar-pacman-updates";
-      };
-
-      "custom/weather" = {
+      "custom/wttr" = {
         format = "{}";
         tooltip = true;
         interval = 1800;

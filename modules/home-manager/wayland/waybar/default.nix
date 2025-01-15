@@ -48,29 +48,15 @@ in
         spacing = 5;
 
         modules-left = [
-          "hyprland/workspaces"
-          "hyprland/submap"
-          "sway/workspaces"
-          "sway/mode"
-          "sway/scratchpad"
+          "hyprland/workspaces" "hyprland/submap"
+          "sway/workspaces" "sway/mode" "sway/scratchpad"
         ];
 
         modules-right = [
-          "idle_inhibitor"
-          "pulseaudio"
-          "cpu"
-          "memory"
-          "disk"
-          "battery"
-          "temperature"
-          "network"
-          "network#vpn"
-          "network#harvard"
-          "custom/updates"
-          "custom/weather"
-          "clock"
-          "custom/swaync"
-          "tray"
+          "idle_inhibitor" "pulseaudio" "cpu"
+          "memory" "disk" "battery" "temperature"
+          "network" "network#vpn" "network#harvard"
+          "custom/wttr" "clock" "custom/swaync" "tray"
         ];
       };
     };
