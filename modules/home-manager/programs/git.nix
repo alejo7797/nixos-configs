@@ -24,12 +24,8 @@ in
 
     # And set some basic options.
     extraConfig = {
-      init.defaultBranch = "master";
-      pull.ff = "only";
-      credential = {
-        helper = "git-credential-libsecret";
-        interactive = true;
-      };
+      init.defaultBranch = "master"; pull.ff = "only";
+      credential.helper = "${pkgs.gitFull}/bin/git-credential-libsecret";
     };
   };
 }

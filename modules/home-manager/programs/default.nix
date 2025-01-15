@@ -2,13 +2,11 @@
 
 {
   imports = [
-    ./joplin-desktop
+    ./joplin ./firefox.nix
+    ./git.nix ./gpg.nix
     ./keepassxc ./kitty
-    ./variety ./zsh
-
-    ./firefox.nix ./git.nix
-    ./gpg.nix ./neovim
+    ./neovim ./variety
     ./thunderbird.nix
-    ./zathura.nix
+    ./zathura.nix ./zsh
   ];
 }

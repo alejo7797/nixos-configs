@@ -125,23 +125,24 @@ in
         let
           oauth_imap = id: { "mail.server.server_${id}.authMethod" = 10; };
           oauth_smtp = id: { "mail.smtpserver.smtp_${id}.authMethod" = 10; };
-          reply_on_top = id: { "mail.identity.id_${id}.reply_on_top" = 1; };
+          default_smtp = id: { "mail.identity.id_${id}.reply_on_top" = 1; };
           sent_no_copy = id: { "mail.identity.id_${id}.fcc" = false; };
-          outlook_smtp = id: (oauth_smtp id) // (sent_no_copy id) // (reply_on_top id);
+          gmail_smtp = id: ( oauth_smtp id // default_smtp id);
+          outlook_smtp = id: (oauth_smtp id // sent_no_copy id // default_smtp id);
         in
 
         builtins.mapAttrs
 
         (
-          _: value:
+          _: account:
             lib.recursiveUpdate
             {
               realName = "Alex Epelde";
-              userName = value.address;
-              imap.port = 993;
+              userName = account.address;
+              imap.port = 993; smtp.port = 587;
               thunderbird.enable = true;
             }
-            value
+            account
         )
 
         {
@@ -151,7 +152,7 @@ in
             imap.host = "mail.epelde.net";
             smtp.host = "mail.epelde.net";
             smtp.tls.useStartTls = true;
-            thunderbird.perIdentitySettings = reply_on_top;
+            thunderbird.perIdentitySettings = default_smtp;
           };
 
           Ewan = {
@@ -160,15 +161,14 @@ in
             imap.host = "mail.patchoulihq.cc";
             smtp.host = "mail.patchoulihq.cc";
             smtp.tls.useStartTls = true;
-            thunderbird.perIdentitySettings = reply_on_top;
+            thunderbird.perIdentitySettings = default_smtp;
           };
 
           Gmail = {
             address = "alexepelde@gmail.com";
             flavor = "gmail.com";
             thunderbird.settings = oauth_imap;
-            thunderbird.perIdentitySettings =
-              id: (oauth_smtp id) // (reply_on_top id);
+            thunderbird.perIdentitySettings = gmail_smtp;
           };
 
           Harvard = {
