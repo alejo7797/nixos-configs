@@ -33,10 +33,7 @@ in
     wayland.windowManager.hyprland = {
       plugins = lib.mkForce [ ];
       importantPrefixes = lib.mkOptionDefault [ "exec-once" ];
-      settings.exec-once = [
-        "hyprpm reload -n"
-        "uwsm app swayidle "
-      ];
+      settings.exec-once = [ "hyprpm reload -n" "uwsm app swayidle " ];
     };
 
     # We run swayidle natively.

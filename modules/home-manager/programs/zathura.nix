@@ -25,7 +25,7 @@ in
         selection-clipboard = "clipboard";
 
         # The default Stylix look is not great.
-        statusbar-fg = lib.mkForce (rgb "base05");
+        statusbar-fg = lib.mkForce (rgb "base06");
         statusbar-bg = lib.mkForce (rgb "base00");
       };
 
