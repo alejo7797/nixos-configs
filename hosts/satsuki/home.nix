@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   ...
 }:
@@ -11,7 +12,7 @@
   };
 
   sops.secrets = {
-    "satsuki-backup-key" = { };
+    "borg-passphrase" = { };
     "shell-scripts-token" = { };
     "calendars/harvard" = { };
   };
@@ -142,6 +143,9 @@
           { name = "data"; frequency = "1 week"; }
         ];
         retention.keepWeekly = 3;
+        storage.encryptionPasscommand = ''
+          ${pkgs.coreutils}/bin/cat ${config.sops.secrets.borg-passphrase.path}
+        '';
       };
     };
 
