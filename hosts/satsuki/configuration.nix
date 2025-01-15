@@ -101,11 +101,10 @@
     unstable.lutris
     unstable.spotify
 
-    dosbox-x
-    easyrpg-player
-    gamescope
-    prismlauncher
-    wine winetricks
+    dosbox-x easyrpg-player
+    gamescope prismlauncher
+    retroarch winetricks
+    wineWowPackages.stable
 
     biber clang lldb
     mathematica-webdoc
