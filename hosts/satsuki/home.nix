@@ -19,6 +19,7 @@
 
   myHome = {
     laptop.enable = true;
+    borgmatic.enable = true;
 
     hyprland.enable = true;
     sway.enable = true;
@@ -120,33 +121,14 @@
 
   programs = {
 
-    borgmatic = {
-      enable = true;
-      backups.personal = {
-        location = {
-          patterns = [
-            "R /home/ewan" "- home/ewan/.cache"
-            # Prohibitively large directory.
-            "- home/ewan/.local/share/Steam"
-            # We don't need email backups.
-            "- home/ewan/.thunderbird"
-          ];
-          repositories = [
-            {
-              "path" = "ssh://patchouli/mnt/Hanekawa/Backup/satsuki/borg";
-              "label" = "patchouli";
-            }
-          ];
-        };
-        consistency.checks = [
-          { name = "repository"; frequency = "1 week"; }
-          { name = "data"; frequency = "1 week"; }
-        ];
-        retention.keepWeekly = 3;
-        storage.encryptionPasscommand = ''
-          ${pkgs.coreutils}/bin/cat ${config.sops.secrets.borg-passphrase.path}
-        '';
+    borgmatic.backups.personal = {
+      retention.keepDaily = 3;
+      location = {
+        patterns = [ "R /home/ewan" "- home/ewan/.cache" "- home/ewan/.local/share/Steam" ];
+        repositories = [ { "path" = "ssh://patchouli/mnt/Hanekawa/Backup/satsuki/borg"; } ];
       };
+      consistency.checks = [ { name = "repository"; frequency = "1 week"; } { name = "data"; frequency = "1 week"; } ];
+      storage.encryptionPasscommand = "${pkgs.coreutils}/bin/cat ${config.sops.secrets.borg-passphrase.path}";
     };
 
     zsh.shellAliases =
