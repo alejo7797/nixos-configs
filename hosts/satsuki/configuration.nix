@@ -109,7 +109,7 @@
     wineWowPackages.stable
 
     # Programming.
-    biber clang lldb
+    biber clang jdk
     mathematica-webdoc
     perl texliveFull
 
