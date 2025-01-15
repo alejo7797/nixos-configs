@@ -113,8 +113,7 @@
         pointer_accel = "-1";
       };
       "1739:52756:SYNA329D:00_06CB:CE14_Touchpad" = {
-        tap = "enabled";
-        dwt = "enabled";
+        tap = "enabled"; dwt = "enabled";
       };
     };
   };
@@ -122,12 +121,15 @@
   programs = {
 
     borgmatic.backups.personal = {
-      retention.keepDaily = 3;
+      consistency.checks = [
+        { name = "repository"; frequency = "2 weeks"; }
+        { name = "data"; frequency = "6 weeks"; }
+      ];
       location = {
         patterns = [ "R /home/ewan" "- home/ewan/.cache" "- home/ewan/.local/share/Steam" ];
         repositories = [ { "path" = "ssh://patchouli/mnt/Hanekawa/Backup/satsuki/borg"; } ];
       };
-      consistency.checks = [ { name = "repository"; frequency = "1 week"; } { name = "data"; frequency = "1 week"; } ];
+      retention = { keepDaily = 3; };
       storage.encryptionPasscommand = "${pkgs.coreutils}/bin/cat ${config.sops.secrets.borg-passphrase.path}";
     };
 

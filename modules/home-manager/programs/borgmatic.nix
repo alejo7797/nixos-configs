@@ -28,11 +28,10 @@ in
           StateDirectory = "borgmatic";
 
           # Lower CPU and I/O priority.
-          Nice = 19;
+          Nice = 19 ;IOWeight = 100;
           CPUSchedulingPolicy = "batch";
           IOSchedulingClass = "best-effort";
           IOSchedulingPriority = 7;
-          IOWeight = 100;
 
           Restart = "no"; LogRateLimitIntervalSec = 0;
 
