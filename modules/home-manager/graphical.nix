@@ -41,6 +41,7 @@ in
       keepassxc.enable = true;
       kitty.enable = true;
       mimeApps.enable = true;
+      mpv.enable = true;
       style.enable = true;
       variety.enable = true;
       zathura.enable = true;
