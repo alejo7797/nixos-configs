@@ -65,7 +65,7 @@ in
 
 {
   options = {
-    myHome.thunderbird.enable = lib.mkEnableOption "Thunderbird configuration";
+    myHome.thunderbird.enable = lib.mkEnableOption "Thunderbird";
 
     accounts.calendar.accounts = lib.mkOption {
       type = with lib.types; attrsOf (submodule {
