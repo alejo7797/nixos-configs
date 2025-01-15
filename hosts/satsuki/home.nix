@@ -11,9 +11,9 @@
   };
 
   sops.secrets = {
-    "sonarr-apikey" = { };
+    "satsuki-backup-key" = { };
     "shell-scripts-token" = { };
-    "calendars/harvard-url" = { };
+    "calendars/harvard" = { };
   };
 
   myHome = {
@@ -117,17 +117,45 @@
     };
   };
 
-  programs.zsh.shellAliases =
-    let
-      what-is-my-ip = "${pkgs.dig}/bin/dig +short myip.opendns.com";
-    in
-    {
-      dotfiles = "${pkgs.git}/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME";
+  programs = {
 
-      # These rely on a custom firewall rule.
-      pubip = "${what-is-my-ip} @resolver1.opendns.com";
-      vpnip = "${what-is-my-ip} @resolver2.opendns.com";
-
-      wf-pacman = "sudo -u wonderful /opt/wonderful/bin/wf-pacman";
+    borgmatic = {
+      enable = true;
+      backups.personal = {
+        location = {
+          patterns = [
+            "R /home/ewan" "- home/ewan/.cache"
+            # Prohibitively large directory.
+            "- home/ewan/.local/share/Steam"
+            # We don't need email backups.
+            "- home/ewan/.thunderbird"
+          ];
+          repositories = [
+            {
+              "path" = "ssh://patchouli/mnt/Hanekawa/Backup/satsuki/borg";
+              "label" = "patchouli";
+            }
+          ];
+        };
+        consistency.checks = [
+          { name = "repository"; frequency = "1 week"; }
+          { name = "data"; frequency = "1 week"; }
+        ];
+        retention.keepWeekly = 3;
+      };
     };
+
+    zsh.shellAliases =
+      let
+        what-is-my-ip = "${pkgs.dig}/bin/dig +short myip.opendns.com";
+      in
+      {
+        # These rely on a custom firewall rule.
+        pubip = "${what-is-my-ip} @resolver1.opendns.com";
+        vpnip = "${what-is-my-ip} @resolver2.opendns.com";
+
+        wf-pacman = "sudo -u wonderful /opt/wonderful/bin/wf-pacman";
+      };
+
+  };
 }
