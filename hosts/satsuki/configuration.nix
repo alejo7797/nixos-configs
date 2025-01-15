@@ -37,8 +37,6 @@
     resolved.enable = true;
   };
 
-  time.timeZone = "America/New_York";
-
   sops.secrets = {
     "my-password" = {
       neededForUsers = true;
@@ -67,6 +65,7 @@
     laptop.enable = true;
     pam.auth.yubikey = true;
     sway.enable = true;
+    tzupdate.enable = true;
 
     nvidia = {
       enable = true;

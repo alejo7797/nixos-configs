@@ -14,7 +14,8 @@
     inputs.sops-nix.nixosModules.sops
     inputs.stylix.nixosModules.stylix
 
-    ./graphical ./programs ./wayland
+    ./graphical ./programs
+    ./services ./wayland
 
     ./locale.nix ./pam.nix
     ./style.nix ./users.nix
