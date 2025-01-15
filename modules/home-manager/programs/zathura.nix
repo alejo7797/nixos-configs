@@ -21,8 +21,8 @@ in
         rgb = color: "rgb(${getColorCh color "r"}, ${getColorCh color "g"}, ${getColorCh color "b"})";
       in
       {
+        # Copy text to the clipboard.
         selection-clipboard = "clipboard";
-        guioptions = "shv";
 
         # The default Stylix look is not great.
         statusbar-fg = lib.mkForce (rgb "base05");
