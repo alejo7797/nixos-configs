@@ -92,6 +92,7 @@
   environment.systemPackages = with pkgs; [
 
     # Actual programs.
+    digikam geogebra
     filezilla gimp
     inkscape krita
     joplin-desktop
@@ -101,11 +102,13 @@
     unstable.lutris
     unstable.spotify
 
+    # Games and all that.
     dosbox-x easyrpg-player
     gamescope prismlauncher
     retroarch winetricks
     wineWowPackages.stable
 
+    # Programming.
     biber clang lldb
     mathematica-webdoc
     perl texliveFull
