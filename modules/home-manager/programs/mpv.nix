@@ -22,10 +22,7 @@ in
         save-position-on-quit = true;
       };
 
-      scripts = with pkgs.unstable; [
-        mpvScripts.builtins.autoload
-        mpvScripts.autosub
-      ];
+      scripts = with pkgs.mpvScripts; [ autoload ];
     };
   };
 }
