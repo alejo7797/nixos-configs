@@ -14,14 +14,10 @@
     inputs.sops-nix.nixosModules.sops
     inputs.stylix.nixosModules.stylix
 
-    ./graphical
-    ./programs
-    ./wayland
+    ./graphical ./programs ./wayland
 
-    ./locale.nix
-    ./pam.nix
-    ./style.nix
-    ./users.nix
+    ./locale.nix ./pam.nix
+    ./style.nix ./users.nix
   ];
 
   nix = {

@@ -1,20 +1,24 @@
-{ pkgs, lib, config, ... }: let
+{
+  lib,
+  config,
+  ...
+}:
 
+let
   cfg = config.myNixOS.firefox;
+in
 
-in {
-
+{
   options.myNixOS.firefox.enable = lib.mkEnableOption "Firefox";
 
   config = lib.mkIf cfg.enable {
 
-    # Install and configure Firefox.
     programs.firefox = {
       enable = true;
 
       policies = {
 
-        # Useful policies to enable.
+        # Essential policies.
         "DisableFeedbackCommands" = true;
         "DisableFirefoxStudies" = true;
         "DisablePocket" = true;
@@ -22,25 +26,19 @@ in {
         "DisableTelemetry" = true;
 
         # Essential Firefox addons.
-        "Extensions" = {
+        Extensions.Install =
+          map (a: "https://addons.mozilla.org/firefox/downloads/latest/${a}/latest.xpi")
+            [
+              "canvasblocker" "decentraleyes" "facebook-container"
+              "font-fingerprint-defender" "h264ify" "indie-wiki-buddy"
+              "keepassxc-browser" "privacy-badger17"
+              "ublock-origin" "youtube-shorts-block"
+            ];
 
-          "Install" =
-            map (a: "https://addons.mozilla.org/firefox/downloads/latest/${a}/latest.xpi")
-              [
-                "canvasblocker" "decentraleyes" "facebook-container"
-                "font-fingerprint-defender" "h264ify" "indie-wiki-buddy"
-                "keepassxc-browser" "privacy-badger17"
-                "ublock-origin" "youtube-shorts-block"
-              ];
-
-        };
-
-        "Preferences" =
-
+        Preferences =
           let
             lock-false = { Value = false; Status = "locked"; };
           in
-
           {
             # Disable sponsored content.
             "browser.newtabpage.activity-stream.showSponsored" = lock-false;
@@ -52,6 +50,5 @@ in {
     };
 
     environment.variables.BROSWER = "firefox";
-
   };
 }
