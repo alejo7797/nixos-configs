@@ -78,42 +78,25 @@ in
 
     environment.systemPackages = with pkgs; [
 
-      dconf-editor
-      font-manager
-      icoutils
-      libnotify
-      mesa-demos
-      pavucontrol
-      pdftk piper
-      playerctl
-      seahorse
-      simple-scan
-      sqlitebrowser
-      xorg.xeyes
-      vulkan-tools
-      zenity
-
-      keepassxc
-      kitty mpv
-      libreoffice
-      yubioath-flutter
-      variety
+      dconf-editor font-manager icoutils
+      libreoffice libnotify mesa-demos
+      pavucontrol pdftk piper seahorse
+      simple-scan sqlitebrowser xorg.xeyes
+      vulkan-tools yubioath-flutter zenity
 
     ];
 
     fonts.packages = with pkgs; [
 
-      corefonts
-      dejavu_fonts
-      font-awesome
-      noto-fonts
+      corefonts dejavu_fonts
+      font-awesome noto-fonts
       noto-fonts-color-emoji
-      source-sans
-      vistafonts
+      source-sans vistafonts
 
       kanji-stroke-order-font
       kochi-substitute
       noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
       source-han-sans
       source-han-serif
 
