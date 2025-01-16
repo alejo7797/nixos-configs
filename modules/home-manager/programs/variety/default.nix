@@ -14,6 +14,8 @@ in
 
   config = lib.mkIf cfg.enable {
 
+    home.packages = [ pkgs.variety ];
+
     systemd.user.services.variety = config.myHome.lib.mkGraphicalService {
       Unit.Description = "Variety wallpaper changer";
       Service.ExecStart = "${pkgs.variety}/bin/variety";

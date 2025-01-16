@@ -14,6 +14,8 @@ in
 
   config = lib.mkIf cfg.enable {
 
+    home.packages = [ pkgs.keepassxc ];
+
     systemd.user.services.keepassxc = config.myHome.lib.mkGraphicalService {
       Unit.Description = "KeepassXC password manager";
       Service = {
