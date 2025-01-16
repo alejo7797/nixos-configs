@@ -115,7 +115,7 @@
     # Programming.
     biber clang jdk23
     mathematica-webdoc
-    perl texliveFull
+    nodejs texliveFull
 
   ];
 }
