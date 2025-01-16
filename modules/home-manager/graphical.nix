@@ -67,6 +67,7 @@ in
 
       "chktexrc".source = ./programs/latex/chktexrc;
       "latexmk/latexmkrc".source = ./programs/latex/latexmkrc;
+      "rubocop/config.yml".source = ./programs/rubocop/config.yml;
 
       "baloofilerc".text = ''
         [Basic Settings]
