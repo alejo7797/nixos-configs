@@ -26,7 +26,7 @@ in
             ip=$(${pkgs.dig}/bin/dig +short myip.opendns.com @resolver1.opendns.com)
 
             # Procure the current timezone from our IP address.
-            tz=$(${pkgs.tzupdate}/bin/tzupdate --print-only --ip "$ip")
+            tz=$(${pkgs.curl}/bin/curl -s -f http://ip-api.com/line/"$ip_address"?fields=timezone)
 
             # Make sure we got an actual timezone as a response.
             if [[ -n $tz && -r ${pkgs.tzdata}/share/zoneinfo/$tz ]]; then
