@@ -113,10 +113,10 @@
     wineWowPackages.stable
 
     # Programming.
-    biber bundler clang
-    jdk23 luajit nodejs
+    clang jdk23 nodejs
+    bundix bundler ruby
     mathematica-webdoc
-    perl texliveFull
+    biber texliveFull
 
   ];
 }
