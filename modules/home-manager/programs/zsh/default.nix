@@ -14,6 +14,12 @@ in
 
   config = lib.mkIf cfg.enable {
 
+    programs.direnv = {
+      enable = true;
+      # We need to do this manually.
+      enableZshIntegration = false;
+    };
+
     programs.zsh = {
       enable = true;
       autocd = true;
@@ -53,14 +59,14 @@ in
       };
 
       initExtraFirst = ''
-        (( $\{+commands[direnv]\} )) && emulate zsh -c "$(direnv export zsh)"
+        emulate zsh -c "$(direnv export zsh)"
 
         # Enable Powerlevel10k instant prompt.
         if [[ -r "$XDG_CACHE_HOME/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
           source "$XDG_CACHE_HOME/p10k-instant-prompt-''${(%):-%n}.zsh"
         fi
 
-        (( $\{+commands[direnv]\} )) && emulate zsh -c "$(direnv hook zsh)"
+        emulate zsh -c "$(direnv hook zsh)"
       '';
 
       initExtra = ''

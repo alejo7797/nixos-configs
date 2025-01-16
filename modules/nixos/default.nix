@@ -100,8 +100,6 @@
       enable = true;
       defaultEditor = true;
     };
-
-    direnv.enable = true;
   };
 
   # For zsh shell completion.
