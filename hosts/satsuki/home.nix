@@ -135,7 +135,7 @@
 
     zsh.shellAliases =
       let
-        what-is-my-ip = "${pkgs.dig}/bin/dig +short myip.opendns.com";
+        what-is-my-ip = "dig +short myip.opendns.com";
       in
       {
         # These rely on a custom firewall rule.

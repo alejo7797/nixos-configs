@@ -21,16 +21,12 @@ in
       Service.ExecStart = "${pkgs.variety}/bin/variety";
     };
 
-    programs.zsh.shellAliases =
-      let
-        variety = "${pkgs.variety}/bin/variety";
-      in
-      {
-        bgnext = "${variety} --next";
-        bgprev = "${variety} --previous";
-        bgtrash = "${variety} --trash";
-        bgfav = "${variety} --favorite";
-      };
+    programs.zsh.shellAliases = {
+      bgnext = "variety --next";
+      bgprev = "variety --previous";
+      bgtrash = "variety --trash";
+      bgfav = "variety --favorite";
+    };
 
     # The script cannot be read-only, otherwise Variety won't run.
     home.activation.variety = lib.hm.dag.entryAfter [ "writeBoundary" ] ''

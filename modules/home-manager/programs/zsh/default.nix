@@ -53,10 +53,14 @@ in
       };
 
       initExtraFirst = ''
+        (( $\{+commands[direnv]\} )) && emulate zsh -c "$(direnv export zsh)"
+
         # Enable Powerlevel10k instant prompt.
         if [[ -r "$XDG_CACHE_HOME/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
           source "$XDG_CACHE_HOME/p10k-instant-prompt-''${(%):-%n}.zsh"
         fi
+
+        (( $\{+commands[direnv]\} )) && emulate zsh -c "$(direnv hook zsh)"
       '';
 
       initExtra = ''
