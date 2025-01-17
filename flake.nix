@@ -1,5 +1,5 @@
 {
-  description = "My NixOS configurations.";
+  description = "My NixOS configurations";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
@@ -52,13 +52,13 @@
 
     {
       nixosConfigurations = {
-        "qemu-vm" = mkSystem hosts/qemu-vm/configuration.nix;
-        "satsuki" = mkSystem hosts/satsuki/configuration.nix;
-        "shinobu" = mkSystem hosts/shinobu/configuration.nix;
+        "qemu-vm" = mkSystem ./hosts/qemu-vm/configuration.nix;
+        "satsuki" = mkSystem ./hosts/satsuki/configuration.nix;
+        "shinobu" = mkSystem ./hosts/shinobu/configuration.nix;
       };
 
-      nixosModules.default = modules/nixos;
-      homeManagerModules.default = modules/home-manager;
+      nixosModules.default = ./modules/nixos;
+      homeManagerModules.default = ./modules/home-manager;
     };
 
 }
