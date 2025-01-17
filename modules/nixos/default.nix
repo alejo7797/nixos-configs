@@ -14,11 +14,9 @@
     inputs.sops-nix.nixosModules.sops
     inputs.stylix.nixosModules.stylix
 
-    ./graphical ./programs
-    ./services ./wayland
-
-    ./locale.nix ./pam.nix
-    ./style.nix ./users.nix
+    ./graphical ./locale.nix ./pam.nix
+    ./programs ./overlays.nix ./services
+    ./style.nix ./users.nix ./wayland
   ];
 
   nix = {
@@ -36,29 +34,7 @@
     };
   };
 
-  nixpkgs = {
-    config.allowUnfree = true;
-
-    overlays = [
-      # Access nixpkgs-unstable.
-      (_: prev: {
-        unstable = import inputs.nixpkgs-unstable {
-          inherit (prev) system;
-          config.allowUnfree = true;
-        };
-      })
-
-      # Access my personal scripts.
-      inputs.my-scripts.overlays.default
-
-      # Specify desktop file locations.
-      (_: prev: {
-        joplin-desktop = prev.joplin-desktop // {
-          desktopFile = "@joplinapp-desktop.desktop";
-        };
-      })
-    ];
-  };
+  nixpkgs.config.allowUnfree = true;
 
   boot.consoleLogLevel = 3;
 

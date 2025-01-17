@@ -92,23 +92,22 @@
   environment.systemPackages = with pkgs; [
 
     # Actual programs.
-    filezilla
-    gimp inkscape
-    joplin-desktop
-    vesktop zotero
+    digikam filezilla geogebra
+    inkscape joplin-desktop krita
+    gimp spotify vesktop zotero
 
-    # Newer fetures.
-    unstable.lutris
-    unstable.spotify
+    # Games and all that.
+    bolt-launcher dosbox-x
+    easyrpg-player lutris
+    gamescope prismlauncher
+    retroarch winetricks
+    wineWowPackages.stable
 
-    gamescope
-    prismlauncher
-    unigine-heaven
-    wine winetricks
-
-    biber clang lldb
+    # Programming.
+    clang jdk23 nodejs
+    bundix bundler ruby
     mathematica-webdoc
-    perl texliveFull
+    biber texliveFull
 
   ];
 }

@@ -96,20 +96,14 @@
   environment.systemPackages = with pkgs; [
 
     # Actual programs.
-    digikam geogebra
-    filezilla gimp
-    inkscape krita
-    joplin-desktop
-    vesktop zotero
-
-    # Newer versions.
-    unstable.lutris
-    unstable.spotify
+    digikam filezilla geogebra
+    inkscape joplin-desktop krita
+    gimp spotify vesktop zotero
 
     # Games and all that.
-    dosbox-x easyrpg-player
+    bolt-launcher dosbox-x
+    easyrpg-player lutris
     gamescope prismlauncher
-    unstable.bolt-launcher
     retroarch winetricks
     wineWowPackages.stable
 
