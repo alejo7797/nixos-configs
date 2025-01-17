@@ -300,16 +300,16 @@ in
           enable = true;
           inlayHints = true;
           servers = {
-            # Shellscript.
-            bashls.enable = true;
-
             # Python.
             basedpyright.enable = true;
+
+            # Shellscript.
+            bashls.enable = true;
 
             # C/C++.
             clangd.enable = true;
 
-            # Javascript et al.
+            # Javascript.
             ts_ls.enable = true;
 
             # Nix.
@@ -336,6 +336,7 @@ in
             diagnostics = {
               checkmake.enable = true;
               deadnix.enable = true;
+              phpcs.enable = true;
               rubocop.enable = true;
               selene.enable = true;
               statix.enable = true;
@@ -345,9 +346,14 @@ in
             };
             formatting = {
               black.enable = true;
+              phpcsfixer.enable = true;
+              prettier = {
+                enable = true;
+                # Prevent conflicts with ts_ls.
+                disableTsServerFormatter = true;
+              };
               rubocop.enable = true;
               stylua.enable = true;
-              prettier.enable = true;
             };
           };
         };
