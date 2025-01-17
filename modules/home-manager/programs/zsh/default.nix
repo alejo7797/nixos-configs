@@ -16,6 +16,8 @@ in
 
     programs.direnv = {
       enable = true;
+      # Improved implementation.
+      nix-direnv.enable = true;
       # We need to do this manually.
       enableZshIntegration = false;
     };
