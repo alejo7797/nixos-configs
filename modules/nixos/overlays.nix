@@ -3,6 +3,14 @@
   ...
 }:
 
+let
+  unstable = system:
+    import inputs.nixpkgs-unstable {
+      config.allowUnfree = true;
+      inherit system;
+    };
+in
+
 {
   nixpkgs.overlays = [
 
@@ -10,18 +18,13 @@
     inputs.my-scripts.overlays.default
 
     # Access packages from nixpkgs-unstable.
-    (_: prev:
-      let
-        unstable = import inputs.nixpkgs-unstable {
-          inherit (prev) system;
-          config.allowUnfree = true;
-        };
-      in
-      {
-        inherit (unstable)
-          bolt-launcher lutris spotify;
-      }
-    )
+    (_: prev: {
+      inherit (unstable prev.system)
+        bolt-launcher
+        joplin-desktop
+        lutris spotify
+        ;
+    })
 
     # Specify desktop file locations.
     (_: prev: {
