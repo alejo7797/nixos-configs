@@ -109,6 +109,7 @@
     # Games and all that.
     dosbox-x easyrpg-player
     gamescope prismlauncher
+    unstable.bolt-launcher
     retroarch winetricks
     wineWowPackages.stable
 
