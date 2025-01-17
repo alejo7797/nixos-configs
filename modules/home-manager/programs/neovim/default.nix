@@ -309,6 +309,9 @@ in
             # C/C++.
             clangd.enable = true;
 
+            # Javascript et al.
+            ts_ls.enable = true;
+
             # Nix.
             nil_ls = {
               enable = true;
