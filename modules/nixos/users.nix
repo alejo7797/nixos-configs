@@ -60,8 +60,7 @@
         shell = pkgs.zsh;
         extraGroups = [
           "networkmanager"
-          "scanner"
-          "wheel"
+          "scanner" "wheel"
         ];
       }
       // user.userSettings

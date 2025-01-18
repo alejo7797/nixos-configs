@@ -18,24 +18,24 @@ in
   config = lib.mkIf cfg.enable {
 
     nixpkgs.overlays = [
-      # Access ilya-fedin's repository.
       (_: prev: {
-        ilya-fedin = import inputs.ilya-fedin {
-          pkgs = prev;
-        };
+        # Access ilya-fedin's Nix repository.
+        ilya-fedin = import inputs.ilya-fedin { pkgs = prev; };
       })
     ];
 
-    # Style QT applications consistently.
     qt = {
       enable = true;
       platformTheme = "qt5ct";
     };
 
-    # Set theme variables early on.
     environment.variables = {
+      # Set theme variables early.
       GTK_THEME = "adw-gtk3";
       QT_FONT_DPI = "120";
+
+      # Improve Java font rendering.
+      _JAVA_OPTIONS = "-Dawt.useSystemAAFontSettings=lcd";
     };
 
     # Enable common theme components.
@@ -51,9 +51,9 @@ in
       # The default KDE sound theme.
       kdePackages.ocean-sound-theme
 
-      # From ilya-fedin's repository.
-      pkgs.ilya-fedin.qt5ct
-      pkgs.ilya-fedin.qt6ct
+      # Improved fork for KDE apps.
+      ilya-fedin.qt5ct
+      ilya-fedin.qt6ct
 
     ];
   };

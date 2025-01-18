@@ -17,11 +17,10 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    # Install and configure a bunch of wayland-specific utilities.
-    myHome.wayland.enable = true;
-
-    # Install and configure wlogout.
-    myHome.wlogout.enable = true;
+    myHome = {
+      wayland.enable = true;
+      wlogout.enable = true;
+    };
 
     # Start kanshi with Hyprland.
     services.kanshi.systemdTarget = "graphical-session.target";
@@ -39,17 +38,13 @@ in
           })
 
           [
-            "gammastep"
-            "hyprpaper"
-            "kdeconnect"
+            "gammastep" "hypridle"
+            "hyprpaper" "kdeconnect"
             "kdeconnect-indicator"
-            "swayidle"
-            "waybar"
-            "xsettingsd"
+            "waybar" "xsettingsd"
           ]
       );
 
-    # Configure Hyprland, the tiling Wayland compositor.
     wayland.windowManager.hyprland = {
       enable = true;
 
@@ -65,10 +60,8 @@ in
           kitty = "${config.programs.kitty.package}/bin/kitty";
         in
         {
-          # Default terminal application.
           "$terminal" = "${uwsm-app} -- ${kitty}";
 
-          # Default application launcher.
           "$menu" = builtins.concatStringsSep " " [
             "${pkgs.wofi}/bin/wofi |"
             "${pkgs.moreutils}/bin/ifne"
@@ -79,7 +72,6 @@ in
           # Workspace autostart command.
           exec-once = [ "${./hypr-startup}" ];
 
-          # Basic look and feel.
           general = {
             gaps_in = 0;
             gaps_out = 0;
@@ -88,7 +80,6 @@ in
             layout = "hy3";
           };
 
-          # Window decorations.
           decoration = {
             rounding = 0;
             active_opacity = 1.0;
@@ -108,7 +99,6 @@ in
             };
           };
 
-          # Animations.
           animations = {
             enabled = "yes, please :)";
 
@@ -146,13 +136,11 @@ in
             lib.mapAttrsToList (o: ws: map (w: "${toString w}, monitor:${o}") ws) config.myHome.workspaces
           );
 
-          # Miscellaneous.
           misc = {
             force_default_wallpaper = 2;
             disable_hyprland_logo = false;
           };
 
-          # Keybindings.
           "$mainMod" = "SUPER";
           bind =
             let
@@ -235,8 +223,12 @@ in
               ", XF86AudioLowerVolume, exec, ${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 4%-"
               ", XF86AudioMute, exec, ${wpctl} set-mute @DEFAULT_AUDIO_SINK@ toggle"
               ", XF86AudioMicMute, exec, ${wpctl} set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+
               ", XF86MonBrightnessUp, exec, ${brightnessctl} s 2%+"
               ", XF86MonBrightnessDown, exec, ${brightnessctl} s 2%-"
+
+              ", switch:on:Lid Switch, exec, hyprctl keyword monitor \"eDP-1, disable\""
+              ", switch:off:Lid Switch, exec, hyprctl keyword monitor \"eDP-1, preferred, 1\""
             ];
 
           bindl =

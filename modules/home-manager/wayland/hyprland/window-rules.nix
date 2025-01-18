@@ -15,7 +15,7 @@
     map (w: "workspace ${toString w.ws} silent, ${w.criteria}") [
       { ws = 1; criteria = "class:^(firefox)$"; }
       { ws = 1; criteria = "title:^(Home - )?Mozilla Thunderbird$"; }
-      { ws = 1; criteria = "class:^(Joplin)$"; }
+      { ws = 1; criteria = "class:^(@joplin\\/app-desktop)$"; }
       { ws = 2; criteria = "class:^(Zotero)$"; }
       { ws = 3; criteria = "title:^(Minecraft\\* 1\\.\\d{1,2}\\.\\d)$"; }
       { ws = 3; criteria = "class:^(steam)$"; }
@@ -34,6 +34,7 @@
     ++ map (w: "float, ${w}") [
       "class:^(.blueman-manager-wrapped)$"
       "class:^(firefox)$, title:^(Picture-in-Picture)$"
+      "class:^(org.kde.kdeconnect.handler)$"
       "class:^(org\\.keepassxc\\.KeePassXC)$"
       "class:^(net.lutris.Lutris), title:(Log for .*)$"
       "class:^(nm-connection-editor)$"
@@ -48,6 +49,7 @@
     ++ builtins.concatLists (
       map (w: [ "size 600 600, ${w}" "move 100%-w-10 100%-w-40, ${w}" ]) [
         "class:^(.blueman-manager-wrapped)$, title:^(Bluetooth Devices)$"
+        "class:^(org.kde.kdeconnect.handler)$, title:^(KDE Connect URL handler)$"
         "class:^(nm-connection-editor)$, title:^(Network Connections)$"
         "class:^(nm-openconnect-auth-dialog)$"
         "class:^(thunderbird)$, title:^(Calendar Reminders)$"

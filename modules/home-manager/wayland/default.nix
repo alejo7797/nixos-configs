@@ -1,46 +1,35 @@
-{ pkgs, lib, config, ... }: let
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
+let
   cfg = config.myHome.wayland;
+in
 
-in {
+{
+  imports = [
+    ./hyprland
+    ./sway-wm
+    ./swaync
+    ./waybar
+    ./wlogout
+  ];
 
-  imports = [ ./hyprland ./sway ./swaync ./waybar ./wlogout ];
-
-  options.myHome.wayland = {
-    enable = lib.mkEnableOption "Wayland";
-
-    lock = lib.mkOption {
-      type = lib.types.str;
-      default = "${pkgs.hyprlock}/bin/hyprlock";
-      example = "/usr/bin/hyprlock";
-      description = "Screen locker executable";
-    };
-
-    loginctl = lib.mkOption {
-      type = lib.types.str;
-      default = "${pkgs.systemd}/bin/loginctl";
-      example = "/usr/bin/loginctl";
-      description = "Instance of `loginctl` to run.";
-    };
-  };
+  options.myHome.wayland.enable = lib.mkEnableOption "Wayland";
 
   config = lib.mkIf cfg.enable {
+
     myHome = {
-      # Configure common graphical utilities.
       graphical.enable = true;
-
-      # Install and configure waybar.
       waybar.enable = true;
-
-      # Install and configure swaync.
       swaync.enable = true;
     };
 
     # Set environment variables using UWSM.
     xdg.configFile."uwsm/env".text = ''
-
-      # Access local scripts.
-      export PATH="$PATH''${PATH:+:}$HOME/.local/bin"
 
       # Set the cursor size.
       export XCURSOR_SIZE=24
@@ -52,7 +41,9 @@ in {
 
     '';
 
-    # Install and configure hyprlock.
+    # Stylix wants to set the wallpaper too.
+    stylix.targets.hyprlock.enable = false;
+
     programs.hyprlock = {
       enable = true;
       settings = {
@@ -70,7 +61,6 @@ in {
       };
     };
 
-    # Install and configure wofi.
     programs.wofi = {
       enable = true;
       settings = {
@@ -80,14 +70,9 @@ in {
       };
     };
 
-    # Stylix wants to set the wallpaper too.
-    stylix.targets.hyprlock.enable = false;
-
     services = {
-      # Enable the kanshi daemon.
       kanshi.enable = true;
 
-      # Enable and configure gammastep.
       gammastep = {
         enable = true;
         tray = true;
@@ -98,18 +83,32 @@ in {
         };
       };
 
-      # Enable and configure swayidle.
-      swayidle = {
+      hypridle = {
         enable = true;
-        events = [
-          { event = "lock"; command = "${pkgs.playerctl}/bin/playerctl -a pause"; }
-          { event = "lock"; command = "${pkgs.procps}/bin/pidof ${cfg.lock} || ${cfg.lock}"; }
-          { event = "before-sleep"; command = "${cfg.loginctl} lock-session"; }
-        ];
-        timeouts = [
-          { timeout = 600; command = "${cfg.loginctl} lock-session"; }
-          { timeout = 660; command = "systemctl suspend"; }
-        ];
+        settings =
+          let
+            hyprlock = "${pkgs.hyprlock}/bin/hyprlock";
+            loginctl = "${pkgs.systemd}/bin/loginctl";
+            playerctl = "${pkgs.playerctl}/bin/playerctl";
+            systemctl = "${pkgs.systemd}/bin/systemctl";
+          in
+          {
+            general = {
+              lock_cmd = "${playerctl} -a pause && ${hyprlock}";
+              unlock_cmd = "${pkgs.procps}/bin/pkill -USR1 hyprlock";
+              before_sleep_cmd = "${loginctl} lock-session";
+            };
+            listener = [
+              {
+                timeout = 600;
+                on-timeout = "${loginctl} lock-session";
+              }
+              {
+                timeout = 720;
+                on-timeout = "${systemctl} suspend";
+              }
+            ];
+          };
       };
     };
   };

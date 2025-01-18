@@ -1,9 +1,11 @@
-{ pkgs, lib, config, ... }: {
+{ ... }:
 
+{
   imports = [
-    ./dolphin.nix ./firefox.nix
+    ./dolphin.nix
+    ./fcitx5.nix
+    ./firefox.nix
+    ./jupyter.nix
     ./thunderbird.nix
-    ./fcitx5.nix ./vim.nix
   ];
-
 }

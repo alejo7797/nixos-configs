@@ -1,5 +1,10 @@
-{ pkgs, lib, config, ... }: {
+{
+  lib,
+  config,
+  ...
+}:
 
+{
   options.myHome.xdgAutostart = lib.mkOption {
     type = lib.types.listOf lib.types.package;
     description = "List of programs to run at system startup.";
@@ -20,28 +25,22 @@
 
         map
 
-          (
-            pkg: {
-              name = "autostart/" + pkg.name + ".desktop";
-              value =
-                let
-                  desktopFile =
-                    if pkg ? desktopFile then
-                      pkg.desktopFile
-                    else
-                      "${stripVersion pkg.name}.desktop";
-                in
+          (pkg: {
+            name = "autostart/" + pkg.name + ".desktop";
+            value =
 
-                if pkg ? desktopItem then
-                  { text = pkg.desktopItem.text; }
-                else
-                  { source = "${pkg}/share/applications/${desktopFile}"; };
-            }
-          )
+              let
+                desktopFile = pkg.desktopFile or "${stripVersion pkg.name}.desktop";
+              in
+
+              if pkg ? desktopItem then
+                { inherit (pkg.desktopItem) text; }
+              else
+                { source = "${pkg}/share/applications/${desktopFile}"; };
+
+          })
 
           config.myHome.xdgAutostart
-
       );
     };
-
 }

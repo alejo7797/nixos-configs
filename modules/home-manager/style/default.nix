@@ -1,6 +1,5 @@
 {
   pkgs,
-  inputs,
   config,
   lib,
   ...
@@ -13,9 +12,6 @@ in
 {
   imports = [ ../../style.nix ];
 
-  # Not available in our current version of Home Manager.
-  disabledModules = [ "${inputs.stylix}/modules/ghostty/hm.nix" ];
-
   options.myHome.style.enable = lib.mkEnableOption "user theme components";
 
   config = lib.mkIf cfg.enable {
@@ -24,11 +20,17 @@ in
     myStylix.enable = true;
 
     xdg = {
-      # Fix the look of QT applications.
       configFile = {
+        # Fix the look of QT applications.
         "kdeglobals".source = ./kdeglobals;
         "qt5ct/qt5ct.conf".source = ./qt5ct.conf;
         "qt6ct/qt6ct.conf".source = ./qt6ct.conf;
+
+        # Fix Japanese fonts.
+        "fontconfig" = {
+          recursive = true;
+          source = ./fontconfig;
+        };
       };
 
       # Make our theme available to Konsole.

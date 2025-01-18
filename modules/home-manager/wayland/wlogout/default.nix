@@ -1,12 +1,14 @@
-{ pkgs, lib, config, ... }: let
+{
+  lib,
+  config,
+  ...
+}:
 
+let
   cfg = config.myHome.wlogout;
+in
 
-  # Instance of loginctl to use.
-  loginctl = config.myHome.wayland.loginctl;
-
-in {
-
+{
   options.myHome.wlogout.enable = lib.mkEnableOption "wlogout";
 
   config = lib.mkIf cfg.enable {
@@ -18,7 +20,7 @@ in {
       layout = [
         {
           label = "lock";
-          action = "${loginctl} lock-session";
+          action = "loginctl lock-session";
           text = "Lock";
           keybind = "l";
         }
@@ -107,7 +109,6 @@ in {
           background-image: image(url("${./icons}/reboot.png"));
         }
       '';
-
-     };
+    };
   };
 }

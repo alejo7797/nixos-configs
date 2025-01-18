@@ -4,50 +4,48 @@
   # Did you read the comment?
   system.stateVersion = "24.11";
 
-  # Include hardware configuration.
   imports = [
     ./filesystems.nix
     ./hardware-configuration.nix
   ];
 
-  # Enable swap.
-  swapDevices = [
-    {
-      device = "/var/swapfile";
-      size = 32768;
-    }
-  ];
+  swapDevices = [ { device = "/var/swapfile"; size = 32768; } ];
 
-  # Enable Bluetooth.
-  hardware.bluetooth.enable = true;
+  boot = {
+    kernelParams = [ "quiet" "nowatchdog" ];
 
-  # Configure systemd-boot.
-  boot.loader = {
-    systemd-boot = {
+    loader = {
+      systemd-boot = {
+        enable = true;
 
-      # Create our own Windows bootloader entry.
-      windows."11" = {
-        title = "Windows 11";
-        sortKey = "a_windows";
-        efiDeviceHandle = "HD0b";
+        # Create our own Windows bootloader entry.
+        windows."11" = {
+          title = "Windows 11";
+          sortKey = "a_windows";
+          efiDeviceHandle = "HD0b";
+        };
+
+        extraInstallCommands = ''
+          # Do not show the auto-generated Windows entry.
+          echo "auto-entries false" >>/boot/loader/loader.conf
+
+          # Set Windows as the default boot entry.
+          ${pkgs.gnused}/bin/sed -i 's/default .*/default windows_11.conf/' /boot/loader/loader.conf
+        '';
       };
-
-      extraInstallCommands = ''
-        # Do not show the auto-generated Windows entry.
-        echo "auto-entries false" >>/boot/loader/loader.conf
-
-        # Set Windows as the default boot entry.
-        ${pkgs.gnused}/bin/sed -i 's/default .*/default windows_11.conf/' /boot/loader/loader.conf
-      '';
     };
   };
 
-  boot.kernelParams = [
-    "quiet"
-    "nowatchdog"
-  ];
+  hardware.bluetooth.enable = true;
 
-  networking.hostName = "shinobu";
+  networking = {
+    hostName = "shinobu";
+    networkmanager.enable = true;
+  };
+
+  services.resolved.enable = true;
+
+  time.timeZone = "Europe/Madrid";
 
   sops.secrets = {
     "my-password" = {
@@ -69,10 +67,6 @@
 
     home-users."ewan" = {
       userConfig = ./home.nix;
-      userSettings = {
-        description = "Alex";
-        hashedPasswordFile = "/run/secrets-for-users/my-password";
-      };
     };
 
     dolphin.enable = true;
@@ -84,75 +78,36 @@
 
   };
 
-  networking.networkmanager.enable = true;
-  services.resolved.enable = true;
-
-  time.timeZone = "Europe/Madrid";
-
   programs = {
-
+    gamemode.enable = true;
     thunderbird.enable = true;
-
     wireshark.enable = true;
 
     steam = {
       enable = true;
       protontricks.enable = true;
     };
-
-    gamemode.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
 
     # Actual programs.
-    filezilla
-    gimp
-    inkscape
-    joplin-desktop
-    plex-desktop
-    qbittorrent
-    simple-scan
-    ungoogled-chromium
-    vesktop
-    yubioath-flutter
-    zoom-us
-    zotero
+    digikam filezilla geogebra
+    inkscape joplin-desktop krita
+    gimp spotify vesktop zotero
 
-    # Wayland IME support.
-    unstable.spotify
-
-    # Wine.
+    # Games and all that.
+    bolt-launcher dosbox-x
+    easyrpg-player lutris
+    gamescope prismlauncher
+    retroarch winetricks
     wineWowPackages.stable
-    winetricks
 
-    # Gaming.
-    gamescope
-    lutris
-    prismlauncher
-    unigine-heaven
+    # Programming.
+    clang jdk23 nodejs
+    bundix bundler ruby
+    mathematica-webdoc
+    biber texliveFull
 
-    # Coding.
-    biber
-    black
-    clang
-    gdb
-    jupyter
-    lldb
-    #mathematica-webdoc
-    nixfmt-rfc-style
-    perl
-    ruby
-    sage
-    shellcheck
-    shfmt
-
-    # LaTeX.
-    (texlive.combine {
-      inherit (texlive)
-        scheme-medium
-        collection-langcyrillic
-        ;
-    })
   ];
 }

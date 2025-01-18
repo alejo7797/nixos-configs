@@ -5,9 +5,11 @@
   pkgs,
   ...
 }:
+
 let
   cfg = config.myHome.arch-linux;
 in
+
 {
   options.myHome.arch-linux.enable = lib.mkEnableOption "Arch-Linux quirks";
 
@@ -18,22 +20,24 @@ in
       nixPath = [ "nixpkgs=flake:nixpkgs" ];
     };
 
+    nixpkgs.overlays = [
+      inputs.my-scripts.overlays.default
+      inputs.nixgl.overlays.default
+    ];
+
     # Wrap Home Manager-insttalled programs with NixGL.
     nixGL.packages = pkgs.nixgl;
     programs.kitty.package = config.lib.nixGL.wrap pkgs.kitty;
 
-    # Load Hyprland plugins using hyprpm.
+    # Important Hyprland configuration overrides.
     wayland.windowManager.hyprland = {
       plugins = lib.mkForce [ ];
       importantPrefixes = lib.mkOptionDefault [ "exec-once" ];
-      settings.exec-once = [ "hyprpm reload -n" ];
+      settings.exec-once = [ "hyprpm reload -n" "uwsm app swayidle " ];
     };
 
-    # Recover hyprlock functionality.
-    myHome.wayland = {
-      loginctl = "/usr/bin/loginctl";
-      lock = "/usr/bin/hyprlock";
-    };
+    # We run swayidle natively.
+    services.swayidle.enable = lib.mkForce false;
 
     programs.zsh = {
       oh-my-zsh.plugins = [ "archlinux" ];

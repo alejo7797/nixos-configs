@@ -1,5 +1,5 @@
 {
-  description = "My NixOS configurations.";
+  description = "My NixOS configurations";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
@@ -10,8 +10,23 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     my-scripts = {
       url = "gitlab:alex/shell-scripts?host=git.patchoulihq.cc";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nur = {
+      url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -19,49 +34,31 @@
     ilya-fedin.url = "github:ilya-fedin/nur-repository";
     impermanence.url = "github:nix-community/impermanence";
     nixgl.url = "github:nix-community/nixGL";
-    nixvim.url = "github:nix-community/nixvim";
-    nur.url = "github:nix-community/NUR";
     sops-nix.url = "github:Mic92/sops-nix";
-    stylix.url = "github:danth/stylix";
+    stylix.url = "github:danth/stylix/release-24.11";
   };
 
   outputs =
-    {
-      nixpkgs,
-      home-manager,
-      self,
-      ...
-    }@inputs:
+    { nixpkgs, self, ... }@inputs:
 
     let
       mkSystem =
         config:
         nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs self; };
-          modules = [ config ] ++ [ self.nixosModules.default ];
-        };
-
-      mkHome =
-        system: config:
-        home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.${system};
-          extraSpecialArgs = { inherit inputs self; };
-          modules = [ config ] ++ [ self.homeManagerModules.default ];
+          modules = [ config self.nixosModules.default ];
         };
     in
 
     {
       nixosConfigurations = {
-        "qemu" = mkSystem hosts/qemu/configuration.nix;
-        "shinobu" = mkSystem hosts/shinobu/configuration.nix;
+        "qemu-vm" = mkSystem ./hosts/qemu-vm/configuration.nix;
+        "satsuki" = mkSystem ./hosts/satsuki/configuration.nix;
+        "shinobu" = mkSystem ./hosts/shinobu/configuration.nix;
       };
 
-      homeConfigurations = {
-        "ewan@satsuki" = mkHome "x86_64-linux" hosts/satsuki/configuration.nix;
-      };
-
-      nixosModules.default = modules/nixos;
-      homeManagerModules.default = modules/home-manager;
+      nixosModules.default = ./modules/nixos;
+      homeManagerModules.default = ./modules/home-manager;
     };
 
 }

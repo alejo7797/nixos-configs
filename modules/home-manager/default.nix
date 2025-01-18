@@ -1,4 +1,5 @@
 {
+  lib,
   inputs,
   config,
   pkgs,
@@ -14,6 +15,11 @@
     ./graphical.nix
     ./programs
   ];
+
+  options.myHome.lib = lib.mkOption {
+    description = "Internal configuration utilities.";
+    type = with lib.types; attrsOf anything;
+  };
 
   config = {
     nix.gc = {
@@ -40,9 +46,7 @@
 
     # My personal shell scripts.
     home.packages = with pkgs; [
-      audio-switch
       favicon-generator
-      lockbg-cache
       round-corners
       sleep-deprived
     ];

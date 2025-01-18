@@ -1,16 +1,11 @@
-{ pkgs, lib, config, ... }: let
+{
+  lib,
+  config,
+  ...
+}:
 
+let
   cfg = config.myHome.thunderbird;
-
-  inherit (pkgs.stdenv.hostPlatform) isDarwin;
-
-  thunderbirdConfigPath =
-    if isDarwin then "Library/Thunderbird" else ".thunderbird";
-
-  thunderbirdProfilesPath = if isDarwin then
-    "${thunderbirdConfigPath}/Profiles"
-  else
-    thunderbirdConfigPath;
 
   enabledCalendars = builtins.attrValues
     (lib.filterAttrs (_: c: c.thunderbird.enable) config.accounts.calendar.accounts);
@@ -24,7 +19,8 @@
   enabledContactsWithId =
     map (c: c // { id = builtins.hashString "sha256" c.name; }) enabledContacts;
 
-  toThunderbirdCalendar = calendar:
+  toThunderbirdCalendar =
+    calendar:
     let
       inherit (calendar) id;
     in
@@ -46,34 +42,36 @@
     }
     // calendar.thunderbird.settings id;
 
-  toThunderbirdContacts = contact:
+  toThunderbirdContacts =
+    contacts:
     let
-      inherit (contact) id;
+      inherit (contacts) id;
     in
     {
-      "ldap_2.servers.${id}.carddav.url" = contact.remote.url;
-      "ldap_2.servers.${id}.carddav.username" = contact.remote.userName;
-      "ldap_2.servers.${id}.description" = contact.name;
-    };
+      "ldap_2.servers.${id}.carddav.url" = contacts.remote.url;
+      "ldap_2.servers.${id}.carddav.username" = contacts.remote.userName;
+      "ldap_2.servers.${id}.description" = contacts.name;
+    }
+    // contacts.thunderbird.settings id;
 
-  mkUserJs = prefs: lib.concatStrings (
-    lib.mapAttrsToList (name: value: ''
-      user_pref("${name}", ${builtins.toJSON value});
-    '') prefs);
-
+  mkUserJs =
+    prefs:
+    lib.concatStrings (
+      lib.mapAttrsToList (name: value: ''
+        user_pref("${name}", ${builtins.toJSON value});
+      '') prefs
+    );
 in
 
 {
-
   options = {
-
-    myHome.thunderbird.enable = lib.mkEnableOption "Thunderbird configuration";
+    myHome.thunderbird.enable = lib.mkEnableOption "Thunderbird";
 
     accounts.calendar.accounts = lib.mkOption {
       type = with lib.types; attrsOf (submodule {
         options.thunderbird = {
 
-          enable = lib.mkEnableOption "Thunderbird for this calendar";
+          enable = lib.mkEnableOption "Thunderbird for this calendar" // { default = true; };
 
           settings = lib.mkOption {
             type = with types; functionTo (attrsOf (oneOf [ bool int str ]));
@@ -97,7 +95,7 @@ in
       type = with lib.types; attrsOf (submodule {
         options.thunderbird = {
 
-          enable = lib.mkEnableOption "Thunderbird for this cardDAV account";
+          enable = lib.mkEnableOption "Thunderbird for this cardDAV account" // { default = true; };
 
           settings = lib.mkOption {
             type = with types; functionTo (attrsOf (oneOf [ bool int str ]));
@@ -122,29 +120,29 @@ in
 
     accounts = {
 
-      # Configure my email accounts.
       email.accounts =
 
         let
           oauth_imap = id: { "mail.server.server_${id}.authMethod" = 10; };
           oauth_smtp = id: { "mail.smtpserver.smtp_${id}.authMethod" = 10; };
-          reply_on_top = id: { "mail.identity.id_${id}.reply_on_top" = 1; };
+          default_smtp = id: { "mail.identity.id_${id}.reply_on_top" = 1; };
           sent_no_copy = id: { "mail.identity.id_${id}.fcc" = false; };
-          outlook_smtp = id: (oauth_smtp id) // (sent_no_copy id) // (reply_on_top id);
+          gmail_smtp = id: ( oauth_smtp id // default_smtp id);
+          outlook_smtp = id: (oauth_smtp id // sent_no_copy id // default_smtp id);
         in
 
         builtins.mapAttrs
 
         (
-          _: value:
+          _: account:
             lib.recursiveUpdate
             {
               realName = "Alex Epelde";
-              userName = value.address;
-              imap.port = 993;
+              userName = account.address;
+              imap.port = 993; smtp.port = 587;
               thunderbird.enable = true;
             }
-            value
+            account
         )
 
         {
@@ -154,7 +152,7 @@ in
             imap.host = "mail.epelde.net";
             smtp.host = "mail.epelde.net";
             smtp.tls.useStartTls = true;
-            thunderbird.perIdentitySettings = reply_on_top;
+            thunderbird.perIdentitySettings = default_smtp;
           };
 
           Ewan = {
@@ -163,15 +161,14 @@ in
             imap.host = "mail.patchoulihq.cc";
             smtp.host = "mail.patchoulihq.cc";
             smtp.tls.useStartTls = true;
-            thunderbird.perIdentitySettings = reply_on_top;
+            thunderbird.perIdentitySettings = default_smtp;
           };
 
           Gmail = {
             address = "alexepelde@gmail.com";
-            flavor = "gmail.com";
+            flavor = "gmail.com"; smtp.port = 465;
             thunderbird.settings = oauth_imap;
-            thunderbird.perIdentitySettings =
-              id: (oauth_smtp id) // (reply_on_top id);
+            thunderbird.perIdentitySettings = gmail_smtp;
           };
 
           Harvard = {
@@ -199,36 +196,26 @@ in
           };
         };
 
-      # Configure my calendars.
       calendar.accounts =
 
         let
-          color = color: id: {
-            "calendar.registry.${id}.color" = color;
-          };
+          color =
+            color: id: {
+              "calendar.registry.${id}.color" = color;
+            };
 
-          identity = email: id: {
-            "calendar.registry.${id}.imip.identity.key" =
-              "id_${builtins.hashString "sha256" email}";
-          };
+          identity =
+            email: id: {
+              "calendar.registry.${id}.imip.identity.key" = "id_${builtins.hashString "sha256" email}";
+            };
 
           readOnly = id: { "calendar.registry.${id}.readOnly" = true; };
 
-          refreshInterval = interval: id: {
-            "calendar.registry.${id}.refreshInterval" = interval;
-          };
+          refreshInterval =
+            interval: id: {
+              "calendar.registry.${id}.refreshInterval" = interval;
+            };
         in
-
-        builtins.mapAttrs
-
-        (
-          _: value:
-            lib.recursiveUpdate
-            {
-              thunderbird.enable = true;
-            }
-            value
-        )
 
         {
           "Nextcloud" = {
@@ -283,7 +270,6 @@ in
           };
         };
 
-      # Configure my cardDAV accounts.
       contact.accounts =
 
         let
@@ -293,17 +279,6 @@ in
           };
         in
 
-        builtins.mapAttrs
-
-        (
-          _: value:
-            lib.recursiveUpdate
-            {
-              thunderbird.enable = true;
-            }
-            value
-        )
-
         {
           "Contacts" = {
             remote = {
@@ -311,15 +286,12 @@ in
               userName = "ewan";
               url = "https://cloud.patchoulihq.cc/remote.php/dav/addressbooks/users/ewan/contacts";
             };
-            thunderbird.settings = id: (
-              nextcloud id
-            );
+            thunderbird.settings = nextcloud;
           };
         };
 
     };
 
-    # Configure Thunderbird.
     programs.thunderbird = {
       enable = true;
       profiles."${config.home.username}.default" = {
@@ -359,10 +331,8 @@ in
 
     # Configure Thunderbird calendar and cardDAV accounts.
     home.file = lib.mkMerge (
-
       lib.mapAttrsToList (name: _: {
-
-        "${thunderbirdProfilesPath}/${name}/user.js".text =
+        ".thunderbird/${name}/user.js".text =
 
           mkUserJs (builtins.foldl' (a: b: a // b) { } (
             (map toThunderbirdCalendar enabledCalendarsWithId)

@@ -36,8 +36,8 @@ in
       serif = config.stylix.fonts.sansSerif;
 
       sansSerif = {
-        package = pkgs.noto-fonts;
-        name = "Noto Sans";
+        package = pkgs.noto-fonts-cjk-sans;
+        name = "Noto Sans CJK JP";
       };
 
       monospace = {

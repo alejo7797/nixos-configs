@@ -1,9 +1,8 @@
-{ pkgs, lib, config, ... }: {
-
+{
   # Set the default locale.
   i18n.defaultLocale = "en_US.UTF-8";
 
-  # Provide a generous selection of available locales.
+  # A generous selection of available locales.
   i18n.supportedLocales = [
     "C.UTF-8/UTF-8"
     "en_GB.UTF-8/UTF-8"

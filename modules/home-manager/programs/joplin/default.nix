@@ -1,9 +1,15 @@
-{ pkgs, lib, config, ... }: let
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
+let
   cfg = config.myHome.joplin-desktop;
+in
 
-in {
-
+{
   options.myHome.joplin-desktop.enable = lib.mkEnableOption "joplin-desktop";
 
   config = lib.mkIf cfg.enable {
@@ -14,15 +20,17 @@ in {
 
       extraConfig = {
         # Basic settings.
-	"locale" = "en_US";
-	"dateFormat" = "YYYY-MM-DD";
-	"themeAutoDetect" = true;
-	"notes.sortOrder.field" = "title";
+        "locale" = "en_US";
+        "dateFormat" = "YYYY-MM-DD";
+	      "editor.codeView" = true;
+        "themeAutoDetect" = true;
+        "notes.sortOrder.field" = "title";
+      	"notes.sortOrder.reverse" = false;
 
         # Font configuration.
-	"style.editor.fontSize" = 14;
-	"style.editor.fontFamily" = "Noto Sans CJK JP";
-	"style.editor.monospaceFontFamily" = "Hack Nerd Font Mono";
+        "style.editor.fontSize" = 14;
+        "style.editor.fontFamily" = "Noto Sans CJK JP";
+        "style.editor.monospaceFontFamily" = "Hack Nerd Font Mono";
       };
     };
 
@@ -37,17 +45,5 @@ in {
       "icons/Papirus-Dark/32x32/apps/@joplinapp-desktop.svg".source =
         "${pkgs.papirus-icon-theme}/share/icons/Papirus-Dark/32x32/apps/joplin.svg";
     };
-
-    # Ugly fix for autostarting joplin-desktop under XWayland.
-    wayland.windowManager =
-      let
-        uwsm-app = "${pkgs.uwsm}/bin/uwsm app";
-        joplin-desktop = "NIXOS_OZONE_WL= ${uwsm-app} -- joplin-desktop";
-      in
-      {
-        sway.config.startup = [ { command = "${joplin-desktop}"; } ];
-        hyprland.settings.exec-once = [ "${joplin-desktop}" ];
-      };
-
   };
 }

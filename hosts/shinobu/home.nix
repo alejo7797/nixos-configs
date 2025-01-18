@@ -1,4 +1,7 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  ...
+}:
 
 {
   home = {
@@ -9,7 +12,6 @@
 
   sops.secrets = {
     "sonarr-apikey" = { };
-    "shell-scripts-token" = { };
     "calendars/harvard-url" = { };
   };
 
@@ -17,6 +19,7 @@
     hyprland.enable = true;
     sway.enable = true;
 
+    firefox.enable = true;
     thunderbird.enable = true;
     joplin-desktop.enable = true;
 
@@ -24,12 +27,9 @@
     waybar.wttr-location = "San Lorenzo de El Escorial";
 
     xdgAutostart = with pkgs; [
-      firefox
-      spotify
-      steam
-      thunderbird
-      vesktop
-      zotero
+      firefox joplin-desktop
+      spotify steam thunderbird
+      vesktop zotero
     ];
   };
 

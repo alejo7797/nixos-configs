@@ -1,8 +1,15 @@
-{ pkgs, lib, config, ... }: let
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
+let
   cfg = config.myNixOS.fcitx5;
+in
 
-in {
+{
 
   options.myNixOS.fcitx5.enable = lib.mkEnableOption "Fcitx5";
 

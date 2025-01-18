@@ -4,16 +4,23 @@
   pkgs,
   ...
 }:
+
 let
   cfg = config.myHome.neovim;
   stylix-colors = config.lib.stylix.colors.withHashtag;
 in
+
 {
-  imports = [ ./keymaps.nix ];
+  imports = [
+    ./keymaps.nix
+    ./latex.nix
+  ];
 
   options.myHome.neovim.enable = lib.mkEnableOption "Neovim";
 
   config = lib.mkIf cfg.enable {
+
+    xdg.configFile."nvim/snippets".source = ./snippets;
 
     programs.nixvim = {
       enable = true;
@@ -49,6 +56,7 @@ in
         expandtab = true;
         foldlevelstart = 99;
         hlsearch = false;
+        shiftwidth = 4;
         signcolumn = "yes";
         title = true;
         undofile = true;
@@ -83,7 +91,7 @@ in
       autoCmd = [
         {
           event = "FileType";
-          pattern = "nix";
+          pattern = [ "nix" ];
           callback.__raw = ''
             function(opts)
               local bo = vim.bo[opts.buf]
@@ -197,7 +205,11 @@ in
 
         # Snippets.
         friendly-snippets.enable = true;
-        luasnip.enable = true;
+        luasnip = {
+          enable = true;
+          # Load custom snippets.
+          fromSnipmate = [ { } ];
+        };
 
         # Telescope.
         telescope.enable = true;
@@ -288,36 +300,24 @@ in
           enable = true;
           inlayHints = true;
           servers = {
-            # Shellscript.
-            bashls.enable = true;
-
             # Python.
             basedpyright.enable = true;
 
+            # Shellscript.
+            bashls.enable = true;
+
             # C/C++.
             clangd.enable = true;
+
+            # Javascript.
+            ts_ls.enable = true;
 
             # Nix.
             nil_ls = {
               enable = true;
               settings = {
                 formatting.command = [ "${pkgs.nixfmt-rfc-style}/bin/nixfmt" ];
-              };
-            };
-
-            # LaTeX.
-            texlab = {
-              enable = true;
-              settings.texlab = {
-                bibtexFormatter = "texlab";
-                chktex = {
-                  onEdit = true;
-                  onOpenAndSave = true;
-                };
-                latexFormatter = "latexindent";
-                latexindent.local = pkgs.writeText "latexindent.yaml" ''
-                  defaultIndent: "    "
-                '';
+                nix.flake.autoArchive = true;
               };
             };
           };
@@ -336,7 +336,7 @@ in
             diagnostics = {
               checkmake.enable = true;
               deadnix.enable = true;
-              proselint.enable = true;
+              phpcs.enable = true;
               rubocop.enable = true;
               selene.enable = true;
               statix.enable = true;
@@ -346,9 +346,14 @@ in
             };
             formatting = {
               black.enable = true;
+              phpcsfixer.enable = true;
+              prettier = {
+                enable = true;
+                # Prevent conflicts with ts_ls.
+                disableTsServerFormatter = true;
+              };
               rubocop.enable = true;
               stylua.enable = true;
-              prettier.enable = true;
             };
           };
         };
@@ -361,13 +366,6 @@ in
         };
 
         trouble.enable = true;
-
-        vimtex = {
-          enable = true;
-          settings = {
-            view_method = "zathura_simple";
-          };
-        };
       };
     };
   };

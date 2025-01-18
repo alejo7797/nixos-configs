@@ -1,6 +1,15 @@
-{ pkgs, lib, config, ... }: {
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+{
 
-  imports = [ ./hyprland.nix ./sway.nix ];
+  imports = [
+    ./hyprland.nix
+    ./sway.nix
+  ];
 
   options.myNixOS.wayland.enable = lib.mkEnableOption "Wayland";
 
@@ -16,7 +25,7 @@
     environment.sessionVariables.NIXOS_OZONE_WL = 1;
 
     # Let hyprlock authenticate users.
-    security.pam.services.hyprlock = {};
+    security.pam.services.hyprlock = { };
 
     # Start nm-applet after WAYLAND_DISPLAY is set.
     systemd.user.services.nm-applet = {

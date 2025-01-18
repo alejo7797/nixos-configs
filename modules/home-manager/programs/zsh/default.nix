@@ -14,6 +14,14 @@ in
 
   config = lib.mkIf cfg.enable {
 
+    programs.direnv = {
+      enable = true;
+      # Improved implementation.
+      nix-direnv.enable = true;
+      # We need to do this manually.
+      enableZshIntegration = false;
+    };
+
     programs.zsh = {
       enable = true;
       autocd = true;
@@ -35,16 +43,11 @@ in
         la = "ls -a";
         lla = "ls -la";
 
-        su = "sudo -i";
-
         # Build NixOS configuration.
         nixos-build = "nixos-rebuild build --flake ~/Git/nixconfig";
 
         # Build and activate NixOS configuration.
         nixos-switch = "sudo nixos-rebuild switch --flake ~/Git/nixconfig";
-
-        # Build and activate Home Manager environment.
-        home-switch = "home-manager switch --flake ~/Git/nixconfig";
 
         # Manage connection to my VPN server.
         vpnup = "nmcli c up Koakuma_VPN";
@@ -58,10 +61,14 @@ in
       };
 
       initExtraFirst = ''
+        emulate zsh -c "$(direnv export zsh)"
+
         # Enable Powerlevel10k instant prompt.
         if [[ -r "$XDG_CACHE_HOME/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
           source "$XDG_CACHE_HOME/p10k-instant-prompt-''${(%):-%n}.zsh"
         fi
+
+        emulate zsh -c "$(direnv hook zsh)"
       '';
 
       initExtra = ''

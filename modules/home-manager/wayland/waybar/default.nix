@@ -1,36 +1,37 @@
-{ pkgs, lib, config, ... }: let
+{
+  lib,
+  config,
+  ...
+}:
 
+let
   cfg = config.myHome.waybar;
+in
 
-in {
-
+{
   imports = [ ./modules.nix ];
 
-  options.myHome.waybar = with lib.types; {
+  options.myHome.waybar = {
 
     enable = lib.mkEnableOption "waybar";
 
     thermal-zone = lib.mkOption {
       description = "Thermal zone to monitor in waybar.";
-      type = int;
+      type = lib.types.int;
       default = 2;
     };
 
     wttr-location = lib.mkOption {
       description = "Location to show the weather for in waybar.";
-      type = str;
+      type = lib.types.str;
       default = "Madrid";
     };
-
   };
 
   config = lib.mkIf cfg.enable {
 
     # Style waybar ourselves.
     stylix.targets.waybar.enable = false;
-
-    # For the weather indicator.
-    home.packages = [ pkgs.wttrbar ];
 
     # Install and configure waybar.
     programs.waybar = {
@@ -47,29 +48,15 @@ in {
         spacing = 5;
 
         modules-left = [
-          "hyprland/workspaces"
-          "hyprland/submap"
-          "sway/workspaces"
-          "sway/mode"
-          "sway/scratchpad"
+          "hyprland/workspaces" "hyprland/submap"
+          "sway/workspaces" "sway/mode" "sway/scratchpad"
         ];
 
         modules-right = [
-          "idle_inhibitor"
-          "pulseaudio"
-          "cpu"
-          "memory"
-          "disk"
-          "battery"
-          "temperature"
-          "network"
-          "network#vpn"
-          "network#harvard"
-          "custom/updates"
-          "custom/weather"
-          "clock"
-          "custom/swaync"
-          "tray"
+          "idle_inhibitor" "pulseaudio" "cpu"
+          "memory" "disk" "battery" "temperature"
+          "network" "network#vpn" "network#harvard"
+          "custom/wttr" "clock" "custom/swaync" "tray"
         ];
       };
     };

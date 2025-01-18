@@ -349,7 +349,7 @@
           __unkeyed = "<leader>lr";
           desc = "LSP References [trouble]";
           icon = {
-            icon = " ";
+            icon = "󱖫 ";
             color = "green";
           };
         }
@@ -385,7 +385,7 @@
             else
               fallback()
             end
-          end)
+          end, { "i", "s" })
         '';
 
         "<S-Tab>" = ''
@@ -397,7 +397,7 @@
             else
               fallback()
             end
-          end)
+          end, { "i", "s" })
         '';
       };
 

@@ -1,13 +1,17 @@
-{ pkgs, lib, config, ... }: let
+{
+  lib,
+  config,
+  ...
+}:
 
+let
   cfg = config.myNixOS.pam;
+in
 
-in {
-
+{
   options.myNixOS.pam = {
-
     sudo.yubikey = lib.mkEnableOption "passwordless sudo";
-
+    auth.yubikey = lib.mkEnableOption "2-factor authentication";
   };
 
   config.security.pam = {
@@ -18,8 +22,15 @@ in {
       challengeResponsePath = "/var/lib/yubico";
     };
 
-    # Enable Yubikey-based passwordless sudo.
-    services.sudo.u2fAuth = cfg.sudo.yubikey;
+    # Configure Yubikey-based passwordless sudo.
+    services.sudo = lib.mkIf cfg.sudo.yubikey {
+      u2fAuth = true;
+    };
 
+    # Configure Yubikey-based 2-factor authentication.
+    u2f = lib.mkIf cfg.auth.yubikey {
+      enable = true;
+      control = "requisite";
+    };
   };
 }
