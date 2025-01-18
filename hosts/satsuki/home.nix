@@ -13,7 +13,6 @@
 
   sops.secrets = {
     "borg-passphrase" = { };
-    "shell-scripts-token" = { };
     "calendars/harvard" = { };
   };
 
