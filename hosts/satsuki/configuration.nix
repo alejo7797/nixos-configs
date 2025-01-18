@@ -21,20 +21,27 @@
   };
 
   hardware.bluetooth.enable = true;
+  powerManagement.powertop.enable = true;
 
   networking = {
     hostName = "satsuki";
     networkmanager.enable = true;
 
     firewall.extraCommands = ''
+      # Route traffic to resolver1.opendns.com outside the VPN tunnel.
       iptables -t mangle -A OUTPUT -d 208.67.222.222 -p udp --dport 53 -j MARK --set-mark 0xcbca
       iptables -t nat -A POSTROUTING -d 208.67.222.222 -p udp --dport 53 -j MASQUERADE
     '';
   };
 
   services = {
-    printing.drivers = [ pkgs.hplip ];
     resolved.enable = true;
+    printing.drivers = [ pkgs.hplip ];
+
+    udev.extraRules = ''
+      # Prevent wakeups from the Logitech USB receiver, which is known to misbehave.
+      ACTION=="add|change", SUBSYSTEM=="usb", DRIVERS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c547", ATTR{power/wakeup}="disabled"
+    '';
   };
 
   sops.secrets = {
@@ -45,12 +52,8 @@
     "wireguard/koakuma/private-key" = { };
     "wireguard/koakuma/preshared-key" = { };
 
-    "syncthing/cert.pem" = {
-      owner = "ewan";
-    };
-    "syncthing/key.pem" = {
-      owner = "ewan";
-    };
+    "syncthing/cert.pem" = { owner = "ewan"; };
+    "syncthing/key.pem" = { owner = "ewan"; };
   };
 
   myNixOS = {
