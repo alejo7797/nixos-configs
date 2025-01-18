@@ -21,7 +21,6 @@
   };
 
   hardware.bluetooth.enable = true;
-  powerManagement.powertop.enable = true;
 
   networking = {
     hostName = "satsuki";
