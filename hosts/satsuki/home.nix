@@ -13,6 +13,7 @@
 
   sops.secrets = {
     "borg-passphrase" = { };
+    "gitlab-token" = { };
     "calendars/harvard" = { };
   };
 
