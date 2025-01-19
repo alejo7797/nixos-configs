@@ -99,8 +99,9 @@
 
     # Games and all that.
     bolt-launcher dosbox-x
-    easyrpg-player lutris
-    prismlauncher winetricks
+    easyrpg-player mangohud
+    lutris prismlauncher
+    winetricks gamescope
     wineWowPackages.stable
 
     # Programming.
