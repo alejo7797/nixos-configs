@@ -33,7 +33,10 @@ in
         terminal = 11;
       };
 
-      serif = config.stylix.fonts.sansSerif;
+      serif = {
+        package = pkgs.noto-fonts;
+        name = "Noto Serif";
+      };
 
       sansSerif = {
         package = pkgs.noto-fonts;
