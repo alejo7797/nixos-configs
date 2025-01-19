@@ -48,19 +48,13 @@
   time.timeZone = "Europe/Madrid";
 
   sops.secrets = {
-    "my-password" = {
-      neededForUsers = true;
-    };
+    "my-password" = { neededForUsers = true; };
+
+    "nix-conf/gitlab-token" = { owner = "ewan"; };
+    "syncthing/key.pem" = { owner = "ewan"; };
 
     "wireguard/koakuma/private-key" = { };
     "wireguard/koakuma/preshared-key" = { };
-
-    "syncthing/cert.pem" = {
-      owner = "ewan";
-    };
-    "syncthing/key.pem" = {
-      owner = "ewan";
-    };
   };
 
   myNixOS = {

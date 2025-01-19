@@ -20,17 +20,18 @@
   ];
 
   nix = {
-    settings = {
-      experimental-features = [
-        "nix-command" "flakes"
-      ];
-    };
-
     channel.enable = false;
+
+    # Smart Gitlab token secret management.
+    extraOptions = "!include /run/secrets/nix-conf/gitlab-token";
 
     gc = {
       automatic = true; dates = "weekly";
       options = "--delete-older-than 30d";
+    };
+
+    settings = {
+      experimental-features = [ "nix-command" "flakes" ];
     };
   };
 
@@ -87,6 +88,7 @@
     openssh = {
       enable = true;
       settings = {
+        # Force public-key authentication.
         PasswordAuthentication = false;
       };
     };
@@ -109,9 +111,9 @@
     neofetch nettools
     nmap procps p7zip
     psmisc rsync sops
-    unrar usbutils uv
+    unar usbutils uv
     wireguard-tools
-    wget yt-dlp
+    wget yt-dlp zfs
 
   ];
 }
