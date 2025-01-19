@@ -66,6 +66,7 @@
     jupyter.enable = true;
     laptop.enable = true;
     pam.auth.yubikey = true;
+    retroarch.enable = true;
     sway.enable = true;
     tzupdate.enable = true;
 
@@ -105,8 +106,7 @@
     # Games and all that.
     bolt-launcher dosbox-x
     easyrpg-player lutris
-    gamescope prismlauncher
-    retroarch winetricks
+    prismlauncher winetricks
     wineWowPackages.stable
 
     # Programming.

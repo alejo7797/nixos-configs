@@ -73,6 +73,7 @@
     hyprland.enable = true;
     nvidia.enable = true;
     pam.sudo.yubikey = true;
+    retroarch.enable = true;
     sway.enable = true;
     tuigreet.enable = true;
 
@@ -99,8 +100,7 @@
     # Games and all that.
     bolt-launcher dosbox-x
     easyrpg-player lutris
-    gamescope prismlauncher
-    retroarch winetricks
+    prismlauncher winetricks
     wineWowPackages.stable
 
     # Programming.
