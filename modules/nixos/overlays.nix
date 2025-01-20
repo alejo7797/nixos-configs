@@ -33,6 +33,7 @@ in
     (_: prev: {
       sage = prev.sage.override {
         extraPythonPackages = ps: with ps; [ snappy ];
+        requireSageTests = false;
       };
     })
 
