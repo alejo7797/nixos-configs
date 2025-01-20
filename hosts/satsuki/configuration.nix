@@ -48,8 +48,7 @@
 
     "nix-conf/gitlab-token" = { owner = "ewan"; };
     "syncthing/key.pem" = { owner = "ewan"; };
-
-    "u2f-mappings" = { };
+    "u2f-mappings" = { owner = "ewan"; };
 
     "wireguard/koakuma/private-key" = { };
     "wireguard/koakuma/preshared-key" = { };

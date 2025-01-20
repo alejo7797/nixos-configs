@@ -125,74 +125,85 @@ in
         let
           oauth_imap = id: { "mail.server.server_${id}.authMethod" = 10; };
           oauth_smtp = id: { "mail.smtpserver.smtp_${id}.authMethod" = 10; };
-          default_smtp = id: { "mail.identity.id_${id}.reply_on_top" = 1; };
+          reply_on_top = id: { "mail.identity.id_${id}.reply_on_top" = 1; };
           sent_no_copy = id: { "mail.identity.id_${id}.fcc" = false; };
-          gmail_smtp = id: ( oauth_smtp id // default_smtp id);
-          outlook_smtp = id: (oauth_smtp id // sent_no_copy id // default_smtp id);
+
+          default_cfg = {
+            perIdentitySettings = reply_on_top;
+          };
+
+          gmail_cfg = {
+            perIdentitySettings =
+              id: (oauth_smtp id // reply_on_top id);
+            settings = oauth_imap;
+          };
+
+          outlook_cfg = {
+            perIdentitySettings =
+              id: (oauth_smtp id // reply_on_top id // sent_no_copy id);
+            settings = oauth_imap;
+          };
         in
 
         builtins.mapAttrs
 
         (
           _: account:
-            lib.recursiveUpdate
+          lib.mkMerge [
             {
-              realName = "Alex Epelde";
-              userName = account.address;
-              imap.port = 993; smtp.port = 587;
+              realName  = lib.mkDefault "Alex Epelde";
+              userName  = lib.mkDefault account.address;
+              smtp.host = lib.mkDefault account.imap.host;
+              smtp.port = lib.mkDefault 587;
+              imap.port = lib.mkDefault 993;
               thunderbird.enable = true;
             }
             account
+          ]
         )
 
         {
           Alex = {
-            address = "alex@epelde.net";
             primary = true;
+            address = "alex@epelde.net";
             imap.host = "mail.epelde.net";
-            smtp.host = "mail.epelde.net";
             smtp.tls.useStartTls = true;
-            thunderbird.perIdentitySettings = default_smtp;
+            thunderbird = default_cfg;
           };
 
           Ewan = {
+            realName = "Ewan";
             address = "ewan@patchoulihq.cc";
-            realName = "ewan";
             imap.host = "mail.patchoulihq.cc";
-            smtp.host = "mail.patchoulihq.cc";
             smtp.tls.useStartTls = true;
-            thunderbird.perIdentitySettings = default_smtp;
+            thunderbird = default_cfg;
           };
 
           Gmail = {
             address = "alexepelde@gmail.com";
-            flavor = "gmail.com"; smtp.port = 465;
-            thunderbird.settings = oauth_imap;
-            thunderbird.perIdentitySettings = gmail_smtp;
+            flavor = "gmail.com";
+            thunderbird = gmail_cfg;
           };
 
           Harvard = {
             address = "epelde@math.harvard.edu";
             flavor = "outlook.office365.com";
             folders.trash = "Deleted Items";
-            thunderbird.settings = oauth_imap;
-            thunderbird.perIdentitySettings = outlook_smtp;
+            thunderbird = outlook_cfg;
           };
 
           Outlook = {
             address = "alexepelde@outlook.es";
             flavor = "outlook.office365.com";
             folders.trash = "Deleted";
-            thunderbird.settings = oauth_imap;
-            thunderbird.perIdentitySettings = outlook_smtp;
+            thunderbird = outlook_cfg;
           };
 
           Cambridge = {
             address = "ae433@cantab.ac.uk";
             flavor = "outlook.office365.com";
             folders.trash = "Deleted Items";
-            thunderbird.settings = oauth_imap;
-            thunderbird.perIdentitySettings = outlook_smtp;
+            thunderbird = outlook_cfg;
           };
         };
 
