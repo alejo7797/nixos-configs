@@ -42,6 +42,7 @@ in
       gpg.enable = true;
       mimeApps.enable = true;
       mpv.enable = true;
+      ssh.enable = true;
       style.enable = true;
       variety.enable = true;
       zathura.enable = true;
