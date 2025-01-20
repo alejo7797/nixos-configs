@@ -94,7 +94,7 @@ in
           in
           {
             general = {
-              lock_cmd = "${playerctl} -a pause && ${hyprlock}";
+              lock_cmd = "${playerctl} -a pause; ${hyprlock}";
               unlock_cmd = "${pkgs.procps}/bin/pkill -USR1 hyprlock";
               before_sleep_cmd = "${loginctl} lock-session";
             };

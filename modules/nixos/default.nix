@@ -23,7 +23,7 @@
     channel.enable = false;
 
     # Smart Gitlab token secret management.
-    extraOptions = "!include /run/secrets/nix-conf/gitlab-token";
+    extraOptions = "!include ${config.sops.secrets."nix-conf/gitlab-token".path}";
 
     gc = {
       automatic = true; dates = "weekly";
