@@ -92,8 +92,8 @@ in
 
         plugins = [
           "alias-finder" "dirhistory"
-          "git" "git-auto-fetch" "history"
-          "python" "rsync" "safe-paste"
+          "git" "history" "python"
+          "rsync" "ruby" "safe-paste"
           "sudo" "systemd" "zbell"
         ];
 
