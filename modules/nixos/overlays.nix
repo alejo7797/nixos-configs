@@ -17,6 +17,9 @@ in
     # Access my personal scripts.
     inputs.my-scripts.overlays.default
 
+    # Access my personal packages.
+    inputs.my-expressions.overlays.default
+
     # Access packages from nixpkgs-unstable.
     (_: prev: {
       inherit (unstable prev.system)

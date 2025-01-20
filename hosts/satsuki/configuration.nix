@@ -111,8 +111,9 @@
 
     # Programming.
     clang jdk23 nodejs
-    bundix bundler ruby
+    bundix bundler gap
     mathematica-webdoc
+    ruby sage snappy
     biber texliveFull
 
   ];

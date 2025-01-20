@@ -15,6 +15,11 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    my-expressions = {
+      url = "gitlab:alex/nix-expressions?host=git.patchoulihq.cc";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     my-scripts = {
       url = "gitlab:alex/shell-scripts?host=git.patchoulihq.cc";
       inputs.nixpkgs.follows = "nixpkgs";
