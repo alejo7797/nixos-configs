@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 
@@ -15,6 +16,8 @@ in
   };
 
   config = {
+
+    services.udev.packages = [ pkgs.yubikey-personalization ];
 
     security.pam = lib.mkMerge [
       {
@@ -46,7 +49,6 @@ in
             u2fAuth = true;
           }
         ) {
-            hyprlock = { };
             i3lock = { };
             swaylock = { };
           };
