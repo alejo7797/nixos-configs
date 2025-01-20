@@ -113,7 +113,7 @@
     clang jdk23 nodejs
     bundix bundler gap
     mathematica-webdoc
-    ruby sage snappy
+    ruby sage snap-py
     biber texliveFull
 
   ];

@@ -29,6 +29,13 @@ in
         ;
     })
 
+    # Access the SnapPy python module in Sage.
+    (_: prev: {
+      sage = prev.sage.override {
+        extraPythonPackages = ps: with ps; [ snappy ];
+      };
+    })
+
     # Specify desktop file locations.
     (_: prev: {
       joplin-desktop = prev.joplin-desktop // {
