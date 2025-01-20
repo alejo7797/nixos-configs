@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }:
 
@@ -14,7 +13,31 @@ in
 
   config = lib.mkIf cfg.enable {
 
+    programs.ssh = {
+      enable = true;
 
+      matchBlocks = {
+        "srcf" = {
+          match = "host=*.srcf.net";
+          user = "ae433";
+        };
 
+        "abel" = {
+          user = "epelde";
+        };
+
+        "patchouli" = {
+          port = 21055;
+        };
+
+        "git.patchoulihq.cc" = {
+          port = 21055;
+        };
+
+        "koakuma" = {
+          port = 51901;
+        };
+      };
+    };
   };
 }

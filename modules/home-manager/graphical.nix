@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }:
 
@@ -93,12 +92,5 @@ in
         };
         inherit Service;
       };
-
-    systemd.user.services = {
-      polkit-gnome-agent = config.myHome.lib.mkGraphicalService {
-        Unit.Description = "GNOME PolicyKit authentication daemon";
-        Service.ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-      };
-    };
   };
 }
