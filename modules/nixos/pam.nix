@@ -49,6 +49,7 @@ in
             u2fAuth = true;
           }
         ) {
+            hyprlock = { };
             i3lock = { };
             swaylock = { };
           };
