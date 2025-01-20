@@ -30,7 +30,7 @@ in
 
     # The script cannot be read-only, otherwise Variety won't run.
     home.activation.variety = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      install -Dm744 ${./set_wallpaper} -t ${config.xdg.configHome}/variety/scripts
+      install -Dm744 ${./set_wallpaper} -T ${config.xdg.configHome}/variety/scripts/set_wallpaper
     '';
   };
 }
