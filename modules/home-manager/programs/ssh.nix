@@ -17,8 +17,7 @@ in
       enable = true;
 
       matchBlocks = {
-        "srcf" = {
-          match = "host=*.srcf.net";
+        "*.srcf.net" = {
           user = "ae433";
         };
 
