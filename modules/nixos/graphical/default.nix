@@ -28,11 +28,9 @@ in
     };
 
     programs = {
-      gnupg.agent.enable = true;
-      ssh.startAgent = true;
-
       dconf.enable = true;
       gnome-disks.enable = true;
+      gnupg.agent.enable = true;
       kdeconnect.enable = true;
       nm-applet.enable = true;
     };

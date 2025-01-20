@@ -40,6 +40,7 @@ in
     myHome = {
       keepassxc.enable = true;
       kitty.enable = true;
+      gpg.enable = true;
       mimeApps.enable = true;
       mpv.enable = true;
       style.enable = true;
