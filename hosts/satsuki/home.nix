@@ -121,19 +121,23 @@
 
   programs = {
 
-    borgmatic.backups.personal = {
-      consistency.checks = [
-        { name = "repository"; frequency = "2 weeks"; }
-        { name = "data"; frequency = "6 weeks"; }
-      ];
-      location = {
-        patterns = [ "R /home/ewan" "- home/ewan/.cache" "- home/ewan/.local/share/Steam" ];
-        repositories = [ { "path" = "ssh://patchouli/mnt/Hanekawa/Backup/satsuki/borg"; } ];
-      };
-      retention = { keepDaily = 3; };
-      storage = {
-        encryptionPasscommand = "${pkgs.coreutils}/bin/cat ${config.sops.secrets."borg/passphrase".path}";
-        extraConfig = { ssh_command = "${pkgs.openssh}/bin/ssh -i ${config.sops.secrests."borg/ssh-key".path}"; };
+    borgmatic = {
+      enable = true;
+
+      backups.personal = {
+        consistency.checks = [
+          { name = "repository"; frequency = "2 weeks"; }
+          { name = "data"; frequency = "6 weeks"; }
+        ];
+        location = {
+          patterns = [ "R /home/ewan" "- home/ewan/.cache" "- home/ewan/.local/share/Steam" ];
+          repositories = [ { "path" = "ssh://patchouli/mnt/Hanekawa/Backup/satsuki/borg"; } ];
+        };
+        retention = { keepDaily = 3; };
+        storage = {
+          encryptionPasscommand = "${pkgs.coreutils}/bin/cat ${config.sops.secrets."borg/passphrase".path}";
+          extraConfig = { ssh_command = "${pkgs.openssh}/bin/ssh -i ${config.sops.secrets."borg/ssh-key".path}"; };
+        };
       };
     };
 

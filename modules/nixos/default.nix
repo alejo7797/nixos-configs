@@ -104,16 +104,12 @@
 
   environment.systemPackages = with pkgs; [
 
-    curl dig file
-    findutils ffmpeg
-    htop imagemagick
-    lm_sensors lsd ncdu
-    neofetch nettools
-    nmap procps p7zip
-    psmisc rsync sops
-    unar usbutils uv
-    wireguard-tools
-    wget yt-dlp zfs
+    curl dig file findutils
+    ffmpeg htop imagemagick
+    lm_sensors lsd lsof ncdu
+    neofetch nmap procps psmisc
+    rsync sops unar usbutils
+    wireguard-tools wget yt-dlp
 
   ];
 }
