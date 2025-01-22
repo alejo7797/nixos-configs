@@ -64,16 +64,32 @@ in
       };
 
       highlightOverride = with stylix-colors; {
-        # Fixing some colors.
+
         MiniIconsBlue.fg = base0D;
         MiniIconsGrey.fg = base04;
+        LightBulbSign.bg = base00;
 
-        # Which-Key.
+        GitSignsAdd = {
+          fg = base0B;
+          bg = base00;
+        };
+        GitSignsChange = {
+          fg = base0E;
+          bg = base00;
+        };
+        GitSignsDelete = {
+          fg = base08;
+          bg = base00;
+        };
+        GitSignsUntracked = {
+          fg = base0C;
+          bg = base00;
+        };
+
         NormalFloat.bg = base00;
         WhichKeyGroup.fg = base05;
         WhichKeySeparator.bg = base00;
 
-        # General look.
         MatchParen = {
           fg = base0A;
           bg = base02;
