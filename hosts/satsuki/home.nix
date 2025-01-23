@@ -136,7 +136,7 @@
         retention = { keepDaily = 3; };
         storage = {
           encryptionPasscommand = "${pkgs.coreutils}/bin/cat ${config.sops.secrets."borg/passphrase".path}";
-          extraConfig = { ssh_command = "${pkgs.openssh}/bin/ssh -i ${config.sops.secrets."borg/ssh-key".path}"; };
+          extraConfig = { ssh_command = "${pkgs.openssh}/bin/ssh -o IdentityAgent=none -i ${config.sops.secrets."borg/ssh-key".path}"; };
         };
       };
     };
