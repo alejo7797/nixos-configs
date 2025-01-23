@@ -8,7 +8,7 @@
       local rule = require('nvim-autopairs.rule')
       require('nvim-autopairs').add_rules({
 
-        rule("$", "$", "tex"),
+        rule("$ ", " $", "tex"),
 
         rule("\\(", "\\)", "tex"),
         rule("\\{", "\\}", "tex"),
