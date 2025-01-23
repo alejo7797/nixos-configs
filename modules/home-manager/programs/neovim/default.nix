@@ -129,8 +129,8 @@ in
         trim.enable = true;
 
         # Visuals.
-        colorizer.enable = true;
         indent-blankline.enable = true;
+        nvim-colorizer.enable = true;
         web-devicons.enable = true;
 
         # UI.
