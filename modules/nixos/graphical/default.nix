@@ -28,6 +28,11 @@ in
     };
 
     programs = {
+      appimage = {
+        enable = true;
+        binfmt = true;
+      };
+
       dconf.enable = true;
       gnome-disks.enable = true;
       gnupg.agent.enable = true;
