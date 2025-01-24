@@ -37,6 +37,14 @@ in
       };
     })
 
+    # Add extra libraries to Lutris.
+    (_: prev: {
+      lutris = prev.lutris.override {
+        extraLibraries = pkgs: with pkgs;
+          [ libgudev libvdpau speex ];
+      };
+    })
+
     # Specify desktop file locations.
     (_: prev: {
       joplin-desktop = prev.joplin-desktop // {
