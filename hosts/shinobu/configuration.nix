@@ -64,6 +64,7 @@
     };
 
     dolphin.enable = true;
+    lutris.enable = true;
     hyprland.enable = true;
     nvidia.enable = true;
     pam.sudo.yubikey = true;
@@ -93,9 +94,8 @@
 
     # Games and all that.
     bolt-launcher dosbox-x
-    easyrpg-player mangohud
-    lutris prismlauncher
-    winetricks gamescope
+    easyrpg-player gamescope
+    prismlauncher winetricks
     wineWowPackages.stable
 
     # Programming.

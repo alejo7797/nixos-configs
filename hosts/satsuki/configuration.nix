@@ -9,7 +9,12 @@
     ./hardware-configuration.nix
   ];
 
-  swapDevices = [ { device = "/var/swapfile"; size = 16384; } ];
+  swapDevices = [
+    {
+      device = "/var/swapfile";
+      size = 16384;
+    }
+  ];
 
   boot = {
     lanzaboote = {
@@ -17,7 +22,10 @@
       pkiBundle = "/var/lib/sbctl";
     };
     loader.timeout = 0;
-    kernelParams = [ "quiet" "nowatchdog" ];
+    kernelParams = [
+      "quiet"
+      "nowatchdog"
+    ];
   };
 
   hardware.bluetooth.enable = true;
@@ -44,11 +52,20 @@
   };
 
   sops.secrets = {
-    "my-password" = { neededForUsers = true; };
+    "my-password" = {
+      neededForUsers = true;
+    };
 
-    "nix-conf/gitlab-token" = { owner = "ewan"; };
-    "syncthing/key.pem" = { owner = "ewan"; };
-    "u2f-mappings" = { group = "users"; mode = "0440"; };
+    "nix-conf/gitlab-token" = {
+      owner = "ewan";
+    };
+    "syncthing/key.pem" = {
+      owner = "ewan";
+    };
+    "u2f-mappings" = {
+      group = "users";
+      mode = "0440";
+    };
 
     "wireguard/koakuma/private-key" = { };
     "wireguard/koakuma/preshared-key" = { };
@@ -64,6 +81,7 @@
     hyprland.enable = true;
     jupyter.enable = true;
     laptop.enable = true;
+    lutris.enable = true;
     pam.auth.yubikey = true;
     retroarch.enable = true;
     sway.enable = true;
@@ -98,23 +116,39 @@
   environment.systemPackages = with pkgs; [
 
     # Actual programs.
-    digikam filezilla geogebra
-    inkscape joplin-desktop krita
-    gimp spotify vesktop zotero
+    digikam
+    filezilla
+    geogebra
+    inkscape
+    joplin-desktop
+    krita
+    gimp
+    spotify
+    vesktop
+    zotero
 
     # Games and all that.
-    bolt-launcher dosbox-x
-    easyrpg-player mangohud
-    lutris prismlauncher
-    winetricks gamescope
+    bolt-launcher
+    dosbox-x
+    easyrpg-player
+    gamescope
+    prismlauncher
+    winetricks
     wineWowPackages.stable
 
     # Programming.
-    clang jdk23 nodejs
-    bundix bundler gap
+    clang
+    jdk23
+    nodejs
+    bundix
+    bundler
+    gap
     mathematica-webdoc
-    ruby sage SnapPy
-    biber texliveFull
+    ruby
+    sage
+    SnapPy
+    biber
+    texliveFull
 
   ];
 }
