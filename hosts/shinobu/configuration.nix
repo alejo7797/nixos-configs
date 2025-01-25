@@ -48,19 +48,13 @@
   time.timeZone = "Europe/Madrid";
 
   sops.secrets = {
-    "my-password" = {
-      neededForUsers = true;
-    };
+    "my-password" = { neededForUsers = true; };
+
+    "nix-conf/gitlab-token" = { owner = "ewan"; };
+    "syncthing/key.pem" = { owner = "ewan"; };
 
     "wireguard/koakuma/private-key" = { };
     "wireguard/koakuma/preshared-key" = { };
-
-    "syncthing/cert.pem" = {
-      owner = "ewan";
-    };
-    "syncthing/key.pem" = {
-      owner = "ewan";
-    };
   };
 
   myNixOS = {
@@ -73,6 +67,7 @@
     hyprland.enable = true;
     nvidia.enable = true;
     pam.sudo.yubikey = true;
+    retroarch.enable = true;
     sway.enable = true;
     tuigreet.enable = true;
 
@@ -98,15 +93,16 @@
 
     # Games and all that.
     bolt-launcher dosbox-x
-    easyrpg-player lutris
-    gamescope prismlauncher
-    retroarch winetricks
+    easyrpg-player mangohud
+    lutris prismlauncher
+    winetricks gamescope
     wineWowPackages.stable
 
     # Programming.
     clang jdk23 nodejs
-    bundix bundler ruby
+    bundix bundler gap
     mathematica-webdoc
+    ruby sage SnapPy
     biber texliveFull
 
   ];

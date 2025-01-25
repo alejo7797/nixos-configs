@@ -11,8 +11,13 @@
     };
 
     nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      url = "github:nix-community/nixvim/nixos-24.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    my-expressions = {
+      url = "gitlab:alex/nix-expressions?host=git.patchoulihq.cc";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     my-scripts = {
@@ -21,7 +26,7 @@
     };
 
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.1";
+      url = "github:nix-community/lanzaboote/v0.4.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

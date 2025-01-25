@@ -2,11 +2,9 @@
 
 {
   imports = [
-    ./borgmatic.nix ./joplin
-    ./firefox.nix ./git.nix
-    ./gpg.nix ./keepassxc
-    ./kitty ./mpv.nix ./neovim
-    ./variety ./thunderbird.nix
-    ./zathura.nix ./zsh
+    ./joplin ./firefox.nix ./geogebra
+    ./git.nix ./gpg.nix ./keepassxc ./zsh
+    ./kitty ./mpv.nix ./neovim ./zathura.nix
+    ./ssh.nix ./thunderbird.nix ./variety
   ];
 }

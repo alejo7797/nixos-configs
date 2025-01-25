@@ -11,8 +11,8 @@
   };
 
   sops.secrets = {
-    "sonarr-apikey" = { };
-    "calendars/harvard-url" = { };
+    "calendar/sonarr" = { };
+    "calendars/harvard" = { };
   };
 
   myHome = {

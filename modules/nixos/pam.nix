@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 
@@ -14,23 +15,52 @@ in
     auth.yubikey = lib.mkEnableOption "2-factor authentication";
   };
 
-  config.security.pam = {
+  config = {
 
-    yubico = {
-      # Use pam_yubico in HMAC-SHA-1 Challenge-Response mode.
-      mode = "challenge-response";
-      challengeResponsePath = "/var/lib/yubico";
-    };
+    services.udev.packages = [ pkgs.yubikey-personalization ];
 
-    # Configure Yubikey-based passwordless sudo.
-    services.sudo = lib.mkIf cfg.sudo.yubikey {
-      u2fAuth = true;
-    };
+    security.pam = lib.mkMerge [
+      {
+        yubico = {
+          mode = "challenge-response";
+          challengeResponsePath = "/var/lib/yubico";
+        };
 
-    # Configure Yubikey-based 2-factor authentication.
-    u2f = lib.mkIf cfg.auth.yubikey {
-      enable = true;
-      control = "requisite";
-    };
+        u2f.settings = {
+          authfile = config.sops.secrets."u2f-mappings".path;
+          origin = "pam://nitori"; # Host independent.
+        };
+      }
+
+      # Optional 2-factor authentication.
+      (lib.mkIf cfg.auth.yubikey {
+
+        u2f.control = "requisite";
+
+        yubico = {
+          enable = true;
+          control = "requisite";
+        };
+
+        # Some services dislike pam_yubico.
+        services = lib.mapAttrs (
+          _: _: {
+            yubicoAuth = false;
+            u2fAuth = true;
+          }
+        ) {
+            hyprlock = { };
+            i3lock = { };
+            swaylock = { };
+          };
+      })
+
+      # Optionally enable Yubikey-based passwordless sudo.
+      (lib.mkIf cfg.sudo.yubikey { services.sudo.yubicoAuth = true; })
+    ];
+
+    warnings = lib.optional (cfg.auth.yubikey && cfg.sudo.yubikey) ''
+      Passwordless sudo won't function if myNixOS.pam.auth.yubikey is set.
+    '';
   };
 }

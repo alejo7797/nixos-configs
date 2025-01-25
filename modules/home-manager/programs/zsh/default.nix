@@ -44,10 +44,10 @@ in
         lla = "ls -la";
 
         # Build NixOS configuration.
-        nixos-build = "nixos-rebuild build --flake ~/Git/nixconfig";
+        nixos-build = "nixos-rebuild build --flake ~/Git/nixos-configs";
 
         # Build and activate NixOS configuration.
-        nixos-switch = "sudo nixos-rebuild switch --flake ~/Git/nixconfig";
+        nixos-switch = "sudo nixos-rebuild switch --flake ~/Git/nixos-configs";
 
         # Manage connection to my VPN server.
         vpnup = "nmcli c up Koakuma_VPN";
@@ -92,8 +92,8 @@ in
 
         plugins = [
           "alias-finder" "dirhistory"
-          "git" "git-auto-fetch" "history"
-          "python" "rsync" "safe-paste"
+          "git" "history" "python"
+          "rsync" "ruby" "safe-paste"
           "sudo" "systemd" "zbell"
         ];
 

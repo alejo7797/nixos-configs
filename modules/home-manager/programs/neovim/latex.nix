@@ -3,6 +3,24 @@
 {
   programs.nixvim.plugins = {
 
+    nvim-autopairs.luaConfig.post = ''
+
+      local rule = require('nvim-autopairs.rule')
+      require('nvim-autopairs').add_rules({
+
+        rule("$ ", " $", "tex"),
+
+        rule("\\(", "\\)", "tex"),
+        rule("\\{", "\\}", "tex"),
+        rule("\\[", "\\]", "tex"),
+
+        rule("\\left(", "\\right)", "tex"),
+        rule("\\left\\{", "\\right\\}", "tex"),
+        rule("\\left[", "\\right]", "tex"),
+
+      })
+    '';
+
     lsp.servers = {
       texlab = {
         enable = true;

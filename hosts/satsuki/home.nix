@@ -12,13 +12,14 @@
   };
 
   sops.secrets = {
-    "borg-passphrase" = { };
+    "borg/passphrase" = { };
+    "borg/ssh-key" = { };
     "calendars/harvard" = { };
+    "calendars/sonarr" = { };
   };
 
   myHome = {
     laptop.enable = true;
-    borgmatic.enable = true;
 
     hyprland.enable = true;
     sway.enable = true;
@@ -48,6 +49,7 @@
   '';
 
   services = {
+    borgmatic.enable = true;
     syncthing.enable = true;
 
     kanshi.settings =
@@ -119,17 +121,24 @@
 
   programs = {
 
-    borgmatic.backups.personal = {
-      consistency.checks = [
-        { name = "repository"; frequency = "2 weeks"; }
-        { name = "data"; frequency = "6 weeks"; }
-      ];
-      location = {
-        patterns = [ "R /home/ewan" "- home/ewan/.cache" "- home/ewan/.local/share/Steam" ];
-        repositories = [ { "path" = "ssh://patchouli/mnt/Hanekawa/Backup/satsuki/borg"; } ];
+    borgmatic = {
+      enable = true;
+
+      backups.personal = {
+        consistency.checks = [
+          { name = "repository"; frequency = "2 weeks"; }
+          { name = "data"; frequency = "6 weeks"; }
+        ];
+        location = {
+          patterns = [ "R /home/ewan" "- home/ewan/.cache" "- home/ewan/.local/share/Steam" ];
+          repositories = [ { "path" = "ssh://patchouli/mnt/Hanekawa/Backup/satsuki/borg"; } ];
+        };
+        retention = { keepDaily = 3; };
+        storage = {
+          encryptionPasscommand = "${pkgs.coreutils}/bin/cat ${config.sops.secrets."borg/passphrase".path}";
+          extraConfig = { ssh_command = "${pkgs.openssh}/bin/ssh -o IdentityAgent=none -i ${config.sops.secrets."borg/ssh-key".path}"; };
+        };
       };
-      retention = { keepDaily = 3; };
-      storage.encryptionPasscommand = "${pkgs.coreutils}/bin/cat ${config.sops.secrets.borg-passphrase.path}";
     };
 
     zsh.shellAliases =

@@ -28,11 +28,14 @@ in
     };
 
     programs = {
-      gnupg.agent.enable = true;
-      ssh.startAgent = true;
+      appimage = {
+        enable = true;
+        binfmt = true;
+      };
 
       dconf.enable = true;
       gnome-disks.enable = true;
+      gnupg.agent.enable = true;
       kdeconnect.enable = true;
       nm-applet.enable = true;
     };
@@ -93,10 +96,10 @@ in
       noto-fonts-color-emoji
       source-sans vistafonts
 
-      kanji-stroke-order-font
-      kochi-substitute
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
+      kanji-stroke-order-font
+      ipaexfont jigmo takao
       source-han-sans
       source-han-serif
 

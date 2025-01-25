@@ -98,16 +98,16 @@ in
 
         // {
           # We like to use Zathura for PDF files.
-          "application/pdf" = [
-            "org.pwmt.zathura-pdf-mupdf.desktop"
-            cfg.defaultWebBrowser
-          ];
+          "application/pdf" = [ "org.pwmt.zathura-pdf-mupdf.desktop" cfg.defaultWebBrowser ];
 
           # We like to use Inkscape for SVG files.
           "image/svg+xml" = "org.inkscape.Inkscape.desktop";
 
           # Use WINE for Windows executables.
           "application/x-ms-dos-executable" = "wine.desktop";
+
+          # Other applications might take Ark's spot otherwise.
+          "application/zip" = "org.kde.ark.desktop";
         };
     };
   };

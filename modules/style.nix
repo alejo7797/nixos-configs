@@ -11,7 +11,7 @@ in
   options.myStylix.enable = lib.mkEnableOption "common theme components";
 
   config.stylix = lib.mkIf cfg.enable {
-		# Enable Stylix.
+    # Enable Stylix.
     enable = true;
 
     # Specifying an image is mandatory.
@@ -21,9 +21,9 @@ in
     };
 
     # Set the colorscheme.
-		base16Scheme = "${pkgs.base16-schemes}/share/themes/tomorrow-night.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/tomorrow-night.yaml";
 
-		# Specify that we are using a dark colorscheme.
+    # Specify that we are using a dark colorscheme.
     polarity = "dark";
 
     # Configure our desired fonts.
@@ -33,11 +33,14 @@ in
         terminal = 11;
       };
 
-      serif = config.stylix.fonts.sansSerif;
+      serif = {
+        package = pkgs.noto-fonts;
+        name = "Noto Serif";
+      };
 
       sansSerif = {
-        package = pkgs.noto-fonts-cjk-sans;
-        name = "Noto Sans CJK JP";
+        package = pkgs.noto-fonts;
+        name = "Noto Sans";
       };
 
       monospace = {

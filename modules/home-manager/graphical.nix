@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }:
 
@@ -40,8 +39,11 @@ in
     myHome = {
       keepassxc.enable = true;
       kitty.enable = true;
+      geogebra.enable = true;
+      gpg.enable = true;
       mimeApps.enable = true;
       mpv.enable = true;
+      ssh.enable = true;
       style.enable = true;
       variety.enable = true;
       zathura.enable = true;
@@ -92,12 +94,5 @@ in
         };
         inherit Service;
       };
-
-    systemd.user.services = {
-      polkit-gnome-agent = config.myHome.lib.mkGraphicalService {
-        Unit.Description = "GNOME PolicyKit authentication daemon";
-        Service.ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-      };
-    };
   };
 }

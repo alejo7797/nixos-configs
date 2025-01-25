@@ -35,7 +35,6 @@
 
     myHome = {
       git.enable = true;
-      gpg.enable = true;
       neovim.enable = true;
       zsh.enable = true;
     };

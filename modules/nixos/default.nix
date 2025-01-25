@@ -20,17 +20,18 @@
   ];
 
   nix = {
-    settings = {
-      experimental-features = [
-        "nix-command" "flakes"
-      ];
-    };
-
     channel.enable = false;
+
+    # Smart Gitlab token secret management.
+    extraOptions = "!include ${config.sops.secrets."nix-conf/gitlab-token".path}";
 
     gc = {
       automatic = true; dates = "weekly";
       options = "--delete-older-than 30d";
+    };
+
+    settings = {
+      experimental-features = [ "nix-command" "flakes" ];
     };
   };
 
@@ -87,6 +88,7 @@
     openssh = {
       enable = true;
       settings = {
+        # Force public-key authentication.
         PasswordAuthentication = false;
       };
     };
@@ -102,16 +104,12 @@
 
   environment.systemPackages = with pkgs; [
 
-    curl dig file
-    findutils ffmpeg
-    htop imagemagick
-    lm_sensors lsd ncdu
-    neofetch nettools
-    nmap procps p7zip
-    psmisc rsync sops
-    unrar usbutils uv
-    wireguard-tools
-    wget yt-dlp
+    curl dig file findutils
+    ffmpeg htop imagemagick
+    lm_sensors lsd lsof ncdu
+    neofetch nmap procps psmisc
+    rsync sops unar usbutils
+    wireguard-tools wget yt-dlp
 
   ];
 }

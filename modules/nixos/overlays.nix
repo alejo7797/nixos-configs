@@ -17,6 +17,9 @@ in
     # Access my personal scripts.
     inputs.my-scripts.overlays.default
 
+    # Access my personal packages.
+    inputs.my-expressions.overlays.default
+
     # Access packages from nixpkgs-unstable.
     (_: prev: {
       inherit (unstable prev.system)
@@ -24,6 +27,22 @@ in
         joplin-desktop
         lutris spotify
         ;
+    })
+
+    # Access the SnapPy python module in Sage.
+    (_: prev: {
+      sage = prev.sage.override {
+        extraPythonPackages = ps: with ps; [ snappy ];
+        requireSageTests = false;
+      };
+    })
+
+    # Add extra libraries to Lutris.
+    (_: prev: {
+      lutris = prev.lutris.override {
+        extraLibraries = pkgs: with pkgs;
+          [ libgudev libvdpau speex ];
+      };
     })
 
     # Specify desktop file locations.
