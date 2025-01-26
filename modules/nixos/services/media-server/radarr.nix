@@ -13,6 +13,11 @@ in
 
   config = lib.mkIf cfg.enable {
 
+    services.radarr = {
+      enable = true;
+      group = "media";
+    };
+
 
 
   };

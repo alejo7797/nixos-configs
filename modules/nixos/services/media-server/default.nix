@@ -11,8 +11,10 @@ in
 {
   imports = [
     ./autobrr.nix ./bazarr.nix
-    ./plex.nix ./prowlarr.nix
-    ./radarr.nix ./rutorrent.nix
+    ./flaresolverr.nix ./plex.nix
+    ./notifiarr.nix ./kometa.nix
+    ./prowlarr.nix ./rutorrent.nix
+    ./radarr.nix ./unpackerr.nix
     ./sonarr.nix ./tautulli.nix
   ];
 
@@ -27,35 +29,32 @@ in
       # Media server module.
       plex.enable = true;
 
-      # Friendly statistics.
+      # Plex companion apps.
+      kometa.enable = true;
       tautulli.enable = true;
 
       # Main download client.
       rutorrent.enable = true;
 
-      # The *Arr suite.
+      # Notification service.
+      notifiarr.enable = true;
+
+      # Indexer management.
       autobrr.enable = true;
-      bazarr.enable = true;
+      flaresolverr.enable = true;
       prowlarr.enable = true;
+
+      # The *Arr suite.
+      bazarr.enable = true;
       radarr.enable = true;
       sonarr.enable = true;
+
+      # Download extraction.
+      unpackerr.enable = true;
     };
 
-    systemd.services = {
-
-      # Extract downloaded archives.
-      unpackerr = { };
-
-    };
-
-    virtualisation.oci-containers.containers = {
-
-      # Proxy bypass services.
-      flaresolverr = { };
-
-      # Notifications service.
-      notifiarr = { };
-
+    users.groups = {
+      media = { gid = 1001; };
     };
   };
 }

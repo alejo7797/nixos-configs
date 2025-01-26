@@ -13,7 +13,10 @@ in
 
   config = lib.mkIf cfg.enable {
 
-
+    services.sonarr = {
+      enable = true;
+      group = "media";
+    };
 
   };
 }
