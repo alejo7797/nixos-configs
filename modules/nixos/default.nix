@@ -105,11 +105,14 @@
     };
 
     locate = {
-      enable = true;
-      localuser = null;
+      enable = true; localuser = null;
       package = pkgs.plocate;
     };
 
+    # Prefer MariaDB over MySQL.
+    mysql.package = pkgs.mariadb;
+
+    # Simple time synchronization.
     timesyncd.enable = true;
   };
 

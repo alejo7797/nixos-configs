@@ -59,7 +59,7 @@ in
       };
     };
 
-    security.acme.certs."mail.patchoulihq.cc" = {
+    security.acme.certs.${config.mailserver.fqdn} = {
       extraDomainNames = "mail.epelde.net";
     };
 
