@@ -10,6 +10,7 @@
     inputs.home-manager.nixosModules.home-manager
     inputs.impermanence.nixosModules.impermanence
     inputs.lanzaboote.nixosModules.lanzaboote
+    inputs.nixos-mailserver.nixosModules.default
     inputs.nur.modules.nixos.default
     inputs.sops-nix.nixosModules.sops
     inputs.stylix.nixosModules.stylix
@@ -79,10 +80,20 @@
     };
   };
 
-  # For zsh shell completion.
+  # For Zsh shell completion.
   environment.pathsToLink = [ "/share/zsh" ];
 
-  security.polkit.enable = true;
+  security = {
+    acme = {
+      acceptTerms = true;
+      defaults = {
+        email = "ewan@patchoulihq.cc"; dnsProvider = "cloudflare";
+        environmentFile = config.sops-nix.secrets."acme/cloudflare".path;
+      };
+    };
+
+    polkit.enable = true;
+  };
 
   services = {
     openssh = {

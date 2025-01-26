@@ -1,3 +1,3 @@
 {
-  imports = [ ./tzupdate.nix ];
+  imports = [ ./mailserver.nix ./tzupdate.nix ];
 }

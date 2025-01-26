@@ -3,6 +3,8 @@
 keys:
   - &admin_ewan >
       age1nzdckw575d6dtk0k032vgh8kg9q2ekm80dqzxs5fjq5dj8ump5zs6f93vk
+  - &server_patchouli >
+      age12tyg7tv4nfq3ay0xaen5thnpgt4zesckqw3g82a7zsg66unwn3esdmgdln
   - &server_satsuki >
       age1v97eer9wgcmrqvf449pgk73f2j55leq5ydma2w9kfqk7dmpwe5fqmy9lq8
   - &server_shinobu >
@@ -13,6 +15,12 @@ creation_rules:
     key_groups:
       - age:
           - *admin_ewan
+
+  - path_regex: secrets/patchouli.yaml$
+    key_groups:
+      - age:
+          - *admin_ewan
+          - *server_patchouli
 
   - path_regex: secrets/satsuki.yaml$
     key_groups:
