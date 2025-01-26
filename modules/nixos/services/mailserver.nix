@@ -7,13 +7,11 @@
 let
   cfg = config.myNixOS.mailserver;
 
-  defaultAliases =
-    domain: [
-      "abuse@${domain}"
-      "hostmaster@${domain}"
-      "postmaster@${domain}"
-      "webmaster@${domain}"
-    ];
+  mkAliases =
+    domain: aliases: map (name: "${name}@${domain}") aliases;
+
+  mkDefaultAliases =
+    domain: mkAliases domain [ "abuse" "hostmaster" "postmaster" "webmaster" ];
 in
 
 {
@@ -27,27 +25,21 @@ in
       certificateScheme = "acme";
       fqdn = "mail.patchoulihq.cc";
 
-      domains = [
-        "patchoulihq.cc"
-        "epelde.net"
-      ];
+      domains = [ "patchoulihq.cc" "epelde.net" ];
 
       loginAccounts = {
 
         alex = {
           name = "alex@epelde.net";
-          aliases = defaultAliases "epelde.net";
+          aliases = mkDefaultAliases "epelde.net";
           hashedPasswordFile = config.sops-nix.secrets."mailserver/alex".path;
         };
 
         ewan = {
           name = "ewan@patchoulihq.cc";
-          aliases = defaultAliases "patchoulihq.cc" ++
-            [
-              "blanc@patchoulihq.cc"
-              "didac@patchoulihq.cc"
-              "root@patchoulihq.cc"
-            ];
+          aliases =
+            mkDefaultAliases "patchoulihq.cc"
+            ++ mkAliases "patchoulihq.cc" [ "blanc" "didac" "root" ];
           hashedPasswordFile = config.sops-nix.secrets."mailserver/ewan".path;
         };
 
