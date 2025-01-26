@@ -60,9 +60,9 @@
 
     {
       nixosConfigurations = {
-        "qemu-vm" = mkSystem ./hosts/qemu-vm/configuration.nix;
-        "satsuki" = mkSystem ./hosts/satsuki/configuration.nix;
-        "shinobu" = mkSystem ./hosts/shinobu/configuration.nix;
+        "qemu-vm" = mkSystem ./hosts/qemu-vm/config.nix;
+        "satsuki" = mkSystem ./hosts/satsuki/config.nix;
+        "shinobu" = mkSystem ./hosts/shinobu/config.nix;
       };
 
       nixosModules.default = ./modules/nixos;

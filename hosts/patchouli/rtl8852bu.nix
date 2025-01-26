@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
   '';
 
   makeFlags = [
-    "KSRC=${kernel.dev}/${modDir}/build" "MODDESTDIR=$out/${modDir}"
+    "KSRC=${kernel.dev}/${modDir}/build" "MODDESTDIR=$(out)/${modDir}"
   ];
 
   meta = {

@@ -2,10 +2,7 @@
   # Did you read the comment?
   system.stateVersion = "24.11";
 
-  imports = [
-    ./filesystems.nix
-    ./hardware-configuration.nix
-  ];
+  imports = [ ./filesystems.nix ./hardware.nix ];
 
   swapDevices = [ { device = "/var/swapfile"; size = 4096; } ];
 
