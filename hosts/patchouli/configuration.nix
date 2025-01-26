@@ -31,6 +31,10 @@
     "wireguard/koakuma/preshared-key" = { };
   };
 
+  users.groups = {
+    media = { gid = 1001; };
+  };
+
   myNixOS = {
 
     home-users."ewan" = {
