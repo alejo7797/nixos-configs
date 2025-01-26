@@ -18,10 +18,7 @@
     "/boot" = {
       device = "/dev/disk/by-uuid/3800-39F2";
       fsType = "vfat";
-      options = [
-        "fmask=0077"
-        "dmask=0077"
-      ];
+      options = [ "fmask=0077" "dmask=0077" ];
     };
   };
 }

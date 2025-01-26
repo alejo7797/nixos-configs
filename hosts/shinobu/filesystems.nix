@@ -2,7 +2,7 @@
   fileSystems = {
 
     "/" = {
-      device = "/dev/disk/by-label/NixOS";
+      device = "/dev/disk/by-uuid/818b5345-df64-4f53-9e0b-2c9e50843c90";
       fsType = "ext4";
     };
 
@@ -13,12 +13,12 @@
     };
 
     "/mnt/windows" = {
-      device = "/dev/disk/by-label/Windows";
+      device = "/dev/disk/by-uuid/";
       fsType = "ntfs";
     };
 
     "/mnt/vault" = {
-      device = "/dev/disk/by-label/Vault";
+      device = "/dev/disk/by-uuid/";
       fsType = "ntfs";
     };
 

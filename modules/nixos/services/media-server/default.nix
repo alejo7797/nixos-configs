@@ -5,7 +5,7 @@
 }:
 
 let
-  cfg = config.myNixOS.mediaServer;
+  cfg = config.myNixOS.mediaserver;
 in
 
 {
@@ -16,16 +16,13 @@ in
     ./sonarr.nix ./tautulli.nix
   ];
 
-  options.myNixOS.mediaServer.enable = lib.mkEnableOption "media server functionality";
+  options.myNixOS.mediaserver.enable = lib.mkEnableOption "media server functionality";
 
   config = lib.mkIf cfg.enable {
 
     myNixOS = {
       # Set up a reverse proxy.
       nginx.enable = true;
-
-      # Friendly dashboard.
-      homepage.enable = true;
 
       # Media server module.
       plex.enable = true;

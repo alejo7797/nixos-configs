@@ -58,6 +58,9 @@
 
     home-users."ewan" = {
       userConfig = ./home.nix;
+      userSettings = {
+        extraGroups = [ "wheel" ];
+      };
     };
 
     dolphin.enable = true;
