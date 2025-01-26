@@ -61,10 +61,10 @@ in
     };
 
     services.postfix = {
-      networks = [
-        "127.0.0.0/8" "[::1]/128"
-        "10.20.20.0/24" "[fd00::]/8"
-      ];
+      config = {
+        # Disable AUTH LOGIN on port 25.
+        smtpd_sasl_auth_enable = false;
+      };
     };
 
     security.acme.certs."mail.patchoulihq.cc" = {
