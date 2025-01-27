@@ -13,12 +13,12 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    virtualisation.oci-containers.containers = {
-
-      kometa = { };
-
-      imagemaid = { };
-
-    };
+    # virtualisation.oci-containers.containers = {
+    #
+    #   kometa = { };
+    #
+    #   imagemaid = { };
+    #
+    # };
   };
 }

@@ -10,7 +10,7 @@
 let
   cfg = config.myNixOS.unpackerr;
 
-  unpackerrConfig = pkgs.writeFile "unpackerr.conf" ''
+  unpackerrConfig = pkgs.writeText "unpackerr.conf" ''
 
   '';
 in

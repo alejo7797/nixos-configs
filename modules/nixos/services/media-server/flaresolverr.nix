@@ -13,9 +13,9 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    virtualisation.oci-containers.containers.flaresolverr = {
-
-    };    
+    # virtualisation.oci-containers.containers.flaresolverr = {
+    #
+    # };
 
   };
 }

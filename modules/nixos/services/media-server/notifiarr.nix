@@ -13,9 +13,9 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    virtualisation.oci-containers.containers.notifiarr = {
-
-    };    
+    # virtualisation.oci-containers.containers.notifiarr = {
+    #
+    # };
 
   };
 }
