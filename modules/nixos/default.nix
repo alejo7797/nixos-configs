@@ -62,6 +62,9 @@
     # Derive sops age key from host SSH key.
     age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     gnupg.sshKeyPaths = [ ];
+
+    # Secrets available to all hosts.
+    secrets."nix-conf/gitlab-token" = { owner = "ewan"; };
   };
 
   programs = {

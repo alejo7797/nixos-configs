@@ -43,8 +43,9 @@
   sops.secrets = {
     "my-password" = { neededForUsers = true; };
 
-    "nix-conf/gitlab-token" = { owner = "ewan"; };
+    "syncthing/cert.pem" = { owner = "ewan"; };
     "syncthing/key.pem" = { owner = "ewan"; };
+
     "u2f-mappings" = { group = "users"; mode = "0440"; };
 
     "wireguard/koakuma/private-key" = { };

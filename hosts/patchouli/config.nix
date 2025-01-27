@@ -1,4 +1,9 @@
 {
+  config,
+  ...
+}:
+
+{
   # Did you read the comment?
   system.stateVersion = "24.11";
 
@@ -24,7 +29,7 @@
     "mailserver/ewan" = { };
     "mailserver/dmarc" = { };
 
-    "nix-conf/gitlab-token" = { owner = "ewan"; };
+    "syncthing/cert.pem" = { owner = "syncthing"; };
     "syncthing/key.pem" = { owner = "syncthing"; };
 
     "wireguard/koakuma/private-key" = { };
@@ -68,6 +73,13 @@
 
     syncthing = {
       enable = true;
+
+      cert = config.sops.secrets."syncthing/cert.pem".path;
+      key = config.sops.secrets."syncthing/key.pem".path;
+
+      settings = {
+
+      };
     };
 
   };
