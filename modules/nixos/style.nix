@@ -17,6 +17,8 @@ in
 
   config = lib.mkIf cfg.enable {
 
+    stylix.enable = true;
+
     nixpkgs.overlays = [
       (_: prev: {
         # Access ilya-fedin's Nix repository.

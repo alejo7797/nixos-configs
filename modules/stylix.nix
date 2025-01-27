@@ -5,7 +5,6 @@
 
 {
   stylix = {
-    enable = true;
 
     # Specifying an image is mandatory.
     image = builtins.fetchurl {
