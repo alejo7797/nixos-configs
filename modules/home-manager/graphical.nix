@@ -9,15 +9,6 @@ let
 in
 
 {
-  imports = [
-    ./style
-    ./wayland
-
-    ./autostart.nix
-    ./i3wm.nix
-    ./mime.nix
-  ];
-
   options.myHome = {
 
     graphical.enable = lib.mkEnableOption "basic graphical utilities";

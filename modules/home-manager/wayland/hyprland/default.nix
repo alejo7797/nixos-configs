@@ -4,15 +4,12 @@
   pkgs,
   ...
 }:
+
 let
   cfg = config.myHome.hyprland;
 in
-{
-  imports = [
-    ./hy3.nix
-    ./window-rules.nix
-  ];
 
+{
   options.myHome.hyprland.enable = lib.mkEnableOption "Hyprland configuration";
 
   config = lib.mkIf cfg.enable {

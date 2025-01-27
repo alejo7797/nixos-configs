@@ -10,14 +10,6 @@ let
 in
 
 {
-  imports = [
-    ./hyprland
-    ./sway-wm
-    ./swaync
-    ./waybar
-    ./wlogout
-  ];
-
   options.myHome.wayland.enable = lib.mkEnableOption "Wayland";
 
   config = lib.mkIf cfg.enable {

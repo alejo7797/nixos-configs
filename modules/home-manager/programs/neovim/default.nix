@@ -11,11 +11,6 @@ let
 in
 
 {
-  imports = [
-    ./keymaps.nix
-    ./latex.nix
-  ];
-
   options.myHome.neovim.enable = lib.mkEnableOption "Neovim";
 
   config = lib.mkIf cfg.enable {

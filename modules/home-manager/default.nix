@@ -5,20 +5,24 @@
   pkgs,
   ...
 }:
+
 {
-  imports = [
-    inputs.nixvim.homeManagerModules.nixvim
-    inputs.nur.modules.homeManager.default
-    inputs.sops-nix.homeManagerModules.sops
+  imports = with lib.fileset;
 
-    ./arch-linux.nix
-    ./graphical.nix
-    ./programs
-  ];
+    [
+      inputs.nixvim.homeManagerModules.nixvim
+      inputs.nur.modules.homeManager.default
+      inputs.sops-nix.homeManagerModules.sops
+    ]
 
-  options.myHome.lib = lib.mkOption {
-    description = "Internal configuration utilities.";
-    type = with lib.types; attrsOf anything;
+    # Recursively import all of my personal Home Manager modules.
+    ++ toList (difference (fileFilter (file: file.hasExt "nix") ./.) ./default.nix);
+
+  options = {
+    myHome.lib = lib.mkOption {
+      description = "Internal configuration utilities.";
+      type = with lib.types; attrsOf anything;
+    };
   };
 
   config = {

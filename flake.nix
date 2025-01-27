@@ -59,14 +59,17 @@
     in
 
     {
-      nixosConfigurations = {
-        "qemu-vm" = mkSystem ./hosts/qemu-vm/config.nix;
-        "satsuki" = mkSystem ./hosts/satsuki/config.nix;
-        "shinobu" = mkSystem ./hosts/shinobu/config.nix;
+      nixosConfigurations = builtins.mapAttrs (
+        hostname: _: mkSystem ./hosts/${hostname}/config.nix
+      ) (builtins.readDir ./hosts);
+
+      nixosModules = {
+        default = ./modules/nixos;
       };
 
-      nixosModules.default = ./modules/nixos;
-      homeManagerModules.default = ./modules/home-manager;
+      homeManagerModules = {
+        default = ./modules/home-manager;
+      };
     };
 
 }

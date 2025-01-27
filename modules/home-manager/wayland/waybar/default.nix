@@ -9,8 +9,6 @@ let
 in
 
 {
-  imports = [ ./modules.nix ];
-
   options.myHome.waybar = {
 
     enable = lib.mkEnableOption "waybar";

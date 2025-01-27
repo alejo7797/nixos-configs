@@ -10,8 +10,6 @@ let
 in
 
 {
-  imports = [ ./window-rules.nix ];
-
   options.myHome.sway.enable = lib.mkEnableOption "sway configuration";
 
   config = lib.mkIf cfg.enable {
