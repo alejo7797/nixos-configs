@@ -63,4 +63,12 @@
     minecraft.enable = true;
 
   };
+
+  services = {
+
+    syncthing = {
+      enable = true;
+    };
+
+  };
 }
