@@ -38,9 +38,6 @@ in
       _JAVA_OPTIONS = "-Dawt.useSystemAAFontSettings=lcd";
     };
 
-    # Enable Stylix.
-    myStylix.enable = true;
-
     # Install necessary theme packages.
     environment.systemPackages = with pkgs; [
 

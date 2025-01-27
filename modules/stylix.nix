@@ -1,19 +1,10 @@
 {
-  lib,
-  config,
   pkgs,
   ...
 }:
 
-let
-  cfg = config.myStylix;
-in
-
 {
-  options.myStylix.enable = lib.mkEnableOption "Stylix";
-
-  config.stylix = lib.mkIf cfg.enable {
-    # Enable Stylix.
+  stylix = {
     enable = true;
 
     # Specifying an image is mandatory.
