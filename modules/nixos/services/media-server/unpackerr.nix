@@ -40,8 +40,8 @@ in
     };
 
     users.users.unpackerr = {
+      isSystemUser = true;
       group = "media";
-      home = "/tmp";
     };
 
   };

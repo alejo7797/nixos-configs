@@ -6,7 +6,10 @@
 
   swapDevices = [ { device = "/var/swapfile"; size = 4096; } ];
 
-  boot.kernelParams = [ "quiet" "nowatchdog" ];
+  boot = {
+    kernelParams = [ "quiet" "nowatchdog" ];
+    loader = { systemd-boot.enable = true; };
+  };
 
   networking = {
     hostName = "patchouli";

@@ -43,6 +43,8 @@
       zsh.enable = true;
     };
 
+    myStylix.enable = true;
+
     programs = {
       home-manager.enable = true;
     };

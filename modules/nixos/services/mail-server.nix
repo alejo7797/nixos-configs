@@ -32,7 +32,7 @@ in
         alex = {
           name = "alex@epelde.net";
           aliases = mkDefaultAliases "epelde.net";
-          hashedPasswordFile = config.sops-nix.secrets."mailserver/alex".path;
+          hashedPasswordFile = config.sops.secrets."mailserver/alex".path;
         };
 
         ewan = {
@@ -40,13 +40,13 @@ in
           aliases =
             mkDefaultAliases "patchoulihq.cc"
             ++ mkAliases "patchoulihq.cc" [ "blanc" "didac" "root" ];
-          hashedPasswordFile = config.sops-nix.secrets."mailserver/ewan".path;
+          hashedPasswordFile = config.sops.secrets."mailserver/ewan".path;
         };
 
         dmarc = {
           name = "dmarc-reports@patchoulihq.cc";
           aliases = [ "dmarc-reports@epelde.net" ];
-          hashedPasswordFile = config.sops-nix.secrets."mailserver/dmarc".path;
+          hashedPasswordFile = config.sops.secrets."mailserver/dmarc".path;
         };
 
       };
@@ -60,7 +60,7 @@ in
     };
 
     security.acme.certs.${config.mailserver.fqdn} = {
-      extraDomainNames = "mail.epelde.net";
+      extraDomainNames = [ "mail.epelde.net" ];
     };
 
   };

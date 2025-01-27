@@ -9,15 +9,6 @@ let
 in
 
 {
-  imports = [
-    ./autobrr.nix ./bazarr.nix
-    ./flaresolverr.nix ./plex.nix
-    ./notifiarr.nix ./kometa.nix
-    ./prowlarr.nix ./rutorrent.nix
-    ./radarr.nix ./unpackerr.nix
-    ./sonarr.nix ./tautulli.nix
-  ];
-
   options.myNixOS.mediaserver.enable = lib.mkEnableOption "media server functionality";
 
   config = lib.mkIf cfg.enable {

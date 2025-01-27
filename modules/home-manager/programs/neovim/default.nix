@@ -15,6 +15,7 @@ in
 
   config = lib.mkIf cfg.enable {
 
+    # Load our personal snippets.
     xdg.configFile."nvim/snippets".source = ./snippets;
 
     programs.nixvim = {

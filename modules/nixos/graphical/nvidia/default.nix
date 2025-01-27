@@ -10,8 +10,6 @@ let
 in
 
 {
-  imports = [ ./prime.nix ];
-
   options.myNixOS.nvidia.enable = lib.mkEnableOption "Nvidia";
 
   config = lib.mkIf cfg.enable {
