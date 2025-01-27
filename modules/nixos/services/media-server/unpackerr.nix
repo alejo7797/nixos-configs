@@ -11,7 +11,13 @@ let
   cfg = config.myNixOS.unpackerr;
 
   unpackerrConfig = pkgs.writeText "unpackerr.conf" ''
+    [[sonarr]]
+    url = "http://localhost:8989"
+    paths = ["/data/hanekawa/downloads", "/data/natsuhi/downloads"]
 
+    [[radarr]]
+    url = "http://localhost:6767"
+    paths = ["/data/hanekawa/downloads"]
   '';
 in
 
@@ -33,6 +39,7 @@ in
         UMask = "0002";
 
         ExecStart = "${pkgs.unpackerr}/bin/unpackerr -c ${unpackerrConfig}";
+        EnvironmentFile = config.sops.secrets."unpackerr/env".path;
 
         WorkingDirectory = "/tmp";
         Restart = "on-failure";
@@ -44,5 +51,9 @@ in
       group = "media";
     };
 
+    sops.secrets = {
+      # File containing application API keys.
+      "unpackerr/env" = { owner = "unpackerr"; };
+    };
   };
 }
