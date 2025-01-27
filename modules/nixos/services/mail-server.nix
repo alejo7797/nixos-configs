@@ -63,5 +63,14 @@ in
       extraDomainNames = [ "mail.epelde.net" ];
     };
 
+    sops.secrets = {
+      # Cloudflare API key for DNS challenges.
+      "acme/cloudflare" = { owner = "acme"; };
+
+      # Secure password deployment.
+      "mailserver/alex" = { };
+      "mailserver/ewan" = { };
+      "mailserver/dmarc" = { };
+    };
   };
 }

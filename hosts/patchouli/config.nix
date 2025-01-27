@@ -23,12 +23,6 @@
   sops.secrets = {
     "my-password" = { neededForUsers = true; };
 
-    "acme/cloudflare" = { owner = "acme"; };
-
-    "mailserver/alex" = { };
-    "mailserver/ewan" = { };
-    "mailserver/dmarc" = { };
-
     "syncthing/cert.pem" = { owner = "syncthing"; };
     "syncthing/key.pem" = { owner = "syncthing"; };
 
