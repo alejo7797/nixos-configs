@@ -10,14 +10,11 @@ let
 in
 
 {
-  imports = [ ../../style.nix ];
+  imports = [ ../../stylix.nix ];
 
-  options.myHome.style.enable = lib.mkEnableOption "user theme components";
+  options.myHome.style.enable = lib.mkEnableOption "user-level theming";
 
   config = lib.mkIf cfg.enable {
-
-    # Enable common theme components.
-    myStylix.enable = true;
 
     xdg = {
       configFile = {

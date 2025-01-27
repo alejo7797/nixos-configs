@@ -4,10 +4,7 @@
   # Did you read the comment?
   system.stateVersion = "24.11";
 
-  imports = [
-    ./filesystems.nix
-    ./hardware-configuration.nix
-  ];
+  imports = [ ./filesystems.nix ./hardware.nix ];
 
   swapDevices = [ { device = "/var/swapfile"; size = 32768; } ];
 
@@ -50,7 +47,7 @@
   sops.secrets = {
     "my-password" = { neededForUsers = true; };
 
-    "nix-conf/gitlab-token" = { owner = "ewan"; };
+    "syncthing/cert.pem" = { owner = "ewan"; };
     "syncthing/key.pem" = { owner = "ewan"; };
 
     "wireguard/koakuma/private-key" = { };
@@ -61,6 +58,9 @@
 
     home-users."ewan" = {
       userConfig = ./home.nix;
+      userSettings = {
+        extraGroups = [ "wheel" ];
+      };
     };
 
     dolphin.enable = true;

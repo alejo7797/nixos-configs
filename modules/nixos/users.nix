@@ -53,17 +53,13 @@
     users.users = builtins.mapAttrs (
       _: user:
 
-      {
-        # Sane defaults.
-        isNormalUser = true;
-        linger = true;
-        shell = pkgs.zsh;
-        extraGroups = [
-          "networkmanager"
-          "scanner" "wheel"
-        ];
-      }
-      // user.userSettings
+      lib.mkMerge [
+        {
+          isNormalUser = true; linger = true; shell = pkgs.zsh;
+          extraGroups = [ "networkmanager" "scanner" ];
+        }
+        user.userSettings
+      ]
 
     ) config.myNixOS.home-users;
   };

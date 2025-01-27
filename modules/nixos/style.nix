@@ -11,9 +11,9 @@ let
 in
 
 {
-  imports = [ ../style.nix ];
+  imports = [ ../stylix.nix ];
 
-  options.myNixOS.style.enable = lib.mkEnableOption "system theme components";
+  options.myNixOS.style.enable = lib.mkEnableOption "system-level theming";
 
   config = lib.mkIf cfg.enable {
 
@@ -37,9 +37,6 @@ in
       # Improve Java font rendering.
       _JAVA_OPTIONS = "-Dawt.useSystemAAFontSettings=lcd";
     };
-
-    # Enable common theme components.
-    myStylix.enable = true;
 
     # Install necessary theme packages.
     environment.systemPackages = with pkgs; [

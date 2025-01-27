@@ -1,4 +1,5 @@
 {
+  lib,
   inputs,
   config,
   pkgs,
@@ -6,18 +7,20 @@
 }:
 
 {
-  imports = [
-    inputs.home-manager.nixosModules.home-manager
-    inputs.impermanence.nixosModules.impermanence
-    inputs.lanzaboote.nixosModules.lanzaboote
-    inputs.nur.modules.nixos.default
-    inputs.sops-nix.nixosModules.sops
-    inputs.stylix.nixosModules.stylix
+  imports = with lib.fileset;
 
-    ./graphical ./locale.nix ./pam.nix
-    ./programs ./overlays.nix ./services
-    ./style.nix ./users.nix ./wayland
-  ];
+    [
+      inputs.home-manager.nixosModules.home-manager
+      inputs.impermanence.nixosModules.impermanence
+      inputs.lanzaboote.nixosModules.lanzaboote
+      inputs.nixos-mailserver.nixosModules.default
+      inputs.nur.modules.nixos.default
+      inputs.sops-nix.nixosModules.sops
+      inputs.stylix.nixosModules.stylix
+    ]
+
+    # Recursively import all of my personal NixOS modules.
+    ++ toList (difference (fileFilter (file: file.hasExt "nix") ./.) ./default.nix);
 
   nix = {
     channel.enable = false;
@@ -59,6 +62,9 @@
     # Derive sops age key from host SSH key.
     age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     gnupg.sshKeyPaths = [ ];
+
+    # Secrets available to all hosts.
+    secrets."nix-conf/gitlab-token" = { owner = "ewan"; };
   };
 
   programs = {
@@ -79,10 +85,18 @@
     };
   };
 
-  # For zsh shell completion.
-  environment.pathsToLink = [ "/share/zsh" ];
+  security = {
+    acme = {
+      acceptTerms = true;
+      defaults = {
+        email = "ewan@patchoulihq.cc"; dnsProvider = "cloudflare";
+        environmentFile = config.sops.secrets."acme/cloudflare".path;
+      };
+    };
 
-  security.polkit.enable = true;
+    polkit.enable = true;
+    sudo.enable = true;
+  };
 
   services = {
     openssh = {
@@ -94,22 +108,30 @@
     };
 
     locate = {
-      enable = true;
-      localuser = null;
+      enable = true; localuser = null;
       package = pkgs.plocate;
     };
 
+    # Prefer MariaDB over MySQL.
+    mysql.package = pkgs.mariadb;
+
+    # Simple time synchronization.
     timesyncd.enable = true;
   };
 
-  environment.systemPackages = with pkgs; [
+  environment = {
+    # Zsh shell completion support.
+    pathsToLink = [ "/share/zsh" ];
 
-    curl dig file findutils
-    ffmpeg htop imagemagick
-    lm_sensors lsd lsof ncdu
-    neofetch nmap procps psmisc
-    rsync sops unar usbutils
-    wireguard-tools wget yt-dlp
+    systemPackages = with pkgs; [
 
-  ];
+      curl dig file findutils
+      ffmpeg htop imagemagick
+      lm_sensors lsd lsof ncdu
+      neofetch nmap procps psmisc
+      rsync sops unar usbutils
+      wireguard-tools wget yt-dlp
+
+    ];
+  };
 }
