@@ -20,8 +20,7 @@ in
       # Media server module.
       plex.enable = true;
 
-      # Plex companion apps.
-      kometa.enable = true;
+      # Plex statistics service.
       tautulli.enable = true;
 
       # Main download client.
