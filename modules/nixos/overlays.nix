@@ -17,7 +17,7 @@ in
     # Access my personal scripts.
     inputs.my-scripts.overlays.default
 
-    # Access my personal packages.
+    # Access my personal derivations.
     inputs.my-expressions.overlays.default
 
     # Access packages from nixpkgs-unstable.
@@ -29,7 +29,7 @@ in
         ;
     })
 
-    # Access the SnapPy python module in Sage.
+    # Access the SnapPy Python module in Sage.
     (_: prev: {
       sage = prev.sage.override {
         extraPythonPackages = ps: with ps; [ snappy ];
