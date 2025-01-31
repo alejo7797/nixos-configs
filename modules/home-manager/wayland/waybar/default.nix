@@ -51,8 +51,8 @@ in
         ];
 
         modules-right = [
-          "idle_inhibitor" "pulseaudio" "cpu"
-          "memory" "disk" "battery" "temperature"
+          "idle_inhibitor" "systemd-failed-units"
+          "pulseaudio" "cpu" "memory" "disk" "battery"
           "network" "network#vpn" "network#harvard"
           "custom/wttr" "clock" "custom/swaync" "tray"
         ];
