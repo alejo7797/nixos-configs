@@ -91,7 +91,7 @@ in
       });
     };
 
-    accounts.contact.accounts = lib.mkOption {
+    accounts.contacts.accounts = lib.mkOption {
       type = with lib.types; attrsOf (submodule {
         options.thunderbird = {
 
@@ -281,7 +281,7 @@ in
           };
         };
 
-      contact.accounts =
+      contacts.accounts =
 
         let
           nextcloud = id: {
@@ -326,6 +326,9 @@ in
 
           # Disable the start page.
           "mailnews.start_page.enabled" = false;
+
+          # Weeks start on Monday.
+          "calendar.week.start" = 1;
 
           # Show 11 hours in the calendar view.
           "calendar.view.visiblehours" = 11;
