@@ -128,17 +128,17 @@ in
           reply_on_top = id: { "mail.identity.id_${id}.reply_on_top" = 1; };
           sent_no_copy = id: { "mail.identity.id_${id}.fcc" = false; };
 
-          default_cfg = {
+          default_config = {
             perIdentitySettings = reply_on_top;
           };
 
-          gmail_cfg = {
+          gmail_config = {
             perIdentitySettings =
               id: (oauth_smtp id // reply_on_top id);
             settings = oauth_imap;
           };
 
-          outlook_cfg = {
+          outlook_config = {
             perIdentitySettings =
               id: (oauth_smtp id // reply_on_top id // sent_no_copy id);
             settings = oauth_imap;
@@ -168,7 +168,7 @@ in
             address = "alex@epelde.net";
             imap.host = "mail.epelde.net";
             smtp.tls.useStartTls = true;
-            thunderbird = default_cfg;
+            thunderbird = default_config;
           };
 
           Ewan = {
@@ -176,34 +176,34 @@ in
             address = "ewan@patchoulihq.cc";
             imap.host = "mail.patchoulihq.cc";
             smtp.tls.useStartTls = true;
-            thunderbird = default_cfg;
+            thunderbird = default_config;
           };
 
           Gmail = {
             address = "alexepelde@gmail.com";
             flavor = "gmail.com";
-            thunderbird = gmail_cfg;
+            thunderbird = gmail_config;
           };
 
           Harvard = {
             address = "epelde@math.harvard.edu";
             flavor = "outlook.office365.com";
             folders.trash = "Deleted Items";
-            thunderbird = outlook_cfg;
+            thunderbird = outlook_config;
           };
 
           Outlook = {
             address = "alexepelde@outlook.es";
             flavor = "outlook.office365.com";
             folders.trash = "Deleted";
-            thunderbird = outlook_cfg;
+            thunderbird = outlook_config;
           };
 
           Cambridge = {
             address = "ae433@cantab.ac.uk";
             flavor = "outlook.office365.com";
             folders.trash = "Deleted Items";
-            thunderbird = outlook_cfg;
+            thunderbird = outlook_config;
           };
         };
 
@@ -285,8 +285,8 @@ in
 
         let
           nextcloud = id: {
-              "ldap_2.servers.${id}.dirType" = 102;
-              "ldap_2.servers.${id}.filename" = "abook-1.sqlite";
+            "ldap_2.servers.${id}.dirType" = 102;
+            "ldap_2.servers.${id}.filename" = "abook-1.sqlite";
           };
         in
 
