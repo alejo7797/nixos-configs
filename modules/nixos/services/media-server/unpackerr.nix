@@ -45,7 +45,7 @@ in
     };
 
     sops.secrets = {
-      # File containing application API keys.
+      # File containing API keys and credentials.
       "unpackerr/env" = { owner = "unpackerr"; };
     };
   };

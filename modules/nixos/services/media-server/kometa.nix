@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 
@@ -9,45 +10,51 @@ let
 in
 
 {
-  options.myNixOS.kometa.enable = lib.mkEnableOption "Kometa & ImageMaid";
+  options.myNixOS.kometa = {
+    enable = lib.mkEnableOption "Kometa";
+
+    home = lib.mkOption {
+      description = "Kometa runtime directory.";
+      type = lib.types.str;
+      default = "/var/lib/kometa";
+    };
+  };
 
   config = lib.mkIf cfg.enable {
 
-    virtualisation.oci-containers.containers = {
+    systemd.services.kometa = {
 
-      kometa = {
-        image = "kometateam/kometa";
+      description = "Kometa Plex Metadata Manager";
+      after = [ "network.target" ];
+      wantedBy = [ "multi-user.target" ];
 
-        volumes = [ "/var/lib/kometa:/config" ];
-        environment = { TZ = "America/New_York"; };
-
-        environmentFiles = [
-          # File containing API keys and such.
-          config.sops.secrets."kometa/env".path
-        ];
+      environment = {
+        LC_ALL = "C.UTF-8";
+        LANG="C.UTF-8";
+        TZ = "America/New_York";
       };
 
-      imagemaid = {
-        image = "kometateam/imagemaid";
+      serviceConfig = {
+        Type = "simple";
 
-        volumes = [
-          "/var/lib/imagemaid:/config"
-          "/var/lib/plex/Plex Media Server:/plex"
-        ];
+        User = "kometa"; Group = "media";
+        ExecStart = "${pkgs.kometa}/bin/kometa -c ${cfg.home}/config.yml";
+        EnvironmentFile = config.sops.secrets."kometa/env".path;
 
-        environment = { TZ = "America/New_York"; };
-
-        environmentFiles = [
-          # File containing API keys and such.
-          config.sops.secrets."imagemaid/env".path
-        ];
+        Restart = "on-failure";
       };
+    };
 
+
+    users.users.kometa = {
+      inherit (cfg) home;
+      isSystemUser = true;
+      group = "media";
     };
 
     sops.secrets = {
-      "kometa/env" = { };
-      "imagemaid/env" = { };
+      # File containing API keys and credentials.
+      "kometa/env" = { owner = "kometa"; };
     };
   };
 }
