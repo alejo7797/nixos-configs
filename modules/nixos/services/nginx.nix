@@ -67,6 +67,14 @@ in
           root = "/var/www/html";
         };
 
+        "epelde.net" = {
+          enableACME = true;
+          forceSSL = true;
+
+          # Points to the SRCF webserver.
+          globalRedirect = "alex.epelde.net";
+        };
+
       };
     };
 
