@@ -43,9 +43,5 @@
       texlivePackage = pkgs.texliveFull;
       settings = { view_method = "zathura_simple"; };
     };
-
-    which-key.settings = {
-      disable.ft = [ "tex" ];
-    };
   };
 }
