@@ -17,7 +17,9 @@ in
 
       plex = {
         enable = true;
-        group = "media";
+
+        # We ensure the media group exists.
+        group = config.users.groups.media.name;
       };
 
       # Run Plex behind our Nginx web server.

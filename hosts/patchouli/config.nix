@@ -20,6 +20,8 @@
     hostName = "patchouli";
   };
 
+  time.timeZone = "America/New_York";
+
   sops.secrets = {
     "my-password" = { neededForUsers = true; };
 

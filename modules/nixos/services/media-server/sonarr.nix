@@ -15,7 +15,9 @@ in
 
     services.sonarr = {
       enable = true;
-      group = "media";
+
+      # We ensure the media group exists.
+      group = config.users.groups.media.name;
     };
 
   };

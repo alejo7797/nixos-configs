@@ -30,8 +30,8 @@ in
 
       environment = {
         LC_ALL = "C.UTF-8";
-        LANG="C.UTF-8";
-        TZ = "America/New_York";
+        LANG = "C.UTF-8";
+        TZ = config.time.timeZone;
       };
 
       serviceConfig = {
@@ -49,7 +49,9 @@ in
     users.users.kometa = {
       inherit (cfg) home;
       isSystemUser = true;
-      group = "media";
+
+      # We ensure the media group exists.
+      group = config.users.groups.media.name;
     };
 
     sops.secrets = {
