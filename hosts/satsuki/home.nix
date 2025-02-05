@@ -101,6 +101,10 @@
         name = "logitech-b330/m330/m331-1";
         sensitivity = -1;
       }
+      {
+        name = "telink-wireless-receiver-mouse";
+        sensitivity = -1;
+      }
     ];
   };
 
