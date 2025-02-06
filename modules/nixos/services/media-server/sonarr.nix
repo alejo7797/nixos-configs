@@ -28,10 +28,14 @@ in
         # Use our wildcard certificate.
         useACMEHost = "patchoulihq.cc"; forceSSL = true;
 
-        extraConfig = ''
-          proxy_read_timeout 10m;
-          proxy_send_timeout 10m;
-        '';
+        extraConfig =
+          ''
+            # Increased timeout values.
+            proxy_read_timeout 10m;
+            proxy_send_timeout 10m;
+          ''
+          # Restrict access to trusted networks.
+          + config.myNixOS.nginx.trustedOnly;
 
         locations."/" = {
           # Proxy to Sonarr running on localhost.

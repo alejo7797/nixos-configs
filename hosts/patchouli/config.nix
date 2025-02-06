@@ -41,27 +41,39 @@
       };
     };
 
-    # Web server and reverse proxy.
-    goaccess.enable = true;
-    nginx.enable = true;
+    nginx = {
+      enable = true;
+
+      trustedNetworks = [
+        # This machine itself.
+        "127.0.0.0/128" "::1/128"
+        # My personal VPN subnets.
+        "10.20.20.0/24" "fd00::/8"
+        # The WiFi subnet.
+        "100.105.183.0/26"
+      ];
+    };
 
     # Simple NixOS mailserver.
     mailserver.enable = true;
 
-    # Personal Nextcloud instance.
+    # My personal Nextcloud instance.
     nextcloud.enable = true;
 
-    # Personal GitLab instance.
+    # My personal GitLab instance.
     gitlab.enable = true;
 
-    # Friendly homepage.
+    # A friendly homepage.
     homepage.enable = true;
 
     # Plex media server & friends.
     mediaserver.enable = true;
 
-    # Personal Minecraft server.
+    # My personal Minecraft server.
     minecraft.enable = true;
+
+    # Web server analytics.
+    goaccess.enable = true;
 
   };
 
