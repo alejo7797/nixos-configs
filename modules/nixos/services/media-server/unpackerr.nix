@@ -41,9 +41,7 @@ in
 
     users.users.unpackerr = {
       isSystemUser = true;
-
-      # We ensure the media group exists.
-      group = config.users.groups.media.name;
+      group = "media";
     };
 
     sops.secrets = {
