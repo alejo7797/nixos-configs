@@ -20,10 +20,10 @@ in
         group = "media";
       };
 
-      # Run Plex behind our Nginx web server.
+      # Run Sonarr behind our Nginx web server.
       nginx.virtualHosts."sonarr.patchoulihq.cc" = {
 
-        # Use our wildcard certificate.
+        # Use our wildcard SSL certificate.
         useACMEHost = "patchoulihq.cc"; forceSSL = true;
 
         extraConfig =
