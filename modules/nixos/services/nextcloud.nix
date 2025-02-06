@@ -27,7 +27,6 @@ in
 
         # Use a MySQL database.
         config.dbtype = "mysql";
-        # TODO: configure DB user password
         database.createLocally = true;
 
         # Miscellaneous goodies.
