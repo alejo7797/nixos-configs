@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 
@@ -51,6 +52,19 @@ in
         };
 
       };
+    };
+
+    systemd.services = {
+
+      plex-cleanup = {
+        description = "Plex PhotoTranscoder Cache Cleanup";
+        script = ''
+          # With this command we keep the PhotoTranscoder cache at a reasonable size, deleting old files that are not needed anymore to save space.
+          ${pkgs.findutils}/bin/find ${config.services.plex.dataDir}/Plex\ Media\ Server/Cache/PhotoTranscoder -name '*.jpg' -type f -mtime +5 -delete
+        '';
+        startAt = "09:00";
+      };
+
     };
   };
 }
