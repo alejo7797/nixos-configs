@@ -15,10 +15,8 @@ in
 
     services = {
 
-      prowlarr = {
-        enable = true;
-        group = "media";
-      };
+      # Enable Prowlarr.
+      prowlarr.enable = true;
 
       # Run Prowlarr behind our Nginx web server.
       nginx.virtualHosts."prowlarr.patchoulihq.cc" = {
