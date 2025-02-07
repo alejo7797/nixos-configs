@@ -37,11 +37,23 @@ in
         secretFile = config.sops.secrets."nextcloud".path;
       };
 
+      mysql.settings = {
+        mysqld = {
+          # For utf8mb4 support.
+          innodb_large_prefix = true;
+          innodb_file_format = "barracuda";
+          innodb_file_per_table = true;
+        };
+      };
+
       nginx.virtualHosts."cloud.patchoulihq.cc" = {
         # Use our wildcard SSL certificate.
         useACMEHost = "patchoulihq.cc"; forceSSL = true;
       };
     };
+
+    # To support system email DKIM signing.
+    mailserver.domains = [ "cloud.patchoulihq.cc" ];
 
     sops.secrets = {
       # File containing config secrets.
