@@ -33,6 +33,7 @@ in
       geogebra.enable = true;
       gpg.enable = true;
       mimeApps.enable = true;
+      musescore.enable = true;
       mpv.enable = true;
       ssh.enable = true;
       style.enable = true;

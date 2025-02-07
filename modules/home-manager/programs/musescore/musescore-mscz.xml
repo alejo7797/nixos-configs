@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
+  <mime-type type="application/x-musescore">
+   <comment>MuseScore file</comment>
+   <glob pattern="*.mscz"/>
+ </mime-type>
+</mime-info>
