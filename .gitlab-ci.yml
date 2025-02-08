@@ -1,3 +1,4 @@
+---
 stages:
   - update
 
@@ -11,7 +12,7 @@ update:
     - git config user.email nix-updater@patchoulihq.cc
 
     - echo "This access token gives us write access."
-    - git remote add https-origin https://gitlab-ci-token:${ACCESS_TOKEN}@git.patchoulihq.cc/alex/nixconfig.git
+    - git remote add https-origin https://gitlab-ci-token:${ACCESS_TOKEN}@git.patchoulihq.cc/alex/nixos-configs.git
 
     - echo "Pulling changes from master branch."
     - git switch updates
