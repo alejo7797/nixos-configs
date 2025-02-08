@@ -22,13 +22,12 @@ in
 
         # Profile-specific extensions.
         extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-          augmented-steam
-          betterttv
-          darkreader
-          simple-tab-groups
-          tampermonkey
-          yomitan
-          zotero-connector
+
+          augmented-steam betterttv
+          darkreader simple-tab-groups
+          tampermonkey to-google-translate
+          yomitan zotero-connector
+
         ];
 
         search = {
@@ -83,11 +82,11 @@ in
             {
               label = "patchouli";
               url = "https://patchoulihq.cc";
-              baseDomain = "patchoulihq.cc";
             }
             {
               label = "nextcloud";
               url = "https://cloud.patchoulihq.cc";
+              customScreenshotURL = "https://patchoulihq.cc/nextcloud-logo.png";
             }
             {
               label = "arxiv";
@@ -107,7 +106,6 @@ in
             {
               label = "patreon";
               url = "https://www.patreon.com";
-              baseDomain = "patreon.com";
             }
           ];
         };

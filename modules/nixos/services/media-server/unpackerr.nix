@@ -5,13 +5,15 @@
   ...
 }:
 
-# TODO: secure API key access
-
 let
   cfg = config.myNixOS.unpackerr;
 
   unpackerrConfig = pkgs.writeText "unpackerr.conf" ''
+    [[sonarr]]
+    url = "http://localhost:8989"
 
+    [[radarr]]
+    url = "http://localhost:6767"
   '';
 in
 
@@ -28,11 +30,9 @@ in
       serviceConfig = {
         Type = "simple";
 
-        User = "unpackerr";
-        Group = "media";
-        UMask = "0002";
-
+        User = "unpackerr"; Group = "media"; UMask = "0002";
         ExecStart = "${pkgs.unpackerr}/bin/unpackerr -c ${unpackerrConfig}";
+        EnvironmentFile = config.sops.secrets."unpackerr/env".path;
 
         WorkingDirectory = "/tmp";
         Restart = "on-failure";
@@ -44,5 +44,9 @@ in
       group = "media";
     };
 
+    sops.secrets = {
+      # File containing API keys and credentials.
+      "unpackerr/env" = { owner = "unpackerr"; };
+    };
   };
 }

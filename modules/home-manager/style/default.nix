@@ -16,6 +16,8 @@ in
 
   config = lib.mkIf cfg.enable {
 
+    stylix.enable = true;
+
     xdg = {
       configFile = {
         # Fix the look of QT applications.

@@ -30,7 +30,6 @@ in
     myHome = {
       keepassxc.enable = true;
       kitty.enable = true;
-      geogebra.enable = true;
       gpg.enable = true;
       mimeApps.enable = true;
       mpv.enable = true;

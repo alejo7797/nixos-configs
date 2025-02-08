@@ -46,6 +46,10 @@ in
         };
       };
 
+      systemd-failed-units = {
+	      format = "{nr_failed} ";
+      };
+
       pulseaudio = {
         scroll-step = 1;
         format = "{volume}% {icon}{format_source}";
@@ -129,7 +133,7 @@ in
         interval = 1800;
         exec = ''
           ${pkgs.wttrbar}/bin/wttrbar \
-          --custom-indicator "{temp_C}°C {ICON}" \
+          --custom-indicator "{FeelsLikeC}°C {ICON}" \
           --location "${cfg.wttr-location}"
         '';
         return-type = "json";

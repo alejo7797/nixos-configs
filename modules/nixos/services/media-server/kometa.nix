@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 
@@ -9,16 +10,51 @@ let
 in
 
 {
-  options.myNixOS.kometa.enable = lib.mkEnableOption "Kometa & ImageMaid";
+  options.myNixOS.kometa = {
+    enable = lib.mkEnableOption "Kometa";
+
+    home = lib.mkOption {
+      description = "Kometa runtime directory.";
+      type = lib.types.str;
+      default = "/var/lib/kometa";
+    };
+  };
 
   config = lib.mkIf cfg.enable {
 
-    # virtualisation.oci-containers.containers = {
-    #
-    #   kometa = { };
-    #
-    #   imagemaid = { };
-    #
-    # };
+    systemd.services.kometa = {
+
+      description = "Kometa Plex Metadata Manager";
+      after = [ "network.target" ];
+      wantedBy = [ "multi-user.target" ];
+
+      environment = {
+        LC_ALL = "C.UTF-8";
+        LANG = "C.UTF-8";
+        TZ = config.time.timeZone;
+      };
+
+      serviceConfig = {
+        Type = "simple";
+
+        User = "kometa"; Group = "media";
+        ExecStart = "${pkgs.kometa}/bin/kometa -c ${cfg.home}/config.yml";
+        EnvironmentFile = config.sops.secrets."kometa/env".path;
+
+        Restart = "on-failure";
+      };
+    };
+
+
+    users.users.kometa = {
+      inherit (cfg) home;
+      isSystemUser = true;
+      group = "media";
+    };
+
+    sops.secrets = {
+      # File containing API keys and credentials.
+      "kometa/env" = { owner = "kometa"; };
+    };
   };
 }

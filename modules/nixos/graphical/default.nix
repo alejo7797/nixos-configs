@@ -62,10 +62,17 @@ in
         pulse.enable = true;
       };
 
+      geoclue2 = {
+        enable = true;
+        # https://github.com/NixOS/nixpkgs/issues/321121
+        geoProviderUrl = "https://api.beacondb.net/v1/geolocate";
+      };
+
+      # Useful for Git credentials.
+      gnome.gnome-keyring.enable = true;
+
       blueman.enable = true;
       libinput.enable = true;
-      geoclue2.enable = true;
-      gnome.gnome-keyring.enable = true;
       gvfs.enable = true;
       pcscd.enable = true;
       ratbagd.enable = true;

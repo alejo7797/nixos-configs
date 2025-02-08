@@ -46,15 +46,6 @@
       }
     ];
 
-    # Set the location used by gammastep manually.
-    # https://github.com/NixOS/nixpkgs/issues/321121
-    gammastep = {
-      provider = "manual";
-      settings.manual = {
-        lat = 40; lon = -4;
-      };
-    };
-
     syncthing.enable = true;
   };
 
