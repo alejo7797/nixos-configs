@@ -33,6 +33,11 @@ in
         autoUpdateApps.enable = true;
         notify_push.enable = true;
 
+        settings = {
+          # System email configuration.
+          mail_smtphost = "mail.patchoulihq.cc";
+        };
+
         # Password salt and other secrets management.
         secretFile = config.sops.secrets."nextcloud".path;
       };

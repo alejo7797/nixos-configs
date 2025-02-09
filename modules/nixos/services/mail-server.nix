@@ -25,7 +25,14 @@ in
       certificateScheme = "acme";
       fqdn = "mail.patchoulihq.cc";
 
-      domains = [ "patchoulihq.cc" "epelde.net" ];
+      domains = [
+        # Personal email accounts.
+        "epelde.net" "patchoulihq.cc"
+
+        # Gitlab & Nextcloud.
+        "git.patchoulihq.cc"
+        "cloud.patchoulihq.cc"
+      ];
 
       loginAccounts = {
 
