@@ -1,0 +1,8 @@
+---
+defaultIndent: "    "
+indentAfterItems:
+modifyLineBreaks:
+  condenseMultipleBlankLinesInto: 2
+  textWrapOptions:
+    columns: 79
+    removeBlockLineBreaks: 0

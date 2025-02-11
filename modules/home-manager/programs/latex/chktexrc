@@ -1,2 +1,2 @@
-# Excluded environments
+# Excluded environments.
 VerbEnvir { asy asydef tikzcd }

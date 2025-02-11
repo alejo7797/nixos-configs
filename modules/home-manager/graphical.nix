@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 
@@ -61,10 +62,14 @@ in
       "latexmk/latexmkrc".source = ./programs/latex/latexmkrc;
       "rubocop/config.yml".source = ./programs/rubocop/config.yml;
 
-      "baloofilerc".text = ''
-        [Basic Settings]
-        Indexing-Enabled=false
-      '';
+      "latexindent/latexindent.yaml".source = ./programs/latex/latexindent.yaml;
+      "latexindent/indentconfig.yaml".source = (pkgs.formats.yaml {}).generate "indentconfig.yaml" {
+        paths = [ "${config.xdg.configHome}/latexindent/latexindent.yaml" ];
+      };
+
+      "baloofilerc".text = lib.generators.toINI {} {
+        "Basic Settings"."Indexing-Enabled" = false;
+      };
     };
 
     xdg.dataFile = {
@@ -75,7 +80,8 @@ in
     };
 
     myHome.lib.mkGraphicalService =
-      { Unit, Service }: {
+      { Unit, Service }:
+      {
         Install.WantedBy = [ "graphical-session.target" ];
         Unit = {
           inherit (Unit) Description;
