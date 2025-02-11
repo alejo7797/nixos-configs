@@ -33,6 +33,7 @@
           bibtexFormatter = "texlab";
           chktex = { onEdit = true; onOpenAndSave = true; };
           latexindent = { modifyLineBreaks = true; };
+          inlayHints.labelReferences = false;
         };
       };
     };
