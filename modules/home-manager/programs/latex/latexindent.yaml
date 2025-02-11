@@ -1,7 +1,8 @@
 ---
 defaultIndent: "    "
 indentAfterItems:
+noAdditionalIndent:
+  emph: 1
 modifyLineBreaks:
-  condenseMultipleBlankLinesInto: 2
   textWrapOptions:
     columns: 79
