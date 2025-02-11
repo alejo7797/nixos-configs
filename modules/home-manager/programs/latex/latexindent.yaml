@@ -1,8 +1,28 @@
 ---
+# Default indentation.
 defaultIndent: "    "
+
+# For long \item fields.
 indentAfterItems:
+
+# For line breaking.
 noAdditionalIndent:
   emph: 1
+
+# Control line length.
 modifyLineBreaks:
   textWrapOptions:
     columns: 79
+
+# Custom indent routines.
+specialBeginEnd:
+  specialBeforeCommand: 1
+  leftRightBrackets:
+    begin: '\\left\('
+    end: '\\right\)'
+  leftRightSquare:
+    begin: '\\left\['
+    end: '\\right\]'
+  leftRightBrace:
+    begin: '\\left\\\{'
+    end: '\\right\\\}'
