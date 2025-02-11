@@ -95,7 +95,7 @@ in
             }
             {
               label = "ae433";
-              url = "https://ae433.user.srcf.net/about-to-get-very-silly";
+              url = "https://alex.epelde.net/about-to-get-very-silly";
               baseDomain = "ae433.user.srcf.net";
             }
             {
