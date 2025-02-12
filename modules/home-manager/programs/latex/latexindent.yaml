@@ -2,22 +2,34 @@
 # Default indentation.
 defaultIndent: "    "
 
-# For long \item fields.
-indentAfterItems:
-
-# For line breaking.
-noAdditionalIndent:
-  emph: 1
-
-# Control line length.
+# Maximum line length.
 modifyLineBreaks:
   textWrapOptions:
     columns: 79
 
-# Custom indent routines.
+# Don't keep long \item fields at
+# an unnatural indentation levels.
+indentAfterItems:
+
+# Allow \emph and inline math to
+# stay in running blocks of text.
+noAdditionalIndent:
+  emph: 1
+  inlineMath: 1
+  inlineMathLaTeX: 1
+
 specialBeginEnd:
   specialBeforeCommand: 1
-  leftRightBrackets:
+
+  # Not in defaultSettings.yaml
+  # for some unkown reason.
+  inlineMathLaTeX:
+    begin: (?<!\\)\\\(
+    end: \\\)
+
+  # To allow for indentation inside
+  # long math expressions with brackets.
+  leftRightParens:
     begin: '\\left\('
     end: '\\right\)'
   leftRightSquare:
