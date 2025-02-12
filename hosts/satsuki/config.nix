@@ -99,8 +99,8 @@
   environment.systemPackages = with pkgs; [
 
     # Actual programs.
-    anki audacity digikam gimp
-    filezilla geogebra inkscape
+    anki audacity castero digikam
+    gimp filezilla geogebra inkscape
     joplin-desktop krita musescore
     spotify tellico vesktop zotero
 
