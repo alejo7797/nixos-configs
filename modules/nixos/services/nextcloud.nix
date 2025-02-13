@@ -25,7 +25,7 @@ in
         # Caching support.
         configureRedis = true;
 
-        # Use a MySQL database.
+        # Use a local MySQL database.
         config.dbtype = "mysql";
         database.createLocally = true;
 

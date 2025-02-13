@@ -20,12 +20,13 @@ modifyLineBreaks:
 # an unnatural indentation level.
 indentAfterItems:
 
-# Allow \emph and inline math to
-# stay in running blocks of text.
+# Don't introduce additional
+# indentation in blocks of text.
 noAdditionalIndent:
   emph: 1
   inlineMath: 1
   inlineMathLaTeX: 1
+  textcolor: 1
 
 specialBeginEnd:
   specialBeforeCommand: 1
