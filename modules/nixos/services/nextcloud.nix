@@ -38,8 +38,9 @@ in
           mail_smtphost = "mail.patchoulihq.cc";
         };
 
-        # Password salt and other secrets management.
-        secretFile = config.sops.secrets."nextcloud".path;
+        # Admin user password and other sensitive Nextcloud secrets.
+        config.adminpassFile = config.sops.secrets."nextcloud/admin".path;
+        secretFile = config.sops.secrets."nextcloud/extra".path;
       };
 
       mysql.settings = {
@@ -62,7 +63,8 @@ in
 
     sops.secrets = {
       # File containing config secrets.
-      "nextcloud" = { owner = "nextcloud"; };
+      "nextcloud/admin" = { owner = "nextcloud"; };
+      "nextcloud/extra" = { owner = "nextcloud"; };
     };
   };
 }
