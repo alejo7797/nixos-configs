@@ -42,6 +42,7 @@
 
     ilya-fedin.url = "github:ilya-fedin/nur-repository";
     impermanence.url = "github:nix-community/impermanence";
+    nix-minecraft.url = "github:Infinidoge/nix-minecraft";
     sops-nix.url = "github:Mic92/sops-nix";
     stylix.url = "github:danth/stylix/release-24.11";
   };

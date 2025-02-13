@@ -20,6 +20,9 @@ in
     # Access my personal derivations.
     inputs.my-expressions.overlays.default
 
+    # Nix-Minecraft overlay.
+    inputs.nix-minecraft.overlays.default
+
     # Access packages from nixpkgs-unstable.
     (_: prev: {
       inherit (unstable prev.system)
