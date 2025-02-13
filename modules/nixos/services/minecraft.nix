@@ -44,6 +44,15 @@ in
 
         symlinks = {
 
+          "ops.json".value = [
+            {
+              uuid = "126ce880-58a3-4479-b246-14e4af6122ff";
+              name = "alejo7797";
+              level = 4;
+              bypassesPlayerLimit = true;
+            }
+          ];
+
         };
 
         files = {
