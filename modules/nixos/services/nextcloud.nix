@@ -58,9 +58,6 @@ in
       };
     };
 
-    # To support system email DKIM signing.
-    mailserver.domains = [ "cloud.patchoulihq.cc" ];
-
     sops.secrets = {
       # File containing config secrets.
       "nextcloud/admin" = { owner = "nextcloud"; };
