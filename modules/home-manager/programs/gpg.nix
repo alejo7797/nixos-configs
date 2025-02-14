@@ -48,5 +48,10 @@ in
       # My personal authorization-capable OpenPGP subkey.
       sshKeys = [ "17EB61C7A5A1DD08599A38F19F1506B02CDAA88F" ];
     };
+
+    systemd.user.sessionVariables = {
+      # Fixes some issues with the SSH agent in applications.
+      SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh";
+    };
   };
 }
