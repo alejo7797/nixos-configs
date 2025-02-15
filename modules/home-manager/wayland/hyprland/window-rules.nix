@@ -1,99 +1,116 @@
 {
+  lib,
+  ...
+}:
+
+{
   wayland.windowManager.hyprland.settings.windowrulev2 =
+
     let
-      dolphin-dialogs =
-        "title:^("
-        + builtins.concatStringsSep "|"
-        [
-          "Copying" "Moving" "Deleting"
-          "Creating directory"
-          "Progress Dialog"
-        ]
-        + ") — Dolphin$";
+      dolphin-dialogs = lib.concatStrings [
+
+        "title:^(Copying|Deleting|Moving)"
+
+        # Sometimes the percentage progress is
+        # present in the initial window title.
+        ''( \(\d+\% of [\d\.]+ \w+\))?''
+
+        " — Dolphin$"
+      ];
     in
-    # Default workspaces.
-    map (w: "workspace ${toString w.ws} silent, ${w.criteria}") [
-      { ws = 1; criteria = "class:^(firefox)$"; }
+
+    # Assign applications to their default workspaces.
+    map (w: "workspace ${toString w.ws} silent, ${w.criteria}")
+    [
+      # Workspace 1 contains my web browser and email client.
+      { ws = 1; criteria = "title:^(\\.+ - )?Mozilla Firefox$"; }
       { ws = 1; criteria = "title:^(Home - )?Mozilla Thunderbird$"; }
-      { ws = 1; criteria = "class:^(@joplin\\/app-desktop)$"; }
-      { ws = 2; criteria = "class:^(Zotero)$"; }
-      { ws = 3; criteria = "title:^(Minecraft\\* 1\\.\\d{1,2}\\.\\d)$"; }
-      { ws = 3; criteria = "class:^(steam)$"; }
-      { ws = 4; criteria = "class:^(xwaylandvideobridge)$"; }
-      { ws = 3; criteria = "class:^(steam_app_\\d*)$"; }
-      { ws = 8; criteria = "class:^(vesktop)$"; }
-      { ws = 9; criteria = "class:^(spotify)$"; }
+
+      # Workspaces 2, 3, 8 and 9 each
+      # have their own main application.
+      { ws = 2; criteria = "class:^Zotero$"; }
+      { ws = 3; criteria = "class:^steam$"; }
+      { ws = 8; criteria = "class:^vesktop$"; }
+      { ws = 9; criteria = "class:^spotify$"; }
     ]
-    # Smart borders.
+
+    # Smart window borders configuration.
     ++ [
       "bordersize 0, floating:0, onworkspace:w[tv1]"
       "bordersize 0, floating:0, onworkspace:f[1]"
       "rounding 12, floating:1"
     ]
-    # Floating windows.
+
+    # Make sure these windows are made to float.
     ++ map (w: "float, ${w}") [
-      "class:^(.blueman-manager-wrapped)$"
-      "class:^(firefox)$, title:^(Picture-in-Picture)$"
-      "class:^(org.kde.kdeconnect.handler)$"
-      "class:^(org\\.keepassxc\\.KeePassXC)$"
-      "class:^(net.lutris.Lutris), title:(Log for .*)$"
-      "class:^(nm-connection-editor)$"
-      "class:^(nm-openconnect-auth-dialog)$"
-      "class:^(system-config-printer)$"
-      "class:^(org.pulseaudio.pavucontrol)$"
-      "class:^(thunderbird)$, title:^(Calendar|\\d*) Reminders?$"
-      "class:^(variety)$, title:^(Variety Images)$"
-      "class:^(yubioath-flutter)$"
+
+      # Firefox Picture-in-Picture video player.
+      "class:^(firefox)$, title:^Picture-in-Picture$"
+
+      # Thunderbird calendar reminder pop-up.
+      "class:^(thunderbird)$, title:^(Calendar|\\d+) Reminder(s)?$"
+
+      # System tray applications.
+      "class:^nm-connection-editor$"
+      "class:^.blueman-manager-wrapped$"
+      "class:^org.kde.kdeconnect.handler$"
+      "class:^org.pulseaudio.pavucontrol$"
+      "class:^system-config-printer$"
+
+      # These float too.
+      dolphin-dialogs
+
+      # Other goodies we like to keep floating.
+      "class:^org\\.keepassxc\\.KeePassXC$"
+      "class:^net.lutris.Lutris$, title:^Log for .*$"
+      "class:^variety$, title:^Variety Images$"
     ]
-    # System tray.
-    ++ builtins.concatLists (
-      map (w: [ "size 600 600, ${w}" "move 100%-w-10 100%-w-40, ${w}" ]) [
-        "class:^(.blueman-manager-wrapped)$, title:^(Bluetooth Devices)$"
-        "class:^(org.kde.kdeconnect.handler)$, title:^(KDE Connect URL handler)$"
-        "class:^(nm-connection-editor)$, title:^(Network Connections)$"
-        "class:^(nm-openconnect-auth-dialog)$"
-        "class:^(thunderbird)$, title:^(Calendar Reminders)$"
-        "class:^(thunderbird)$, title:^(\\d* Reminders?)$"
+
+    # System tray dialogs.
+    ++ builtins.concatMap
+
+      # Set both comfortable window position and size.
+      (w: [ "size 600 600, ${w}" "move 100%-w-10 100%-w-40, ${w}" ])
+
+      [
+        "class:^.blueman-manager-wrapped$, title:^Bluetooth Devices$"
+        "class:^org.kde.kdeconnect.handler$, title:^KDE Connect URL handler$"
+        "class:^nm-connection-editor$, title:^Network Connections$"
+        "class:^thunderbird$, title:^(Calendar|\\d+) Reminder(s)?$"
       ]
-    )
-    # Variety wallpaper selector.
-    ++ map (e: "${e}, class:^(variety)$, title:^(Variety Images)$") [
-      "bordersize 0" "rounding 0"
-      "size 1920 120" "move 0 100%-w-30"
+
+    # Move the Variety wallpaper selector into its natural position.
+    ++ map (e: "${e}, class:^variety$, title:^Variety Images$") [
+      "bordersize 0" "rounding 0" "size 1920 120" "move 0 100%-w-30"
     ]
-    # Inhibit idle when fullscreen.
-    ++ map (w: "idleinhibit fullscreen, ${w}") [
-      "class:^(firefox)$"
-      "class:^(mpv)$"
-      "class:^(steam_app_\\d*)$"
+
+    # Make these inhibit hypridle when fullscreen.
+    ++ map (c: "idleinhibit fullscreen, class:^${c}$") [
+      "firefox" "mpv" "plex-desktop" "steam_app_\\d*"
     ]
-    # Inhibit idle always.
-    ++ map (w: "idleinhibit, ${w}") [
-      "title:^(.* - YouTube — Mozilla Firefox)$"
-      "class:^(Zoom Workplace)$"
-    ]
-    # Dolphin popups.
+
+    # Make Dolphin popups show up near the mouse cursor.
+    ++ [ "move onscreen cursor -50% -50%, class:^(org.kde.dolphin)$, floating:1" ]
+
+    # Make Dolphin dialogs show up above the system tray.
     ++ [
-      "move onscreen cursor -50% -50%, class:^(org.kde.dolphin)$, floating:1"
-    ]
-    # Dolphin dialogs
-    ++ [
-      "float, ${dolphin-dialogs}"
-      "noinitialfocus, ${dolphin-dialogs}"
       "size 450 265, ${dolphin-dialogs}"
       "move 100%-w-10 100%-w-40, ${dolphin-dialogs}"
+      "noinitialfocus, ${dolphin-dialogs}"
     ]
+
     ++ [
-      # Ignore maximize requests from apps. You'll probably like this.
+      # Ignore maximize requests from apps.
       "suppressevent maximize, class:.*"
 
-      # Fix some dragging issues with XWayland.
+      # Fix some dragging issues with XWayland. Recommended configuration.
       "nofocus, class:^$, title:^$, xwayland:1, floating:1, fullscreen:0, pinned:0"
     ]
-    # XWaylandVideoBridge
+
+    # XWaylandVideoBridge window rules.
     ++ map (e: "${e}, class:^(xwaylandvideobridge)$") [
-      "opacity 0.0 override" "noanim" "noinitialfocus"
-      "maxsize 1 1" "noblur" "nofocus"
+      "opacity 0.0 override" "noinitialfocus"
+      "maxsize 1 1" "noanim" "noblur" "nofocus"
     ];
 
 }
