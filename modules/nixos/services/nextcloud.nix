@@ -25,7 +25,7 @@ in
         # Caching support.
         configureRedis = true;
 
-        # Use a MySQL database.
+        # Use a local MySQL database.
         config.dbtype = "mysql";
         database.createLocally = true;
 
@@ -33,8 +33,14 @@ in
         autoUpdateApps.enable = true;
         notify_push.enable = true;
 
-        # Password salt and other secrets management.
-        secretFile = config.sops.secrets."nextcloud".path;
+        settings = {
+          # System email configuration.
+          mail_smtphost = "mail.patchoulihq.cc";
+        };
+
+        # Admin user password and other sensitive Nextcloud secrets.
+        config.adminpassFile = config.sops.secrets."nextcloud/admin".path;
+        secretFile = config.sops.secrets."nextcloud/extra".path;
       };
 
       mysql.settings = {
@@ -52,12 +58,10 @@ in
       };
     };
 
-    # To support system email DKIM signing.
-    mailserver.domains = [ "cloud.patchoulihq.cc" ];
-
     sops.secrets = {
       # File containing config secrets.
-      "nextcloud" = { owner = "nextcloud"; };
+      "nextcloud/admin" = { owner = "nextcloud"; };
+      "nextcloud/extra" = { owner = "nextcloud"; };
     };
   };
 }

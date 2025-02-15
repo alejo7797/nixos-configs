@@ -1,0 +1,50 @@
+---
+# Default indentation.
+defaultIndent: "    "
+
+# Text wrapping config.
+modifyLineBreaks:
+  textWrapOptions:
+    columns: 79
+
+    # Allow for text wrapping after display
+    # math and related math environments.
+    blocksFollow:
+      other: |-
+        (?x) \\\]
+        | \\item(?:\h|\[)
+        | \\end\{align\*?\}
+        | \\end\{equation\}
+
+# Don't keep long \item fields at
+# an unnatural indentation level.
+indentAfterItems:
+
+# Don't introduce additional
+# indentation in blocks of text.
+noAdditionalIndent:
+  emph: 1
+  inlineMath: 1
+  inlineMathLaTeX: 1
+  textcolor: 1
+
+specialBeginEnd:
+  specialBeforeCommand: 1
+
+  # Not in defaultSettings.yaml
+  # for some unkown reason.
+  inlineMathLaTeX:
+    begin: (?<!\\)\\\(
+    end: \\\)
+
+  # To allow for indentation inside
+  # math expressions with brackets.
+  leftRightParens:
+    begin: '\\left\('
+    end: '\\right\)'
+  leftRightSquare:
+    begin: '\\left\['
+    end: '\\right\]'
+  leftRightBrace:
+    begin: '\\left\\\{'
+    end: '\\right\\\}'

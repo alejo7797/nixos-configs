@@ -25,20 +25,25 @@ in
       certificateScheme = "acme";
       fqdn = "mail.patchoulihq.cc";
 
-      domains = [ "patchoulihq.cc" "epelde.net" ];
+      domains = [
+        # Personal email accounts.
+        "epelde.net" "patchoulihq.cc"
+
+        # Gitlab & Nextcloud.
+        "git.patchoulihq.cc"
+        "cloud.patchoulihq.cc"
+      ];
 
       loginAccounts = {
 
         alex = {
-          name = "alex@epelde.net";
-          aliases = mkDefaultAliases "epelde.net";
+          name = "alex@epelde.net"; aliases = mkDefaultAliases "epelde.net";
           hashedPasswordFile = config.sops.secrets."mailserver/alex".path;
         };
 
         ewan = {
           name = "ewan@patchoulihq.cc";
-          aliases =
-            mkDefaultAliases "patchoulihq.cc"
+          aliases = mkDefaultAliases "patchoulihq.cc"
             ++ mkAliases "patchoulihq.cc" [ "blanc" "didac" "root" ];
           hashedPasswordFile = config.sops.secrets."mailserver/ewan".path;
         };
@@ -59,7 +64,7 @@ in
       };
     };
 
-    security.acme.certs.${config.mailserver.fqdn} = {
+    security.acme.certs."mail.patchoulihq.cc" = {
       extraDomainNames = [ "mail.epelde.net" ];
     };
 

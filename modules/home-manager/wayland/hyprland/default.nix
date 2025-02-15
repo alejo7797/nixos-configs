@@ -19,112 +19,100 @@ in
       wlogout.enable = true;
     };
 
-    # Start kanshi with Hyprland.
+    # Start the kanshi daemon when Hyprland starts.
     services.kanshi.systemdTarget = "graphical-session.target";
 
-    # Start graphical services after WAYLAND_DISPLAY gets set.
-    systemd.user.services =
+    systemd.user.services = lib.mapAttrs
 
-      builtins.listToAttrs (
-        map
-          (name: {
-            inherit name;
-            value = {
-              Unit.After = [ "graphical-session.target" ];
-            };
-          })
+      # Delay the start of graphical systemd user services.
+      (_: _: { Unit.After = [ "graphical-session.target" ]; })
 
-          [
-            "gammastep" "hypridle"
-            "hyprpaper" "kdeconnect"
-            "kdeconnect-indicator"
-            "waybar" "xsettingsd"
-          ]
-      );
+      {
+        gammastep = { }; hypridle = { };
+        hyprpaper = { }; kdeconnect = { };
+        kdeconnect-indicator = { };
+        waybar = { }; xsettingsd = { };
+      };
 
     wayland.windowManager.hyprland = {
       enable = true;
 
-      # Use hy3 for i3-like behaviour.
+      # Use hy3 to allow for i3-like behaviour.
       plugins = with pkgs.hyprlandPlugins; [ hy3 ];
 
-      # Prevent conflicts with UWSM.
+      # Conflicts with UWSM.
       systemd.enable = false;
 
       settings =
+
         let
           uwsm-app = "${pkgs.uwsm}/bin/uwsm app";
-          kitty = "${config.programs.kitty.package}/bin/kitty";
+          kitty = "${pkgs.kitty}/bin/kitty";
         in
+
         {
           "$terminal" = "${uwsm-app} -- ${kitty}";
 
-          "$menu" = builtins.concatStringsSep " " [
-            "${pkgs.wofi}/bin/wofi |"
-            "${pkgs.moreutils}/bin/ifne"
-            "${pkgs.findutils}/bin/xargs"
-            "${uwsm-app} --"
-          ];
+          # Make it so that wofi launches applications using the UWSM app helper.
+          # Our implementation requires that `drun-print_command` be set to true.
+          "$menu" = "${pkgs.wofi}/bin/wofi | ${pkgs.findutils}/bin/xargs -r ${uwsm-app} --";
 
           # Workspace autostart command.
           exec-once = [ "${./hypr-startup}" ];
 
           general = {
-            gaps_in = 0;
-            gaps_out = 0;
-            border_size = 2;
-            resize_on_border = true;
+            # We don't like gaps.
+            gaps_in = 0; gaps_out = 0;
+
+            # Borders for split window layouts.
+            border_size = 2; resize_on_border = true;
+
             layout = "hy3";
           };
 
           decoration = {
+            # No rounding.
             rounding = 0;
+
+            # No opacity effects.
             active_opacity = 1.0;
             inactive_opacity = 1.0;
 
-            shadow = {
-              enabled = true;
-              range = 4;
-              render_power = 3;
-            };
-
-            blur = {
-              enabled = true;
-              size = 3;
-              passes = 1;
-              vibrancy = 0.1696;
-            };
+            # Shadow and blur.
+            shadow.enabled = true;
+            blur.enabled = true;
           };
 
           animations = {
             enabled = "yes, please :)";
 
             bezier = [
-              "easeOutQuint,0.23,1,0.32,1"
-              "easeInOutCubic,0.65,0.05,0.36,1"
-              "linear,0,0,1,1"
-              "almostLinear,0.5,0.5,0.75,1.0"
-              "quick,0.15,0,0.1,1"
+              "quick,           0.15, 0,    0.1,  1"
+              "easeOutQuint,    0.23, 1,    0.32, 1"
+              "easeInOutCubic,  0.65, 0.05, 0.36, 1"
+              "almostLinear,    0.5,  0.5,  0.75, 1"
+              "linear,          0,    0,    1,    1"
             ];
 
             animation = [
-              "global, 1, 10, default"
-              "border, 1, 5.39, easeOutQuint"
-              "windows, 1, 4.79, easeOutQuint"
-              "windowsIn, 1, 4.1, easeOutQuint, popin 87%"
-              "windowsOut, 1, 1.49, linear, popin 87%"
-              "fadeIn, 1, 1.73, almostLinear"
-              "fadeOut, 1, 1.46, almostLinear"
-              "fade, 1, 3.03, quick"
-              "layers, 1, 3.81, easeOutQuint"
-              "layersIn, 1, 4, easeOutQuint, fade"
-              "layersOut, 1, 1.5, linear, fade"
-              "fadeLayersIn, 1, 1.79, almostLinear"
-              "fadeLayersOut, 1, 1.39, almostLinear"
-              "workspaces, 1, 1.94, almostLinear, slide"
-              "workspacesIn, 1, 1.21, almostLinear, slide"
-              "workspacesOut, 1, 1.94, almostLinear, slide"
-              "specialWorkspace, 1, 1.94, almostLinear, fade"
+              # name                on/off  speed   curve           style
+              "global,              1,      10,     default"
+              "windows,             1,      4.79,   easeOutQuint"
+                "windowsIn,         1,      4.1,    easeOutQuint,   popin 87%"
+                "windowsOut,        1,      1.49,   linear,         popin 87%"
+              "layers,              1,      3.81,   easeOutQuint"
+                "layersIn,          1,      4,      easeOutQuint,   fade"
+                "layersOut,         1,      1.5,    linear,         fade"
+              "fade,                1,      3.03,   quick"
+                "fadeIn,            1,      1.73,   almostLinear"
+                "fadeOut,           1,      1.46,   almostLinear"
+                "fadeLayersIn,      1,      1.79,   almostLinear"
+                "fadeLayersOut,     1,      1.39,   almostLinear"
+              "border,              1,      5.39,   easeOutQuint"
+              "workspaces,          1,      1.94,   almostLinear,   slide"
+                "workspacesIn,      1,      1.21,   almostLinear,   slide"
+                "workspacesOut,     1,      1.94,   almostLinear,   slide"
+                "specialWorkspace,  1,      1.94,   almostLinear,   fade"
             ];
           };
 
@@ -139,14 +127,20 @@ in
           };
 
           "$mainMod" = "SUPER";
+
           bind =
+
             let
               grimblast = "${pkgs.grimblast}/bin/grimblast";
             in
+
             map (x: "$mainMod, ${x}") [
+
+              # Basic Hyprland keybindings.
               "Return, exec, $terminal"
-              "D, exec, $menu"
-              "F, fullscreen,"
+              "D, exec, $menu" "F, fullscreen,"
+
+              # Keybind to access logout menu.
               "X, exec, ${pkgs.wlogout}/bin/wlogout"
 
               "left, hy3:movefocus, l"
@@ -179,6 +173,7 @@ in
               "mouse_down, workspace, e+1"
               "mouse_up, workspace, e-1"
             ]
+
             ++ map (x: "$mainMod SHIFT, ${x}") [
               "Q, killactive,"
               "Space, togglefloating,"

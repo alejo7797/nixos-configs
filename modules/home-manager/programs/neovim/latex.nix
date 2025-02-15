@@ -32,8 +32,8 @@
         settings.texlab = {
           bibtexFormatter = "texlab";
           chktex = { onEdit = true; onOpenAndSave = true; };
-          latexindent.local = pkgs.writeText
-            "latexindent.yaml" "defaultIndent: \"    \"";
+          latexindent = { modifyLineBreaks = true; };
+          inlayHints.labelReferences = false;
         };
       };
     };

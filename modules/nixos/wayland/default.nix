@@ -34,7 +34,6 @@
       wf-recorder wl-clipboard
       libsForQt5.qt5.qtwayland
       kdePackages.qtwayland
-      kdePackages.xwaylandvideobridge
 
     ];
   };
