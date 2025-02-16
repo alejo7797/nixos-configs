@@ -35,7 +35,7 @@
     printing.drivers = [ pkgs.hplip ];
 
     udev.extraRules = ''
-      # Prevent wakeups from the Logitech USB receiver, which is known to misbehave.
+      # Prevent the Logitech USB mouse receiver from waking up the system from suspend. It has been known to misbehave in the past.
       ACTION=="add|change", SUBSYSTEM=="usb", DRIVERS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c547", ATTR{power/wakeup}="disabled"
     '';
   };

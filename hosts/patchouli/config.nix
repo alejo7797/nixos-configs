@@ -3,6 +3,10 @@
   ...
 }:
 
+let
+  localIP = "100.105.183.8";
+in
+
 {
   # Did you read the comment?
   system.stateVersion = "24.11";
@@ -19,10 +23,16 @@
   networking = {
     hostName = "patchouli";
 
+    firewall = {
+      # Listen to DNS queries.
+      allowedTCPPorts = [ 853 ];
+    };
+
     wireless = {
+      # We use WiFi.
       enable = true;
 
-      # Set up home WiFi authentication with wpa_supplicant.
+      # Set up WiFi authentication with wpa_supplicant.
       networks.xfinity_HUH_Res = { pskRaw = "ext:wifi-psk"; };
       secretsFile = config.sops.secrets."wpa-supplicant".path;
     };
@@ -59,8 +69,10 @@
       trustedNetworks = [
         # The machine itself.
         "127.0.0.0/128" "::1/128"
+
         # My personal VPN subnets.
         "10.20.20.0/24" "fd00::/8"
+
         # The WiFi subnet.
         "100.105.183.0/26"
       ];
@@ -99,6 +111,39 @@
 
       settings = {
 
+      };
+    };
+
+    unbound = {
+      enable = true;
+
+      # Add to /etc/resolv.conf.
+      resolveLocalQueries = true;
+
+      settings = {
+        server = {
+          # Listen on localhost and the wireless interface.
+          interface = [ "::1" "127.0.0.1" "${localIP}@853" ];
+
+          # SSL certificate for serving DoT. We don't trust the local network that much.
+          tls-service-pem = "${config.security.acme.certs."patchoulihq.cc".directory}/fullchain.pem";
+          tls-service-key = "${config.security.acme.certs."patchoulihq.cc".directory}/key.pem";
+
+          local-data = [
+            # The local IP for patchouli.
+            "patchouli.my-vpn. A ${localIP}"
+            "patchoulihq.cc. A ${localIP}"
+
+            # Make sure koakuma is still resolved.
+            "koakuma.my-vpn. AAAA fdaa:d7cf:c47f:8b79::1"
+            "koakuma.my-vpn. A 10.20.20.1"
+          ];
+        };
+
+        forward-zone = [
+          # Forward DNS queries to koakuma by default, through our VPN tunnel.
+          { name = "."; forward-addr = [ "fdaa:d7cf:c47f:8b79::1" "10.20.20.1" ]; }
+        ];
       };
     };
 
