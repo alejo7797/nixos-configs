@@ -18,6 +18,14 @@
 
   networking = {
     hostName = "patchouli";
+
+    wireless = {
+      enable = true;
+
+      # Set up home WiFi authentication with wpa_supplicant.
+      networks.xfinity_HUH_Res = { pskRaw = "ext:wifi-psk"; };
+      secretsFile = config.sops.secrets."wpa-supplicant".path;
+    };
   };
 
   time.timeZone = "America/New_York";
@@ -30,6 +38,8 @@
 
     "wireguard/koakuma/private-key" = { };
     "wireguard/koakuma/preshared-key" = { };
+
+    "wpa-supplicant" = { };
   };
 
   myNixOS = {
@@ -37,7 +47,9 @@
     home-users."ewan" = {
       userConfig = ./home.nix;
       userSettings = {
-        extraGroups = [ "media" "wheel" ];
+        extraGroups = [
+          "media" "wheel"
+        ];
       };
     };
 
@@ -45,7 +57,7 @@
       enable = true;
 
       trustedNetworks = [
-        # This machine itself.
+        # The machine itself.
         "127.0.0.0/128" "::1/128"
         # My personal VPN subnets.
         "10.20.20.0/24" "fd00::/8"
@@ -57,10 +69,10 @@
     # Simple NixOS mailserver.
     mailserver.enable = true;
 
-    # My personal Nextcloud instance.
+    # My personal Nextcloud.
     nextcloud.enable = true;
 
-    # My personal GitLab instance.
+    # My personal GitLab.
     gitlab.enable = true;
 
     # A friendly homepage.
