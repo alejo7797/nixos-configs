@@ -38,6 +38,13 @@ in
     };
   };
 
+  systemd.network = {
+    enable = true;
+
+    netdevs."10-wg0" = { };
+    networks."10-wg0" = { };
+  };
+
   time.timeZone = "America/New_York";
 
   sops.secrets = {
@@ -46,8 +53,8 @@ in
     "syncthing/cert.pem" = { owner = "syncthing"; };
     "syncthing/key.pem" = { owner = "syncthing"; };
 
-    "wireguard/koakuma/private-key" = { };
-    "wireguard/koakuma/preshared-key" = { };
+    "wireguard/koakuma/private-key" = { owner = "systemd-network"; };
+    "wireguard/koakuma/preshared-key" = { owner = "systemd-network"; };
 
     "wpa-supplicant" = { };
   };
