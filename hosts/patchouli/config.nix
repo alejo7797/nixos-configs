@@ -106,6 +106,7 @@ in
     nextcloud.enable = true;
 
     # My personal GitLab.
+    gitlab-runner.enable = true;
     gitlab.enable = true;
 
     # A friendly homepage.

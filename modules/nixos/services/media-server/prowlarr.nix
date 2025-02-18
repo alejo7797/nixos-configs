@@ -26,7 +26,7 @@ in
 
         extraConfig =
           ''
-            # Increased timeout values.
+            # Increased values.
             proxy_read_timeout 10m;
             proxy_send_timeout 10m;
           ''
