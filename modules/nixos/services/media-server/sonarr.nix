@@ -23,7 +23,7 @@ in
       # Run Sonarr behind our Nginx web server.
       nginx.virtualHosts."sonarr.patchoulihq.cc" = {
 
-        # Use our wildcard SSL certificate.
+        # Use our existing wildcard SSL certificate.
         useACMEHost = "patchoulihq.cc"; forceSSL = true;
 
         extraConfig =

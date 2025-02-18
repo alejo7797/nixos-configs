@@ -53,7 +53,7 @@ in
       };
 
       nginx.virtualHosts."cloud.patchoulihq.cc" = {
-        # Use our wildcard SSL certificate.
+        # Use our existing wildcard SSL certificate.
         useACMEHost = "patchoulihq.cc"; forceSSL = true;
       };
     };

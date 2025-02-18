@@ -24,7 +24,7 @@ in
       # Run Plex behind our Nginx web server.
       nginx.virtualHosts."plex.patchoulihq.cc" = {
 
-        # Use our wildcard certificate.
+        # Use our existing wildcard certificate.
         useACMEHost = "patchoulihq.cc"; forceSSL = true;
 
         extraConfig = ''
