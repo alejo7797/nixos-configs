@@ -29,20 +29,34 @@ in
     };
 
     wireless = {
-      # We use WiFi.
       enable = true;
 
       # Set up WiFi authentication with wpa_supplicant.
       networks.xfinity_HUH_Res = { pskRaw = "ext:wifi-psk"; };
       secretsFile = config.sops.secrets."wpa-supplicant".path;
     };
-  };
 
-  systemd.network = {
-    enable = true;
+    # My own wireguard tunnel.
+    wg-quick.interfaces."wg0" = {
 
-    netdevs."10-wg0" = { };
-    networks."10-wg0" = { };
+      address = [ "10.20.20.2/32" "fc00::2/128" ];
+      # File containing the wireguard interface's private key, as producted by `wg genkey`.
+      privateKeyFile = config.sops.secrets."wireguard/koakuma/private-key".path;
+
+      peers = [
+        {
+          allowedIPs = [ "0.0.0.0/0" "::/0" ];
+          endpoint = "vpn.patchoulihq.cc:51820";
+
+          publicKey = "b+GlQ2iouEiGH02pbMeqscMnTTaurDVE/EaH6Q2ud0E=";
+          # File containing the preshared key for use with koakuma, as producted by `wg genpsk`.
+          presharedKeyFile = config.sops.secrets."wireguard/koakuma/preshared-key".path;
+        }
+      ];
+    };
+
+    # For use by NixOS containers.
+    nat.externalInterface = "wlo1";
   };
 
   time.timeZone = "America/New_York";
@@ -53,8 +67,8 @@ in
     "syncthing/cert.pem" = { owner = "syncthing"; };
     "syncthing/key.pem" = { owner = "syncthing"; };
 
-    "wireguard/koakuma/private-key" = { owner = "systemd-network"; };
-    "wireguard/koakuma/preshared-key" = { owner = "systemd-network"; };
+    "wireguard/koakuma/private-key" = { };
+    "wireguard/koakuma/preshared-key" = { };
 
     "wpa-supplicant" = { };
   };
@@ -78,7 +92,7 @@ in
         "127.0.0.0/128" "::1/128"
 
         # My personal VPN subnets.
-        "10.20.20.0/24" "fd00::/8"
+        "10.20.20.0/24" "fc00::/64"
 
         # The WiFi subnet.
         "100.105.183.0/26"
@@ -133,7 +147,7 @@ in
           interface = [ "::1" "127.0.0.1" "${localIP}@853" ];
 
           # SSL certificate for serving DoT. We don't trust the local network that much.
-          tls-service-pem = "${config.security.acme.certs."patchoulihq.cc".directory}/fullchain.pem";
+          tls-service-pem = "${config.security.acme.certs."patchoulihq.cc".directory}/cert.pem";
           tls-service-key = "${config.security.acme.certs."patchoulihq.cc".directory}/key.pem";
 
           local-data = [
@@ -142,14 +156,14 @@ in
             "patchoulihq.cc. A ${localIP}"
 
             # Make sure koakuma is still resolved.
-            "koakuma.my-vpn. AAAA fdaa:d7cf:c47f:8b79::1"
+            "koakuma.my-vpn. AAAA fc00::1"
             "koakuma.my-vpn. A 10.20.20.1"
           ];
         };
 
         forward-zone = [
           # Forward DNS queries to koakuma by default, through our VPN tunnel.
-          { name = "."; forward-addr = [ "fdaa:d7cf:c47f:8b79::1" "10.20.20.1" ]; }
+          { name = "."; forward-addr = [ "fc00::1" "10.20.20.1" ]; }
         ];
       };
     };
