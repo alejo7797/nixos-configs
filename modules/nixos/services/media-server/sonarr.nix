@@ -23,12 +23,12 @@ in
       # Run Sonarr behind our Nginx web server.
       nginx.virtualHosts."sonarr.patchoulihq.cc" = {
 
-        # Use our wildcard SSL certificate.
+        # Use our existing wildcard SSL certificate.
         useACMEHost = "patchoulihq.cc"; forceSSL = true;
 
         extraConfig =
           ''
-            # Increased timeout values.
+            # Increased values.
             proxy_read_timeout 10m;
             proxy_send_timeout 10m;
           ''

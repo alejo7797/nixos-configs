@@ -89,7 +89,6 @@ in
             bezier = [
               "quick,           0.15, 0,    0.1,  1"
               "easeOutQuint,    0.23, 1,    0.32, 1"
-              "easeInOutCubic,  0.65, 0.05, 0.36, 1"
               "almostLinear,    0.5,  0.5,  0.75, 1"
               "linear,          0,    0,    1,    1"
             ];
@@ -110,22 +109,16 @@ in
                 "fadeLayersOut,     1,      1.39,   almostLinear"
               "border,              1,      5.39,   easeOutQuint"
               "workspaces,          1,      1.94,   almostLinear,   slide"
-                "workspacesIn,      1,      1.21,   almostLinear,   slide"
-                "workspacesOut,     1,      1.94,   almostLinear,   slide"
                 "specialWorkspace,  1,      1.94,   almostLinear,   fade"
             ];
           };
 
-          # Assign workspaces to outputs.
-          workspace = builtins.concatLists (
-            lib.mapAttrsToList (o: ws: map (w: "${toString w}, monitor:${o}") ws) config.myHome.workspaces
-          );
+          # Assign workspaces to physical monitors.
+          workspace = builtins.concatLists (lib.mapAttrsToList
+            (o: ws: map (w: "${toString w}, monitor:${o}") ws)
+            config.myHome.workspaces);
 
-          misc = {
-            force_default_wallpaper = 2;
-            disable_hyprland_logo = false;
-          };
-
+          # Main modifier key.
           "$mainMod" = "SUPER";
 
           bind =
@@ -143,54 +136,60 @@ in
               # Keybind to access logout menu.
               "X, exec, ${pkgs.wlogout}/bin/wlogout"
 
+              # Move between windows.
               "left, hy3:movefocus, l"
               "right, hy3:movefocus, r"
               "up, hy3:movefocus, u"
               "down, hy3:movefocus, d"
 
+              # With Vim keybindings.
               "h, hy3:movefocus, l"
               "l, hy3:movefocus, r"
               "k, hy3:movefocus, u"
               "j, hy3:movefocus, d"
 
+              # Switch window layouts.
               "w, hy3:makegroup, tab"
               "b, hy3:changegroup, h"
               "v, hy3:changegroup, v"
 
-              "1, workspace, 1"
-              "2, workspace, 2"
-              "3, workspace, 3"
-              "4, workspace, 4"
-              "5, workspace, 5"
-              "6, workspace, 6"
-              "7, workspace, 7"
-              "8, workspace, 8"
-              "9, workspace, 9"
-              "0, workspace, 10"
+              # Move between workspaces.
+              "1, workspace, 1" "2, workspace, 2"
+              "3, workspace, 3" "4, workspace, 4"
+              "5, workspace, 5" "6, workspace, 6"
+              "7, workspace, 7" "8, workspace, 8"
+              "9, workspace, 9" "0, workspace, 10"
 
+              # Toggle the scratchpad workspace.
               "s, togglespecialworkspace, magic"
 
+              # Scroll between workspaces.
               "mouse_down, workspace, e+1"
               "mouse_up, workspace, e-1"
             ]
 
             ++ map (x: "$mainMod SHIFT, ${x}") [
-              "Q, killactive,"
-              "Space, togglefloating,"
 
+              # More basic keybindings.
+              "Q, killactive," "Space, togglefloating,"
+
+              # Screenshot keyboard shortcuts.
               "X, exec, ${grimblast} copysave area"
               "Z, exec, ${grimblast} copysave output"
 
+              # Move windows around.
               "left, hy3:movewindow, l"
               "right, hy3:movewindow, r"
               "up, hy3:movewindow, u"
               "down, hy3:movewindow, d"
 
+              # With Vim keybindings.
               "h, hy3:movewindow, l"
               "l, hy3:movewindow, r"
               "k, hy3:movewindow, u"
               "j, hy3:movewindow, d"
 
+              # Move between workspaces.
               "1, hy3:movetoworkspace, 1"
               "2, hy3:movetoworkspace, 2"
               "3, hy3:movetoworkspace, 3"
@@ -202,14 +201,17 @@ in
               "9, hy3:movetoworkspace, 9"
               "0, hy3:movetoworkspace, 10"
 
+              # Send to the scratchpad workspace.
               "S, hy3:movetoworkspace, special:magic"
             ];
 
           bindel =
+
             let
               wpctl = "${pkgs.wireplumber}/bin/wpctl";
               brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
             in
+
             [
               ", XF86AudioRaiseVolume, exec, ${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 4%+"
               ", XF86AudioLowerVolume, exec, ${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 4%-"
@@ -224,9 +226,11 @@ in
             ];
 
           bindl =
+
             let
               playerctl = "${pkgs.playerctl}/bin/playerctl";
             in
+
             [
               ", XF86AudioNext, exec, ${playerctl} next"
               ", XF86AudioPause, exec, ${playerctl} play-pause"
@@ -234,14 +238,14 @@ in
               ", XF86AudioPrev, exec, ${playerctl} previous"
             ];
 
-          # Move and resize windows with the mouse.
-          bindm = map (x: "$mainMod, ${x}") [
-            "mouse:272, movewindow"
-            "mouse:273, resize_window"
+          bindm = [
+            # Move and resize using the mouse.
+            "$mainMod, mouse:272, movewindow"
+            "$mainMod, mouse:273, resize_window"
           ];
 
-          # Click on a window's titlebar to focus on it.
           bindn = [
+            # Focus on windows using the mouse.
             ", mouse:272, hy3:focustab, mouse"
           ];
         };

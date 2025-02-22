@@ -14,9 +14,8 @@
   config =
 
     let
-      stripVersion = with lib.strings; (
-        packageName:
-          builtins.elemAt (splitString "-" packageName) 0
+      stripVersion = with lib.strings; (packageName:
+        builtins.elemAt (splitString "-" packageName) 0
       );
     in
 
@@ -26,15 +25,18 @@
         map
 
           (pkg: {
-            name = "autostart/" + pkg.name + ".desktop";
+            name = "autostart/${pkg.name}.desktop";
+
             value =
 
               let
-                desktopFile = pkg.desktopFile or "${stripVersion pkg.name}.desktop";
+                desktopFile = pkg.desktopFile
+                  or "${stripVersion pkg.name}.desktop";
               in
 
               if pkg ? desktopItem then
                 { inherit (pkg.desktopItem) text; }
+
               else
                 { source = "${pkg}/share/applications/${desktopFile}"; };
 

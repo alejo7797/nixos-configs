@@ -1,136 +1,166 @@
-{ pkgs, lib, config,  ... }: {
+{
+  lib,
+  config,
+  ...
+}:
 
+let
+  localIP = "100.105.183.8";
+in
+
+{
   # Did you read the comment?
   system.stateVersion = "24.11";
-
-  # Set the system architecure.
-  nixpkgs.hostPlatform.system = "x86_64-linux";
 
   # QEMU guest settings.
   virtualisation.qemu.options = [ "-device virtio-vga" ];
 
-  # Use systemd-boot as our boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  # Set the system architecure.
+  nixpkgs.hostPlatform.system = "x86_64-linux";
 
-  # Set the kernel parameters.
-  boot.kernelParams = [ "quiet" "splash" "loglevel=3" "nowatchdog" ];
+  boot = {
+    kernelParams = [ "quiet" "nowatchdog" ];
+    loader = { systemd-boot.enable = true; };
+  };
 
-  # Set the hostname.
-  networking.hostName = "nixos-vm";
+  networking = {
+    hostName = "nixos-vm";
 
-  # Configure my user account.
-  myNixOS.home-users."ewan" = {
-    userConfig = ./home.nix;
-    userSettings = {
-      description = "Alex";
+    firewall = {
+      # Listen to DNS queries.
+      allowedTCPPorts = [ 853 ];
+    };
+
+    wireless = {
+      # We use WiFi.
+      enable = true;
+
+      # Set up WiFi authentication with wpa_supplicant.
+      networks.xfinity_HUH_Res = { pskRaw = "ext:wifi-psk"; };
+      secretsFile = config.sops.secrets."wpa-supplicant".path;
     };
   };
 
-  # Use NetworkManager together with systemd-resolved.
-  networking.networkmanager.enable = true;
-  services.resolved.enable = true;
-
-  # Set the system time zone.
-  time.timeZone = "Europe/Madrid";
-
-  # Customise the tty.
-  console = {
-    font = "Lat2-Terminus16";
-    keyMap = "us";
-  };
-
-  # Use tuigreet to log us in.
-  myNixOS.tuigreet.enable = true;
-
-  # Install Hyprland, the tiling Wayland compositor.
-  myNixOS.hyprland.enable = true;
-
-  # Install sway, the i3-compatible Wayland compositor.
-  myNixOS.sway.enable = true;
-
-  # Enable sound support.
-  security.rtkit.enable = true;
-  services.pipewire = {
+  systemd.network = {
     enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
+
+    netdevs."10-wg0" = { };
+    networks."10-wg0" = { };
   };
 
-  # Configure Fcitx5 as our input method.
-  myNixOS.fcitx5.enable = true;
+  time.timeZone = "America/New_York";
 
-  # Enable CUPS.
-  services.printing.enable = true;
-  services.avahi.enable = true;
-  services.system-config-printer.enable = true;
+  sops = {
+    # Override secrets file for VM testing purposes.
+    defaultSopsFile = lib.mkForce ../../secrets/patchouli.yaml;
 
-  # Enable SANE.
-  hardware.sane.enable = true;
-  services.saned.enable = true;
-  users.users.ewan.extraGroups = [ "scanner" ];
+    secrets = {
+      "my-password" = { neededForUsers = true; };
 
-  # Enable my custom system theme.
-  myNixOS.style.enable = true;
+      "syncthing/cert.pem" = { owner = "syncthing"; };
+      "syncthing/key.pem" = { owner = "syncthing"; };
 
-  # Install Dolphin and related KDE applications.
-  myNixOS.dolphin.enable = true;
+      "wireguard/koakuma/private-key" = { owner = "systemd-network"; };
+      "wireguard/koakuma/preshared-key" = { owner = "systemd-network"; };
 
-  # Install Thunderbird.
-  programs.thunderbird.enable = true;
-
-  # Install Wireshark.
-  programs.wireshark.enable = true;
-
-  # Install Steam and Protontricks.
-  programs.steam = {
-    enable = true;
-    protontricks.enable = true;
+      "wpa-supplicant" = { };
+    };
   };
 
-  # Install gamemode.
-  programs.gamemode.enable = true;
+  myNixOS = {
 
-  # Install the following packages system-wide.
-  environment.systemPackages = with pkgs; [
+    home-users."ewan" = {
+      userConfig = ./home.nix;
+      userSettings = {
+        extraGroups = [
+          "media" "wheel"
+        ];
+      };
+    };
 
-    # Hardware support.
-    cnijfilter2 ntfs3g
+    nginx = {
+      enable = true;
 
-    # Actual programs.
-    filezilla gimp inkscape
-    joplin-desktop plex-desktop
-    qbittorrent simple-scan spotify
-    ungoogled-chromium variety
-    vesktop yubioath-flutter
-    zathura zoom-us zotero
+      trustedNetworks = [
+        # The machine itself.
+        "127.0.0.0/128" "::1/128"
 
-    # Wine.
-    wineWowPackages.stable
-    winetricks
+        # My personal VPN subnets.
+        "10.20.20.0/24" "fd00::/8"
 
-    # Gaming.
-    gamescope lutris
-    prismlauncher
-    unigine-heaven
+        # The WiFi subnet.
+        "100.105.183.0/26"
+      ];
+    };
 
-    # Coding.
-    biber black clang
-    gdb jupyter
-    #mathematica-webdoc
-    nixfmt-rfc-style
-    ruby sage
-    shellcheck shfmt
+    # Simple NixOS mailserver.
+    mailserver.enable = true;
 
-    # LaTeX.
-    (texlive.combine {
-      inherit (texlive)
-        scheme-medium
-        collection-langcyrillic
-        ;
-    })
+    # My personal Nextcloud.
+    nextcloud.enable = true;
 
-  ];
+    # My personal GitLab.
+    gitlab.enable = true;
 
+    # A friendly homepage.
+    homepage.enable = true;
+
+    # Plex media server & friends.
+    mediaserver.enable = true;
+
+    # My personal Minecraft server.
+    minecraft.enable = true;
+
+    # Web server analytics.
+    goaccess.enable = true;
+
+  };
+
+  services = {
+
+    syncthing = {
+      enable = true;
+
+      cert = config.sops.secrets."syncthing/cert.pem".path;
+      key = config.sops.secrets."syncthing/key.pem".path;
+
+      settings = {
+
+      };
+    };
+
+    unbound = {
+      enable = true;
+
+      # Add to /etc/resolv.conf.
+      resolveLocalQueries = true;
+
+      settings = {
+        server = {
+          # Listen on localhost and the wireless interface.
+          interface = [ "::1" "127.0.0.1" "${localIP}@853" ];
+
+          # SSL certificate for serving DoT. We don't trust the local network that much.
+          tls-service-pem = "${config.security.acme.certs."patchoulihq.cc".directory}/fullchain.pem";
+          tls-service-key = "${config.security.acme.certs."patchoulihq.cc".directory}/key.pem";
+
+          local-data = [
+            # The local IP for patchouli.
+            "patchouli.my-vpn. A ${localIP}"
+            "patchoulihq.cc. A ${localIP}"
+
+            # Make sure koakuma is still resolved.
+            "koakuma.my-vpn. AAAA fdaa:d7cf:c47f:8b79::1"
+            "koakuma.my-vpn. A 10.20.20.1"
+          ];
+        };
+
+        forward-zone = [
+          # Forward DNS queries to koakuma by default, through our VPN tunnel.
+          { name = "."; forward-addr = [ "fdaa:d7cf:c47f:8b79::1" "10.20.20.1" ]; }
+        ];
+      };
+    };
+
+  };
 }

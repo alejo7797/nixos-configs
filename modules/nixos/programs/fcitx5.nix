@@ -22,7 +22,7 @@ in
       fcitx5 = {
         plasma6Support = true;
         addons = with pkgs; [
-          fcitx5-mozc
+          fcitx5-mozc-ut
           fcitx5-rime
         ];
       };
