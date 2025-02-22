@@ -314,6 +314,7 @@ in
           servers = {
             # Python.
             basedpyright.enable = true;
+            ruff.enable = true;
 
             # Shellscript.
             bashls.enable = true;
@@ -357,7 +358,6 @@ in
               zsh.enable = true;
             };
             formatting = {
-              black.enable = true;
               phpcsfixer.enable = true;
               prettier = {
                 enable = true;
