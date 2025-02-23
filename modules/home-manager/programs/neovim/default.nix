@@ -312,6 +312,10 @@ in
           enable = true;
           inlayHints = true;
           servers = {
+            # Python.
+            basedpyright.enable = true;
+            ruff.enable = true;
+
             # Shellscript.
             bashls.enable = true;
 
@@ -327,24 +331,6 @@ in
               settings = {
                 formatting.command = [ "${pkgs.nixfmt-rfc-style}/bin/nixfmt" ];
                 nix.flake.autoArchive = true;
-              };
-            };
-
-            # Python.
-            pylsp = {
-              enable = true;
-              settings = {
-                plugins = {
-                  isort.enabled = true;
-                  pylsp_mypy = {
-                    enabled = true;
-                    overrides = [
-                      # Use the correct Python interpreter in development environments.
-                      "--python-executable" { __raw = "vim.fn.exepath('python')"; } true
-                    ];
-                  };
-                  ruff.enabled = true;
-                };
               };
             };
           };
