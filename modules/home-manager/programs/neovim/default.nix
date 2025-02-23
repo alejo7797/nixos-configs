@@ -313,7 +313,6 @@ in
           inlayHints = true;
           servers = {
             # Python.
-            basedpyright.enable = true;
             ruff.enable = true;
 
             # Shellscript.
@@ -349,11 +348,11 @@ in
             diagnostics = {
               checkmake.enable = true;
               deadnix.enable = true;
+              mypy.enable = true;
               phpcs.enable = true;
               rubocop.enable = true;
               selene.enable = true;
               statix.enable = true;
-              stylelint.enable = true;
               yamllint.enable = true;
               zsh.enable = true;
             };
