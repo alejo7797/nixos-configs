@@ -99,10 +99,7 @@
     },
     "devshell": {
       "inputs": {
-        "nixpkgs": [
-          "nixvim",
-          "nixpkgs"
-        ]
+        "nixpkgs": ["nixvim", "nixpkgs"]
       },
       "locked": {
         "lastModified": 1735644329,
@@ -266,10 +263,7 @@
     },
     "flake-parts": {
       "inputs": {
-        "nixpkgs-lib": [
-          "lanzaboote",
-          "nixpkgs"
-        ]
+        "nixpkgs-lib": ["lanzaboote", "nixpkgs"]
       },
       "locked": {
         "lastModified": 1730504689,
@@ -287,10 +281,7 @@
     },
     "flake-parts_2": {
       "inputs": {
-        "nixpkgs-lib": [
-          "nixvim",
-          "nixpkgs"
-        ]
+        "nixpkgs-lib": ["nixvim", "nixpkgs"]
       },
       "locked": {
         "lastModified": 1738453229,
@@ -308,10 +299,7 @@
     },
     "flake-parts_3": {
       "inputs": {
-        "nixpkgs-lib": [
-          "nur",
-          "nixpkgs"
-        ]
+        "nixpkgs-lib": ["nur", "nixpkgs"]
       },
       "locked": {
         "lastModified": 1733312601,
@@ -401,10 +389,7 @@
     },
     "flake-utils_5": {
       "inputs": {
-        "systems": [
-          "stylix",
-          "systems"
-        ]
+        "systems": ["stylix", "systems"]
       },
       "locked": {
         "lastModified": 1731533236,
@@ -438,15 +423,9 @@
     },
     "git-hooks": {
       "inputs": {
-        "flake-compat": [
-          "nixvim",
-          "flake-compat"
-        ],
+        "flake-compat": ["nixvim", "flake-compat"],
         "gitignore": "gitignore_2",
-        "nixpkgs": [
-          "nixvim",
-          "nixpkgs"
-        ]
+        "nixpkgs": ["nixvim", "nixpkgs"]
       },
       "locked": {
         "lastModified": 1737465171,
@@ -464,20 +443,10 @@
     },
     "git-hooks_2": {
       "inputs": {
-        "flake-compat": [
-          "stylix",
-          "flake-compat"
-        ],
+        "flake-compat": ["stylix", "flake-compat"],
         "gitignore": "gitignore_3",
-        "nixpkgs": [
-          "stylix",
-          "nixpkgs"
-        ],
-        "nixpkgs-stable": [
-          "stylix",
-          "git-hooks",
-          "nixpkgs"
-        ]
+        "nixpkgs": ["stylix", "nixpkgs"],
+        "nixpkgs-stable": ["stylix", "git-hooks", "nixpkgs"]
       },
       "locked": {
         "lastModified": 1731363552,
@@ -495,11 +464,7 @@
     },
     "gitignore": {
       "inputs": {
-        "nixpkgs": [
-          "lanzaboote",
-          "pre-commit-hooks-nix",
-          "nixpkgs"
-        ]
+        "nixpkgs": ["lanzaboote", "pre-commit-hooks-nix", "nixpkgs"]
       },
       "locked": {
         "lastModified": 1709087332,
@@ -517,11 +482,7 @@
     },
     "gitignore_2": {
       "inputs": {
-        "nixpkgs": [
-          "nixvim",
-          "git-hooks",
-          "nixpkgs"
-        ]
+        "nixpkgs": ["nixvim", "git-hooks", "nixpkgs"]
       },
       "locked": {
         "lastModified": 1709087332,
@@ -539,11 +500,7 @@
     },
     "gitignore_3": {
       "inputs": {
-        "nixpkgs": [
-          "stylix",
-          "git-hooks",
-          "nixpkgs"
-        ]
+        "nixpkgs": ["stylix", "git-hooks", "nixpkgs"]
       },
       "locked": {
         "lastModified": 1709087332,
@@ -578,9 +535,7 @@
     },
     "home-manager": {
       "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
+        "nixpkgs": ["nixpkgs"]
       },
       "locked": {
         "lastModified": 1739757849,
@@ -599,10 +554,7 @@
     },
     "home-manager_2": {
       "inputs": {
-        "nixpkgs": [
-          "nixvim",
-          "nixpkgs"
-        ]
+        "nixpkgs": ["nixvim", "nixpkgs"]
       },
       "locked": {
         "lastModified": 1739570999,
@@ -621,10 +573,7 @@
     },
     "home-manager_3": {
       "inputs": {
-        "nixpkgs": [
-          "stylix",
-          "nixpkgs"
-        ]
+        "nixpkgs": ["stylix", "nixpkgs"]
       },
       "locked": {
         "lastModified": 1736373539,
@@ -677,16 +626,8 @@
     },
     "ixx": {
       "inputs": {
-        "flake-utils": [
-          "nixvim",
-          "nuschtosSearch",
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixvim",
-          "nuschtosSearch",
-          "nixpkgs"
-        ]
+        "flake-utils": ["nixvim", "nuschtosSearch", "flake-utils"],
+        "nixpkgs": ["nixvim", "nuschtosSearch", "nixpkgs"]
       },
       "locked": {
         "lastModified": 1729958008,
@@ -708,9 +649,7 @@
         "crane": "crane",
         "flake-compat": "flake-compat_2",
         "flake-parts": "flake-parts",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
+        "nixpkgs": ["nixpkgs"],
         "pre-commit-hooks-nix": "pre-commit-hooks-nix",
         "rust-overlay": "rust-overlay"
       },
@@ -733,17 +672,15 @@
       "inputs": {
         "dream2nix": "dream2nix",
         "flake-utils": "flake-utils",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
+        "nixpkgs": ["nixpkgs"]
       },
       "locked": {
         "host": "git.patchoulihq.cc",
-        "lastModified": 1740178152,
-        "narHash": "sha256-8+HGbna/56xWs5m0zqvkeN8J7DiFplV8PlDAl27w10M=",
+        "lastModified": 1740515564,
+        "narHash": "sha256-Aez+0iVQP7nd2Hf3LFkKfxN6LIN9TF8UyEDSw1CnNhQ=",
         "owner": "alex",
         "repo": "nix-expressions",
-        "rev": "c5a670f57154a8eaa061eff45177a0d9954a4f59",
+        "rev": "13bc0e073bdbe1a0022c6cd7afc7817c8e54b915",
         "type": "gitlab"
       },
       "original": {
@@ -756,9 +693,7 @@
     "my-scripts": {
       "inputs": {
         "flake-utils": "flake-utils_2",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
+        "nixpkgs": ["nixpkgs"]
       },
       "locked": {
         "host": "git.patchoulihq.cc",
@@ -778,10 +713,7 @@
     },
     "nix-darwin": {
       "inputs": {
-        "nixpkgs": [
-          "nixvim",
-          "nixpkgs"
-        ]
+        "nixpkgs": ["nixvim", "nixpkgs"]
       },
       "locked": {
         "lastModified": 1739553546,
@@ -822,9 +754,7 @@
       "inputs": {
         "blobs": "blobs",
         "flake-compat": "flake-compat_5",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
+        "nixpkgs": ["nixpkgs"],
         "nixpkgs-24_11": "nixpkgs-24_11"
       },
       "locked": {
@@ -993,9 +923,7 @@
         "git-hooks": "git-hooks",
         "home-manager": "home-manager_2",
         "nix-darwin": "nix-darwin",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
+        "nixpkgs": ["nixpkgs"],
         "nuschtosSearch": "nuschtosSearch",
         "treefmt-nix": "treefmt-nix"
       },
@@ -1017,9 +945,7 @@
     "nur": {
       "inputs": {
         "flake-parts": "flake-parts_3",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
+        "nixpkgs": ["nixpkgs"],
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
@@ -1040,10 +966,7 @@
       "inputs": {
         "flake-utils": "flake-utils_4",
         "ixx": "ixx",
-        "nixpkgs": [
-          "nixvim",
-          "nixpkgs"
-        ]
+        "nixpkgs": ["nixvim", "nixpkgs"]
       },
       "locked": {
         "lastModified": 1738508923,
@@ -1061,15 +984,9 @@
     },
     "pre-commit-hooks-nix": {
       "inputs": {
-        "flake-compat": [
-          "lanzaboote",
-          "flake-compat"
-        ],
+        "flake-compat": ["lanzaboote", "flake-compat"],
         "gitignore": "gitignore",
-        "nixpkgs": [
-          "lanzaboote",
-          "nixpkgs"
-        ],
+        "nixpkgs": ["lanzaboote", "nixpkgs"],
         "nixpkgs-stable": "nixpkgs-stable"
       },
       "locked": {
@@ -1089,11 +1006,7 @@
     "purescript-overlay": {
       "inputs": {
         "flake-compat": "flake-compat_3",
-        "nixpkgs": [
-          "my-expressions",
-          "dream2nix",
-          "nixpkgs"
-        ],
+        "nixpkgs": ["my-expressions", "dream2nix", "nixpkgs"],
         "slimlock": "slimlock"
       },
       "locked": {
@@ -1147,10 +1060,7 @@
     },
     "rust-overlay": {
       "inputs": {
-        "nixpkgs": [
-          "lanzaboote",
-          "nixpkgs"
-        ]
+        "nixpkgs": ["lanzaboote", "nixpkgs"]
       },
       "locked": {
         "lastModified": 1731897198,
@@ -1367,10 +1277,7 @@
     },
     "treefmt-nix": {
       "inputs": {
-        "nixpkgs": [
-          "nixvim",
-          "nixpkgs"
-        ]
+        "nixpkgs": ["nixvim", "nixpkgs"]
       },
       "locked": {
         "lastModified": 1738953846,
@@ -1388,10 +1295,7 @@
     },
     "treefmt-nix_2": {
       "inputs": {
-        "nixpkgs": [
-          "nur",
-          "nixpkgs"
-        ]
+        "nixpkgs": ["nur", "nixpkgs"]
       },
       "locked": {
         "lastModified": 1733222881,
