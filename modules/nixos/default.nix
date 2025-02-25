@@ -26,9 +26,6 @@
   nix = {
     channel.enable = false;
 
-    # Smart Gitlab token secret management.
-    extraOptions = "!include ${config.sops.secrets."nix-conf/gitlab-token".path}";
-
     gc = {
       automatic = true; dates = "weekly";
       options = "--delete-older-than 30d";
