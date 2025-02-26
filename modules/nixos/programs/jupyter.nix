@@ -12,18 +12,6 @@ let
     url = "https://patchoulihq.cc/sage-logo.png";
     sha256 = "1gk4fkq0ni7pwkryvq4k9q16zsdkijcd00rmrix0mjvnm74fckd4";
   };
-
-  wolfram-logo = builtins.fetchurl {
-    url = "https://patchoulihq.cc/wolfram-logo.png";
-    sha256 = "0yr527s52fzi9q744ns3g6ak6hvncppyzijqmb7kkssvz54kf09p";
-  };
-
-  WolframLanguageForJupyter = pkgs.fetchFromGitHub {
-    owner = "WolframResearch";
-    repo = "WolframLanguageForJupyter";
-    rev = "v0.9.3";
-    hash = "sha256-aFj7FM8DuiOp47RUB3lzX26fsvy1HWlbcdAbvym10qs=";
-  };
 in
 
 {
@@ -37,10 +25,12 @@ in
 
         definitions = {
 
-          # The default Jupyter kernel.
+          # The default Python 3 interactive shell.
           inherit (jupyter-kernel.default) python3;
 
-          # Interface with SageMath.
+          # Interface with the Wolfram Engine.
+          wolfram = wolfram-for-jupyter-kernel.definition;
+
           sagemath = {
             displayName = "SageMath ${sage.version}";
             argv = [
@@ -51,19 +41,6 @@ in
             language = "sage";
             logo32 = sage-logo;
             logo64 = sage-logo;
-          };
-
-          # Interface with the Wolfram Engine.
-          wolfram = {
-            displayName = "Wolfram Language ${mathematica-webdoc.version}";
-            argv = [
-              "${mathematica-webdoc}/bin/WolframKernel"
-              "-script" "${WolframLanguageForJupyter}/WolframLanguageForJupyter/Resources/KernelForWolframLanguageForJupyter.wl"
-              "{connection_file}"
-            ];
-            language = "Wolfram Language";
-            logo32 = wolfram-logo;
-            logo64 = wolfram-logo;
           };
 
         };
