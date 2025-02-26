@@ -9,8 +9,9 @@ let
   cfg = config.myNixOS.jupyter;
 
   sage-logo = builtins.fetchurl {
-    url = "https://patchoulihq.cc/sage-logo.png";
-    sha256 = "1gk4fkq0ni7pwkryvq4k9q16zsdkijcd00rmrix0mjvnm74fckd4";
+    url = "https://raw.githubusercontent.com/sagemath/sage/refs"
+      + "/heads/master/src/sage/ext_data/notebook-ipython/logo-64x64.png";
+    sha256 = "sha256-pE3myKl2ywp6zDUD0JiMs+lvAk6T4O3z5PdEC/B0ZL4=";
   };
 in
 
@@ -25,20 +26,14 @@ in
 
         definitions = {
 
-          # The default Python 3 interactive shell.
+          # The default Python 3 interpreter.
           inherit (jupyter-kernel.default) python3;
 
-          # Interface with the Wolfram Engine.
+          # Wolfram Language kernel for Jupyter.
           wolfram = wolfram-for-jupyter-kernel.definition;
 
-          sagemath = {
-            displayName = "SageMath ${sage.version}";
-            argv = [
-              "${sage}/bin/sage" "--python"
-              "-m" "sage.repl.ipython_kernel"
-              "-f" "{connection_file}"
-            ];
-            language = "sage";
+          # SageMath Jupyter kernel.
+          sagemath = sage.kernelspec // {
             logo32 = sage-logo;
             logo64 = sage-logo;
           };
