@@ -11,6 +11,7 @@
 
     [
       inputs.nixvim.homeManagerModules.nixvim
+      inputs.nur.modules.homeManager.default
       inputs.sops-nix.homeManagerModules.sops
     ]
 

@@ -52,7 +52,7 @@
 
         lib.mkMerge [
           {
-            shell = lib.mkDefault pkgs.zsh;
+            shell = lib.mkOverride 100 pkgs.zsh;
             extraGroups = [ "networkmanager" "scanner" ];
             isNormalUser = true; linger = true;
           }

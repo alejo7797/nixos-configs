@@ -10,6 +10,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     lanzaboote = {
       # Secure Boot support under NixOS.
       url = "github:nix-community/lanzaboote/v0.4.2";
@@ -19,12 +24,6 @@
     my-expressions = {
       # Personal derivations and overlays.
       url = "gitlab:alex/nix-expressions?host=git.patchoulihq.cc";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    firefox-addons = {
-      # Firefox addons as Nix derivations.
-      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
