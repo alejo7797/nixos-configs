@@ -26,14 +26,6 @@ in
     })
 
     (_: prev: {
-      sage = prev.sage.override {
-        # Access the SnapPy Python module.
-        extraPythonPackages = ps: [ ps.snappy ];
-        requireSageTests = false;
-      };
-    })
-
-    (_: prev: {
       lutris = prev.lutris.override {
         extraLibraries = pkgs: with pkgs;
           [ libgudev libvdpau speex ];

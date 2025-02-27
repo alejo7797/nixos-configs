@@ -684,11 +684,11 @@
       },
       "locked": {
         "host": "git.patchoulihq.cc",
-        "lastModified": 1740684724,
-        "narHash": "sha256-NyeN68syjy+xN6XqfHThz+ybX3J2u5HyBeRkXUHxFZk=",
+        "lastModified": 1740696675,
+        "narHash": "sha256-GG/GH31HLPoAs7eSL1BIU5RIHc/8wvU36jCJxEI/XyU=",
         "owner": "alex",
         "repo": "nix-expressions",
-        "rev": "e6d345e7a505d4642b2ab0ad81e4fd383b730841",
+        "rev": "8d99ec5a793f28238fbf1d9423df6c56b51c2deb",
         "type": "gitlab"
       },
       "original": {
