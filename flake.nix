@@ -20,11 +20,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    my-scripts = {
-      url = "gitlab:alex/shell-scripts?host=git.patchoulihq.cc";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nixos-mailserver = {
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -47,30 +42,25 @@
     stylix.url = "github:danth/stylix/release-24.11";
   };
 
-  outputs =
-    { nixpkgs, self, ... }@inputs:
+  outputs = { nixpkgs, self, ... }@inputs:
 
     let
-      mkSystem =
-        config:
-        nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs self; };
-          modules = [ config self.nixosModules.default ];
-        };
+      mkSystem = config: nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs self; };
+        modules = [ config self.nixosModules.default ];
+      };
     in
 
     {
-      nixosConfigurations = builtins.mapAttrs (
-        hostname: _: mkSystem ./hosts/${hostname}/config.nix
-      ) (builtins.readDir ./hosts);
+      nixosConfigurations = builtins.mapAttrs
+        (hostname: _: mkSystem ./hosts/${hostname}/config.nix)
+        (builtins.readDir ./hosts);
 
-      nixosModules = {
-        default = ./modules/nixos;
-      };
+      # My master NixOS module for all systems.
+      nixosModules = { default = ./modules/nixos; };
 
-      homeManagerModules = {
-        default = ./modules/home-manager;
-      };
+      # My master Home Manager module for all configurations.
+      homeManagerModules = { default = ./modules/home-manager; };
     };
 
 }

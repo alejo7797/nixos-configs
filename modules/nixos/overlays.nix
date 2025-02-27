@@ -14,7 +14,6 @@ in
 {
   nixpkgs.overlays = [
 
-    inputs.my-scripts.overlays.default
     inputs.my-expressions.overlays.default
     inputs.nix-minecraft.overlays.default
 

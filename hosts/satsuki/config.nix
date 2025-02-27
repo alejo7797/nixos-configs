@@ -115,8 +115,9 @@
     clang jdk23 nodejs
     bundix bundler gap
     mathematica-webdoc
-    ruby sage SnapPy
+    knotjob snappy-math
     biber texliveFull
+    sage khoca ruby
 
   ];
 }
