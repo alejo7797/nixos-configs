@@ -11,34 +11,39 @@
     };
 
     lanzaboote = {
+      # Secure Boot support under NixOS.
       url = "github:nix-community/lanzaboote/v0.4.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     my-expressions = {
+      # Personal derivations and overlays.
       url = "gitlab:alex/nix-expressions?host=git.patchoulihq.cc";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-mailserver = {
-      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.11";
+    firefox-addons = {
+      # Firefox addons as Nix derivations.
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nixvim = {
+      # Configure Neovim declaratively.
       url = "github:nix-community/nixvim/nixos-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nur = {
-      url = "github:nix-community/NUR";
+    nixos-mailserver = {
+      # Convenient email server NixOS module.
+      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     ilya-fedin.url = "github:ilya-fedin/nur-repository";
     impermanence.url = "github:nix-community/impermanence";
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
-    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.url = "github:Mic92/sops-nix/master";
     stylix.url = "github:danth/stylix/release-24.11";
   };
 

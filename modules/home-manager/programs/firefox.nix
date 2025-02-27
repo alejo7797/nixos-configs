@@ -1,12 +1,16 @@
 {
   lib,
+  inputs,
+  osConfig,
   config,
-  pkgs,
   ...
 }:
 
 let
   cfg = config.myHome.firefox;
+
+  # Need to tell the firefox-addons flake.
+  system = osConfig.nixpkgs.hostPlatform;
 in
 
 {
@@ -21,7 +25,7 @@ in
       profiles."${config.home.username}.default" = {
 
         # Profile-specific extensions.
-        extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+        extensions = with inputs.firefox-addons.packages.${system}; [
 
           augmented-steam betterttv
           darkreader simple-tab-groups

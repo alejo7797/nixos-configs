@@ -15,7 +15,6 @@
       inputs.lanzaboote.nixosModules.lanzaboote
       inputs.nixos-mailserver.nixosModules.default
       inputs.nix-minecraft.nixosModules.minecraft-servers
-      inputs.nur.modules.nixos.default
       inputs.sops-nix.nixosModules.sops
       inputs.stylix.nixosModules.stylix
     ]
@@ -37,6 +36,17 @@
   };
 
   nixpkgs.config.allowUnfree = true;
+
+  home-manager = {
+    # Set Nixpkgs instance.
+    useGlobalPkgs = true;
+
+    # Access flake inputs in Home Manager.
+    extraSpecialArgs = { inherit inputs; };
+
+    # Move existing files out of the way.
+    backupFileExtension = "backup";
+  };
 
   boot.consoleLogLevel = 3;
 

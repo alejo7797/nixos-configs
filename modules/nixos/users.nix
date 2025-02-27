@@ -1,7 +1,6 @@
 {
   lib,
   self,
-  inputs,
   config,
   pkgs,
   ...
@@ -9,9 +8,10 @@
 
 {
   options.myNixOS.home-users = lib.mkOption {
+
     description = "Attribute set containing user accounts.";
-    type =
-      with lib.types;
+
+    type = with lib.types;
       attrsOf (submodule {
         options = {
 
@@ -26,41 +26,40 @@
           };
         };
       });
+
   };
 
   config = {
 
-    # Set up Home Manager given myNixOS.home-users.
-    home-manager = {
-      useGlobalPkgs = true;
-      backupFileExtension = "backup";
-      extraSpecialArgs = { inherit inputs; };
-      users = builtins.mapAttrs (
-        _: user:
+    home-manager.users = builtins.mapAttrs (
+
+      _: user:
 
         { ... }:
         {
           imports = [
+            # This is a complete config!
             self.homeManagerModules.default
             (import user.userConfig)
           ];
         }
 
-      ) config.myNixOS.home-users;
-    };
+    ) config.myNixOS.home-users;
 
-    # And define the user accounts themselves.
     users.users = builtins.mapAttrs (
+
       _: user:
 
-      lib.mkMerge [
-        {
-          isNormalUser = true; linger = true; shell = pkgs.zsh;
-          extraGroups = [ "networkmanager" "scanner" ];
-        }
-        user.userSettings
-      ]
+        lib.mkMerge [
+          {
+            shell = lib.mkDefault pkgs.zsh;
+            extraGroups = [ "networkmanager" "scanner" ];
+            isNormalUser = true; linger = true;
+          }
+          user.userSettings
+        ]
 
     ) config.myNixOS.home-users;
+
   };
 }
