@@ -9,9 +9,13 @@ let
   cfg = config.myHome.knotTheory;
 
   init = ''
+    (* Make KnotTheory available to the WolframEngine interpreter. *)
     AppendTo[$Path, "${pkgs.knottheory}/share/WolframEngine/Applications"]
 
-    QuantumGroupsDataDirectory[] := "$UserBaseDirectory/Applications/QuantumGroups/data"
+    QuantumGroupsDataDirectory[] := FileNameJoin[
+      (* Set the QuantumGroups data directory to a suitable path. *)
+      {$UserBaseDirectory, "Applications", "QuantumGroups", "data"}
+    ]
   '';
 in
 
