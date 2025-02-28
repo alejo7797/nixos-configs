@@ -26,6 +26,7 @@
     i3.enable = true;
 
     firefox.enable = true;
+    knotTheory.enable = true;
     thunderbird.enable = true;
     joplin-desktop.enable = true;
 
