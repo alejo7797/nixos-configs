@@ -1,5 +1,5 @@
 {
-  description = "My NixOS configurations";
+  description = "Alex's NixOS configurations";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
