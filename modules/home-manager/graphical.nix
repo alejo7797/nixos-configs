@@ -43,7 +43,6 @@ in
     services = {
       mpris-proxy.enable = true;
       playerctld.enable = true;
-      xsettingsd.enable = true;
 
       kdeconnect = {
         enable = true;
@@ -60,7 +59,6 @@ in
 
       "chktexrc".source = ./programs/latex/chktexrc;
       "latexmk/latexmkrc".source = ./programs/latex/latexmkrc;
-      "rubocop/config.yml".source = ./programs/rubocop/config.yml;
 
       "latexindent/latexindent.yaml".source = ./programs/latex/latexindent.yaml;
       "latexindent/indentconfig.yaml".source = (pkgs.formats.yaml {}).generate "indentconfig.yaml" {

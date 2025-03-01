@@ -1,6 +1,5 @@
 {
   lib,
-  inputs,
   config,
   pkgs,
   ...
@@ -18,13 +17,6 @@ in
   config = lib.mkIf cfg.enable {
 
     stylix.enable = true;
-
-    nixpkgs.overlays = [
-      (final: _: {
-        # To access ilya-fedin's Nix expressions further down.
-        ilya-fedin = import inputs.ilya-fedin { pkgs = final; };
-      })
-    ];
 
     qt = {
       # Desktop independent QT customisation.
@@ -50,7 +42,7 @@ in
       kdePackages.ocean-sound-theme
 
       # Dolphin support.
-      ilya-fedin.qt5ct
+      libsForQt5.qt5ct
       kdePackages.qt6ct
 
     ];

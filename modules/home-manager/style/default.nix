@@ -21,50 +21,33 @@ in
     xdg = {
       configFile = {
         # Fix the look of QT applications.
-        "kdeglobals".source = ./kdeglobals;
         "qt5ct/qt5ct.conf".source = ./qt5ct.conf;
         "qt6ct/qt6ct.conf".source = ./qt6ct.conf;
+        "kdeglobals".source = ./kdeglobals;
 
-        # Fix Japanese fonts.
         "fontconfig" = {
-          recursive = true;
+          # Japanese fonts.
           source = ./fontconfig;
+          recursive = true;
         };
       };
 
-      # Make our theme available to Konsole.
+      # Configure Konsole - for use inside Dolphin.
       configFile."konsolerc".source = ./konsole/konsolerc;
       dataFile."konsole".source = ./konsole/data;
     };
 
-    # Set our desired font DPI.
-    dconf.settings."org/gnome/desktop/interface" = {
-      text-scaling-factor = 1.25;
+    dconf.settings = {
+      "org/gnome/desktop/interface" = {
+        # Scale the user interface.
+        text-scaling-factor = 1.25;
+      };
     };
 
-    # Use Papirus as our icon theme.
     stylix.iconTheme = {
-      enable = true;
-      package = pkgs.papirus-icon-theme;
-      dark = "Papirus-Dark";
-      light = "Papirus-Light";
-    };
-
-    # Use the default KDE sound theme.
-    gtk = {
-      gtk2.extraConfig = "gtk-sound-theme-name = ocean";
-      gtk3.extraConfig.gtk-sound-theme-name = "ocean";
-      gtk4.extraConfig.gtk-sound-theme-name = "ocean";
-    };
-    dconf.settings."org/gnome/desktop/sound".theme-name = "ocean";
-
-    # Pass our settings to xsettingsd.
-    services.xsettingsd.settings = {
-      "Net/ThemeName" = "adw-gkt3";
-      "Net/IconThemeName" = "Papirus-Dark";
-      "Net/SoundThemeName" = "ocean";
-      "Gtk/CursorThemeName" = "breeze_cursors";
-      "Xft/DPI" = 122880;
+      # Tell Stylix to use Papirus as our icon theme.
+      enable = true; package = pkgs.papirus-icon-theme;
+      dark = "Papirus-Dark"; light = "Papirus-Light";
     };
   };
 }

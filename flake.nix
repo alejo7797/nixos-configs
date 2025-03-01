@@ -39,11 +39,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    ilya-fedin.url = "github:ilya-fedin/nur-repository";
+    stylix.url = "github:danth/stylix/release-24.11";
     impermanence.url = "github:nix-community/impermanence";
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
     sops-nix.url = "github:Mic92/sops-nix/master";
-    stylix.url = "github:danth/stylix/release-24.11";
   };
 
   outputs = { nixpkgs, self, ... }@inputs:
