@@ -314,6 +314,7 @@ in
           servers = {
             # Python.
             basedpyright.enable = true;
+            ruff.enable = true;
 
             # Shellscript.
             bashls.enable = true;
@@ -352,12 +353,10 @@ in
               rubocop.enable = true;
               selene.enable = true;
               statix.enable = true;
-              stylelint.enable = true;
               yamllint.enable = true;
               zsh.enable = true;
             };
             formatting = {
-              black.enable = true;
               phpcsfixer.enable = true;
               prettier = {
                 enable = true;

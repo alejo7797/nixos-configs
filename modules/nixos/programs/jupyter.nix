@@ -9,20 +9,9 @@ let
   cfg = config.myNixOS.jupyter;
 
   sage-logo = builtins.fetchurl {
-    url = "https://patchoulihq.cc/sage-logo.png";
-    sha256 = "1gk4fkq0ni7pwkryvq4k9q16zsdkijcd00rmrix0mjvnm74fckd4";
-  };
-
-  wolfram-logo = builtins.fetchurl {
-    url = "https://patchoulihq.cc/wolfram-logo.png";
-    sha256 = "0yr527s52fzi9q744ns3g6ak6hvncppyzijqmb7kkssvz54kf09p";
-  };
-
-  WolframLanguageForJupyter = pkgs.fetchFromGitHub {
-    owner = "WolframResearch";
-    repo = "WolframLanguageForJupyter";
-    rev = "v0.9.3";
-    hash = "sha256-aFj7FM8DuiOp47RUB3lzX26fsvy1HWlbcdAbvym10qs=";
+    url = "https://raw.githubusercontent.com/sagemath/sage/refs"
+      + "/heads/master/src/sage/ext_data/notebook-ipython/logo-64x64.png";
+    sha256 = "sha256-pE3myKl2ywp6zDUD0JiMs+lvAk6T4O3z5PdEC/B0ZL4=";
   };
 in
 
@@ -37,33 +26,16 @@ in
 
         definitions = {
 
-          # The default Jupyter kernel.
+          # The default Python 3 interpreter.
           inherit (jupyter-kernel.default) python3;
 
-          # Interface with SageMath.
-          sagemath = {
-            displayName = "SageMath ${sage.version}";
-            argv = [
-              "${sage}/bin/sage" "--python"
-              "-m" "sage.repl.ipython_kernel"
-              "-f" "{connection_file}"
-            ];
-            language = "sage";
+          # Wolfram Language kernel for Jupyter.
+          wolfram = wolfram-for-jupyter-kernel.definition;
+
+          # SageMath Jupyter kernel.
+          sagemath = sage.kernelspec // {
             logo32 = sage-logo;
             logo64 = sage-logo;
-          };
-
-          # Interface with the Wolfram Engine.
-          wolfram = {
-            displayName = "Wolfram Language ${mathematica-webdoc.version}";
-            argv = [
-              "${mathematica-webdoc}/bin/WolframKernel"
-              "-script" "${WolframLanguageForJupyter}/WolframLanguageForJupyter/Resources/KernelForWolframLanguageForJupyter.wl"
-              "{connection_file}"
-            ];
-            language = "Wolfram Language";
-            logo32 = wolfram-logo;
-            logo64 = wolfram-logo;
           };
 
         };

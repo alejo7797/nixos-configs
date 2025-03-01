@@ -26,9 +26,6 @@
   nix = {
     channel.enable = false;
 
-    # Smart Gitlab token secret management.
-    extraOptions = "!include ${config.sops.secrets."nix-conf/gitlab-token".path}";
-
     gc = {
       automatic = true; dates = "weekly";
       options = "--delete-older-than 30d";
@@ -40,6 +37,17 @@
   };
 
   nixpkgs.config.allowUnfree = true;
+
+  home-manager = {
+    # Set Nixpkgs instance.
+    useGlobalPkgs = true;
+
+    # Access flake inputs in Home Manager.
+    extraSpecialArgs = { inherit inputs; };
+
+    # Move existing files out of the way.
+    backupFileExtension = "backup";
+  };
 
   boot.consoleLogLevel = 3;
 
