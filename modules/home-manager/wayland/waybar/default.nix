@@ -19,8 +19,8 @@ in
       default = 2;
     };
 
-    wttr-location = lib.mkOption {
-      description = "Location to show the weather for in waybar.";
+    location = lib.mkOption {
+      description = "Weather location to use in waybar.";
       type = lib.types.str;
       default = "Madrid";
     };
@@ -28,26 +28,26 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    # Style waybar ourselves.
+    # Set the style for waybar ourselves.
     stylix.targets.waybar.enable = false;
 
-    # Install and configure waybar.
     programs.waybar = {
-
       enable = true;
+
+      # Run as a user service.
       systemd.enable = true;
 
       style = ./style.css;
 
       settings.mainBar = {
-
+        # The one and only bar.
+        height = 30; spacing = 5;
         position = "bottom";
-        height = 30;
-        spacing = 5;
 
         modules-left = [
-          "hyprland/workspaces" "hyprland/submap"
-          "sway/workspaces" "sway/mode" "sway/scratchpad"
+          # Mostly just workspace icons.
+          "hyprland/workspaces" "sway/workspaces"
+          "sway/mode" "sway/scratchpad"
         ];
 
         modules-right = [

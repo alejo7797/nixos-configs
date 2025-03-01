@@ -1,12 +1,11 @@
 {
-  config,
   pkgs,
+  config,
   ...
 }:
 
 let
   cfg = config.myHome.waybar;
-  stylix-colors = config.lib.stylix.colors;
 in
 
 {
@@ -20,11 +19,10 @@ in
           "2" = ""; # library
           "3" = ""; # steam
           "4" = ""; # terminal
-          "6" = ""; # git
+          "6" = ""; # coding
           "8" = ""; # discord
           "9" = ""; # spotify
           "10" = ""; # extra
-          "urgent" = ""; # (!)
         };
       };
     in
@@ -51,28 +49,21 @@ in
       };
 
       pulseaudio = {
-        scroll-step = 1;
+        scroll-step = 1; # Make precise adjustments.
+        format-bluetooth = "{volume}% {icon}{format_source}";
         format = "{volume}% {icon}{format_source}";
-        format-bluetooth = "{volume}% {icon}";
-        format-bluetooth-muted = " {icon}";
+
         format-muted = " ";
+        # Only show when source is on.
         format-source = " {volume}% ";
         format-source-muted = "";
-        format-icons = {
-          headphone = "";
-          hands-free = "";
-          headset = "";
-          phone = "";
-          portable = "";
-          car = "";
-          default = ["" "" ""];
-        };
+
         on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
+        format-icons = { default = ["" "" ""]; headphone = ""; };
         on-click-right = "${pkgs.audio-switch}/bin/audio-switch";
       };
 
       cpu = {
-        tooltip = false;
         format = "{usage}% ";
       };
 
@@ -81,20 +72,17 @@ in
       };
 
       disk = {
-        interval = 30;
+        interval = 30; path = "/";
         format = "{percentage_used}% ";
-        path = "/";
       };
 
       battery = {
-        states = {
-          warning = 30;
-          critical = 15;
-        };
         format = "{capacity}% {icon}";
         format-charging = "{capacity}% ";
         format-plugged = "{capacity}% ";
         format-alt = "{time} {icon}";
+
+        states = { warning = 30; critical = 15; };
         format-icons = [ "" "" "" "" "" ];
       };
 
@@ -102,7 +90,6 @@ in
         inherit (cfg) thermal-zone;
         format = "{temperatureC}°C {icon}";
         format-icons = ["" "" ""];
-        tooltip = false;
       };
 
       network = {
@@ -112,69 +99,60 @@ in
       };
 
       "network#vpn" = {
-        interface = "wg0";
-        format = "VPN ";
-        format-disconnected = "VPN ";
+        interface = "wg0"; format = "VPN ";
         format-alt = "{ifname}: {ipaddr}/{cidr}";
-        tooltip = false;
+        format-disconnected = "VPN ";
       };
 
       "network#harvard" = {
-        interface = "tun0";
-        format = "Harvard VPN ";
-        format-disconnected = "";
+        interface = "tun0"; format = "Harvard VPN ";
+        format-disconnected = ""; # Don't show normally.
         format-alt = "{ifname}: {ipaddr}/{cidr}";
-        tooltip = false;
       };
 
       "custom/wttr" = {
         format = "{}";
-        tooltip = true;
         interval = 1800;
+        return-type = "json";
+        tooltip = true;
+
         exec = ''
           ${pkgs.wttrbar}/bin/wttrbar \
-          --custom-indicator "{FeelsLikeC}°C {ICON}" \
-          --location "${cfg.wttr-location}"
+            --custom-indicator "{FeelsLikeC}°C {ICON}" \
+            --location "${cfg.location}"
         '';
-        return-type = "json";
       };
 
       clock = {
-        interval = 5;
-        format-alt = "{:%Y-%m-%d %H:%M:%S}";
+        interval = 5; format-alt = "{:%Y-%m-%d %H:%M:%S}"; # Cute calendar pop-up.
         tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
       };
 
       "custom/swaync" =
         let
-          swaync-client = "${pkgs.swaynotificationcenter}/bin/swaync-client";
+          alert = "<span foreground='#${red}'><sup></sup></span>";
+          client = "${pkgs.swaynotificationcenter}/bin/swaync-client";
+          red = config.lib.stylix.colors.base08; # Alert icon color.
         in
         {
-          tooltip = false;
-          format = "{icon}";
-          format-icons =
-            let
-              alert = "<span foreground='#${stylix-colors.base08}'><sup></sup></span>";
-            in
-            {
-              notification = "${alert}";
-              none = "";
-              dnd-notification = "${alert}";
-              dnd-none = "";
-              inhibited-notification = "${alert}";
-              inhibited-none = "";
-              dnd-inhibited-notification = "${alert}";
-              dnd-inhibited-none = "";
-            };
-          return-type = "json";
-          exec = "${swaync-client} -swb";
-          on-click = "${swaync-client} -t -sw";
-          on-click-right = "${swaync-client} -d -sw";
           escape = true;
+          format = "{icon}";
+          return-type = "json";
+          tooltip = false;
+
+          format-icons = {
+            notification = "${alert}"; dnd-none = "";
+            dnd-notification = "${alert}"; none = "";
+          };
+
+          exec = "${client} -swb"; # Run client daemon process.
+          on-click = "${client} -t -sw"; # Open swaync dashboard.
+          on-click-right = "${client} -d -sw"; # Do not disturb.
         };
 
       tray = {
         spacing = 10;
       };
     };
+
 }
