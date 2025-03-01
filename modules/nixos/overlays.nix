@@ -25,6 +25,28 @@ in
         ;
     })
 
+    (final: prev: with final; {
+      kdePackages = prev.kdePackages.overrideScope (
+        kde-final: kde-prev: with kde-final; {
+          qt6ct = kde-prev.qt6ct.overrideAttrs (oldAttrs: {
+            buildInputs = oldAttrs.buildInputs ++
+              [
+                qtdeclarative kconfig
+                kcolorscheme kiconthemes
+              ];
+
+            nativeBuildInputs =  [
+              cmake wrapQtAppsHook qttools
+            ];
+
+            cmakeFlags = [
+              "-DPLUGINDIR=${placeholder "out"}/${qtbase.qtPluginPrefix}"
+            ];
+          });
+        }
+      );
+    })
+
     (_: prev: {
       lutris = prev.lutris.override {
         extraLibraries = pkgs: with pkgs;
