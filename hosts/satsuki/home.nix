@@ -23,13 +23,14 @@
     thunderbird.enable = true;
 
     workspaces = {
+      # I'm used to it, okay?
       "DP-1" = [ 1 2 3 4 6 8 9 10 ];
       "eDP-1" = [ 5 7 ];
     };
 
     waybar = {
-      thermal-zone = 7;
       location = "Cambridge, MA";
+      thermal-zone = 7;
     };
 
     xdgAutostart = with pkgs; [
@@ -39,7 +40,7 @@
 
   xdg.configFile."uwsm/env".text = ''
     export __EGL_VENDOR_LIBRARY_FILENAMES=/run/opengl-driver/share/glvnd/egl_vendor.d/50_mesa.json
-    export __GLX_VENDOR_LIBRARY_NAME=mesa
+    export __GLX_VENDOR_LIBRARY_NAME=mesa  # Tell Wayland compositors not to use the Nvidia GPU.
   '';
 
   services = {
@@ -47,21 +48,24 @@
     syncthing.enable = true;
 
     kanshi.settings =
+
       let
         laptop-screen = {
-          criteria = "eDP-1";
+          criteria = "eDP-1"; scale = 1.0;
           mode = "1920x1080@60.033Hz";
-          scale = 1.0;
         };
+
         home-monitor = {
           criteria = "ASUSTek COMPUTER INC ASUS VA27EHE N3LMTF145950";
-          mode = "1920x1080@74.986Hz";
+          mode = "1920x1080@74.986Hz"; # I like this Asus monitor.
         };
+
         office-monitor = {
           criteria = "Samsung Electric Company S27R65 H4TT101982";
-          mode = "1920x1080@74.973Hz";
+          mode = "1920x1080@74.973Hz"; # I got this one for free!
         };
       in
+
       [
         {
           profile.name = "home";
@@ -70,6 +74,7 @@
             (laptop-screen // { position = "1920,0"; })
           ];
         }
+
         {
           profile.name = "office";
           profile.outputs = [
@@ -77,6 +82,7 @@
             (laptop-screen // { position = "1920,0"; })
           ];
         }
+
         {
           profile.name = "mobile";
           profile.outputs = [
@@ -84,34 +90,35 @@
           ];
         }
       ];
+
   };
 
-  wayland.windowManager.hyprland.settings = {
-    device = [
+  wayland.windowManager =  {
+    hyprland.settings.device = [
       {
+        # PRO X Superlight.
         name = "logitech-usb-receiver";
         sensitivity = -1;
       }
       {
+        # Trusty office use mouse.
         name = "logitech-b330/m330/m331-1";
         sensitivity = -1;
       }
       {
+        # Only when I really need it.
         name = "telink-wireless-receiver-mouse";
         sensitivity = -1;
       }
     ];
-  };
 
-  wayland.windowManager.sway.config = {
-    input = {
-      "1133:50503:Logitech_USB_Receiver" = {
-        pointer_accel = "-1";
-      };
-      "1133:16471:Logitech_B330/M330/M331" = {
-        pointer_accel = "-1";
-      };
+    sway.config.input = {
+      # Should be a repeat of the above Hyprland input device settings.
+      "1133:50503:Logitech_USB_Receiver" = { pointer_accel = "-1"; };
+      "1133:16471:Logitech_B330/M330/M331" = { pointer_accel = "-1"; };
+
       "1739:52756:SYNA329D:00_06CB:CE14_Touchpad" = {
+        # Touchpad use QoL improvements.
         tap = "enabled"; dwt = "enabled";
       };
     };
@@ -123,18 +130,25 @@
       enable = true;
 
       backups.personal = {
+
         consistency.checks = [
+          # Some of these take a long time to run.
           { name = "repository"; frequency = "2 weeks"; }
           { name = "data"; frequency = "6 weeks"; }
         ];
+
         location = {
           patterns = [ "R /home/ewan" "- home/ewan/.cache" "- home/ewan/.local/share/Steam" ];
           repositories = [ { "path" = "ssh://patchouli/mnt/Hanekawa/Backup/satsuki/borg"; } ];
         };
-        retention = { keepDaily = 3; };
+
+        # You never know what might end up happening.
+        retention = { keepDaily = 3; keepWeekly = 1; };
+
         storage = {
-          encryptionPasscommand = "${pkgs.coreutils}/bin/cat ${config.sops.secrets."borg/passphrase".path}";
+          # Use a dedicated private SSH key. Make sure not to bother me by trying to talk to the GnuPG SSH agent.
           extraConfig = { ssh_command = "${pkgs.openssh}/bin/ssh -o IdentityAgent=none -i ${config.sops.secrets."borg/ssh-key".path}"; };
+          encryptionPasscommand = "${pkgs.coreutils}/bin/cat ${config.sops.secrets."borg/passphrase".path}";
         };
       };
     };
@@ -147,8 +161,6 @@
         # These rely on a custom firewall rule.
         pubip = "${what-is-my-ip} @resolver1.opendns.com";
         vpnip = "${what-is-my-ip} @resolver2.opendns.com";
-
-        wf-pacman = "sudo -u wonderful /opt/wonderful/bin/wf-pacman";
       };
 
   };
