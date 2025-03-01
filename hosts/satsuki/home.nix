@@ -1,10 +1,5 @@
-{
-  config,
-  pkgs,
-  ...
-}:
+{ pkgs, config, ... }: {
 
-{
   home = {
     username = "ewan";
     homeDirectory = "/home/ewan";
@@ -19,23 +14,23 @@
   };
 
   myHome = {
-    laptop.enable = true;
-
-    hyprland.enable = true;
     sway.enable = true;
+    hyprland.enable = true;
     i3.enable = true;
 
     firefox.enable = true;
-    thunderbird.enable = true;
     joplin-desktop.enable = true;
+    thunderbird.enable = true;
 
     workspaces = {
       "DP-1" = [ 1 2 3 4 6 8 9 10 ];
       "eDP-1" = [ 5 7 ];
     };
 
-    waybar.thermal-zone = 7;
-    waybar.wttr-location = "Cambridge, MA";
+    waybar = {
+      thermal-zone = 7;
+      location = "Cambridge, MA";
+    };
 
     xdgAutostart = with pkgs; [
       firefox thunderbird zotero

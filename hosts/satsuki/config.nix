@@ -24,39 +24,38 @@
     networkmanager.enable = true;
 
     firewall.extraCommands = ''
-      # Route traffic to resolver1.opendns.com outside the VPN tunnel.
+      # Route traffic to resolver1.opendns.com outside of the VPN tunnel.
       iptables -t mangle -A OUTPUT -d 208.67.222.222 -p udp --dport 53 -j MARK --set-mark 0xcbca
       iptables -t nat -A POSTROUTING -d 208.67.222.222 -p udp --dport 53 -j MASQUERADE
     '';
   };
 
   services = {
+    # Domain Name Resolution.
     resolved.enable = true;
+
+    # Install drivers for HP printers.
     printing.drivers = [ pkgs.hplip ];
 
     udev.extraRules = ''
-      # Prevent the Logitech USB mouse receiver from waking up the system from suspend. It has been known to misbehave in the past.
+      # Prevent the Logitech USB mouse receiver from waking the system up from suspend. It has been known to cause issues for us in the past.
       ACTION=="add|change", SUBSYSTEM=="usb", DRIVERS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c547", ATTR{power/wakeup}="disabled"
     '';
   };
 
   sops.secrets = {
-    "my-password" = { neededForUsers = true; };
-
-    "syncthing/cert.pem" = { owner = "ewan"; };
-    "syncthing/key.pem" = { owner = "ewan"; };
-
-    "u2f-mappings" = { group = "users"; mode = "0440"; };
-
-    "wireguard/koakuma/private-key" = { };
-    "wireguard/koakuma/preshared-key" = { };
+    u2f-mappings = {
+      # YubiKey pam-u2f module secrets.
+      group = "users"; mode = "0440";
+    };
   };
 
   myNixOS = {
 
-    home-users."ewan" = {
+    home-users.ewan = {
       userConfig = ./home.nix;
       userSettings = {
+        # I'm the only one here.
         extraGroups = [ "wheel" ];
       };
     };
@@ -64,16 +63,10 @@
     dolphin.enable = true;
     hyprland.enable = true;
     jupyter.enable = true;
-    laptop.enable = true;
     pam.auth.yubikey = true;
     retroarch.enable = true;
     sway.enable = true;
     tzupdate.enable = true;
-
-    nvidia = {
-      enable = true;
-      prime.enable = true;
-    };
 
     tuigreet = {
       enable = true;
