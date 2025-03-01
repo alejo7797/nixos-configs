@@ -31,10 +31,8 @@ in
         binfmt = true;
       };
 
-      dconf.enable = true;
-      gnome-disks.enable = true;
-      gnupg.agent.enable = true;
       kdeconnect.enable = true;
+      gnupg.agent.enable = true;
       nm-applet.enable = true;
     };
 
@@ -64,16 +62,15 @@ in
 
       geoclue2 = {
         enable = true;
-        # https://github.com/NixOS/nixpkgs/issues/321121
+        # See https://github.com/NixOS/nixpkgs/issues/321121.
         geoProviderUrl = "https://api.beacondb.net/v1/geolocate";
       };
 
-      # Useful for Git credentials.
+      # Useful to keep Git credentials.
       gnome.gnome-keyring.enable = true;
 
       blueman.enable = true;
       libinput.enable = true;
-      gvfs.enable = true;
       pcscd.enable = true;
       ratbagd.enable = true;
       udisks2.enable = true;

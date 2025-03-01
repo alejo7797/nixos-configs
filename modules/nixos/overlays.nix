@@ -26,9 +26,9 @@ in
     })
 
     (final: prev: with final; {
-      kdePackages = prev.kdePackages.overrideScope (
-        kde-final: kde-prev: with kde-final; {
-          qt6ct = kde-prev.qt6ct.overrideAttrs (oldAttrs: {
+      qt6Packages = prev.qt6Packages.overrideScope (
+        _: qt6-prev: with kdePackages; {
+          qt6ct = qt6-prev.qt6ct.overrideAttrs (oldAttrs: {
             buildInputs = oldAttrs.buildInputs ++
               [
                 qtdeclarative kconfig
