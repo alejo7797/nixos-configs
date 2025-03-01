@@ -20,39 +20,38 @@ in
     stylix.enable = true;
 
     nixpkgs.overlays = [
-      (_: prev: {
-        # Access ilya-fedin's Nix repository.
-        ilya-fedin = import inputs.ilya-fedin { pkgs = prev; };
+      (final: _: {
+        # To access ilya-fedin's Nix expressions further down.
+        ilya-fedin = import inputs.ilya-fedin { pkgs = final; };
       })
     ];
 
     qt = {
-      enable = true;
-      platformTheme = "qt5ct";
+      # Desktop independent QT customisation.
+      enable = true; platformTheme = "qt5ct";
     };
 
     environment.variables = {
-      # Set theme variables early.
+      # Set these early on.
       GTK_THEME = "adw-gtk3";
       QT_FONT_DPI = "120";
 
-      # Improve Java font rendering.
+      # Try to improve Java applications' font rendering.
       _JAVA_OPTIONS = "-Dawt.useSystemAAFontSettings=lcd";
     };
 
-    # Install necessary theme packages.
     environment.systemPackages = with pkgs; [
 
-      # The default KDE theme.
+      # Default KDE theme.
       libsForQt5.breeze-qt5
       kdePackages.breeze
 
       # The default KDE sound theme.
       kdePackages.ocean-sound-theme
 
-      # Improved fork for KDE apps.
+      # Dolphin support.
       ilya-fedin.qt5ct
-      ilya-fedin.qt6ct
+      kdePackages.qt6ct
 
     ];
   };
