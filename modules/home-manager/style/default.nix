@@ -47,6 +47,11 @@ in
       };
     };
 
+    home.packages = with pkgs; [
+      # The default while under KDE.
+      kdePackages.ocean-sound-theme
+    ];
+
     stylix.iconTheme = {
       # Tell Stylix to use Papirus as our icon theme.
       enable = true; package = pkgs.papirus-icon-theme;
