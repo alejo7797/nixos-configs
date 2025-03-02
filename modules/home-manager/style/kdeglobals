@@ -98,23 +98,6 @@ ForegroundNormal=197,200,198
 ForegroundPositive=181,189,104
 ForegroundVisited=197,200,198
 
-[General]
-ColorScheme=TomorrowNight
-TerminalApplication=kitty
-desktopFont[$i]=Noto Sans,10,-1,5,50,0,0,0,0,0
-fixed[$i]=Hack Nerd Font,11,-1,5,50,0,0,0,0,0
-font[$i]=Noto Sans,10,-1,5,50,0,0,0,0,0
-menuFont[$i]=Noto Sans,10,-1,5,50,0,0,0,0,0
-smallestReadableFont[$i]=Noto Sans,10,-1,5,50,0,0,0,0,0
-taskbarFont[$i]=Noto Sans,10,-1,5,50,0,0,0,0,0
-toolBarFont[$i]=Noto Sans,10,-1,5,50,0,0,0,0,0
-
-[Icons]
-Theme=Papirus-Dark
-
-[KDE]
-widgetStyle=qt6ct-style
-
 [WM]
 activeBackground=29,31,33
 activeBlend=240,198,116
@@ -122,3 +105,10 @@ activeForeground=197,200,198
 inactiveBackground=29,31,33
 inactiveBlend=150,152,150
 inactiveForeground=197,200,198
+
+[General]
+ColorScheme=TomorrowNight
+TerminalApplication=kitty
+
+[Icons]
+Theme=Papirus-Dark

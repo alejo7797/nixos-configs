@@ -20,10 +20,13 @@ in
 
     xdg = {
       configFile = {
-        # Fix the look of QT applications.
+        # Fix look and feel of QT applications.
         "qt5ct/qt5ct.conf".source = ./qt5ct.conf;
         "qt6ct/qt6ct.conf".source = ./qt6ct.conf;
+
+        # Fix the colorscheme in Dolphin.
         "kdeglobals".source = ./kdeglobals;
+        "dolphinrc".source = ./dolphinrc;
 
         "fontconfig" = {
           # Japanese fonts.
