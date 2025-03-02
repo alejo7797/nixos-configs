@@ -18,9 +18,8 @@ in
     stylix.enable = true;
 
     qt = {
-      enable = true;
-      platformTheme = "qt5ct";
-      style = "breeze";
+      # Desktop independent QT look and feel.
+      enable = true; platformTheme = "qt5ct";
     };
 
     environment.variables = {

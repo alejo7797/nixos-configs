@@ -25,28 +25,6 @@ in
         ;
     })
 
-    (final: prev: with final; {
-      qt6Packages = prev.qt6Packages.overrideScope (
-        _: qt6-prev: with kdePackages; {
-          qt6ct = qt6-prev.qt6ct.overrideAttrs (oldAttrs: {
-            buildInputs = oldAttrs.buildInputs ++
-              [
-                qtdeclarative kconfig
-                kcolorscheme kiconthemes
-              ];
-
-            nativeBuildInputs =  [
-              cmake wrapQtAppsHook qttools
-            ];
-
-            cmakeFlags = [
-              "-DPLUGINDIR=${placeholder "out"}/${qtbase.qtPluginPrefix}"
-            ];
-          });
-        }
-      );
-    })
-
     (_: prev: {
       lutris = prev.lutris.override {
         extraLibraries = pkgs: with pkgs;

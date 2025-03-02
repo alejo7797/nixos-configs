@@ -11,6 +11,7 @@
 
     [
       inputs.home-manager.nixosModules.home-manager
+      inputs.ilya-fedin.nixosModules.qt6ct
       inputs.impermanence.nixosModules.impermanence
       inputs.lanzaboote.nixosModules.lanzaboote
       inputs.nixos-mailserver.nixosModules.default
