@@ -29,8 +29,10 @@ in
   config = lib.mkIf cfg.enable {
 
     myHome = {
+      dolphin.enable = true;
       keepassxc.enable = true;
       kitty.enable = true;
+      konsole.enable = true;
       gpg.enable = true;
       mimeApps.enable = true;
       mpv.enable = true;

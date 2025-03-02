@@ -17,27 +17,16 @@ in
   config = lib.mkIf cfg.enable {
 
     stylix.enable = true;
+    my.qt.enable = true;
 
     xdg = {
       configFile = {
-        # Fix look and feel of QT applications.
-        "qt5ct/qt5ct.conf".source = ./qt5ct.conf;
-        "qt6ct/qt6ct.conf".source = ./qt6ct.conf;
-
-        # Fix the colorscheme in Dolphin.
-        "kdeglobals".source = ./kdeglobals;
-        "dolphinrc".source = ./dolphinrc;
-
         "fontconfig" = {
           # Japanese fonts.
           source = ./fontconfig;
           recursive = true;
         };
       };
-
-      # Configure Konsole - for use inside Dolphin.
-      configFile."konsolerc".source = ./konsole/konsolerc;
-      dataFile."konsole".source = ./konsole/data;
     };
 
     dconf.settings = {
