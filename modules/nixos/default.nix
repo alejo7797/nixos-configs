@@ -125,11 +125,11 @@
     mysql.package = pkgs.mariadb;
 
     # Simple time synchronization.
-    timesyncd.enable = true;
+    timesyncd.enable = lib.mkDefault true;
   };
 
   environment = {
-    # Zsh shell completion support.
+
     pathsToLink = [ "/share/zsh" ];
 
     systemPackages = with pkgs; [

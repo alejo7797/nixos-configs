@@ -28,6 +28,8 @@ in
         sidekiq.concurrency = 10;
         backup.keepTime = 72;
 
+        initialRootPasswordFile = config.sops.secrets."gitlab/root-password".path;
+
         secrets = {
           dbFile = config.sops.secrets."gitlab/db-key".path;
           jwsFile = config.sops.secrets."gitlab/session-key".path;
@@ -78,6 +80,7 @@ in
 
     sops.secrets = {
       "gitlab/db-key" = { owner = "gitlab"; };
+      "gitlab/root-password" = { owner = "gitlab"; };
       "gitlab/session-key" = { owner = "gitlab"; };
       "gitlab/secret-key" = { owner = "gitlab"; };
       "gitlab/otp-key" = { owner = "gitlab"; };

@@ -6,13 +6,13 @@
 }:
 
 let
-  cfg = config.myNixOS.pam;
+  cfg = config.my.yubikey;
 in
 
 {
-  options.myNixOS.pam = {
-    sudo.yubikey = lib.mkEnableOption "passwordless sudo";
-    auth.yubikey = lib.mkEnableOption "2-factor authentication";
+  options.my.yubikey = {
+    sudo = lib.mkEnableOption "passwordless sudo";
+    _2fa = lib.mkEnableOption "2-factor authentication";
   };
 
   config = {
@@ -33,7 +33,7 @@ in
       }
 
       # Optional 2-factor authentication.
-      (lib.mkIf cfg.auth.yubikey {
+      (lib.mkIf cfg._2fa {
 
         u2f.control = "requisite";
 
@@ -43,24 +43,25 @@ in
         };
 
         # Some services dislike pam_yubico.
-        services = lib.mapAttrs (
-          _: _: {
-            yubicoAuth = false;
-            u2fAuth = true;
-          }
-        ) {
-            hyprlock = { };
-            i3lock = { };
-            swaylock = { };
-          };
+        services =
+          lib.mapAttrs
+            (_: _: {
+              yubicoAuth = false;
+              u2fAuth = true;
+            })
+            {
+              hyprlock = { };
+              i3lock = { };
+              swaylock = { };
+            };
       })
 
       # Optionally enable Yubikey-based passwordless sudo.
-      (lib.mkIf cfg.sudo.yubikey { services.sudo.yubicoAuth = true; })
+      (lib.mkIf cfg.sudo { services.sudo.yubicoAuth = true; })
     ];
 
-    warnings = lib.optional (cfg.auth.yubikey && cfg.sudo.yubikey) ''
-      Passwordless sudo won't function if myNixOS.pam.auth.yubikey is set.
+    warnings = lib.optional (cfg.sudo && cfg._2fa) ''
+      Passwordless sudo won't work if my.yubikey._2fa is set.
     '';
   };
 }

@@ -50,6 +50,10 @@
     };
   };
 
+  my = {
+    yubikey._2fa = true;
+  };
+
   myNixOS = {
 
     home-users.ewan = {
@@ -63,7 +67,6 @@
     dolphin.enable = true;
     hyprland.enable = true;
     jupyter.enable = true;
-    pam.auth.yubikey = true;
     retroarch.enable = true;
     sway.enable = true;
     tzupdate.enable = true;
