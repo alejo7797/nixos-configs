@@ -5,11 +5,11 @@
 }:
 
 let
-  cfg = config.myNixOS.nvidia.prime;
+  cfg = config.my.nvidia.prime;
 in
 
 {
-  options.myNixOS.nvidia.prime.enable = lib.mkEnableOption "Nvidia PRIME render offload";
+  options.my.nvidia.prime.enable = lib.mkEnableOption "Nvidia PRIME render offload";
 
   config = lib.mkIf cfg.enable {
 
@@ -29,6 +29,7 @@ in
           enableOffloadCmd = true;
         };
       };
+
     };
   };
 }

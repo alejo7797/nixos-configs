@@ -17,7 +17,7 @@
       extraPackages = [ ];
 
       # Let sway now when we are using Nvidia drivers.
-      extraOptions = lib.mkIf config.myNixOS.nvidia.enable [ "--unsupported-gpu" ];
+      extraOptions = lib.mkIf config.my.nvidia.enable [ "--unsupported-gpu" ];
     };
 
     # Configure UWSM to manage sway.

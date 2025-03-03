@@ -85,6 +85,9 @@ in
     environment.variables = {
       # Try to improve Java applications' font rendering.
       _JAVA_OPTIONS = "-Dawt.useSystemAAFontSettings=lcd";
+
+      # Screen scaling for QT applications.
+      QT_AUTO_SCREEN_SCALE_FACTOR = "1";
     };
 
     environment.systemPackages = with pkgs; [

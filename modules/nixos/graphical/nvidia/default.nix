@@ -6,11 +6,11 @@
 }:
 
 let
-  cfg = config.myNixOS.nvidia;
+  cfg = config.my.nvidia;
 in
 
 {
-  options.myNixOS.nvidia.enable = lib.mkEnableOption "Nvidia";
+  options.my.nvidia.enable = lib.mkEnableOption "Nvidia";
 
   config = lib.mkIf cfg.enable {
 

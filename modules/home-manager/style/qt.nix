@@ -56,10 +56,5 @@ in
       "qt6ct/qt6ct.conf".text = qtctConf;
 
     };
-
-    home.sessionVariables = {
-      QT_FONT_DPI = "120";
-    };
-
   };
 }

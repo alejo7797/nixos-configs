@@ -54,6 +54,11 @@
     "wireguard/koakuma/preshared-key" = { };
   };
 
+  my = {
+    nvidia.enable = true;
+    yubikey.sudo = true;
+  };
+
   myNixOS = {
 
     home-users."ewan" = {
@@ -65,8 +70,6 @@
 
     dolphin.enable = true;
     hyprland.enable = true;
-    nvidia.enable = true;
-    pam.sudo.yubikey = true;
     retroarch.enable = true;
     sway.enable = true;
     tuigreet.enable = true;
