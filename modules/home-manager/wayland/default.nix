@@ -56,7 +56,8 @@ in
     programs.wofi = {
       enable = true;
       settings = {
-        mode = "drun"; drun-print_command = true;
+        mode = "drun,run"; # Run commands in system $PATH.
+        drun-print_command = true; run-print_command = true;
         width = "36%"; height = "40%"; allow_images = true;
         location = "center"; key_expand = "Ctrl-x";
       };
