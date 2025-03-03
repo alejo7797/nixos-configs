@@ -19,7 +19,7 @@ let
     else
       config.stylix.iconTheme.light;
 
-  qtctConf = {
+  qtctConf = toINI {
     Appearance = {
       color_scheme_path = "${config.xdg.dataHome}/color-schemes/${colorschemeSlug}.colors";
       custom_palette = true;
@@ -39,6 +39,11 @@ in
 
   config = lib.mkIf cfg.enable {
 
+    qt = {
+      enable = true;
+      platformTheme.name = "qtct";
+    };
+
     xdg.configFile = {
 
       "kdeglobals".text = toINI {
@@ -47,9 +52,13 @@ in
         Icons.Theme = iconTheme;
       };
 
-      "qt5ct/qt5ct.conf".text = toINI qtctConf;
-      "qt6ct/qt6ct.conf".text = toINI qtctConf;
+      "qt5ct/qt5ct.conf".text = qtctConf;
+      "qt6ct/qt6ct.conf".text = qtctConf;
 
+    };
+
+    home.sessionVariables = {
+      QT_FONT_DPI = "120";
     };
 
   };

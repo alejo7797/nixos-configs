@@ -28,6 +28,8 @@ in
 
   config = lib.mkIf cfg.enable {
 
+    my.style.enable = true;
+
     myHome = {
       dolphin.enable = true;
       keepassxc.enable = true;
@@ -37,7 +39,6 @@ in
       mimeApps.enable = true;
       mpv.enable = true;
       ssh.enable = true;
-      style.enable = true;
       variety.enable = true;
       zathura.enable = true;
     };

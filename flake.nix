@@ -62,7 +62,7 @@
 
     {
       nixosConfigurations = builtins.mapAttrs
-        (hostname: _: mkSystem ./hosts/${hostname}/config.nix)
+        (hostName: _: mkSystem ./hosts/${hostName})
         (builtins.readDir ./hosts);
 
       # Top-level NixOS module for all hosts.

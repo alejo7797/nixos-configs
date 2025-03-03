@@ -6,17 +6,14 @@
 }:
 
 let
-  cfg = config.myHome.style;
+  cfg = config.my.style;
 in
 
 {
-  imports = [ ../../stylix.nix ];
-
-  options.myHome.style.enable = lib.mkEnableOption "user-level theming";
+  options.my.style.enable = lib.mkEnableOption "user-level theming";
 
   config = lib.mkIf cfg.enable {
 
-    stylix.enable = true;
     my.qt.enable = true;
 
     xdg = {

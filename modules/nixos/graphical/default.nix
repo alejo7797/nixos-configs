@@ -20,10 +20,11 @@ in
     boot.plymouth.enable = true;
 
     myNixOS = {
-      style.enable = true;
       firefox.enable = true;
       fcitx5.enable = true;
     };
+
+    stylix.enable = true;
 
     programs = {
       appimage = {
@@ -79,6 +80,11 @@ in
     xdg.portal = {
       enable = true;
       xdgOpenUsePortal = true;
+    };
+
+    environment.variables = {
+      # Try to improve Java applications' font rendering.
+      _JAVA_OPTIONS = "-Dawt.useSystemAAFontSettings=lcd";
     };
 
     environment.systemPackages = with pkgs; [

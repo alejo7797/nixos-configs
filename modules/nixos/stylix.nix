@@ -1,7 +1,6 @@
 { pkgs, ... }: {
 
   stylix = {
-
     image = builtins.fetchurl {
       # Must specify a wallpaper image even if we don't really need it.
       url = "https://w.wallhaven.cc/full/zy/wallhaven-zye9ry.jpg";
