@@ -98,6 +98,12 @@ in
       simple-scan sqlitebrowser xorg.xeyes
       vulkan-tools yubioath-flutter zenity
 
+      # Fix kirigami applications.
+      kdePackages.qqc2-desktop-style
+
+      # Default KDE theme for Qt5.
+      libsForQt5.breeze-qt5
+
     ];
 
     fonts.packages = with pkgs; [

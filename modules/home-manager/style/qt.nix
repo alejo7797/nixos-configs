@@ -57,10 +57,5 @@ in
       "qt6ct/qt6ct.conf".text = qtctConf;
 
     };
-
-    home.packages = with pkgs; [
-      # Fix kirigami applications.
-      kdePackages.qqc2-desktop-style
-    ];
   };
 }

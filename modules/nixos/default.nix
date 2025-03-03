@@ -14,7 +14,6 @@
       inputs.impermanence.nixosModules.impermanence
       inputs.lanzaboote.nixosModules.lanzaboote
       inputs.nixos-mailserver.nixosModules.default
-      inputs.nix-minecraft.nixosModules.minecraft-servers
       inputs.nur.modules.nixos.default
       inputs.sops-nix.nixosModules.sops
       inputs.stylix.nixosModules.stylix
