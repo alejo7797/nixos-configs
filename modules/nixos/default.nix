@@ -1,36 +1,34 @@
-{
-  lib,
-  inputs,
-  config,
-  pkgs,
-  ...
-}:
+{ config, inputs, lib, pkgs, ... }: {
 
-{
   imports = with lib.fileset;
 
     [
-      inputs.home-manager.nixosModules.home-manager
-      inputs.impermanence.nixosModules.impermanence
-      inputs.lanzaboote.nixosModules.lanzaboote
-      inputs.nixos-mailserver.nixosModules.default
-      inputs.nur.modules.nixos.default
-      inputs.sops-nix.nixosModules.sops
-      inputs.stylix.nixosModules.stylix
+      # Import essential external modules.
+      inputs.home-manager.nixosModules.default
+      inputs.sops-nix.nixosModules.default
     ]
 
-    # Recursively import all of my personal NixOS modules.
-    ++ toList (difference (fileFilter (file: file.hasExt "nix") ./.) ./default.nix);
+    ++
+
+    toList (difference
+      # Automatically import all my NixOS modules.
+      (fileFilter (file: file.hasExt "nix") ./.)
+      ./default.nix # You cannot import yourself!
+    )
+
+  ;
 
   nix = {
+    # We use flakes instead.
     channel.enable = false;
 
     gc = {
       automatic = true; dates = "weekly";
-      options = "--delete-older-than 30d";
+      options = "--delete-older-than 14d";
     };
 
     settings = {
+      # Enable the experimental v3 CLI and flake support.
       experimental-features = [ "nix-command" "flakes" ];
     };
   };
@@ -47,8 +45,6 @@
     # Move existing files out of the way.
     backupFileExtension = "backup";
   };
-
-  boot.consoleLogLevel = 3;
 
   networking = {
     # Use standard network interface names.

@@ -16,6 +16,7 @@ in
 
     inputs.my-expressions.overlays.default
     inputs.nix-minecraft.overlays.default
+    inputs.nur.overlays.default
 
     (_: prev: {
       inherit (unstable prev.system)

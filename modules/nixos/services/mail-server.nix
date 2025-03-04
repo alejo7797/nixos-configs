@@ -1,5 +1,6 @@
 {
   lib,
+  inputs,
   config,
   ...
 }:
@@ -15,6 +16,8 @@ let
 in
 
 {
+  imports = [ inputs.nixos-mailserver.nixosModules.default ];
+
   options.myNixOS.mailserver.enable = lib.mkEnableOption "email server functionality";
 
   config = lib.mkIf cfg.enable {

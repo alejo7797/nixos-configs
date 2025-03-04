@@ -6,11 +6,11 @@
     # Follow the latest stable NixOS release branch.
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
 
-    # Access newer versions of packages before a new release.
+    # Access recent versions of packages before a new release.
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
-      # Manage a user's home environment using Nix.
+      # Manage users' home environments using Nix.
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -33,7 +33,7 @@
     };
 
     nixvim = {
-      # A Neovim configuration system for Nix.
+      # Neovim configuration system built on Nix.
       url = "github:nix-community/nixvim/nixos-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -55,15 +55,15 @@
 
     let
       mkSystem = config: nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs self; };
         modules = [ config self.nixosModules.default ];
+        specialArgs = { inherit inputs self; };
       };
     in
 
     {
       nixosConfigurations = builtins.mapAttrs
-        (hostName: _: mkSystem ./hosts/${hostName})
-        (builtins.readDir ./hosts);
+        # Build a NixOS configuration for each machine sitting under ./hosts.
+        (hostName: _: mkSystem ./hosts/${hostName}) (builtins.readDir ./hosts);
 
       # Top-level NixOS module for all hosts.
       nixosModules.default = ./modules/nixos;

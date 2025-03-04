@@ -1,10 +1,13 @@
-{ pkgs, ... }:
+{ inputs, pkgs, ... }:
 
 {
   # Did you read the comment?
   system.stateVersion = "24.11";
 
-  imports = [ ./filesystems.nix ./hardware.nix ];
+  imports = [
+    inputs.lanzaboote.nixosModules.lanzaboote
+    ./filesystems.nix ./hardware.nix
+  ];
 
   swapDevices = [ { device = "/var/swapfile"; size = 16384; } ];
 
