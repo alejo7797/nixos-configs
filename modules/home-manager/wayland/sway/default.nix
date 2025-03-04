@@ -51,12 +51,7 @@ in
           terminal = "${uwsm-app} -- ${kitty}";
 
           # Default application launcher.
-          menu = lib.concatStringsSep " " [
-            "${pkgs.wofi}/bin/wofi |"
-            "${pkgs.moreutils}/bin/ifne"
-            "${pkgs.findutils}/bin/xargs"
-            "${uwsm-app} --"
-          ];
+          menu = "${uwsm-app} -- $(${pkgs.wofi}/bin/wofi)";
 
           # We use waybar instead.
           bars = [ ];
