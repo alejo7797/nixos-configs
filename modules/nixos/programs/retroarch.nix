@@ -25,6 +25,7 @@ in
           # https://emulation.gametechwiki.com/index.php/Main_Page
 
           mesen          # Famicom
+          mgba           # Game Boy
           bsnes          # Super Famicom
           mupen64plus    # Nintendo 64
           dolphin        # GameCube + Wii
