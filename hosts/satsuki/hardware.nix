@@ -15,6 +15,8 @@
   # Use the Nvidia dGPU in PRIME render offload mode.
   my.nvidia = { enable = true; prime.enable = true; };
 
+  my.intel-graphics.enable = true;
+
   # Necessary fix at the moment for functioning RTD3 power management.
   hardware.nvidia = { open = lib.mkForce false; gsp.enable = false; };
 
