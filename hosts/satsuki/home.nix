@@ -43,10 +43,6 @@
     export __GLX_VENDOR_LIBRARY_NAME=mesa  # Tell Wayland compositors not to use the Nvidia GPU.
   '';
 
-  xdg.configFile."uwsm/env-hyprland".text = ''
-    export AQ_DRM_DEVICES=/dev/dri/by-path/pci-0000:01:00.0-card
-  '';
-
   services = {
     borgmatic.enable = true;
     syncthing.enable = true;
