@@ -87,7 +87,7 @@ in
       _JAVA_OPTIONS = "-Dawt.useSystemAAFontSettings=lcd";
 
       # Screen scaling for QT applications.
-      QT_AUTO_SCREEN_SCALE_FACTOR = "1";
+      QT_FONT_DPI = 120;
     };
 
     environment.systemPackages = with pkgs; [
@@ -97,9 +97,6 @@ in
       pavucontrol pdftk piper seahorse
       simple-scan sqlitebrowser xorg.xeyes
       vulkan-tools yubioath-flutter zenity
-
-      # Fix kirigami applications.
-      kdePackages.qqc2-desktop-style
 
       # Default KDE theme for Qt5.
       libsForQt5.breeze-qt5
