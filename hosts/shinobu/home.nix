@@ -19,9 +19,8 @@
     joplin.enable = true;
 
     autostart = with pkgs; [
-      firefox joplin-desktop
-      spotify steam thunderbird
-      vesktop zotero
+      firefox spotify steam
+      thunderbird vesktop zotero
     ];
   };
 
