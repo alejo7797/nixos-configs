@@ -5,44 +5,20 @@
 }:
 
 {
-  options.myHome.xdgAutostart = lib.mkOption {
-    type = lib.types.listOf lib.types.package;
-    description = "List of programs to run at system startup.";
+  options.my.autostart = lib.mkOption {
+    type = with lib.types; listOf package;
+    description = "List of programs to autostart with the user session.";
     default = [ ];
   };
 
-  config =
+  config.xdg.configFile = builtins.listToAttrs (map
 
-    let
-      stripVersion = with lib.strings; (packageName:
-        builtins.elemAt (splitString "-" packageName) 0
-      );
-    in
+    (pkg: {
+      name = "autostart/${pkg.name}.desktop";
+      value = { inherit (pkg.desktopItem) text; };
+    })
 
-    {
-      xdg.configFile = builtins.listToAttrs (
+    config.my.autostart
 
-        map
-
-          (pkg: {
-            name = "autostart/${pkg.name}.desktop";
-
-            value =
-
-              let
-                desktopFile = pkg.desktopFile
-                  or "${stripVersion pkg.name}.desktop";
-              in
-
-              if pkg ? desktopItem then
-                { inherit (pkg.desktopItem) text; }
-
-              else
-                { source = "${pkg}/share/applications/${desktopFile}"; };
-
-          })
-
-          config.myHome.xdgAutostart
-      );
-    };
+  );
 }

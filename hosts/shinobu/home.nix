@@ -15,6 +15,16 @@
     "calendars/harvard" = { };
   };
 
+  my = {
+    joplin.enable = true;
+
+    autostart = with pkgs; [
+      firefox joplin-desktop
+      spotify steam thunderbird
+      vesktop zotero
+    ];
+  };
+
   myHome = {
     hyprland.enable = true;
     sway.enable = true;
@@ -25,12 +35,6 @@
 
     waybar.thermal-zone = 1;
     waybar.wttr-location = "San Lorenzo de El Escorial";
-
-    xdgAutostart = with pkgs; [
-      firefox joplin-desktop
-      spotify steam thunderbird
-      vesktop zotero
-    ];
   };
 
   services = {

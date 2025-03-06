@@ -13,13 +13,20 @@
     "calendars/sonarr" = { };
   };
 
+  my = {
+    autostart = with pkgs; [
+      firefox thunderbird zotero
+    ];
+
+    joplin.enable = true;
+  };
+
   myHome = {
     sway.enable = true;
     hyprland.enable = true;
     i3.enable = true;
 
     firefox.enable = true;
-    joplin-desktop.enable = true;
     thunderbird.enable = true;
 
     workspaces = {
@@ -32,10 +39,6 @@
       location = "Cambridge, MA";
       thermal-zone = 7;
     };
-
-    xdgAutostart = with pkgs; [
-      firefox thunderbird zotero
-    ];
   };
 
   xdg.configFile."uwsm/env-sway".text = ''

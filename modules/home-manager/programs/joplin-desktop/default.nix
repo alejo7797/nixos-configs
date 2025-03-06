@@ -1,16 +1,11 @@
-{
-  lib,
-  config,
-  pkgs,
-  ...
-}:
+{ lib, config, ... }:
 
 let
-  cfg = config.myHome.joplin-desktop;
+  cfg = config.my.joplin;
 in
 
 {
-  options.myHome.joplin-desktop.enable = lib.mkEnableOption "joplin-desktop";
+  options.my.joplin.enable = lib.mkEnableOption "Joplin";
 
   config = lib.mkIf cfg.enable {
 
@@ -38,12 +33,6 @@ in
     xdg.configFile = {
       "joplin-desktop/userchrome.css".source = ./userchrome.css;
       "joplin-desktop/userstyle.css".source = ./userstyle.css;
-    };
-
-    # Fix the application icon.
-    xdg.dataFile = {
-      "icons/Papirus-Dark/32x32/apps/@joplinapp-desktop.svg".source =
-        "${pkgs.papirus-icon-theme}/share/icons/Papirus-Dark/32x32/apps/joplin.svg";
     };
   };
 }
