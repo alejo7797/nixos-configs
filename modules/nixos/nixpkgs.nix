@@ -1,14 +1,5 @@
-{ config, inputs, ... }:
+{ inputs, ... }: {
 
-let
-  pkgs-unstable =
-    import inputs.nixpkgs-unstable {
-      localSystem = config.nixpkgs.hostPlatform;
-      inherit (config.nixpkgs) config;
-    };
-in
-
-{
   nixpkgs = {
     config.allowUnfree = true;
 
@@ -18,12 +9,12 @@ in
       inputs.nix-minecraft.overlays.default
       inputs.nur.overlays.default
 
-      (_: _: {
-        inherit (pkgs-unstable)
-          bolt-launcher
-          joplin-desktop
-          spotify
-          ;
+      (final: _: {
+        bolt-launcher = final.callPackage (import "${inputs.nixpkgs-unstable}/pkgs/by-name/bo/bolt-launcher/package.nix") { libgbm = final.mesa; };
+
+        joplin-desktop = final.callPackage (import "${inputs.nixpkgs-unstable}/pkgs/by-name/jo/joplin-desktop/package.nix") { };
+
+        spotify = final.callPackage (import "${inputs.nixpkgs-unstable}/pkgs/by-name/sp/spotify/package.nix") { libgbm = final.mesa; };
       })
 
       (final: prev: with final; {
