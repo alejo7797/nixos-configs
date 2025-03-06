@@ -28,12 +28,10 @@
     };
 
     settings = {
-      # Enable the experimental v3 CLI and flake support.
+      # Enable the experimental v3 CLI and flakes support.
       experimental-features = [ "nix-command" "flakes" ];
     };
   };
-
-  nixpkgs.config.allowUnfree = true;
 
   home-manager = {
     # Set Nixpkgs instance.
