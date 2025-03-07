@@ -15,7 +15,7 @@
 
   my = {
     autostart = with pkgs; [
-      firefox thunderbird zotero
+      firefox thunderbird zotero joplin-desktop
     ];
 
     joplin.enable = true;

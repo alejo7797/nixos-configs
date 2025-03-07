@@ -13,10 +13,16 @@
 
   config.xdg.configFile = builtins.listToAttrs (map
 
-    (pkg: {
-      name = "autostart/${pkg.name}.desktop";
-      value = { inherit (pkg.desktopItem) text; };
-    })
+    (
+      pkg:
+        let
+          name = pkg.pname or pkg.name;
+        in
+        {
+          name = "autostart/${name}.desktop";
+          value.source = "${pkg}/share/applications/${name}.desktop";
+        }
+    )
 
     config.my.autostart
 

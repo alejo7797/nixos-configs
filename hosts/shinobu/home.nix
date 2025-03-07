@@ -11,7 +11,7 @@
   };
 
   sops.secrets = {
-    "calendar/sonarr" = { };
+    "calendars/sonarr" = { };
     "calendars/harvard" = { };
   };
 
@@ -19,8 +19,9 @@
     joplin.enable = true;
 
     autostart = with pkgs; [
-      firefox spotify steam
-      thunderbird vesktop zotero
+      firefox joplin-desktop
+      spotify steam thunderbird
+      vesktop zotero
     ];
   };
 
@@ -30,10 +31,9 @@
 
     firefox.enable = true;
     thunderbird.enable = true;
-    joplin-desktop.enable = true;
 
     waybar.thermal-zone = 1;
-    waybar.wttr-location = "San Lorenzo de El Escorial";
+    waybar.location = "San Lorenzo de El Escorial";
   };
 
   services = {
