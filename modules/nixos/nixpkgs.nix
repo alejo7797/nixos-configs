@@ -17,6 +17,23 @@
         spotify = final.callPackage (import "${inputs.nixpkgs-unstable}/pkgs/by-name/sp/spotify/package.nix") { libgbm = final.mesa; };
       })
 
+      (final: prev: {
+        joplin-desktop = prev.joplin-desktop // {
+          desktopItem = final.makeDesktopItem {
+            name = "joplin-desktop";
+            desktopName = "Joplin";
+            exec = "joplin-desktop";
+          };
+        };
+
+        uwsm = prev.uwsm.overrideAttrs {
+          postPatch = ''
+            substituteInPlace uwsm/misc.py \
+              --replace-fail '\A[a-zA-Z0-9_]' '\A[a-zA-Z0-9_@]'
+          '';
+        };
+      })
+
       (final: prev: with final; {
         libsForQt5 = prev.libsForQt5.overrideScope (
           qt5-final: qt5-prev: with qt5-final; {
