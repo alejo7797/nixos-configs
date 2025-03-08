@@ -98,10 +98,12 @@
   environment.systemPackages = with pkgs; [
 
     # Actual programs.
-    anki audacity castero digikam
-    gimp filezilla geogebra inkscape
-    joplin-desktop krita musescore
-    spotify tellico vesktop zotero
+    anki audacity castero
+    digikam gimp filezilla
+    geogebra inkscape krita
+    joplin-desktop musescore
+    plex-desktop spotify
+    tellico vesktop zotero
 
     # Games and all that.
     bolt-launcher dosbox-x
