@@ -46,7 +46,7 @@ in
       settings =
 
         let
-          uwsm-app = "${pkgs.uwsm}/bin/uwsm app";
+          uwsm-app = "${pkgs.uwsm}/bin/uwsm-app";
           kitty = "${pkgs.kitty}/bin/kitty";
         in
 

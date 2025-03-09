@@ -40,7 +40,7 @@ in
         let
           modifier = "Mod4";
           exit = "exit: [s]leep, [h]ibernate, [r]eboot, [p]oweroff";
-          uwsm-app = "${pkgs.uwsm}/bin/uwsm app";
+          uwsm-app = "${pkgs.uwsm}/bin/uwsm-app";
           kitty = "${config.programs.kitty.package}/bin/kitty";
         in
 
