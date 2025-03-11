@@ -29,13 +29,13 @@ in
 
     environment.etc =
       let
-        plasma-applications = # This fixes the unpopulated MIME application menus in Dolphin and others.
-          builtins.readFile "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
+        plasma-applications = # This fixes the unpopulated application menus in Dolphin.
+          "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
       in
       {
-        "/xdg/menus/i3-applications.menu".text = "${plasma-applications}";
-        "/xdg/menus/Hyprland-applications.menu".text = "${plasma-applications}";
-        "/xdg/menus/sway-applications.menu".text = "${plasma-applications}";
+        "/xdg/menus/i3-applications.menu".source = plasma-applications;
+        "/xdg/menus/Hyprland-applications.menu".source = plasma-applications;
+        "/xdg/menus/sway-applications.menu".source = plasma-applications;
       };
 
   };
