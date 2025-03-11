@@ -30,6 +30,9 @@
     settings = {
       # Enable the experimental v3 CLI and flakes support.
       experimental-features = [ "nix-command" "flakes" ];
+
+      # Keep home directory uncluttered.
+      use-xdg-base-directories = true;
     };
   };
 

@@ -33,6 +33,11 @@ in
       };
     };
 
+    home.file = lib.mkIf (config.home.pointerCursor != null) {
+      ".icons/default/index.theme".enable = false;
+      ".icons/${config.home.pointerCursor.name}".enable = false;
+    };
+
     home.packages = with pkgs; [
       # The default while under KDE.
       kdePackages.ocean-sound-theme
@@ -43,5 +48,9 @@ in
       enable = true; package = pkgs.papirus-icon-theme;
       dark = "Papirus-Dark"; light = "Papirus-Light";
     };
+
+    stylix.targets.gtk.flatpakSupport.enable = false;
+
+    xresources.path = "${config.xdg.configHome}/X11/xresources";
   };
 }

@@ -28,6 +28,10 @@ in
       enable = true;
       autocd = true;
 
+      dotDir = ".config/zsh";
+
+      history.path = "${config.xdg.stateHome}/zsh/history";
+
       sessionVariables = {
         # OhMyZsh configuration.
         DISABLE_AUTO_TITLE = "true";
