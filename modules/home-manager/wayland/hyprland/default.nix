@@ -53,9 +53,9 @@ in
         {
           "$terminal" = "${uwsm-app} -- ${kitty}";
 
-          # Make it so that wofi launches applications using the UWSM app helper.
-          # Our implementation requires that `drun-print_command` be set to true.
-          "$menu" = "${uwsm-app} -- $(${pkgs.wofi}/bin/wofi)";
+          # Make it so that wofi launches applications as units using the UWSM helper.
+          # Our implementation requires that `drun-print_desktop_file` be set to true.
+          "$menu" = "${pkgs.wofi}/bin/wofi | ${pkgs.findutils}/bin/xargs -r ${uwsm-app} -- ";
 
           # Workspace autostart command.
           exec-once = [ "${./hypr-startup}" ];
