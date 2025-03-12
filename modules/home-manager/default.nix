@@ -53,7 +53,11 @@
       home-manager.enable = true;
     };
 
-    xdg.enable = true;
+    xdg = {
+      enable = true;
+
+      configFile."nix/nix.conf".enable = false;
+    };
 
     # My personal shell scripts.
     home.packages = with pkgs; [

@@ -131,6 +131,8 @@ in
 
     };
 
+    home.file.".zshenv".enable = false;
+
     xdg.configFile = {
       # Configure lsd, for a happier ls experience.
       "lsd/config.yaml".source = ./lsd-config.yaml;
