@@ -56,6 +56,12 @@
 
   };
 
+  environment.extraInit = ''
+    if [ -f /etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh ]; then
+      . /etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh
+    fi
+  '';
+
   sops = {
 
     # Keep each host's secrets their own suitably encrypted YAML file.

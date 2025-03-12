@@ -82,7 +82,7 @@ in
       xdgOpenUsePortal = true;
     };
 
-    environment.variables = {
+    environment.sessionVariables = {
       # Try to improve Java applications' font rendering.
       _JAVA_OPTIONS = "-Dawt.useSystemAAFontSettings=lcd";
 
