@@ -71,31 +71,35 @@ in
 
     };
 
-    xdg.configFile = {
-      "fcitx5" = {
-        source = ./programs/fcitx5/config;
-        force = true;
-        recursive = true;
+    xdg = {
+      configFile = {
+        "fcitx5" = {
+          source = ./programs/fcitx5/config;
+          force = true;
+          recursive = true;
+        };
+
+        "chktexrc".source = ./programs/latex/chktexrc;
+        "latexmk/latexmkrc".source = ./programs/latex/latexmkrc;
+
+        "latexindent/latexindent.yaml".source = ./programs/latex/latexindent.yaml;
+        "latexindent/indentconfig.yaml".source = (pkgs.formats.yaml {}).generate "indentconfig.yaml" {
+          paths = [ "${config.xdg.configHome}/latexindent/latexindent.yaml" ];
+        };
+
+        "baloofilerc".text = lib.generators.toINI {} {
+          "Basic Settings"."Indexing-Enabled" = false;
+        };
       };
 
-      "chktexrc".source = ./programs/latex/chktexrc;
-      "latexmk/latexmkrc".source = ./programs/latex/latexmkrc;
-
-      "latexindent/latexindent.yaml".source = ./programs/latex/latexindent.yaml;
-      "latexindent/indentconfig.yaml".source = (pkgs.formats.yaml {}).generate "indentconfig.yaml" {
-        paths = [ "${config.xdg.configHome}/latexindent/latexindent.yaml" ];
+      dataFile = {
+        "fcitx5" = {
+          source = ./programs/fcitx5/data;
+          recursive = true;
+        };
       };
 
-      "baloofilerc".text = lib.generators.toINI {} {
-        "Basic Settings"."Indexing-Enabled" = false;
-      };
-    };
-
-    xdg.dataFile = {
-      "fcitx5" = {
-        source = ./programs/fcitx5/data;
-        recursive = true;
-      };
+      userDirs.enable = true;
     };
 
     myHome.lib.mkGraphicalService =
