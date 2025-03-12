@@ -17,8 +17,10 @@ in
     # Pull this in just in case.
     myNixOS.graphical.enable = true;
 
+  environment = {
+
     # Install Dolphin and all that's good with it.
-    environment.systemPackages = with pkgs.kdePackages; [
+    systemPackages = with pkgs.kdePackages; [
 
       ark dolphin dolphin-plugins ffmpegthumbs
       gwenview kde-cli-tools kfind kimageformats
@@ -27,7 +29,7 @@ in
 
     ];
 
-    environment.etc =
+    etc =
       let
         plasma-applications = # This fixes the unpopulated application menus in Dolphin.
           "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
@@ -37,6 +39,10 @@ in
         "/xdg/menus/Hyprland-applications.menu".source = plasma-applications;
         "/xdg/menus/sway-applications.menu".source = plasma-applications;
       };
+
+    pathsToLink = [ "/share/color-schemes" ];
+
+  };
 
     nixpkgs.overlays = [
       (final: prev: with final; {

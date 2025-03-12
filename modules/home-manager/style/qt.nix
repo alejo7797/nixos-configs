@@ -21,7 +21,7 @@ let
 
   qtctConf = toINI {
     Appearance = {
-      color_scheme_path = "${config.xdg.stateHome}/nix/profile/share/color-schemes/${colorschemeSlug}.colors";
+      color_scheme_path = "${config.xdg.dataHome}/color-schemes/${colorschemeSlug}.colors";
       custom_palette = true;
       icon_theme = iconTheme;
       style = "Breeze";
