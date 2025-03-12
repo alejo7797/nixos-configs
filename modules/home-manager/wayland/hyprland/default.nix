@@ -55,7 +55,9 @@ in
 
           # Make it so that wofi launches applications as units using the UWSM helper.
           # Our implementation requires that `drun-print_desktop_file` be set to true.
-          "$menu" = "${pkgs.wofi}/bin/wofi | ${pkgs.findutils}/bin/xargs -r ${uwsm-app} -- ";
+          "$menu" = ''
+            entry=$(${pkgs.wofi}/bin/wofi); [ -n "$entry" ] && ${uwsm-app} -- "$entry"
+          '';
 
           # Workspace autostart command.
           exec-once = [ "${./hypr-startup}" ];
