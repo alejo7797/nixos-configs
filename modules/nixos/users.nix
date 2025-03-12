@@ -1,6 +1,5 @@
 {
   lib,
-  self,
   config,
   pkgs,
   ...
@@ -39,7 +38,6 @@
         {
           imports = [
             # This is a complete config!
-            self.homeManagerModules.default
             (import user.userConfig)
           ];
         }

@@ -1,4 +1,4 @@
-{ config, inputs, lib, pkgs, ... }: {
+{ config, inputs, lib, pkgs, self, ... }: {
 
   imports = with lib.fileset;
 
@@ -19,81 +19,65 @@
   ;
 
   nix = {
+
     # We use flakes instead.
     channel.enable = false;
 
     gc = {
       automatic = true; dates = "weekly";
-      options = "--delete-older-than 14d";
+      options = "--delete-older-than 7d";
     };
 
     settings = {
-      # Enable the experimental v3 CLI and flakes support.
+      # Enable the experimental v3 CLI and flake support.
       experimental-features = [ "nix-command" "flakes" ];
 
-      # Keep home directory uncluttered.
+      # Use $XDG_STATE_HOME and so on.
       use-xdg-base-directories = true;
     };
+
   };
 
   home-manager = {
-    # Set Nixpkgs instance.
-    useGlobalPkgs = true;
+
+    # Get old files out of the way.
+    backupFileExtension = "backup";
 
     # Access flake inputs in Home Manager.
     extraSpecialArgs = { inherit inputs; };
 
-    # Move existing files out of the way.
-    backupFileExtension = "backup";
-  };
+    sharedModules = [
+      # Top-level module to build on.
+      self.homeManagerModules.default
+    ];
 
-  networking = {
-    # Use standard network interface names.
-    usePredictableInterfaceNames = false;
+    # Check the documentation for what these do.
+    useGlobalPkgs = true; useUserPackages = true;
 
-    firewall = {
-      # Wireguard trips up rpfilter.
-      checkReversePath = false;
-
-      # Prevent dmesg spam.
-      logRefusedConnections = false;
-    };
   };
 
   sops = {
-    # Default secrets file per host.
+
+    # Keep each host's secrets their own suitably encrypted YAML file.
     defaultSopsFile = ../../secrets/${config.networking.hostName}.yaml;
 
-    # Derive sops age key from host SSH key.
-    age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+    # We skip RSA host keys.
     gnupg.sshKeyPaths = [ ];
 
-    # Secrets available to all hosts.
-    secrets."nix-conf/gitlab-token" = { owner = "ewan"; };
   };
 
-  programs = {
-    zsh = {
-      enable = true;
-      shellInit = ''
-        export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
-      '';
-      autosuggestions.enable = true;
-      syntaxHighlighting.enable = true;
-    };
+  networking.firewall = {
 
-    git = {
-      enable = true;
-      package = pkgs.gitFull;
-    };
+    # Issues using Wireguard.
+    checkReversePath = false;
 
-    vim = {
-      enable = true;
-      defaultEditor = true;
-    };
+    # Prevent dmesg from being flooded.
+    logRefusedConnections = false;
+
   };
 
   security = {
+
     acme = {
       acceptTerms = true;
       defaults = {
@@ -104,9 +88,11 @@
 
     polkit.enable = true;
     sudo.enable = true;
+
   };
 
   services = {
+
     openssh = {
       enable = true;
       settings = {
@@ -115,31 +101,11 @@
       };
     };
 
-    locate = {
-      enable = true; localuser = null;
-      package = pkgs.plocate;
-    };
-
     # Prefer MariaDB over MySQL.
     mysql.package = pkgs.mariadb;
 
     # Simple time synchronization.
     timesyncd.enable = lib.mkDefault true;
-  };
 
-  environment = {
-
-    pathsToLink = [ "/share/zsh" ];
-
-    systemPackages = with pkgs; [
-
-      curl dig file findutils
-      ffmpeg htop imagemagick
-      lm_sensors lsd lsof ncdu
-      neofetch nmap procps psmisc
-      rsync sops unar usbutils
-      wireguard-tools wget yt-dlp
-
-    ];
   };
 }
