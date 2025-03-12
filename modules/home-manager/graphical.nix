@@ -56,22 +56,19 @@ in
     gtk.gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
 
     home.sessionVariables = {
-
-      BUNDLE_USER_CONFIG = "${config.xdg.configHome}/bundle";
-      BUNDLE_USER_CACHE = "${config.xdg.cacheHome}/bundle";
-      BUNDLE_USER_PLUGIN = "${config.xdg.dataHome}/bundle";
-
       CUDA_CACHE_PATH = "${config.xdg.cacheHome}/nv";
 
-      DOT_SAGE = "${config.xdg.configHome}/sage";
+      # Environment variables related to math tools and the like.
+      DOT_SAGE = "${config.xdg.configHome}/sage"; JUPYTER_PLATFORM_DIRS = 1;
+      MATHEMATICA_USERBASE = "${config.xdg.dataHome}/WolframEngine";
+      WOLFRAM_USERBASE = "${config.xdg.dataHome}/Wolfram";
 
-      NPM_CONFIG_INIT_MODULE = "${config.xdg.configHome}/npm/config/npm-init.js";
       NPM_CONFIG_CACHE = "${config.xdg.cacheHome}/npm";
-      NPM_CONFIG_TMP = "$XDG_RUNTIME_DIR/npm";
 
-      RENPY_PATH_TO_SAVES="${config.xdg.dataHome}/renpy";
+      RENPY_PATH_TO_SAVES = "${config.xdg.dataHome}/renpy";
 
-      WINEPREFIX="${config.xdg.dataHome}/wine";
+      WINEPREFIX = "${config.xdg.dataHome}/wine";
+
     };
 
     xdg.configFile = {
