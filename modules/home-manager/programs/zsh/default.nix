@@ -108,26 +108,43 @@ in
         '';
       };
 
-      plugins = [
-        {
-          name = "nix-shell"; # Use Zsh under nix-shell.
-          src = "${pkgs.zsh-nix-shell}/share/zsh-nix-shell";
-        }
-        {
-          name = "powerlevel10k"; src = "${pkgs.zsh-powerlevel10k}";
-          file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-        }
-        {
-          name = "powerlevel10k-config";
-          # Default configuration for our Zsh theme.
-          src = ./powerlevel10k; file = "p10k.zsh";
-        }
-        {
-          name = "powerlevel10k-config";
-          # TTY-friendly configuration for our Zsh theme.
-          src = ./powerlevel10k; file = "p10k-tty.zsh";
-        }
-      ];
+      plugins =
+
+        let
+          p10k-config = patch: pkgs.stdenv.mkDerivation {
+            name = "p10k.zsh";
+            src = pkgs.zsh-powerlevel10k;
+            patches = [ patch ];
+            dontBuild = true;
+
+            installPhase = ''
+              install -Dm644 share/zsh-powerlevel10k/config/p10k-lean-8colors.zsh $out/p10k.zsh
+            '';
+          };
+        in
+
+        [
+          {
+            name = "nix-shell"; # Use Zsh under nix-shell.
+            src = "${pkgs.zsh-nix-shell}/share/zsh-nix-shell";
+          }
+          {
+            name = "powerlevel10k"; src = "${pkgs.zsh-powerlevel10k}";
+            file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+          }
+          {
+            name = "powerlevel10k-config";
+            # Default configuration for our Zsh theme.
+            src = p10k-config ./powerlevel10k/p10k.patch;
+            file = "p10k.zsh";
+          }
+          {
+            name = "powerlevel10k-config-tty";
+            # TTY-friendly configuration for our Zsh theme.
+            src = p10k-config ./powerlevel10k/p10k-tty.patch;
+            file = "p10k.zsh";
+          }
+        ];
 
     };
 
