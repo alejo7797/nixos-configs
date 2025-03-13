@@ -45,6 +45,7 @@ in
 
     services = {
       mpris-proxy.enable = true;
+      gnome-keyring.enable = true;
       playerctld.enable = true;
 
       kdeconnect = {
