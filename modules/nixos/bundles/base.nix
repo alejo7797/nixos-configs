@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ lib, pkgs, ... }: {
 
   environment.systemPackages = with pkgs; [
 
@@ -22,6 +22,22 @@
       enable = true;
       defaultEditor = true;
     };
+
+  };
+
+  services = {
+
+    openssh.enable = true;
+
+    timesyncd.enable = lib.mkDefault true;
+
+  };
+
+  security = {
+
+    polkit.enable = true;
+
+    sudo.enable = true;
 
   };
 }

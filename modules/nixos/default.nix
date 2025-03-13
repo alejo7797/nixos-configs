@@ -1,4 +1,4 @@
-{ config, inputs, lib, pkgs, self, ... }: {
+{ config, inputs, lib, self, ... }: {
 
   imports = with lib.fileset;
 
@@ -51,67 +51,19 @@
       self.homeManagerModules.default
     ];
 
-    # Check the documentation for what these do.
-    useGlobalPkgs = true; useUserPackages = true;
+    # Take note of these!
+    useUserPackages = true;
+    useGlobalPkgs = true;
 
   };
-
-  environment.extraInit = ''
-    if [ -f /etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh ]; then
-      . /etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh
-    fi
-  '';
 
   sops = {
 
-    # Keep each host's secrets their own suitably encrypted YAML file.
+    # Encrypted using the host's ed25519 public SSH key, in age format.
     defaultSopsFile = ../../secrets/${config.networking.hostName}.yaml;
 
-    # We skip RSA host keys.
-    gnupg.sshKeyPaths = [ ];
-
-  };
-
-  networking.firewall = {
-
-    # Issues using Wireguard.
-    checkReversePath = false;
-
-    # Prevent dmesg from being flooded.
-    logRefusedConnections = false;
-
-  };
-
-  security = {
-
-    acme = {
-      acceptTerms = true;
-      defaults = {
-        email = "ewan@patchoulihq.cc"; dnsProvider = "cloudflare";
-        environmentFile = config.sops.secrets."acme/cloudflare".path;
-      };
-    };
-
-    polkit.enable = true;
-    sudo.enable = true;
-
-  };
-
-  services = {
-
-    openssh = {
-      enable = true;
-      settings = {
-        # Force public-key authentication.
-        PasswordAuthentication = false;
-      };
-    };
-
-    # Prefer MariaDB over MySQL.
-    mysql.package = pkgs.mariadb;
-
-    # Simple time synchronization.
-    timesyncd.enable = lib.mkDefault true;
+    # Skip loading any RSA SSH host keys.
+    gnupg.sshKeyPaths = lib.mkDefault [ ];
 
   };
 }

@@ -29,7 +29,7 @@ in
     };
 
     # And define the following environment variables.
-    environment.sessionVariables = {
+    environment.variables = {
       SDL_IM_MODULE = "fcitx";
       XMODIFIERS = "@im=fcitx";
     };

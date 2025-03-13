@@ -1,12 +1,8 @@
-{
-  lib,
-  inputs,
-  config,
-  ...
-}:
+{ lib, config, ... }:
 
 let
   cfg = config.myNixOS.rutorrent;
+  inherit (config.sops) secrets;
 in
 
 {
@@ -27,8 +23,9 @@ in
       localAddress = "172.18.0.2";
 
       bindMounts = {
-        # For sops-nix to decrypt the VPN secrets.
-        "/etc/ssh/ssh_host_ed25519_key".isReadOnly = true;
+        # Access the VPN credentials.
+        ${secrets."wireguard/airvpn/private-key".path} = { };
+        ${secrets."wireguard/airvpn/preshared-key".path} = { };
 
         # Data download directories.
         "/data/hanekawa/downloads" = { };
@@ -36,9 +33,9 @@ in
         "/data/natsuhi/media/Music" = { };
       };
 
-      config = { config, ...}: {
+      specialArgs = { inherit secrets; };
 
-        imports = [ inputs.sops-nix.nixosModules.sops ];
+      config = { secrets, ... }: {
 
         # Matches the GID in the host.
         users.groups.media = { gid = 1001; };
@@ -66,7 +63,7 @@ in
           # Set up the AirVPN tunnel.
           wg-quick.interfaces."wg0" = {
 
-            privateKeyFile = config.sops.secrets."wireguard/airvpn/private-key".path;
+            privateKeyFile = secrets."wireguard/airvpn/private-key".path;
             address = [ "10.134.211.44/32" "fd7d:76ee:e68f:a993:597:e1ef:fcfe:6e51/128" ];
             dns = [ "10.128.0.1" "fd7d:76ee:e68f:a993::1" ];
 
@@ -76,21 +73,11 @@ in
                 endpoint = "199.189.27.125:1637";
 
                 publicKey = "PyLCXAQT8KkM4T+dUsOQfn+Ub3pGxfGlxkIApuig+hk=";
-                presharedKeyFile = config.sops.secrets."wireguard/airvpn/preshared-key".path;
+                presharedKeyFile = secrets."wireguard/airvpn/preshared-key".path;
               }
             ];
           };
 
-        };
-
-        sops = {
-          defaultSopsFile = ../../../../secrets/airvpn.yaml;
-          age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-
-          secrets = {
-            "wireguard/airvpn/private-key" = { };
-            "wireguard/airvpn/preshared-key" = { };
-          };
         };
 
         system.stateVersion = "24.11";
@@ -111,6 +98,11 @@ in
           proxyPass = "http://172.18.0.2:80";
         };
       };
+    };
+
+    sops.secrets = {
+      "wireguard/airvpn/private-key" = { };
+      "wireguard/airvpn/preshared-key" = { };
     };
   };
 }
