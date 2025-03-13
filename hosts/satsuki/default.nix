@@ -44,6 +44,11 @@
       # Prevent the Logitech USB mouse receiver from waking the system up from suspend. It has been known to cause issues for us in the past.
       ACTION=="add|change", SUBSYSTEM=="usb", DRIVERS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c547", ATTR{power/wakeup}="disabled"
     '';
+
+    getty = {
+      autologinUser = "ewan";
+      autologinOnce = true;
+    };
   };
 
   sops.secrets = {
@@ -73,14 +78,6 @@
     retroarch.enable = true;
     sway.enable = true;
     tzupdate.enable = true;
-
-    tuigreet = {
-      enable = true;
-      autologin = {
-        enable = true;
-        user = "ewan";
-      };
-    };
 
   };
 

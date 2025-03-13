@@ -72,7 +72,6 @@
     hyprland.enable = true;
     retroarch.enable = true;
     sway.enable = true;
-    tuigreet.enable = true;
 
   };
 
