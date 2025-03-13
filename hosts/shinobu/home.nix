@@ -10,11 +10,6 @@
     stateVersion = "24.11";
   };
 
-  sops.secrets = {
-    "calendars/sonarr" = { };
-    "calendars/harvard" = { };
-  };
-
   my = {
     joplin.enable = true;
 
@@ -27,7 +22,6 @@
 
   myHome = {
     hyprland.enable = true;
-    sway.enable = true;
 
     firefox.enable = true;
     thunderbird.enable = true;
@@ -59,13 +53,5 @@
         sensitivity = -1;
       }
     ];
-  };
-
-  wayland.windowManager.sway.config = {
-    input = {
-      "1133:49298:Logitech_G203_LIGHTSYNC_Gaming_Mouse" = {
-        pointer_accel = "-1";
-      };
-    };
   };
 }

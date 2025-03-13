@@ -76,7 +76,6 @@
     hyprland.enable = true;
     jupyter.enable = true;
     retroarch.enable = true;
-    sway.enable = true;
     tzupdate.enable = true;
 
   };

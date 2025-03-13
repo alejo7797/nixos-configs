@@ -28,13 +28,7 @@ in
     in
 
     {
-      "sway/workspaces" = workspaces;
       "hyprland/workspaces" = workspaces;
-
-      "sway/scratchpad" = {
-        format = "{icon} {count}";
-        format-icons = ["" ""];
-      };
 
       idle_inhibitor = {
         format = "{icon}";

@@ -71,7 +71,6 @@
     dolphin.enable = true;
     hyprland.enable = true;
     retroarch.enable = true;
-    sway.enable = true;
 
   };
 
