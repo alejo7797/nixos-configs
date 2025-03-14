@@ -1,34 +1,7 @@
 #!/usr/bin/env bash
 
-WP=$1
+WP=$1 # Path to wallpaper image.
+hyprctl hyprpaper reload ", $WP"
 
-SIMPLE_WMS=("i3" "i3-with-shmlog")
-if [[ " ${SIMPLE_WMS[*]} " = *" $XDG_CURRENT_DESKTOP "* ]]; then
-    if command -v "feh" >/dev/null 2>&1; then
-        feh --bg-fill "$WP" 2>/dev/null
-    fi
-fi
-
-read -ra PID <<<"$(pidof swaybg)"
-if [ "$XDG_CURRENT_DESKTOP" == "sway" ]; then
-    if command -v "swaybg" >/dev/null 2>&1; then
-        swaybg -i "$WP" -m fill &
-        if [ -n "${PID[0]}" ]; then
-            sleep 1
-            kill "${PID[@]}" 2>/dev/null
-        fi
-    else
-        swaymsg output "*" bg "$WP" fill 2>/dev/null
-    fi
-fi
-
-if [ "$XDG_CURRENT_DESKTOP" == "Hyprland" ]; then
-    if command -v "hyprctl" >/dev/null 2>&1; then
-        hyprctl hyprpaper reload ", $1"
-    fi
-fi
-
-[[ -d "$XDG_CONFIG_HOME/i3" ]] && echo "new_wp" >"$XDG_CONFIG_HOME/i3/.wp_status"
-[[ -d "$XDG_CONFIG_HOME/hypr" ]] && magick "$1" "$XDG_CONFIG_HOME/hypr/wall.png"
-
-exit 0
+# Restore previous wallpaper on login.
+magick "$WP" "$XDG_STATE_HOME/wall.png"

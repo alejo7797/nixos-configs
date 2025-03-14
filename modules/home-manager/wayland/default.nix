@@ -40,7 +40,7 @@ in
             grace = 5; hide_cursor = true;
           };
           background = {
-            path = "${config.xdg.configHome}/hypr/wall.png";
+            path = "${config.xdg.stateHome}/wall.png";
             blur_passes = 2; brightness = 0.5;
           };
           input-field = {
@@ -108,8 +108,8 @@ in
       };
 
       hyprpaper.settings = {
-        preload = [ "${config.xdg.configHome}/hypr/wall.png" ];
-        wallpaper = [ ", ${config.xdg.configHome}/hypr/wall.png" ];
+        preload = [ "${config.xdg.stateHome}/wall.png" ];
+        wallpaper = [ ", ${config.xdg.stateHome}/wall.png" ];
       };
     };
   };
