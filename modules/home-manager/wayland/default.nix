@@ -64,8 +64,8 @@ in
       };
 
       zsh.profileExtra = ''
-        if [[ $(find /run/agetty.autologged -mmin -1) ]]; then
-          uwsm check may-start && exec uwsm start default
+        if uwsm check may-start; then
+          exec uwsm start default
         fi
       '';
     };

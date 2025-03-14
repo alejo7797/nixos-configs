@@ -6,11 +6,11 @@
     # Follow the latest stable NixOS release branch.
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
 
-    # Access recent versions of packages before a new release.
+    # Access newer versions of packages before the next release.
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
-      # Manage users' home environments using Nix.
+      # Manage a user's home environment using Nix.
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -27,7 +27,7 @@
     };
 
     my-expressions = {
-      # My personal Nix derivations and Nixpkgs overlays.
+      # My personal derivations and Nixpkgs overlays.
       url = "gitlab:alex/nix-expressions?host=git.patchoulihq.cc";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -39,7 +39,7 @@
     };
 
     nixos-mailserver = {
-      # NixOS module for easily setting up an email server.
+      # NixOS module for setting up a 10/10 email server.
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
