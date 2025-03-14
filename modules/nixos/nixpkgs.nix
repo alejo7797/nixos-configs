@@ -15,6 +15,7 @@
         borgmatic = final.callPackage (import "${inputs.nixpkgs-unstable}/pkgs/by-name/bo/borgmatic/package.nix") { };
         joplin-desktop = final.callPackage (import "${inputs.nixpkgs-unstable}/pkgs/by-name/jo/joplin-desktop/package.nix") { };
         spotify = final.callPackage (import "${inputs.nixpkgs-unstable}/pkgs/by-name/sp/spotify/package.nix") { libgbm = final.mesa; };
+        uwsm = final.callPackage (import "${inputs.nixpkgs-unstable}/pkgs/by-name/uw/uwsm/package.nix") { };
       })
 
     ];

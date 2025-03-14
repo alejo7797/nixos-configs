@@ -31,7 +31,7 @@ in
         gammastep = { }; hypridle = { };
         hyprpaper = { }; kdeconnect = { };
         kdeconnect-indicator = { };
-        waybar = { }; xsettingsd = { };
+        waybar = { };
       };
 
     wayland.windowManager.hyprland = {
