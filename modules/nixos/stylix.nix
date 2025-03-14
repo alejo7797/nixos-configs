@@ -13,6 +13,9 @@
     # My favorite color scheme https://github.com/chriskempson/tomorrow-theme.
     base16Scheme = "${pkgs.base16-schemes}/share/themes/tomorrow-night.yaml";
 
+    # Set system theme.
+    polarity = "dark";
+
     fonts = rec {
       sizes = {
         # At DPI = 120.
