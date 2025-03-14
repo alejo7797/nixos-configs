@@ -28,8 +28,9 @@ in
       (_: _: { Unit.After = [ "graphical-session.target" ]; })
 
       {
+        # Fixed with release 25.05
         gammastep = { }; hypridle = { };
-        hyprpaper = { }; kdeconnect = { };
+        kdeconnect = { };
         kdeconnect-indicator = { };
         waybar = { };
       };
