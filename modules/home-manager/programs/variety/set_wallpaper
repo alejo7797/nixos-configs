@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-WP=$1 # Path to wallpaper image.
-hyprctl hyprpaper reload ", $WP"
-
-# Restore previous wallpaper on login.
-magick "$WP" "$XDG_STATE_HOME/wall.png"

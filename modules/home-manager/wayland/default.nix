@@ -14,6 +14,10 @@ in
 
   config = lib.mkIf cfg.enable {
 
+    my = {
+      swww.enable = true;
+    };
+
     myHome = {
       graphical.enable = true;
       waybar.enable = true;
@@ -107,10 +111,8 @@ in
           };
       };
 
-      hyprpaper.settings = {
-        preload = [ "${config.xdg.stateHome}/wall.png" ];
-        wallpaper = [ ", ${config.xdg.stateHome}/wall.png" ];
-      };
+      # Can remove with Stylix 25.05 release.
+      hyprpaper.enable = lib.mkForce false;
     };
   };
 }

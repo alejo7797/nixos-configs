@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+WP=$1 # Path to wallpaper image.
+
+if [[ -n "$WAYLAND_DISPLAY" ]]; then
+
+    swww img "$WP" -t right --transition-fps 60 --transition-duration 1
+
+else
+
+    feh --bg-fill "$WP" 2>/dev/null
+
+fi
+
+# Restore previous wallpaper on login.
+magick "$WP" "$XDG_STATE_HOME/wall.png"

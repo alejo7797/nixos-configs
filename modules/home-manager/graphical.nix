@@ -28,7 +28,10 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    my.style.enable = true;
+    my = {
+      fcitx5.enable = true;
+      style.enable = true;
+    };
 
     myHome = {
       dolphin.enable = true;
@@ -74,12 +77,6 @@ in
 
     xdg = {
       configFile = {
-        "fcitx5" = {
-          source = ./programs/fcitx5/config;
-          force = true;
-          recursive = true;
-        };
-
         "chktexrc".source = ./programs/latex/chktexrc;
         "latexmk/latexmkrc".source = ./programs/latex/latexmkrc;
 
@@ -90,13 +87,6 @@ in
 
         "baloofilerc".text = lib.generators.toINI {} {
           "Basic Settings"."Indexing-Enabled" = false;
-        };
-      };
-
-      dataFile = {
-        "fcitx5" = {
-          source = ./programs/fcitx5/data;
-          recursive = true;
         };
       };
     };
