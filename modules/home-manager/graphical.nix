@@ -99,8 +99,6 @@ in
           recursive = true;
         };
       };
-
-      userDirs.enable = true;
     };
 
     myHome.lib.mkGraphicalService =
