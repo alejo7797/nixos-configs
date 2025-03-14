@@ -1,21 +1,21 @@
-{ inputs, pkgs, ... }: {
+{ inputs, lib, pkgs, ... }: {
 
   imports = [ inputs.stylix.nixosModules.stylix ];
 
   stylix = {
+
     image = builtins.fetchurl {
-      # Must specify a wallpaper image even if we don't really need it.
+      # The 24.11 release of Stylix makes us specify a wallpaper image.
       url = "https://w.wallhaven.cc/full/zy/wallhaven-zye9ry.jpg";
       sha256 = "16d5pch4544knygndsslmh682fxp6sqwn5b9vnrb35ji7m5zfcm0";
     };
 
-    # Tomorrow Night is still the best for me even now. Thank you chriskempson.
+    # My favorite color scheme https://github.com/chriskempson/tomorrow-theme.
     base16Scheme = "${pkgs.base16-schemes}/share/themes/tomorrow-night.yaml";
-
-    polarity = "dark";
 
     fonts = rec {
       sizes = {
+        # At DPI = 120.
         applications = 10;
         terminal = 11;
       };
@@ -45,5 +45,29 @@
       package = pkgs.kdePackages.breeze;
       name = "breeze_cursors"; size = 24;
     };
+
   };
+
+  # Set up Stylix for home users.
+  home-manager.sharedModules = [{
+
+    stylix = {
+      iconTheme = {
+        # Setting not available in the NixOS module.
+        enable = true; package = pkgs.papirus-icon-theme;
+        dark = "Papirus-Dark"; light = "Papirus-Light";
+      };
+
+      targets = {
+        # Don't create ~/.themes directory.
+        gtk.flatpakSupport.enable = false;
+
+        # Won't need these with 25.05.
+        hyprpaper.enable = lib.mkForce false;
+        hyprlock.enable = false;
+      };
+    };
+
+  }];
+
 }

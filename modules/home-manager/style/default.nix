@@ -33,6 +33,7 @@ in
       };
     };
 
+    # TODO: remove with 25.05 release
     home.file = lib.mkIf (config.home.pointerCursor != null) {
       ".icons/default/index.theme".enable = false;
       ".icons/${config.home.pointerCursor.name}".enable = false;
@@ -42,14 +43,6 @@ in
       # The default while under KDE.
       kdePackages.ocean-sound-theme
     ];
-
-    stylix.iconTheme = {
-      # Tell Stylix to use Papirus as our icon theme.
-      enable = true; package = pkgs.papirus-icon-theme;
-      dark = "Papirus-Dark"; light = "Papirus-Light";
-    };
-
-    stylix.targets.gtk.flatpakSupport.enable = false;
 
     xresources.path = "${config.xdg.configHome}/X11/xresources";
   };

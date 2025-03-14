@@ -23,8 +23,7 @@ in
     # Set environment variables using UWSM.
     xdg.configFile."uwsm/env".text = ''
 
-      # Set the cursor size.
-      export XCURSOR_SIZE=24
+      # TODO: remove with 25.05.
       export HYPRCURSOR_SIZE=24
 
       # Wayland fixes.
@@ -32,9 +31,6 @@ in
       export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
 
     '';
-
-    # Stylix wants to set the wallpaper too.
-    stylix.targets.hyprlock.enable = false;
 
     programs = {
       hyprlock = {
@@ -109,6 +105,11 @@ in
               }
             ];
           };
+      };
+
+      hyprpaper.settings = {
+        preload = [ "${config.xdg.configHome}/hypr/wall.png" ];
+        wallpaper = [ ", ${config.xdg.configHome}/hypr/wall.png" ];
       };
     };
   };
