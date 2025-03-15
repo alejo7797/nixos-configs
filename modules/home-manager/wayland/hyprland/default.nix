@@ -60,11 +60,11 @@ in
 
           exec-once = [
             # Workspace autostart command.
-            (pkgs.writeShellApplication {
+            "${pkgs.writeShellApplication {
               name = "hypr-startup";
               runtimeInputs = with pkgs; [ hyprland jq ];
               text = ./hypr-startup;
-            })
+            }}/bin/hypr-startup"
           ];
 
           general = {
