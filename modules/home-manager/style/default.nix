@@ -1,70 +1,49 @@
 {
-  pkgs,
-  config,
   lib,
+  config,
+  pkgs,
   ...
 }:
 
 let
-  cfg = config.myHome.style;
+  cfg = config.my.style;
 in
 
 {
-  imports = [ ../../stylix.nix ];
-
-  options.myHome.style.enable = lib.mkEnableOption "user-level theming";
+  options.my.style.enable = lib.mkEnableOption "user-level theming";
 
   config = lib.mkIf cfg.enable {
 
-    stylix.enable = true;
+    my.qt.enable = true;
 
     xdg = {
       configFile = {
-        # Fix the look of QT applications.
-        "kdeglobals".source = ./kdeglobals;
-        "qt5ct/qt5ct.conf".source = ./qt5ct.conf;
-        "qt6ct/qt6ct.conf".source = ./qt6ct.conf;
-
-        # Fix Japanese fonts.
         "fontconfig" = {
-          recursive = true;
+          # Japanese fonts.
           source = ./fontconfig;
+          recursive = true;
         };
       };
-
-      # Make our theme available to Konsole.
-      configFile."konsolerc".source = ./konsole/konsolerc;
-      dataFile."konsole".source = ./konsole/data;
     };
 
-    # Set our desired font DPI.
-    dconf.settings."org/gnome/desktop/interface" = {
-      text-scaling-factor = 1.25;
+    dconf.settings = {
+      "org/gnome/desktop/interface" = {
+        # Scale the user interface.
+        text-scaling-factor = 1.25;
+      };
     };
 
-    # Use Papirus as our icon theme.
-    stylix.iconTheme = {
-      enable = true;
-      package = pkgs.papirus-icon-theme;
-      dark = "Papirus-Dark";
-      light = "Papirus-Light";
+    # TODO: remove with 25.05 release
+    home.file = lib.mkIf (config.home.pointerCursor != null) {
+      ".icons/default/index.theme".enable = false;
+      ".icons/${config.home.pointerCursor.name}".enable = false;
     };
 
-    # Use the default KDE sound theme.
-    gtk = {
-      gtk2.extraConfig = "gtk-sound-theme-name = ocean";
-      gtk3.extraConfig.gtk-sound-theme-name = "ocean";
-      gtk4.extraConfig.gtk-sound-theme-name = "ocean";
-    };
-    dconf.settings."org/gnome/desktop/sound".theme-name = "ocean";
+    home.packages = with pkgs; [
+      # The default while under KDE.
+      kdePackages.ocean-sound-theme
+    ];
 
-    # Pass our settings to xsettingsd.
-    services.xsettingsd.settings = {
-      "Net/ThemeName" = "adw-gkt3";
-      "Net/IconThemeName" = "Papirus-Dark";
-      "Net/SoundThemeName" = "ocean";
-      "Gtk/CursorThemeName" = "breeze_cursors";
-      "Xft/DPI" = 122880;
-    };
+    xresources.path = "${config.xdg.configHome}/X11/xresources";
   };
 }

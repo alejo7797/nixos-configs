@@ -14,6 +14,10 @@ in
 
   config = lib.mkIf cfg.enable {
 
+    my = {
+      swww.enable = true;
+    };
+
     myHome = {
       graphical.enable = true;
       waybar.enable = true;
@@ -23,8 +27,7 @@ in
     # Set environment variables using UWSM.
     xdg.configFile."uwsm/env".text = ''
 
-      # Set the cursor size.
-      export XCURSOR_SIZE=24
+      # TODO: remove with 25.05.
       export HYPRCURSOR_SIZE=24
 
       # Wayland fixes.
@@ -33,33 +36,38 @@ in
 
     '';
 
-    # Stylix wants to set the wallpaper too.
-    stylix.targets.hyprlock.enable = false;
-
-    programs.hyprlock = {
-      enable = true;
-      settings = {
-        general = {
-          grace = 5; hide_cursor = true;
-        };
-        background = {
-          path = "${config.xdg.configHome}/hypr/wall.png";
-          blur_passes = 2; brightness = 0.5;
-        };
-        input-field = {
-          fade_timeout = 1000; monitor = "";
-          placeholder_text = ""; size = "400, 60";
+    programs = {
+      hyprlock = {
+        enable = true;
+        settings = {
+          general = {
+            grace = 5; hide_cursor = true;
+          };
+          background = {
+            path = "${config.xdg.stateHome}/wall.png";
+            blur_passes = 2; brightness = 0.5;
+          };
+          input-field = {
+            fade_timeout = 1000; monitor = "";
+            placeholder_text = ""; size = "400, 60";
+          };
         };
       };
-    };
 
-    programs.wofi = {
-      enable = true;
-      settings = {
-        mode = "drun"; drun-print_command = true;
-        width = "36%"; height = "40%"; allow_images = true;
-        location = "center"; key_expand = "Ctrl-x";
+      wofi = {
+        enable = true;
+        settings = {
+          mode = "drun"; drun-print_desktop_file = true;
+          width = "36%"; height = "40%"; allow_images = true;
+          location = "center"; key_expand = "Ctrl-x";
+        };
       };
+
+      zsh.profileExtra = ''
+        if uwsm check may-start; then
+          exec uwsm start default
+        fi
+      '';
     };
 
     services = {
@@ -102,6 +110,9 @@ in
             ];
           };
       };
+
+      # Can remove with Stylix 25.05 release.
+      hyprpaper.enable = lib.mkForce false;
     };
   };
 }

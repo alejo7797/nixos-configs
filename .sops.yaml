@@ -16,7 +16,7 @@ creation_rules:
       - age:
           - *admin_ewan
 
-  - path_regex: secrets/(patchouli|airvpn).yaml$
+  - path_regex: secrets/patchouli.yaml$
     key_groups:
       - age:
           - *admin_ewan

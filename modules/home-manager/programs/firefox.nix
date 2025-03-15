@@ -96,7 +96,7 @@ in
             {
               label = "ae433";
               url = "https://alex.epelde.net/about-to-get-very-silly";
-              baseDomain = "ae433.user.srcf.net";
+              baseDomain = "alex.epelde.net";
             }
             {
               label = "nixos";

@@ -20,10 +20,11 @@ in
     boot.plymouth.enable = true;
 
     myNixOS = {
-      style.enable = true;
       firefox.enable = true;
       fcitx5.enable = true;
     };
+
+    stylix.enable = true;
 
     programs = {
       appimage = {
@@ -31,10 +32,8 @@ in
         binfmt = true;
       };
 
-      dconf.enable = true;
-      gnome-disks.enable = true;
-      gnupg.agent.enable = true;
       kdeconnect.enable = true;
+      gnupg.agent.enable = true;
       nm-applet.enable = true;
     };
 
@@ -64,16 +63,15 @@ in
 
       geoclue2 = {
         enable = true;
-        # https://github.com/NixOS/nixpkgs/issues/321121
+        # See https://github.com/NixOS/nixpkgs/issues/321121.
         geoProviderUrl = "https://api.beacondb.net/v1/geolocate";
       };
 
-      # Useful for Git credentials.
+      # Useful to keep Git credentials.
       gnome.gnome-keyring.enable = true;
 
       blueman.enable = true;
       libinput.enable = true;
-      gvfs.enable = true;
       pcscd.enable = true;
       ratbagd.enable = true;
       udisks2.enable = true;
@@ -84,6 +82,14 @@ in
       xdgOpenUsePortal = true;
     };
 
+    environment.sessionVariables = {
+      # Try to improve Java applications' font rendering.
+      _JAVA_OPTIONS = "-Dawt.useSystemAAFontSettings=lcd";
+
+      # Screen scaling for QT applications.
+      QT_FONT_DPI = 120;
+    };
+
     environment.systemPackages = with pkgs; [
 
       dconf-editor font-manager icoutils
@@ -91,6 +97,9 @@ in
       pavucontrol pdftk piper seahorse
       simple-scan sqlitebrowser xorg.xeyes
       vulkan-tools yubioath-flutter zenity
+
+      # Default KDE theme for Qt5.
+      libsForQt5.breeze-qt5
 
     ];
 

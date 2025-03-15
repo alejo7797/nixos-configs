@@ -18,7 +18,7 @@ in
       {
         source = pkgs.writeText "tzupdate" ''
 
-          [[ $1 != "wlan0" ]] && exit 0
+          ! [[ $1 =~ wlo[0-9] ]] && exit 0
 
           if [[ $2 == "up" ]]; then
 

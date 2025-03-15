@@ -11,7 +11,6 @@
 
     [
       inputs.nixvim.homeManagerModules.nixvim
-      inputs.nur.modules.homeManager.default
       inputs.sops-nix.homeManagerModules.sops
     ]
 
@@ -26,10 +25,17 @@
   };
 
   config = {
-    nix.gc = {
-      automatic = true;
-      frequency = "weekly";
-      options = "--delete-older-than 30d";
+
+    nix = {
+      enable = true;
+
+      settings.use-xdg-base-directories = true;
+
+      gc = {
+        automatic = true;
+        frequency = "weekly";
+        options = "--delete-older-than 30d";
+      };
     };
 
     sops = {
@@ -45,6 +51,12 @@
 
     programs = {
       home-manager.enable = true;
+    };
+
+    xdg = {
+      enable = true;
+
+      configFile."nix/nix.conf".enable = false;
     };
 
     # My personal shell scripts.

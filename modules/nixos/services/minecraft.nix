@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  inputs,
   pkgs,
   ...
 }:
@@ -10,9 +11,13 @@ let
 in
 
 {
+  imports = [ inputs.nix-minecraft.nixosModules.minecraft-servers ];
+
   options.myNixOS.minecraft.enable = lib.mkEnableOption "my personal Minecraft server";
 
   config = lib.mkIf cfg.enable {
+
+    nixpkgs.overlays = [ inputs.nix-minecraft.overlays.default ];
 
     services.minecraft-servers = {
       enable = true;

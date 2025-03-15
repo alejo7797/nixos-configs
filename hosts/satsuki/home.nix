@@ -9,17 +9,20 @@
   sops.secrets = {
     "borg/passphrase" = { };
     "borg/ssh-key" = { };
-    "calendars/harvard" = { };
-    "calendars/sonarr" = { };
+  };
+
+  my = {
+    autostart = with pkgs; [
+      firefox thunderbird zotero
+    ];
+
+    joplin.enable = true;
   };
 
   myHome = {
-    sway.enable = true;
     hyprland.enable = true;
-    i3.enable = true;
 
     firefox.enable = true;
-    joplin-desktop.enable = true;
     thunderbird.enable = true;
 
     workspaces = {
@@ -32,15 +35,12 @@
       location = "Cambridge, MA";
       thermal-zone = 7;
     };
-
-    xdgAutostart = with pkgs; [
-      firefox thunderbird zotero
-    ];
   };
 
-  xdg.configFile."uwsm/env".text = ''
-    export __EGL_VENDOR_LIBRARY_FILENAMES=/run/opengl-driver/share/glvnd/egl_vendor.d/50_mesa.json
-    export __GLX_VENDOR_LIBRARY_NAME=mesa  # Tell Wayland compositors not to use the Nvidia GPU.
+  xdg.configFile."uwsm/env-hyprland".text = ''
+    IGPU_CARD=$(readlink -f /dev/dri/by-path/pci-0000:00:02.0-card)
+    DGPU_CARD=$(readlink -f /dev/dri/by-path/pci-0000:01:00.0-card)
+    export AQ_DRM_DEVICES="$IGPU_CARD:$DGPU_CARD"
   '';
 
   services = {
@@ -111,17 +111,6 @@
         sensitivity = -1;
       }
     ];
-
-    sway.config.input = {
-      # Should be a repeat of the above Hyprland input device settings.
-      "1133:50503:Logitech_USB_Receiver" = { pointer_accel = "-1"; };
-      "1133:16471:Logitech_B330/M330/M331" = { pointer_accel = "-1"; };
-
-      "1739:52756:SYNA329D:00_06CB:CE14_Touchpad" = {
-        # Touchpad use QoL improvements.
-        tap = "enabled"; dwt = "enabled";
-      };
-    };
   };
 
   programs = {

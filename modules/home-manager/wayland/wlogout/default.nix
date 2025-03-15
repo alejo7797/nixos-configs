@@ -1,11 +1,27 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 
 let
   cfg = config.myHome.wlogout;
+
+  wlogout-icons = pkgs.stdenv.mkDerivation {
+    name = "wlogout-icons"; src = pkgs.wlogout;
+    nativeBuildInputs = [ pkgs.imagemagick ];
+    buildPhase = ''
+      for f in share/wlogout/icons/*; do
+        magick "$f" -alpha extract -background white -alpha shape "$f"
+      done
+    '';
+    installPhase = ''
+      for f in share/wlogout/icons/*; do
+        install -Dm644 "$f" -t $out
+      done
+    '';
+  };
 in
 
 {
@@ -86,27 +102,27 @@ in
         }
 
         #lock {
-          background-image: image(url("${./icons}/lock.png"));
+          background-image: image(url("${wlogout-icons}/lock.png"));
         }
 
         #logout {
-          background-image: image(url("${./icons}/logout.png"));
+          background-image: image(url("${wlogout-icons}/logout.png"));
         }
 
         #suspend {
-          background-image: image(url("${./icons}/suspend.png"));
+          background-image: image(url("${wlogout-icons}/suspend.png"));
         }
 
         #hibernate {
-          background-image: image(url("${./icons}/hibernate.png"));
+          background-image: image(url("${wlogout-icons}/hibernate.png"));
         }
 
         #shutdown {
-          background-image: image(url("${./icons}/shutdown.png"));
+          background-image: image(url("${wlogout-icons}/shutdown.png"));
         }
 
         #reboot {
-          background-image: image(url("${./icons}/reboot.png"));
+          background-image: image(url("${wlogout-icons}/reboot.png"));
         }
       '';
     };

@@ -44,11 +44,7 @@ in
         height = 30; spacing = 5;
         position = "bottom";
 
-        modules-left = [
-          # Mostly just workspace icons.
-          "hyprland/workspaces" "sway/workspaces"
-          "sway/mode" "sway/scratchpad"
-        ];
+        modules-left = [ "hyprland/workspaces" ];
 
         modules-right = [
           "idle_inhibitor" "systemd-failed-units"

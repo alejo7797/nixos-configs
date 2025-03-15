@@ -34,10 +34,14 @@ in
       Group = "gitlab-runner";
     };
 
-    users.users.gitlab-runner = {
-      isSystemUser = true;
-      home = "/var/lib/gitlab-runner";
-      group = "gitlab-runner";
+    users = {
+      users.gitlab-runner = {
+        isSystemUser = true;
+        home = "/var/lib/gitlab-runner";
+        group = "gitlab-runner";
+      };
+
+      groups.gitlab-runner = { };
     };
 
     sops.secrets = {

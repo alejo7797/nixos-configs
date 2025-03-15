@@ -49,6 +49,6 @@ in
       };
     };
 
-    environment.variables.BROSWER = "firefox";
+    environment.sessionVariables.BROSWER = "firefox";
   };
 }

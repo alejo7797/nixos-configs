@@ -1,0 +1,76 @@
+{ inputs, lib, pkgs, ... }: {
+
+  imports = [ inputs.stylix.nixosModules.stylix ];
+
+  stylix = {
+
+    image = builtins.fetchurl {
+      # The 24.11 release of Stylix makes us specify a wallpaper image.
+      url = "https://w.wallhaven.cc/full/zy/wallhaven-zye9ry.jpg";
+      sha256 = "16d5pch4544knygndsslmh682fxp6sqwn5b9vnrb35ji7m5zfcm0";
+    };
+
+    # My favorite color scheme https://github.com/chriskempson/tomorrow-theme.
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/tomorrow-night.yaml";
+
+    # Set system theme.
+    polarity = "dark";
+
+    fonts = rec {
+      sizes = {
+        # At DPI = 120.
+        applications = 10;
+        terminal = 11;
+      };
+
+      sansSerif = {
+        package = pkgs.noto-fonts;
+        name = "Noto Sans";
+      };
+
+      # Why would I not?
+      serif = sansSerif;
+
+      monospace = {
+        name = "Hack Nerd Font"; # Avoid grabbing all Nerd Fonts.
+        package = pkgs.nerdfonts.override { fonts = [ "Hack" ]; };
+      };
+
+      emoji = {
+        # Would prefer monochrome.
+        package = pkgs.noto-fonts-emoji;
+        name = "Noto Color Emoji";
+      };
+    };
+
+    cursor = {
+      # Use the default KDE cursor theme.
+      package = pkgs.kdePackages.breeze;
+      name = "breeze_cursors"; size = 24;
+    };
+
+  };
+
+  # Set up Stylix for home users.
+  home-manager.sharedModules = [{
+
+    stylix = {
+      iconTheme = {
+        # Setting not available in the NixOS module.
+        enable = true; package = pkgs.papirus-icon-theme;
+        dark = "Papirus-Dark"; light = "Papirus-Light";
+      };
+
+      targets = {
+        # Don't create ~/.themes directory.
+        gtk.flatpakSupport.enable = false;
+
+        # Won't need these with 25.05.
+        hyprpaper.enable = lib.mkForce false;
+        hyprlock.enable = false;
+      };
+    };
+
+  }];
+
+}

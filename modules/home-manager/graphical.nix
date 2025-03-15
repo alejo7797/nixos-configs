@@ -28,22 +28,28 @@ in
 
   config = lib.mkIf cfg.enable {
 
+    my = {
+      fcitx5.enable = true;
+      style.enable = true;
+    };
+
     myHome = {
+      dolphin.enable = true;
       keepassxc.enable = true;
       kitty.enable = true;
+      konsole.enable = true;
       gpg.enable = true;
       mimeApps.enable = true;
       mpv.enable = true;
       ssh.enable = true;
-      style.enable = true;
       variety.enable = true;
       zathura.enable = true;
     };
 
     services = {
       mpris-proxy.enable = true;
+      gnome-keyring.enable = true;
       playerctld.enable = true;
-      xsettingsd.enable = true;
 
       kdeconnect = {
         enable = true;
@@ -51,31 +57,37 @@ in
       };
     };
 
-    xdg.configFile = {
-      "fcitx5" = {
-        source = ./programs/fcitx5/config;
-        force = true;
-        recursive = true;
-      };
+    gtk.gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
 
-      "chktexrc".source = ./programs/latex/chktexrc;
-      "latexmk/latexmkrc".source = ./programs/latex/latexmkrc;
-      "rubocop/config.yml".source = ./programs/rubocop/config.yml;
+    home.sessionVariables = {
+      CUDA_CACHE_PATH = "${config.xdg.cacheHome}/nv";
 
-      "latexindent/latexindent.yaml".source = ./programs/latex/latexindent.yaml;
-      "latexindent/indentconfig.yaml".source = (pkgs.formats.yaml {}).generate "indentconfig.yaml" {
-        paths = [ "${config.xdg.configHome}/latexindent/latexindent.yaml" ];
-      };
+      # Environment variables related to math tools and the like.
+      DOT_SAGE = "${config.xdg.configHome}/sage"; JUPYTER_PLATFORM_DIRS = 1;
+      MATHEMATICA_USERBASE = "${config.xdg.dataHome}/WolframEngine";
+      WOLFRAM_USERBASE = "${config.xdg.dataHome}/Wolfram";
 
-      "baloofilerc".text = lib.generators.toINI {} {
-        "Basic Settings"."Indexing-Enabled" = false;
-      };
+      NPM_CONFIG_CACHE = "${config.xdg.cacheHome}/npm";
+
+      RENPY_PATH_TO_SAVES = "${config.xdg.dataHome}/renpy";
+
+      WINEPREFIX = "${config.xdg.dataHome}/wine";
+
     };
 
-    xdg.dataFile = {
-      "fcitx5" = {
-        source = ./programs/fcitx5/data;
-        recursive = true;
+    xdg = {
+      configFile = {
+        "chktexrc".source = ./programs/latex/chktexrc;
+        "latexmk/latexmkrc".source = ./programs/latex/latexmkrc;
+
+        "latexindent/latexindent.yaml".source = ./programs/latex/latexindent.yaml;
+        "latexindent/indentconfig.yaml".source = (pkgs.formats.yaml {}).generate "indentconfig.yaml" {
+          paths = [ "${config.xdg.configHome}/latexindent/latexindent.yaml" ];
+        };
+
+        "baloofilerc".text = lib.generators.toINI {} {
+          "Basic Settings"."Indexing-Enabled" = false;
+        };
       };
     };
 

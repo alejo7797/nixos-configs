@@ -28,10 +28,11 @@ in
       (_: _: { Unit.After = [ "graphical-session.target" ]; })
 
       {
+        # Fixed with release 25.05
         gammastep = { }; hypridle = { };
-        hyprpaper = { }; kdeconnect = { };
+        kdeconnect = { };
         kdeconnect-indicator = { };
-        waybar = { }; xsettingsd = { };
+        waybar = { };
       };
 
     wayland.windowManager.hyprland = {
@@ -46,16 +47,16 @@ in
       settings =
 
         let
-          uwsm-app = "${pkgs.uwsm}/bin/uwsm app";
+          uwsm-app = "${pkgs.uwsm}/bin/uwsm-app";
           kitty = "${pkgs.kitty}/bin/kitty";
         in
 
         {
           "$terminal" = "${uwsm-app} -- ${kitty}";
 
-          # Make it so that wofi launches applications using the UWSM app helper.
-          # Our implementation requires that `drun-print_command` be set to true.
-          "$menu" = "${pkgs.wofi}/bin/wofi | ${pkgs.findutils}/bin/xargs -r ${uwsm-app} --";
+          # Make it so that wofi launches applications as units using the UWSM helper.
+          # Our implementation requires that `drun-print_desktop_file` be set to true.
+          "$menu" = "${uwsm-app} -- $(${pkgs.wofi}/bin/wofi || echo true)";
 
           # Workspace autostart command.
           exec-once = [ "${./hypr-startup}" ];

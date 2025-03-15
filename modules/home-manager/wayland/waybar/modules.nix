@@ -28,13 +28,7 @@ in
     in
 
     {
-      "sway/workspaces" = workspaces;
       "hyprland/workspaces" = workspaces;
-
-      "sway/scratchpad" = {
-        format = "{icon} {count}";
-        format-icons = ["" ""];
-      };
 
       idle_inhibitor = {
         format = "{icon}";
@@ -59,7 +53,7 @@ in
         format-source-muted = "";
 
         on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
-        format-icons = { default = ["" "" ""]; headphone = ""; };
+        format-icons = { default = ["" "" ""]; headphone = ""; headset = ""; };
         on-click-right = "${pkgs.audio-switch}/bin/audio-switch";
       };
 

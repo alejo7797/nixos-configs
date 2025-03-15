@@ -20,7 +20,7 @@ in
       Unit.Description = "KeepassXC password manager";
       Service = {
         # Prevent quirks with KeepassXC when it starts too early.
-        ExecStartPre = "${pkgs.coreutils}/bin/sleep 5";
+        ExecStartPre = "${pkgs.coreutils}/bin/sleep 10";
         ExecStart = "${pkgs.keepassxc}/bin/keepassxc";
       };
     };
