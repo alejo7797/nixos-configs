@@ -7,6 +7,8 @@
   imports = [
     inputs.lanzaboote.nixosModules.lanzaboote
     ./filesystems.nix ./hardware.nix
+
+    ../../users/ewan
   ];
 
   swapDevices = [ { device = "/var/swapfile"; size = 16384; } ];
@@ -51,6 +53,11 @@
     };
   };
 
+  home-manager = {
+    # TODO: refactor
+    sharedModules = [ ./home.nix ];
+  };
+
   sops.secrets = {
     u2f-mappings = {
       # YubiKey pam-u2f module secrets.
@@ -63,14 +70,6 @@
   };
 
   myNixOS = {
-
-    home-users.ewan = {
-      userConfig = ./home.nix;
-      userSettings = {
-        # I'm the only one here.
-        extraGroups = [ "wheel" ];
-      };
-    };
 
     dolphin.enable = true;
     hyprland.enable = true;

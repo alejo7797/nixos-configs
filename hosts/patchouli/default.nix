@@ -11,7 +11,7 @@ in
   # Did you read the comment?
   system.stateVersion = "24.11";
 
-  imports = [ ./filesystems.nix ./hardware.nix ];
+  imports = [ ./filesystems.nix ./hardware.nix ../../users/ewan ];
 
   swapDevices = [ { device = "/var/swapfile"; size = 4096; } ];
 
@@ -72,6 +72,9 @@ in
 
     "wpa-supplicant" = { };
   };
+
+  # TODO: refactor
+  home-manager.sharedModules = [ ./home.nix ];
 
   myNixOS = {
 
