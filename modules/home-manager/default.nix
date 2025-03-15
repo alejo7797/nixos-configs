@@ -32,9 +32,8 @@
       settings.use-xdg-base-directories = true;
 
       gc = {
-        automatic = true;
-        frequency = "weekly";
-        options = "--delete-older-than 30d";
+        automatic = true; frequency = "daily";
+        options = "--delete-older-than 7d";
       };
     };
 

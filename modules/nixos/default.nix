@@ -24,7 +24,7 @@
     channel.enable = false;
 
     gc = {
-      automatic = true; dates = "weekly";
+      automatic = true; dates = "daily";
       options = "--delete-older-than 7d";
     };
 
