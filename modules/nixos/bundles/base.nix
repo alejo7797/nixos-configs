@@ -3,7 +3,7 @@
   environment.systemPackages = with pkgs; [
 
     curl dig file findutils
-    ffmpeg htop imagemagick
+    ffmpeg htop imagemagick jq
     lm_sensors lsd lsof ncdu
     neofetch nmap procps psmisc
     rsync sops unar usbutils

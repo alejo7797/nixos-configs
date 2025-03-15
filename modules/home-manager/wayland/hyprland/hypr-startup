@@ -1,14 +1,23 @@
 #!/usr/bin/env bash
 
-sleep 1.2
+hyprctl dispatch exec '[workspace 4 silent]' uwsm-app dolphin
+
+while [[ -z $(hyprctl clients -j | jq '.[] | select(.workspace.id==4) | select(.class == "org.kde.dolphin")') ]]; do
+    sleep 0.1
+done
+
+hyprctl dispatch exec '[workspace 4 silent]' uwsm-app kitty
+
+while [[ -z $(hyprctl clients -j | jq '.[] | select(.workspace.id==4) | select(.class == "kitty")') ]]; do
+    sleep 0.1
+done
+
 hyprctl dispatch workspace 4
-hyprctl dispatch exec uwsm app dolphin
-
-sleep 1.2
-hyprctl dispatch exec uwsm app kitty
-
-sleep 0.6
 hyprctl dispatch hy3:movewindow right
 hyprctl dispatch hy3:makegroup tab
+
+hyprctl dispatch movefocus l
+hyprctl dispatch movefocus r
+
 hyprctl dispatch workspace 5
 hyprctl dispatch workspace 1

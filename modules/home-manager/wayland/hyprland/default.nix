@@ -58,8 +58,14 @@ in
           # Our implementation requires that `drun-print_desktop_file` be set to true.
           "$menu" = "${uwsm-app} -- $(${pkgs.wofi}/bin/wofi || echo true)";
 
-          # Workspace autostart command.
-          exec-once = [ "${./hypr-startup}" ];
+          exec-once = [
+            # Workspace autostart command.
+            (pkgs.writeShellApplication {
+              name = "hypr-startup";
+              runtimeInputs = with pkgs; [ hyprland jq ];
+              text = ./hypr-startup;
+            })
+          ];
 
           general = {
             # We don't like gaps.
