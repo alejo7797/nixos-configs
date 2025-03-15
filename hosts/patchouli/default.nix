@@ -62,8 +62,6 @@ in
   time.timeZone = "America/New_York";
 
   sops.secrets = {
-    "my-password" = { neededForUsers = true; };
-
     "syncthing/cert.pem" = { owner = "syncthing"; };
     "syncthing/key.pem" = { owner = "syncthing"; };
 

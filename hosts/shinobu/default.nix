@@ -48,8 +48,6 @@
   home-manager.sharedModules = [ ./home.nix ];
 
   sops.secrets = {
-    "my-password" = { neededForUsers = true; };
-
     "syncthing/cert.pem" = { owner = "ewan"; };
     "syncthing/key.pem" = { owner = "ewan"; };
 

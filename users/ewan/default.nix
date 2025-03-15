@@ -13,4 +13,6 @@
 
   programs.zsh.enable = true;
 
+  sops.secrets.my-password = { neededForUsers = true; };
+
 }
