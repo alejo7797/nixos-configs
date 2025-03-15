@@ -29,7 +29,7 @@
     };
 
     settings = {
-      # Enable the experimental v3 CLI and flake support.
+      # Enable the experimental v3 CLI and flakes support.
       experimental-features = [ "nix-command" "flakes" ];
 
       # Use $XDG_STATE_HOME and so on.
