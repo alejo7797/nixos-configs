@@ -1,49 +1,39 @@
 { pkgs, ... }: {
 
-  environment = {
+  environment.systemPackages = with pkgs; [
 
-    systemPackages = with pkgs; [
+    curl
+    dig
+    nmap
+    rsync
+    wget
 
-      curl
-      dig
-      nmap
-      wget
+    file
+    findutils
 
-      file
-      findutils
+    # these should go to
+    # desktop.nix & patchouli
+    # and that's it, no?
+    ffmpeg
+    imagemagick
+    yt-dlp
 
-      ffmpeg
-      imagemagick
-      yt-dlp
+    htop
+    lsof
+    ncdu
+    procps
+    psmisc
 
-      htop
-      lsof
-      ncdu
-      procps
-      psmisc
+    jq
+    lsd
+    sops
+    unar
 
-      jq
-      lsd
-      sops
-      unar
+    neofetch
 
-      neofetch
-      rsync
+    usbutils
 
-      usbutils
-
-    ];
-
-    variables = {
-
-      XDG_CONFIG_HOME = "$HOME/.config";
-      XDG_DATA_HOME = "$HOME/.local/share";
-      XDG_STATE_HOME = "$HOME/.local/state";
-      XDG_CACHE_HOME = "$HOME/.cache";
-
-    };
-
-  };
+  ];
 
   programs = {
     git.enable = true;

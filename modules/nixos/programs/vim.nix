@@ -4,10 +4,16 @@
   };
 
   environment.interactiveShellInit = ''
-    if [[ ! -f "$XDG_CONFIG_HOME/vim/vimrc" ]]; then
-      mkdir -p "$XDG_CONFIG_HOME/vim"
-      mkdir -p "$XDG_STATE_HOME/vim"
-      echo "set viminfofile=$XDG_STATE_HOME/vim/viminfo" >"$XDG_CONFIG_HOME/vim/vimrc"
+    # Keep files out of users' $HOME.
+    viminfo=$HOME/.local/state/vim/viminfo
+    vimrc=$HOME/.config/vim/vimrc
+
+    if [[ ! -f "$vimrc" ]]; then
+      mkdir -p "$(dirname "$viminfo")"
+      mkdir -p "$(dirname "$vimrc")"
+
+      # Tell Vim where to keep the viminfo file.
+      echo "set viminfofile=$viminfo" > "$vimrc"
     fi
   '';
 }
