@@ -38,6 +38,13 @@
 
   };
 
+  users = {
+
+    # Declarative config.
+    mutableUsers = false;
+
+  };
+
   home-manager = {
 
     # Get old files out of the way.
