@@ -50,8 +50,8 @@
     # Get old files out of the way.
     backupFileExtension = "backup";
 
-    # Access flake inputs in Home Manager.
-    extraSpecialArgs = { inherit inputs; };
+    # Access inputs and outputs in Home Manager.
+    extraSpecialArgs = { inherit inputs self; };
 
     sharedModules = [
       # Top-level module to build on.

@@ -10,7 +10,7 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
-      # Manage a user's home environment using Nix.
+      # Manage users' home environment configuration with Nix.
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -21,25 +21,25 @@
     };
 
     lanzaboote = {
-      # Secure Boot support for NixOS systems.
+      # Support for EFI Secure Boot on NixOS systems.
       url = "github:nix-community/lanzaboote/v0.4.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     my-expressions = {
-      # My personal derivations and Nixpkgs overlays.
+      # My personal scripts, Nix derivations and Nixpkgs overlays.
       url = "gitlab:alex/nix-expressions?host=git.patchoulihq.cc";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nixvim = {
-      # Neovim configuration system built on Nix.
+      # Neovim configuration system built through Nix.
       url = "github:nix-community/nixvim/nixos-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nixos-mailserver = {
-      # NixOS module for setting up a 10/10 email server.
+      # NixOS module to easily set up and host your own 10/10 mail server.
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
