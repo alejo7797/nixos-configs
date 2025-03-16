@@ -1,19 +1,19 @@
-{
+{ pkgs, ... }: {
+
   programs.vim = {
+
     defaultEditor = true;
+
+    package = pkgs.vim.customize {
+      vimrcConfig.customRC = ''
+
+        if !has('nvim')
+          " Do not create a .viminfo file in users' $HOME.
+          set viminfofile=$HOME/.local/state/vim/viminfo
+        endif
+
+      '';
+    };
+
   };
-
-  environment.interactiveShellInit = ''
-    # Keep files out of users' $HOME.
-    viminfo=$HOME/.local/state/vim/viminfo
-    vimrc=$HOME/.config/vim/vimrc
-
-    if [[ ! -f "$vimrc" ]]; then
-      mkdir -p "$(dirname "$viminfo")"
-      mkdir -p "$(dirname "$vimrc")"
-
-      # Tell Vim where to keep the viminfo file.
-      echo "set viminfofile=$viminfo" > "$vimrc"
-    fi
-  '';
 }

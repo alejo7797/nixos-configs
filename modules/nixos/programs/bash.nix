@@ -2,9 +2,8 @@
   programs.bash = {
 
     interactiveShellInit = ''
-      # Keep history out of users' $HOME.
+      # Avoid creating a ~/.bash_history file.
       HISTFILE=$HOME/.local/state/bash/history
-      mkdir -p "$(dirname "$HISTFILE")"
     '';
 
   };
