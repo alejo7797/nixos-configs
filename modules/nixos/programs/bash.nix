@@ -3,7 +3,7 @@
 
     interactiveShellInit = ''
       # Keep history out of users' $HOME.
-      HISTFILE=$HOME/.local/state/bash/history
+      HISTFILE=$XDG_STATE_HOME/bash/history
       mkdir -p "$(dirname "$HISTFILE")"
     '';
 

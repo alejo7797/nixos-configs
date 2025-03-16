@@ -1,43 +1,62 @@
-{ lib, pkgs, ... }: {
+{ pkgs, ... }: {
 
-  environment.systemPackages = with pkgs; [
+  environment = {
 
-    curl dig file findutils
-    ffmpeg htop imagemagick jq
-    lm_sensors lsd lsof ncdu
-    neofetch nmap procps psmisc
-    rsync sops unar usbutils
-    wireguard-tools wget yt-dlp
+    systemPackages = with pkgs; [
 
-  ];
+      curl
+      dig
+      nmap
+      wget
+
+      file
+      findutils
+
+      ffmpeg
+      imagemagick
+      yt-dlp
+
+      htop
+      lsof
+      ncdu
+      procps
+      psmisc
+
+      jq
+      lsd
+      sops
+      unar
+
+      neofetch
+      rsync
+
+      usbutils
+
+    ];
+
+    variables = {
+
+      XDG_CONFIG_HOME = "$HOME/.config";
+      XDG_DATA_HOME = "$HOME/.local/share";
+      XDG_STATE_HOME = "$HOME/.local/state";
+      XDG_CACHE_HOME = "$HOME/.cache";
+
+    };
+
+  };
 
   programs = {
-
-    git = {
-      enable = true;
-      package = pkgs.gitFull;
-    };
-
-    vim = {
-      enable = true;
-      defaultEditor = true;
-    };
-
+    git.enable = true;
+    vim.enable = true;
   };
 
   services = {
-
     openssh.enable = true;
-
-    timesyncd.enable = lib.mkDefault true;
-
+    timesyncd.enable = true;
   };
 
   security = {
-
     polkit.enable = true;
-
     sudo.enable = true;
-
   };
 }
