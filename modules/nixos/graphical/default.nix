@@ -51,8 +51,11 @@ in
 
     services = {
       printing.enable = true;
-      avahi.enable = true;
-      saned.enable = true;
+
+      avahi = {
+        enable = true;
+        nssmdns4 = true;
+      };
 
       pipewire = {
         enable = true;
