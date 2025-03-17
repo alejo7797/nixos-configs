@@ -1,18 +1,14 @@
 " My default vimrc file.
 
-" Enable filetype plugin.
 filetype plugin indent on
-
-" Do not create .viminfo file in users' $HOME.
-set viminfofile=$HOME/.local/state/vim/viminfo
-
-set incsearch
-set ignorecase
-set smartcase
 
 set hidden
 set autochdir
 set showcmd
+
+set incsearch
+set ignorecase
+set smartcase
 
 syntax on
 set mouse=nvi
@@ -25,6 +21,9 @@ set expandtab
 " Look and feel.
 set background=dark
 set termguicolors
+
+" Do not create .viminfo file in users' $HOME.
+set viminfofile=$HOME/.local/state/vim/viminfo
 
 " A pleasant default colorscheme.
 colorscheme base16-tomorrow-night
