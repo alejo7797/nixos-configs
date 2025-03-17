@@ -52,8 +52,10 @@ in
         expandtab = true;
         foldlevelstart = 99;
         hlsearch = false;
+        ignorecase = true;
         shiftwidth = 4;
         signcolumn = "yes";
+        smartcase = true;
         title = true;
         undofile = true;
         updatetime = 100;
