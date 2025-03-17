@@ -69,6 +69,8 @@ in
 
       NPM_CONFIG_CACHE = "${config.xdg.cacheHome}/npm";
 
+      PYTHON_HISTORY = "${config.xdg.stateHome}/python/history";
+
       RENPY_PATH_TO_SAVES = "${config.xdg.dataHome}/renpy";
 
       WINEPREFIX = "${config.xdg.dataHome}/wine";

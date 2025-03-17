@@ -12,7 +12,8 @@
       # The Nix User Repository.
       inputs.nur.overlays.default
 
-      (final: _:
+      # Backports.
+      (final: prev:
 
         let
           # Build a Nixpkgs instance based off of the `nixos-unstable` branch upstream.
@@ -31,6 +32,11 @@
 
           # Enable Wayland IME; build against the correct mesa version.
           spotify = unstable.spotify.override { libgbm = final.mesa; };
+
+          vimPlugins = prev.vimPlugins.extend (
+            # Replace legacy maxlinenr symbol U+2630 with U+2261.
+            _: _: { inherit (unstable.vimPlugins) vim-airline; }
+          );
         }
 
       )

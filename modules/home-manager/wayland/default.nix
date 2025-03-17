@@ -44,7 +44,7 @@ in
             grace = 5; hide_cursor = true;
           };
           background = {
-            path = "${config.xdg.stateHome}/wall.png";
+            path = "${config.xdg.stateHome}/wall.jpg";
             blur_passes = 2; brightness = 0.5;
           };
           input-field = {
