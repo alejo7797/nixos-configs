@@ -43,9 +43,10 @@ in
         # See github.com/lsd-rs/lsd.
         ls = "lsd \${=lsd_params}";
 
-        # Quite standard ls aliases.
-        l = "ls -l"; lt = "ls --tree";
-        la = "ls -a"; lla = "ls -la";
+        # Standard ls aliases.
+        l = "ls -lah";
+        lt = "ls --tree";
+        la = "ls -a";
 
         # Handy aliases for building NixOS configurations from my flake.
         nixos-switch = "sudo nixos-rebuild switch --flake ~/Git/nixos-configs";
@@ -76,9 +77,12 @@ in
         # Accept suggestion with Shift+Tab.
         bindkey '^[[Z' autosuggest-accept
 
+        # Show directories first in list.
+        lsd_params="--group-dirs first"
+
         if (( terminfo[colors] == 8 )); then
           # Don't show icons in TTY.
-          lsd_params="--icon never"
+          lsd_params="$lsd_params --icon never"
         fi
 
         # See OhMyZsh.
@@ -149,10 +153,5 @@ in
     };
 
     home.file.".zshenv".enable = false;
-
-    xdg.configFile = {
-      # Configure lsd, for a happier ls experience.
-      "lsd/config.yaml".source = ./lsd-config.yaml;
-    };
   };
 }

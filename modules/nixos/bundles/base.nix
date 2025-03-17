@@ -11,11 +11,8 @@
       wget
 
       file
-      findutils
 
-      # these should go to
-      # desktop.nix & patchouli
-      # and that's it, no?
+      findutils
 
       htop
       lsof
@@ -24,8 +21,6 @@
       psmisc
 
       jq
-      lsd
-      sops
       unar
 
       neofetch
