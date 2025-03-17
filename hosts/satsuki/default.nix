@@ -66,6 +66,7 @@
   };
 
   my = {
+    laptop.enable = true;
     yubikey._2fa = true;
   };
 

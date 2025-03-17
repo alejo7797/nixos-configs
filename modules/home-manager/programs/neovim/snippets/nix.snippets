@@ -1,19 +1,20 @@
-# Nix snippets
+#
+# My personal Nix snippets.
+#
 
 snippet module Simple NixOS / Home Manager module
-        {
-          lib,
-          config,
-          pkgs,
-          ...
-        }:
+        { config, lib, pkgs, ... }:
 
         let
-          cfg = config.${1:myNixOS}.${2:name};
+          cfg = config.my.${1:name};
         in
 
         {
-          options.${1}.${2}.enable = lib.mkEnableOption "${3:fullName}";
+          options = {
+
+            my.${1}.enable = lib.mkEnableOption "${2:fullName}";
+
+          };
 
           config = lib.mkIf cfg.enable {
 
