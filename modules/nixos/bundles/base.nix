@@ -1,39 +1,39 @@
 { pkgs, ... }: {
 
-  environment.systemPackages = with pkgs; [
+  environment = {
 
-    curl
-    dig
-    nmap
-    rsync
-    wget
+    systemPackages = with pkgs; [
 
-    file
-    findutils
+      curl
+      dig
+      nmap
+      rsync
+      wget
 
-    # these should go to
-    # desktop.nix & patchouli
-    # and that's it, no?
-    ffmpeg
-    imagemagick
-    yt-dlp
+      file
+      findutils
 
-    htop
-    lsof
-    ncdu
-    procps
-    psmisc
+      # these should go to
+      # desktop.nix & patchouli
+      # and that's it, no?
 
-    jq
-    lsd
-    sops
-    unar
+      htop
+      lsof
+      ncdu
+      procps
+      psmisc
 
-    neofetch
+      jq
+      lsd
+      sops
+      unar
 
-    usbutils
+      neofetch
 
-  ];
+      usbutils
+
+    ];
+  };
 
   programs = {
     git.enable = true;

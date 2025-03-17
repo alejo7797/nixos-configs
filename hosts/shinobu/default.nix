@@ -56,6 +56,7 @@
   };
 
   my = {
+    desktop.enable = true;
     nvidia.enable = true;
     yubikey.sudo = true;
   };

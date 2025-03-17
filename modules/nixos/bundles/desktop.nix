@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   cfg = config.my.desktop;
@@ -13,7 +13,13 @@ in
 
   config = lib.mkIf cfg.enable {
 
+    environment.systemPackages = with pkgs; [
 
+      ffmpeg
+      imagemagick
+      yt-dlp
+
+    ];
 
   };
 }
