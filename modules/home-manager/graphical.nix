@@ -31,6 +31,7 @@ in
     my = {
       fcitx5.enable = true;
       style.enable = true;
+      variety.enable = true;
     };
 
     myHome = {
@@ -42,7 +43,6 @@ in
       mimeApps.enable = true;
       mpv.enable = true;
       ssh.enable = true;
-      variety.enable = true;
       zathura.enable = true;
     };
 

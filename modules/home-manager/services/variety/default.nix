@@ -1,18 +1,15 @@
-{
-  lib,
-  config,
-  pkgs,
-  ...
-}:
+{ config, lib, pkgs, ... }:
 
 let
-  cfg = config.myHome.variety;
+  cfg = config.my.variety;
 in
 
 {
-  options.myHome.variety.enable = lib.mkEnableOption "Variety";
+  options.my.variety.enable = lib.mkEnableOption "Variety";
 
   config = lib.mkIf cfg.enable {
+
+    # TODO: manage variety.conf, with scripts as derivations
 
     home.packages = [ pkgs.variety ];
 
