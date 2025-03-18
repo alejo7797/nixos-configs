@@ -1,9 +1,6 @@
 { inputs, pkgs, ... }:
 
 {
-  # Did you read the comment?
-  system.stateVersion = "24.11";
-
   imports = [
     inputs.lanzaboote.nixosModules.lanzaboote
     ./filesystems.nix ./hardware.nix

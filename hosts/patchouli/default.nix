@@ -5,9 +5,6 @@ let
 in
 
 {
-  # Did you read the comment?
-  system.stateVersion = "24.11";
-
   imports = [ ./filesystems.nix ./hardware.nix ../../users/ewan ];
 
   swapDevices = [ { device = "/var/swapfile"; size = 4096; } ];
