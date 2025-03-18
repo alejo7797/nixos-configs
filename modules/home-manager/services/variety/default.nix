@@ -33,7 +33,6 @@ in
             };
             sources = lib.mkOption {
               description = "Wallpaper sources.";
-              default = { };
               type = attrsOf (submodule {
                 options = {
                   type = lib.mkOption {
@@ -59,7 +58,14 @@ in
 
     my.swww.enable = config.my.wayland.enable;
 
-    home.packages = [ cfg.package ];
+    my.variety.settings = {
+      sources.favorites = {
+        type = "favorites";
+        uri = "The Favorites folder";
+      };
+    };
+
+    home.packages = [ cfg.package pkgs.feh ];
 
     systemd.user.services.variety = {
       Unit = {
