@@ -33,6 +33,7 @@ in
             };
             sources = lib.mkOption {
               description = "Wallpaper sources.";
+              default = { };
               type = attrsOf (submodule {
                 options = {
                   type = lib.mkOption {
@@ -58,48 +59,7 @@ in
 
     my.swww.enable = config.my.wayland.enable;
 
-    # TODO: move somewhere
-    my.variety.settings = {
-      changeInterval = 28800;
-      sources = {
-        favorites = {
-          type = "favorites";
-          uri = "The Favorites folder";
-        };
-
-        local = {
-          type = "folder";
-          uri = "${config.home.homeDirectory}/Pictures/Wallpapers";
-        };
-
-        touhou1 = {
-          type = "wallhaven";
-          uri = "https://wallhaven.cc/search?q=id%3A136&sorting=random";
-        };
-
-        touhou2 = {
-          type = "wallhaven";
-          uri = "https://wallhaven.cc/search?q=%23Touhou&sorting=random";
-        };
-
-        landscapes = {
-          type = "wallhaven";
-          uri = "https://wallhaven.cc/search?q=id%3A711&categories=010&sorting=random";
-        };
-
-        zelda = {
-          type = "wallhaven";
-          uri = "https://wallhaven.cc/search?q=id%3A1777&categories=010&sorting=random";
-        };
-
-        pokemon = {
-          type = "wallhaven";
-          uri = "https://wallhaven.cc/search?q=id%3A4641&categories=010&sorting=random";
-        };
-      };
-    };
-
-    home.packages = [ cfg.package pkgs.feh ];
+    home.packages = [ cfg.package ];
 
     systemd.user.services.variety = {
       Unit = {
