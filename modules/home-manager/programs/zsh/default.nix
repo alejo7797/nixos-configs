@@ -101,9 +101,9 @@ in
 
           zbell_ignore=(
             bash dmesg nix-shell
-            git htop less man
-            sc-status scu-status
-            ssh vim
+            git htop journalctl
+            less man sc-status
+            scu-status ssh vim
           )
         '';
       };
