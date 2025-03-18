@@ -14,8 +14,9 @@ in
 
   config = lib.mkIf cfg.enable {
 
+    my.wayland.enable = true;
+
     myHome = {
-      wayland.enable = true;
       wlogout.enable = true;
     };
 

@@ -1,9 +1,4 @@
-{
-  lib,
-  config,
-  pkgs,
-  ...
-}:
+{ config, lib, pkgs, ... }:
 
 let
   cfg = config.myHome.zsh;
@@ -105,9 +100,10 @@ in
           zstyle ':omz:plugins:alias-finder' cheaper yes
 
           zbell_ignore=(
-            dotfiles nix-shell git
-            htop less man powertop
-            ssh su vim vimdiff
+            bash dmesg nix-shell
+            git htop less man
+            sc-status scu-status
+            ssh vim
           )
         '';
       };
@@ -152,6 +148,12 @@ in
 
     };
 
-    home.file.".zshenv".enable = false;
+    home = {
+
+      packages = with pkgs; [ lsd ];
+
+      file.".zshenv".enable = false;
+
+    };
   };
 }

@@ -30,7 +30,7 @@
     # Install some Wayland-specific packages.
     environment.systemPackages = with pkgs; [
 
-      bemenu grimblast swww
+      bemenu grimblast
       wf-recorder wl-clipboard
       libsForQt5.qt5.qtwayland
       kdePackages.qtwayland

@@ -6,11 +6,11 @@
 }:
 
 let
-  cfg = config.myHome.wayland;
+  cfg = config.my.wayland;
 in
 
 {
-  options.myHome.wayland.enable = lib.mkEnableOption "Wayland";
+  options.my.wayland.enable = lib.mkEnableOption "Wayland";
 
   config = lib.mkIf cfg.enable {
 

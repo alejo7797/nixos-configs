@@ -5,18 +5,38 @@ let
 in
 
 {
-  options.my.variety.enable = lib.mkEnableOption "Variety";
+  options = {
+
+    my.variety = {
+
+      enable = lib.mkEnableOption "Variety";
+      package = lib.mkPackageOption pkgs "variety" { nullable = true; };
+
+    };
+
+  };
 
   config = lib.mkIf cfg.enable {
 
-    home.packages = [ pkgs.variety ];
+    my.swww.enable = config.my.wayland.enable;
 
-    systemd.user.services.variety = config.myHome.lib.mkGraphicalService {
-      Unit.Description = "Variety wallpaper changer";
-      Service.ExecStart = "${pkgs.variety}/bin/variety";
+    home.packages = [ cfg.package ];
+
+    systemd.user.services.variety = {
+      Unit = {
+        Description = "Variety wallpaper changer";
+        PartOf = [ "graphical-session.target" ];
+        After = [ "graphical-session.target" "swww.service" ];
+        X-Restart-Triggers = [ config.xdg.configFile."variety/variety.conf".source ];
+      };
+      Service = {
+        ExecStart = lib.getExe pkgs.variety;
+        Restart = "on-failure";
+      };
+      Install.WantedBy = [ "graphical-session.target" ];
     };
 
-    programs.zsh.shellAliases = {
+    home.shellAliases = {
       bgnext = "variety --next";
       bgprev = "variety --previous";
       bgtrash = "variety --trash";
