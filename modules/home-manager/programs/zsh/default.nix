@@ -8,13 +8,6 @@
 
     history.path = "${config.xdg.stateHome}/zsh/history";
 
-    sessionVariables = {
-      # OhMyZsh configuration.
-      DISABLE_AUTO_TITLE = "true";
-      ENABLE_CORRECTION = "true";
-      HIST_STAMPS = "yyyy-mm-dd";
-    };
-
     initExtraFirst =
 
       lib.optionalString config.programs.direnv.enable ''
@@ -31,7 +24,7 @@
       # Accept suggestion with Shift+Tab.
       bindkey '^[[Z' autosuggest-accept
 
-      # See OhMyZsh.
+      # OhMyZsh...
       unalias gap
     '';
 
@@ -46,6 +39,9 @@
       ];
 
       extraConfig = ''
+        ENABLE_CORRECTION="true"
+        HIST_STAMPS="yyyy-mm-dd"
+
         zstyle ':omz:plugins:alias-finder' autoload yes
         zstyle ':omz:plugins:alias-finder' exact yes
         zstyle ':omz:plugins:alias-finder' cheaper yes
