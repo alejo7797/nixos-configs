@@ -14,9 +14,6 @@ in
 
       # Improved implementation.
       nix-direnv.enable = true;
-
-      # We need to do this manually!
-      enableZshIntegration = false;
     };
 
     programs.zsh = {
@@ -58,16 +55,6 @@ in
         dmesg = "sudo dmesg -H -e --color=always | less";
       };
 
-      initExtraFirst = ''
-        emulate zsh -c "$(direnv export zsh)"
-
-        if [[ -r "$XDG_CACHE_HOME/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
-          source "$XDG_CACHE_HOME/p10k-instant-prompt-''${(%):-%n}.zsh"
-        fi
-
-        emulate zsh -c "$(direnv hook zsh)"
-      '';
-
       initExtra = ''
         # Accept suggestion with Shift+Tab.
         bindkey '^[[Z' autosuggest-accept
@@ -108,43 +95,12 @@ in
         '';
       };
 
-      plugins =
-
-        let
-          p10k-config = patch: pkgs.stdenv.mkDerivation {
-            name = "p10k.zsh";
-            src = pkgs.zsh-powerlevel10k;
-            patches = [ patch ];
-            dontBuild = true;
-
-            installPhase = ''
-              install -Dm644 share/zsh-powerlevel10k/config/p10k-lean-8colors.zsh $out/p10k.zsh
-            '';
-          };
-        in
-
-        [
-          {
-            name = "nix-shell"; # Use Zsh under nix-shell.
-            src = "${pkgs.zsh-nix-shell}/share/zsh-nix-shell";
-          }
-          {
-            name = "powerlevel10k"; src = "${pkgs.zsh-powerlevel10k}";
-            file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-          }
-          {
-            name = "powerlevel10k-config";
-            # Default configuration for our Zsh theme.
-            src = p10k-config ./powerlevel10k/p10k.patch;
-            file = "p10k.zsh";
-          }
-          {
-            name = "powerlevel10k-config-tty";
-            # TTY-friendly configuration for our Zsh theme.
-            src = p10k-config ./powerlevel10k/p10k-tty.patch;
-            file = "p10k.zsh";
-          }
-        ];
+      plugins = [
+        {
+          name = "nix-shell"; # Use Zsh under nix-shell.
+          src = "${pkgs.zsh-nix-shell}/share/zsh-nix-shell";
+        }
+      ];
 
     };
 

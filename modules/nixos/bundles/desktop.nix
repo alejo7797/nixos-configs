@@ -21,5 +21,11 @@ in
 
     ];
 
+    home-manager.sharedModules = [{
+
+      my.desktop.enable = true;
+
+    }];
+
   };
 }
