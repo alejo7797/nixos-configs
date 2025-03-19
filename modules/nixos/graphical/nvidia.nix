@@ -23,7 +23,10 @@ in
 
     hardware.graphics = {
       # Additional driver packages.
-      extraPackages = with pkgs; [ nvidia-vaapi-driver libvdpau-va-gl ];
+      extraPackages = with pkgs; [
+        nvidia-vaapi-driver # included by default in 25.05
+        libvdpau-va-gl
+      ];
       extraPackages32 = with pkgs.driversi686Linux; [ libvdpau-va-gl ];
     };
 
