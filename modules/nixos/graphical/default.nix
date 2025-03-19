@@ -36,16 +36,6 @@ in
       nm-applet.enable = true;
     };
 
-    hardware = {
-      graphics = {
-        enable = true;
-        enable32Bit = true;
-      };
-
-      gpgSmartcards.enable = true;
-      sane.enable = true;
-    };
-
     security.rtkit.enable = true;
 
     services = {

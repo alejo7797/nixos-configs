@@ -21,6 +21,11 @@ in
 
     ];
 
+    hardware = {
+      gpgSmartcards.enable = true;
+      sane.enable = true;
+    };
+
     services = {
       dbus.packages = [ pkgs.gcr ];
     };
