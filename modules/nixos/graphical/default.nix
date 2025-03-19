@@ -33,7 +33,6 @@ in
       };
 
       kdeconnect.enable = true;
-      gnupg.agent.enable = true;
       nm-applet.enable = true;
     };
 

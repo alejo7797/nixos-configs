@@ -21,6 +21,10 @@ in
 
     ];
 
+    services = {
+      dbus.packages = [ pkgs.gcr ];
+    };
+
     home-manager.sharedModules = [{
 
       my.desktop.enable = true;

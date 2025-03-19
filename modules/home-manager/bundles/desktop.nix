@@ -15,12 +15,14 @@ in
 
     programs = {
       direnv.enable = true;
+      gpg.enable = true;
       lsd.enable = true;
       nixvim.enable = true;
     };
 
     services = {
       my.variety.enable = true;
+      gpg-agent.enable = true;
     };
 
     home.packages = with pkgs; [

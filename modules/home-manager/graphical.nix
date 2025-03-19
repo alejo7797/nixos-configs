@@ -38,7 +38,6 @@ in
       keepassxc.enable = true;
       kitty.enable = true;
       konsole.enable = true;
-      gpg.enable = true;
       mimeApps.enable = true;
       mpv.enable = true;
       ssh.enable = true;
