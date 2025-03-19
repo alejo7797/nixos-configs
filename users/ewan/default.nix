@@ -25,7 +25,7 @@ in
       # Admin group.
       [ wheel.name ]
 
-      # Give access to the NetworkManager daemon, configure and add new networks.
+      # Give access to the NetworkManager daemon: configure and add new networks.
       ++ lib.optional config.networking.networkmanager.enable networkmanager.name
 
       # Give access to local - and remote - scanners using the SANE library.
