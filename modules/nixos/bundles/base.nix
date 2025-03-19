@@ -1,34 +1,23 @@
 { pkgs, ... }: {
 
-  environment = {
+  # Essential packages to install globally.
+  environment.systemPackages = with pkgs; [
 
-    systemPackages = with pkgs; [
+    # See the following for packages that get included:
+    # ${modulesPath}/tasks/network-interfaces.nix
+    # ${modulesPath}/config/system-path.nix
 
-      curl
-      dig
-      nmap
-      rsync
-      wget
+    file
+    htop
+    jq
+    lsof
+    ncdu
+    neofetch
+    nmap
+    unar
+    usbutils
 
-      file
-
-      findutils
-
-      htop
-      lsof
-      ncdu
-      procps
-      psmisc
-
-      jq
-      unar
-
-      neofetch
-
-      usbutils
-
-    ];
-  };
+  ];
 
   programs = {
     git.enable = true;
