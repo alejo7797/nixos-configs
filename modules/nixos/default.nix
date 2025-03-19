@@ -5,6 +5,7 @@
     [
       # Import essential external modules.
       inputs.home-manager.nixosModules.default
+      inputs.nix-index-database.nixosModules.nix-index
       inputs.sops-nix.nixosModules.default
     ]
 
