@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   cfg = config.my.desktop;
@@ -14,8 +14,15 @@ in
   config = lib.mkIf cfg.enable {
 
     programs = {
-      starship.enable = true;
+      direnv.enable = true;
+      lsd.enable = true;
     };
+
+    home.packages = with pkgs; [
+      favicon-generator
+      round-corners
+      sleep-deprived
+    ];
 
   };
 }

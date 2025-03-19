@@ -1,12 +1,5 @@
-{
-  lib,
-  inputs,
-  config,
-  pkgs,
-  ...
-}:
+{ config, inputs, lib, ... }: {
 
-{
   imports = with lib.fileset;
 
     [
@@ -45,7 +38,6 @@
     myHome = {
       git.enable = true;
       neovim.enable = true;
-      zsh.enable = true;
     };
 
     programs = {
@@ -58,11 +50,6 @@
       configFile."nix/nix.conf".enable = false;
     };
 
-    # My personal shell scripts.
-    home.packages = with pkgs; [
-      favicon-generator
-      round-corners
-      sleep-deprived
-    ];
+    home.stateVersion = "24.11";
   };
 }

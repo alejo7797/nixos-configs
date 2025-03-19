@@ -2,8 +2,16 @@
 
   home = {
     username = "ewan";
-    homeDirectory = "/home/ewan";
-    stateVersion = "24.11";
+
+    shellAliases =
+      let
+        what-is-my-ip = "dig +short myip.opendns.com";
+      in
+      {
+        # These rely on a custom firewall rule.
+        pubip = "${what-is-my-ip} @resolver1.opendns.com";
+        vpnip = "${what-is-my-ip} @resolver2.opendns.com";
+      };
   };
 
   sops.secrets = {
@@ -141,16 +149,6 @@
         };
       };
     };
-
-    zsh.shellAliases =
-      let
-        what-is-my-ip = "dig +short myip.opendns.com";
-      in
-      {
-        # These rely on a custom firewall rule.
-        pubip = "${what-is-my-ip} @resolver1.opendns.com";
-        vpnip = "${what-is-my-ip} @resolver2.opendns.com";
-      };
 
   };
 }
