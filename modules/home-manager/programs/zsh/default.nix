@@ -92,16 +92,8 @@
           file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
         }
         {
-          name = "powerlevel10k-config";
-          # Default configuration for our Zsh theme.
-          src = p10k-config ./powerlevel10k/p10k.patch;
-          file = "p10k.zsh";
-        }
-        {
-          name = "powerlevel10k-config-tty";
-          # TTY-friendly configuration for our Zsh theme.
-          src = p10k-config ./powerlevel10k/p10k-tty.patch;
-          file = "p10k.zsh";
+          name = "p10k-config"; # Zsh theme configuration.
+          src = p10k-config ./p10k.patch; file = "p10k.zsh";
         }
       ];
 

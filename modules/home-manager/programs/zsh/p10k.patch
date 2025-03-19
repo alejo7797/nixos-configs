@@ -1,14 +1,7 @@
-diff -rua orig/share/zsh-powerlevel10k/config/p10k-lean-8colors.zsh new/share/zsh-powerlevel10k/config/p10k-lean-8colors.zsh
+diff -rua p10k-orig/share/zsh-powerlevel10k/config/p10k-lean-8colors.zsh p10k-new/share/zsh-powerlevel10k/config/p10k-lean-8colors.zsh
 --- p10k-orig/share/zsh-powerlevel10k/config/p10k-lean-8colors.zsh
 +++ p10k-new/share/zsh-powerlevel10k/config/p10k-lean-8colors.zsh
-@@ -1,3 +1,6 @@
-+# Standard Powerlevel10k configuration.
-+if zmodload zsh/terminfo && (( terminfo[colors] >= 256 )); then
-+
- # Config for Powerlevel10k with 8-color lean prompt style. Type `p10k configure` to generate
- # your own config based on it.
- #
-@@ -25,6 +28,7 @@
+@@ -25,6 +25,7 @@
    # The list of segments shown on the left. Fill it with the most important segments.
    typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
      # =========================[ Line #1 ]=========================
@@ -16,7 +9,7 @@ diff -rua orig/share/zsh-powerlevel10k/config/p10k-lean-8colors.zsh new/share/zs
      # os_icon               # os identifier
      dir                     # current directory
      vcs                     # git status
-@@ -78,7 +82,6 @@
+@@ -78,7 +79,6 @@
      gcloud                  # google cloud cli account and project (https://cloud.google.com/)
      google_app_cred         # google application credentials (https://cloud.google.com/docs/authentication/production)
      toolbox                 # toolbox name (https://github.com/containers/toolbox)
@@ -24,7 +17,7 @@ diff -rua orig/share/zsh-powerlevel10k/config/p10k-lean-8colors.zsh new/share/zs
      nordvpn                 # nordvpn connection status, linux only (https://nordvpn.com/)
      ranger                  # ranger shell (https://github.com/ranger/ranger)
      nnn                     # nnn shell (https://github.com/jarun/nnn)
-@@ -110,7 +113,7 @@
+@@ -110,7 +110,7 @@
    )
 
    # Defines character set used by powerlevel10k. It's best to let `p10k configure` set it for you.
@@ -33,7 +26,7 @@ diff -rua orig/share/zsh-powerlevel10k/config/p10k-lean-8colors.zsh new/share/zs
    # When set to `moderate`, some icons will have an extra space after them. This is meant to avoid
    # icon overlap when using non-monospace fonts. When set to `none`, spaces are not added.
    typeset -g POWERLEVEL9K_ICON_PADDING=none
-@@ -139,16 +142,16 @@
+@@ -139,16 +139,16 @@
    typeset -g POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 
    # Connect left prompt lines with these symbols.
@@ -54,7 +47,7 @@ diff -rua orig/share/zsh-powerlevel10k/config/p10k-lean-8colors.zsh new/share/zs
    # The right end of right prompt.
    typeset -g POWERLEVEL9K_RIGHT_PROMPT_LAST_SEGMENT_END_SYMBOL=
 
-@@ -206,19 +209,19 @@
+@@ -206,19 +206,19 @@
 
    ##################################[ dir: current directory ]##################################
    # Default current directory color.
@@ -78,7 +71,7 @@ diff -rua orig/share/zsh-powerlevel10k/config/p10k-lean-8colors.zsh new/share/zs
    # Don't shorten directories that contain any of these files. They are anchors.
    local anchor_files=(
      .bzr
-@@ -344,7 +347,7 @@
+@@ -344,7 +344,7 @@
 
    #####################################[ vcs: git status ]######################################
    # Branch icon. Set this parameter to '\UE0A0 ' for the popular Powerline branch icon.
@@ -87,7 +80,7 @@ diff -rua orig/share/zsh-powerlevel10k/config/p10k-lean-8colors.zsh new/share/zs
 
    # Untracked files icon. It's really a question mark, your font isn't broken.
    # Change the value of this parameter to show a different icon.
-@@ -894,9 +897,9 @@
+@@ -894,9 +894,9 @@
    # Context color when running with privileges.
    typeset -g POWERLEVEL9K_CONTEXT_ROOT_FOREGROUND=1
    # Context color in SSH without privileges.
@@ -99,7 +92,7 @@ diff -rua orig/share/zsh-powerlevel10k/config/p10k-lean-8colors.zsh new/share/zs
 
    # Context format when running with privileges: bold user@hostname.
    typeset -g POWERLEVEL9K_CONTEXT_ROOT_TEMPLATE='%B%n@%m'
-@@ -907,7 +910,7 @@
+@@ -907,7 +907,7 @@
 
    # Don't show context unless running with privileges or in SSH.
    # Tip: Remove the next line to always show context.
@@ -108,16 +101,7 @@ diff -rua orig/share/zsh-powerlevel10k/config/p10k-lean-8colors.zsh new/share/zs
 
    # Custom icon.
    # typeset -g POWERLEVEL9K_CONTEXT_VISUAL_IDENTIFIER_EXPANSION='⭐'
-@@ -918,7 +921,7 @@
-   # Python virtual environment color.
-   typeset -g POWERLEVEL9K_VIRTUALENV_FOREGROUND=6
-   # Don't show Python version next to the virtual environment name.
--  typeset -g POWERLEVEL9K_VIRTUALENV_SHOW_PYTHON_VERSION=false
-+  typeset -g POWERLEVEL9K_VIRTUALENV_SHOW_PYTHON_VERSION=true
-   # If set to "false", won't show virtualenv if pyenv is already shown.
-   # If set to "if-different", won't show virtualenv if it's the same as pyenv.
-   typeset -g POWERLEVEL9K_VIRTUALENV_SHOW_WITH_PYENV=false
-@@ -1677,7 +1680,7 @@
+@@ -1677,7 +1677,7 @@
    #   - always:   Trim down prompt when accepting a command line.
    #   - same-dir: Trim down prompt when accepting a command line unless this is the first command
    #               typed after changing current working directory.
@@ -126,9 +110,3 @@ diff -rua orig/share/zsh-powerlevel10k/config/p10k-lean-8colors.zsh new/share/zs
 
    # Instant prompt mode.
    #
-@@ -1707,3 +1710,5 @@
-
- (( ${#p10k_config_opts} )) && setopt ${p10k_config_opts[@]}
- 'builtin' 'unset' 'p10k_config_opts'
-+
-+fi
