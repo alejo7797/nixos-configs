@@ -1,6 +1,9 @@
 { inputs, pkgs, ... }:
 
 {
+  # Did you read the comment?
+  system.stateVersion = "24.11";
+
   imports = [
     inputs.lanzaboote.nixosModules.lanzaboote
     ./filesystems.nix ./hardware.nix
@@ -52,6 +55,8 @@
 
   home-manager = {
     # TODO: refactor
+    # split into *@satsuki stuff
+    # and ewan@satsuki stuff
     sharedModules = [ ./home.nix ];
   };
 

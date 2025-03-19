@@ -49,7 +49,5 @@
 
       configFile."nix/nix.conf".enable = false;
     };
-
-    home.stateVersion = "24.11";
   };
 }

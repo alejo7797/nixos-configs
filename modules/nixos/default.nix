@@ -73,6 +73,4 @@
     gnupg.sshKeyPaths = lib.mkDefault [ ];
 
   };
-
-  system.stateVersion = "24.11";
 }

@@ -5,7 +5,7 @@
 
 {
   home = {
-    username = "ewan";
+    stateVersion = "24.11";
   };
 
   my = {
