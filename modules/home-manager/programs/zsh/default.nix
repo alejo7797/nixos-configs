@@ -1,11 +1,7 @@
 { config, lib, pkgs, ... }: {
 
-  programs.direnv = {
-    # We need to do this manually!
-    enableZshIntegration = false;
-  };
-
   programs.zsh = {
+
     autocd = true;
 
     dotDir = ".config/zsh";
@@ -26,14 +22,10 @@
       ''
       +
       ''
-      if [[ -r "$XDG_CACHE_HOME/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
-        source "$XDG_CACHE_HOME/p10k-instant-prompt-''${(%):-%n}.zsh"
-      fi
-      ''
-      +
-      lib.optionalString config.programs.direnv.enable ''
-      emulate zsh -c "$(direnv hook zsh)"
-    '';
+        if [[ -r "$XDG_CACHE_HOME/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
+          source "$XDG_CACHE_HOME/p10k-instant-prompt-''${(%):-%n}.zsh"
+        fi
+      '';
 
     initExtra = ''
       # Accept suggestion with Shift+Tab.
@@ -88,8 +80,8 @@
           src = "${pkgs.zsh-nix-shell}/share/zsh-nix-shell";
         }
         {
-          name = "powerlevel10k"; src = "${pkgs.zsh-powerlevel10k}";
-          file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+          name = "powerlevel10k"; file = "powerlevel10k.zsh-theme";
+          src = "${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k";
         }
         {
           name = "p10k-config"; # Zsh theme configuration.
@@ -99,5 +91,6 @@
 
   };
 
+  # Need /etc/zshenv to set ZDOTDIR.
   home.file.".zshenv".enable = false;
 }
