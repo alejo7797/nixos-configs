@@ -60,7 +60,7 @@
 
         zbell_ignore=(
           bash dmesg nix-shell
-          git htop journalctl
+          git glola htop journalctl
           less man sc-status
           scu-status ssh vim
         )
