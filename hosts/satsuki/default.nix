@@ -54,10 +54,7 @@
   };
 
   home-manager = {
-    # TODO: refactor
-    # split into *@satsuki stuff
-    # and ewan@satsuki stuff
-    sharedModules = [ ./home.nix ];
+    users.ewan = import ./home.nix;
   };
 
   sops.secrets = {

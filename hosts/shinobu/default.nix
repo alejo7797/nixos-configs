@@ -44,8 +44,9 @@
 
   time.timeZone = "Europe/Madrid";
 
-  # TODO: refactor
-  home-manager.sharedModules = [ ./home.nix ];
+  home-manager = {
+    users.ewan = import ./home.nix;
+  };
 
   sops.secrets = {
     "syncthing/cert.pem" = { owner = "ewan"; };
