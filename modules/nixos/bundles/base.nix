@@ -3,16 +3,11 @@
   # Essential packages to install globally.
   environment.systemPackages = with pkgs; [
 
-    # See the following for packages that get included:
-    # ${modulesPath}/tasks/network-interfaces.nix
-    # ${modulesPath}/config/system-path.nix
-
+    dua
+    fastfetch
     file
-    htop
     jq
     lsof
-    ncdu
-    neofetch
     nmap
     unar
     usbutils

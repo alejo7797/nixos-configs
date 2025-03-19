@@ -15,6 +15,8 @@ in
 
     environment.systemPackages = with pkgs; [
 
+      btop
+
       ffmpeg
       imagemagick
       yt-dlp
