@@ -31,7 +31,6 @@ in
     my = {
       fcitx5.enable = true;
       style.enable = true;
-      variety.enable = true;
     };
 
     myHome = {

@@ -1,13 +1,13 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.my.variety;
+  cfg = config.services.my.variety;
 in
 
 {
   options = {
 
-    my.variety = {
+    services.my.variety = {
 
       enable = lib.mkEnableOption "Variety";
       package = lib.mkPackageOption pkgs "variety" { nullable = true; };
@@ -39,8 +39,8 @@ in
                     description = "Source type.";
                     type = enum [ "image" "favorites" "folder" "wallhaven" ];
                   };
-                  uri = lib.mkOption {
-                    description = "Source URI";
+                  url = lib.mkOption {
+                    description = "Source URL";
                     type = str;
                   };
                 };
@@ -58,10 +58,10 @@ in
 
     my.swww.enable = config.my.wayland.enable;
 
-    my.variety.settings = {
+    services.my.variety.settings = {
       sources.favorites = {
         type = "favorites";
-        uri = "The Favorites folder";
+        url = "The Favorites folder";
       };
     };
 
@@ -106,7 +106,7 @@ in
       };
 
       sections.sources = builtins.mapAttrs (
-        _: value: "True|${value.type}|${value.uri}"
+        _: value: "True|${value.type}|${value.url}"
       ) cfg.settings.sources;
     };
   };

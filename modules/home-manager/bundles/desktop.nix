@@ -16,6 +16,11 @@ in
     programs = {
       direnv.enable = true;
       lsd.enable = true;
+      nixvim.enable = true;
+    };
+
+    services = {
+      my.variety.enable = true;
     };
 
     home.packages = with pkgs; [

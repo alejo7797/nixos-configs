@@ -3,7 +3,6 @@
   imports = with lib.fileset;
 
     [
-      inputs.nixvim.homeManagerModules.nixvim
       inputs.sops-nix.homeManagerModules.sops
     ]
 
@@ -35,14 +34,8 @@
       age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
     };
 
-    myHome = {
-      git.enable = true;
-      neovim.enable = true;
-    };
-
-    programs = {
-      home-manager.enable = true;
-    };
+    # Default starting from 25.05.
+    systemd.user.startServices = true;
 
     xdg = {
       enable = true;
