@@ -7,6 +7,8 @@
       userEmail = "alex@epelde.net";
     };
 
+    zsh.enable = true;
+
   };
 
   services = {
@@ -53,8 +55,5 @@
     };
 
   };
-
-  # Set up my shell config.
-  programs.zsh.enable = true;
 
 }
