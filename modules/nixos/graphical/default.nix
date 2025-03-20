@@ -52,9 +52,6 @@ in
         geoProviderUrl = "https://api.beacondb.net/v1/geolocate";
       };
 
-      # Useful to keep Git credentials.
-      gnome.gnome-keyring.enable = true;
-
       blueman.enable = true;
       libinput.enable = true;
       pcscd.enable = true;
@@ -62,10 +59,9 @@ in
       udisks2.enable = true;
     };
 
-    xdg.portal = {
-      enable = true;
-      xdgOpenUsePortal = true;
-    };
+    security.pam.services.login.enableGnomeKeyring = true;
+
+    xdg.portal.xdgOpenUsePortal = true;
 
     environment.sessionVariables = {
       # Try to improve Java applications' font rendering.

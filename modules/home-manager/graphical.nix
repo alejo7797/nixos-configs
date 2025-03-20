@@ -45,14 +45,10 @@ in
     };
 
     services = {
-      mpris-proxy.enable = true;
       gnome-keyring.enable = true;
+      kdeconnect.indicator = true;
+      mpris-proxy.enable = true;
       playerctld.enable = true;
-
-      kdeconnect = {
-        enable = true;
-        indicator = true;
-      };
     };
 
     gtk.gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
