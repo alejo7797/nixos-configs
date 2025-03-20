@@ -171,8 +171,8 @@ in
               "s, togglespecialworkspace, magic"
 
               # Scroll between workspaces.
-              "mouse_down, workspace, e+1"
-              "mouse_up, workspace, e-1"
+              "mouse_down, workspace, m-1"
+              "mouse_up, workspace, m+1"
             ]
 
             ++ map (x: "$mainMod SHIFT, ${x}") [
