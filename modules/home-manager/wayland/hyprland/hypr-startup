@@ -28,4 +28,5 @@ hyprctl dispatch hy3:makegroup tab
 hyprctl dispatch movefocus l
 hyprctl dispatch movefocus r
 
+hyprctl dispatch workspace name:extra
 hyprctl dispatch workspace 1
