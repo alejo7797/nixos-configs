@@ -15,16 +15,18 @@ in
       format = "{icon}";
       format-icons = {
         "1" = ""; # firefox
-        "2" = ""; # latex
-        "3" = ""; # games
+        "2" = ""; # emails
+        "3" = ""; # latex
         "4" = ""; # terminal
+        "5" = ""; # games
         "6" = ""; # coding
+        "8" = ""; # discord
+        "9" = ""; # spotify
 
-        "11" = ""; # thunderbird
-        "12" = ""; # discord
-        "16" = ""; # spotify
         "18" = ""; # library
-        "20" = ""; # task manager
+        "20" = ""; # btop
+
+        "extra" = "";
       };
     };
 

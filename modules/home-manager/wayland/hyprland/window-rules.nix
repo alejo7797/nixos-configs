@@ -24,12 +24,13 @@
     [
       # Workspace 1 contains my web browser and email client.
       { ws = 1; criteria = "title:^(\\.+ - )?Mozilla Firefox$"; }
+      { ws = 2; criteria = "title:^(Home - )?Mozilla Thunderbird$"; }
 
       { ws = 3; criteria = "class:^steam$"; }
 
-      { ws = 11; criteria = "title:^(Home - )?Mozilla Thunderbird$"; }
-      { ws = 12; criteria = "class:^vesktop$"; }
-      { ws = 16; criteria = "class:^spotify$"; }
+      { ws = 8; criteria = "class:^vesktop$"; }
+      { ws = 9; criteria = "class:^spotify$"; }
+
       { ws = 18; criteria = "class:^Zotero$"; }
     ]
 

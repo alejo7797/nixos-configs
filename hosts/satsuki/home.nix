@@ -35,8 +35,8 @@
 
     workspaces = {
       # TODO: look into this.
-      "DP-1" = [ "r[1-4]" 6 "r[8-20]" ];
-      "eDP-1" = [ 5 7 ];
+      "DP-1" = [ "r[1-20]" ];
+      "eDP-1" = [ "name:extra" ];
     };
 
     waybar = {
