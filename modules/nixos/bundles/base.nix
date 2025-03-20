@@ -1,8 +1,6 @@
 { pkgs, ... }: {
 
-  # Essential packages to install globally.
   environment.systemPackages = with pkgs; [
-
     dua
     fastfetch
     file
@@ -11,7 +9,6 @@
     nmap
     unar
     usbutils
-
   ];
 
   programs = {
