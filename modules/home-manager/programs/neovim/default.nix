@@ -46,6 +46,7 @@ in
       shiftwidth = 4;
       signcolumn = "yes";
       smartcase = true;
+      splitright = true;
       title = true;
       undofile = true;
       updatetime = 100;
@@ -168,7 +169,7 @@ in
         enable = true;
         settings.options = {
           close_command.__raw = ''
-            function()
+            function(bufnum)
               require('bufdelete').bufdelete(bufnum, false)
             end
           '';
