@@ -20,7 +20,7 @@ in
       wlogout.enable = true;
     };
 
-    # Start the kanshi daemon when Hyprland starts.
+    # TODO: remove with 25.05.
     services.kanshi.systemdTarget = "graphical-session.target";
 
     systemd.user.services = lib.mapAttrs
@@ -48,8 +48,8 @@ in
       settings =
 
         let
-          uwsm-app = "${pkgs.uwsm}/bin/uwsm-app";
-          kitty = "${pkgs.kitty}/bin/kitty";
+          uwsm-app = lib.getExe' pkgs.uwsm "uwsm-app";
+          kitty = lib.getExe pkgs.kitty;
         in
 
         {
@@ -57,15 +57,15 @@ in
 
           # Make it so that wofi launches applications as units using the UWSM helper.
           # Our implementation requires that `drun-print_desktop_file` be set to true.
-          "$menu" = "${uwsm-app} -- $(${pkgs.wofi}/bin/wofi || echo true)";
+          "$menu" = "${uwsm-app} -- $(${lib.getExe pkgs.wofi} || echo true)";
 
           exec-once = [
             # Workspace autostart command.
-            "${pkgs.writeShellApplication {
+            (lib.getExe (pkgs.writeShellApplication {
               name = "hypr-startup";
               runtimeInputs = with pkgs; [ hyprland jq ];
               text = ./hypr-startup;
-            }}/bin/hypr-startup"
+            }))
           ];
 
           general = {
@@ -132,7 +132,7 @@ in
           bind =
 
             let
-              grimblast = "${pkgs.grimblast}/bin/grimblast";
+              grimblast = lib.getExe pkgs.grimblast;
             in
 
             map (x: "$mainMod, ${x}") [
@@ -142,7 +142,7 @@ in
               "D, exec, $menu" "F, fullscreen,"
 
               # Keybind to access logout menu.
-              "X, exec, ${pkgs.wlogout}/bin/wlogout"
+              "X, exec, ${lib.getExe pkgs.wlogout}"
 
               # Move between windows.
               "left, hy3:movefocus, l"
@@ -216,8 +216,8 @@ in
           bindel =
 
             let
-              wpctl = "${pkgs.wireplumber}/bin/wpctl";
-              brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
+              wpctl = lib.getExe' pkgs.wireplumber "wpctl";
+              brightnessctl = lib.getExe pkgs.brightnessctl;
             in
 
             [
@@ -236,7 +236,7 @@ in
           bindl =
 
             let
-              playerctl = "${pkgs.playerctl}/bin/playerctl";
+              playerctl = lib.getExe pkgs.playerctl;
             in
 
             [

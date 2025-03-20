@@ -34,8 +34,8 @@
     thunderbird.enable = true;
 
     workspaces = {
-      # I'm used to it, okay?
-      "DP-1" = [ 1 2 3 4 6 8 9 10 ];
+      # TODO: look into this.
+      "DP-1" = [ 1 2 3 4 6 8 9 10 "n[true]" ];
       "eDP-1" = [ 5 7 ];
     };
 

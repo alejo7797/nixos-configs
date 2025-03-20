@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+hyprctl dispatch exec '[workspace name:btop silent]' uwsm-app kitty btop
+
+while [[ -z $(hyprctl clients -j | jq '.[] |  select(.title == "btop")') ]]; do
+    sleep 0.1
+done
+
 hyprctl dispatch exec '[workspace 4 silent]' uwsm-app dolphin
 
 while [[ -z $(hyprctl clients -j | jq '.[] | select(.workspace.id==4) | select(.class == "org.kde.dolphin")') ]]; do
