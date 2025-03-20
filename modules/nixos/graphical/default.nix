@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }:
 
@@ -12,39 +11,19 @@ in
 {
   options.myNixOS = {
     graphical.enable = lib.mkEnableOption "common graphical utilities";
-    laptop.enable = lib.mkEnableOption "laptop-specific configuration";
   };
 
   config = lib.mkIf cfg.enable {
-
-    boot.plymouth.enable = true;
-
-    myNixOS = {
-      firefox.enable = true;
-      fcitx5.enable = true;
-    };
-
-    stylix.enable = true;
 
     programs = {
       appimage = {
         enable = true;
         binfmt = true;
       };
-
-      kdeconnect.enable = true;
-      nm-applet.enable = true;
     };
 
-    security.rtkit.enable = true;
-
     services = {
-      printing.enable = true;
 
-      avahi = {
-        enable = true;
-        nssmdns4 = true;
-      };
 
       geoclue2 = {
         enable = true;
@@ -52,11 +31,6 @@ in
         geoProviderUrl = "https://api.beacondb.net/v1/geolocate";
       };
 
-      blueman.enable = true;
-      libinput.enable = true;
-      pcscd.enable = true;
-      ratbagd.enable = true;
-      udisks2.enable = true;
     };
 
     security.pam.services.login.enableGnomeKeyring = true;
@@ -70,34 +44,5 @@ in
       # Screen scaling for QT applications.
       QT_FONT_DPI = 120;
     };
-
-    environment.systemPackages = with pkgs; [
-
-      dconf-editor font-manager icoutils
-      libreoffice libnotify mesa-demos
-      pavucontrol pdftk piper seahorse
-      simple-scan sqlitebrowser xorg.xeyes
-      vulkan-tools yubioath-flutter zenity
-
-      # Default KDE theme for Qt5.
-      libsForQt5.breeze-qt5
-
-    ];
-
-    fonts.packages = with pkgs; [
-
-      corefonts dejavu_fonts
-      font-awesome noto-fonts
-      noto-fonts-color-emoji
-      source-sans vistafonts
-
-      noto-fonts-cjk-sans
-      noto-fonts-cjk-serif
-      kanji-stroke-order-font
-      ipaexfont jigmo takao
-      source-han-sans
-      source-han-serif
-
-    ];
   };
 }
