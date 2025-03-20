@@ -1,7 +1,4 @@
 {
-  services.avahi = {
-
-    nssmdns4 = true;
-
-  };
+  # Enable the mDNS NSS plug-in.
+  services.avahi.nssmdns4 = true;
 }
