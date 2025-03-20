@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-hyprctl dispatch exec '[workspace name:btop silent]' uwsm-app kitty btop
+hyprctl dispatch exec '[workspace name:zz-btop silent]' uwsm-app kitty btop
 
 while [[ -z $(hyprctl clients -j | jq '.[] |  select(.title == "btop")') ]]; do
     sleep 0.1

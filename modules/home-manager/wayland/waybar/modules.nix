@@ -20,10 +20,11 @@ in
         "4" = ""; # terminal
         "6" = ""; # coding
 
-        "zotero" = ""; # library
         "discord" = ""; # discord
-        "spotify" = ""; # spotify
-        "btop" = ""; # task manager
+        "music" = ""; # spotify
+        "email" = ""; # thunderbird
+        "zotero" = ""; # library
+        "zz-btop" = ""; # task manager
       };
     };
 

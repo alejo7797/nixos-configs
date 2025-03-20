@@ -24,13 +24,13 @@
     [
       # Workspace 1 contains my web browser and email client.
       { ws = 1; criteria = "title:^(\\.+ - )?Mozilla Firefox$"; }
-      { ws = 1; criteria = "title:^(Home - )?Mozilla Thunderbird$"; }
 
       { ws = 3; criteria = "class:^steam$"; }
 
-      { ws = "name:zotero"; criteria = "class:^Zotero$"; }
       { ws = "name:discord"; criteria = "class:^vesktop$"; }
-      { ws = "name:spotify"; criteria = "class:^spotify$"; }
+      { ws = "name:email"; criteria = "title:^(Home - )?Mozilla Thunderbird$"; }
+      { ws = "name:music"; criteria = "class:^spotify$"; }
+      { ws = "name:zotero"; criteria = "class:^Zotero$"; }
     ]
 
     # Smart window borders configuration.
