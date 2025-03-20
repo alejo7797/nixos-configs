@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: {
+{ config, pkgs, ... }: {
 
   programs.zsh = {
 
@@ -8,18 +8,6 @@
 
     history.path = "${config.xdg.stateHome}/zsh/history";
 
-    initExtraFirst =
-
-      lib.optionalString config.programs.direnv.enable ''
-        emulate zsh -c "$(direnv export zsh)"
-      ''
-      +
-      ''
-        if [[ -r "$XDG_CACHE_HOME/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
-          source "$XDG_CACHE_HOME/p10k-instant-prompt-''${(%):-%n}.zsh"
-        fi
-      '';
-
     initExtra = ''
       # Accept suggestion with Shift+Tab.
       bindkey '^[[Z' autosuggest-accept
@@ -28,60 +16,16 @@
       unalias gap
     '';
 
-    oh-my-zsh = {
-      enable = true;
+    my.powerlevel10k.enable = true;
 
-      plugins = [
-        "alias-finder" "dirhistory"
-        "git" "history" "python"
-        "rsync" "ruby" "safe-paste"
-        "sudo" "systemd" "zbell"
-      ];
-
-      extraConfig = ''
-        ENABLE_CORRECTION="true"
-        HIST_STAMPS="yyyy-mm-dd"
-
-        zstyle ':omz:plugins:alias-finder' autoload yes
-        zstyle ':omz:plugins:alias-finder' exact yes
-        zstyle ':omz:plugins:alias-finder' cheaper yes
-
-        zbell_ignore=(
-          bash dmesg nix-shell
-          git glola htop journalctl
-          less man sc-status
-          scu-status ssh vim
-        )
-      '';
-    };
+    oh-my-zsh.enable = true;
 
     plugins =
-
-      let
-        p10k-config = patch: pkgs.stdenv.mkDerivation {
-          name = "p10k.zsh";
-          src = pkgs.zsh-powerlevel10k;
-          patches = [ patch ];
-          dontBuild = true;
-
-          installPhase = ''
-            install -Dm644 share/zsh-powerlevel10k/config/p10k-lean-8colors.zsh $out/p10k.zsh
-          '';
-        };
-      in
 
       [
         {
           name = "nix-shell"; # Use Zsh under nix-shell.
           src = "${pkgs.zsh-nix-shell}/share/zsh-nix-shell";
-        }
-        {
-          name = "powerlevel10k"; file = "powerlevel10k.zsh-theme";
-          src = "${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k";
-        }
-        {
-          name = "p10k-config"; # Zsh theme configuration.
-          src = p10k-config ./p10k.patch; file = "p10k.zsh";
         }
       ];
 
