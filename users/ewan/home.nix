@@ -34,7 +34,7 @@
         };
 
         toplist = {
-          type = "wallhaven"; # Download popular anime wallpapers within the past month.
+          type = "wallhaven"; # Download anime wallpapers popular within the past month.
           url = "https://wallhaven.cc/search?categories=010&topRange=1M&sorting=toplist";
         };
 
@@ -54,7 +54,7 @@
 
   };
 
-  # Set up my user Zsh config.
+  # Set up my shell config.
   programs.zsh.enable = true;
 
 }
