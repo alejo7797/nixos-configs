@@ -1,8 +1,4 @@
-{
-  pkgs,
-  config,
-  ...
-}:
+{ config, lib, pkgs, ... }:
 
 let
   cfg = config.myHome.waybar;
@@ -52,9 +48,9 @@ in
       format-source = " {volume}% ";
       format-source-muted = "";
 
-      on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
+      on-click = lib.getExe pkgs.pavucontrol;
       format-icons = { default = ["" "" ""]; headphone = ""; headset = ""; };
-      on-click-right = "${pkgs.audio-switch}/bin/audio-switch";
+      on-click-right = lib.getExe pkgs.audio-switch;
     };
 
     cpu = {
@@ -111,7 +107,7 @@ in
       tooltip = true;
 
       exec = ''
-        ${pkgs.wttrbar}/bin/wttrbar \
+        ${lib.getExe pkgs.wttrbar} \
           --custom-indicator "{FeelsLikeC}°C {ICON}" \
           --location "${cfg.location}"
       '';
@@ -125,7 +121,7 @@ in
     "custom/swaync" =
       let
         alert = "<span foreground='#${red}'><sup></sup></span>";
-        client = "${pkgs.swaynotificationcenter}/bin/swaync-client";
+        client = lib.getExe' pkgs.swaynotificationcenter "swaync-client";
         red = config.lib.stylix.colors.base08; # Alert icon color.
       in
       {
