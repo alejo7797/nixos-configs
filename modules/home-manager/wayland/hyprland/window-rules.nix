@@ -27,10 +27,10 @@
 
       { ws = 3; criteria = "class:^steam$"; }
 
-      { ws = "name:discord"; criteria = "class:^vesktop$"; }
-      { ws = "name:email"; criteria = "title:^(Home - )?Mozilla Thunderbird$"; }
-      { ws = "name:music"; criteria = "class:^spotify$"; }
-      { ws = "name:zotero"; criteria = "class:^Zotero$"; }
+      { ws = 11; criteria = "title:^(Home - )?Mozilla Thunderbird$"; }
+      { ws = 12; criteria = "class:^vesktop$"; }
+      { ws = 16; criteria = "class:^spotify$"; }
+      { ws = 18; criteria = "class:^Zotero$"; }
     ]
 
     # Smart window borders configuration.

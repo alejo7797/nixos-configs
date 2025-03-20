@@ -35,7 +35,7 @@
 
     workspaces = {
       # TODO: look into this.
-      "DP-1" = [ 1 2 3 4 6 8 9 10 "n[true]" ];
+      "DP-1" = [ "r[1-4]" 6 "r[8-20]" ];
       "eDP-1" = [ 5 7 ];
     };
 
