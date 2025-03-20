@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 
-hyprctl dispatch exec '[workspace 20 silent]' uwsm-app kitty btop
+hyprctl dispatch exec '[workspace 20 silent]' uwsm-app btop.desktop
 
 while [[ -z $(hyprctl clients -j | jq '.[] |  select(.title == "btop")') ]]; do
     sleep 0.1
 done
 
-hyprctl dispatch exec '[workspace 4 silent]' uwsm-app dolphin
+hyprctl dispatch exec '[workspace 4 silent]' uwsm-app org.kde.dolphin.desktop
 
 while [[ -z $(hyprctl clients -j | jq '.[] | select(.workspace.id==4) | select(.class == "org.kde.dolphin")') ]]; do
     sleep 0.1
 done
 
-hyprctl dispatch exec '[workspace 4 silent]' uwsm-app kitty
+hyprctl dispatch exec '[workspace 4 silent]' uwsm-app kitty.desktop
 
 while [[ -z $(hyprctl clients -j | jq '.[] | select(.workspace.id==4) | select(.class == "kitty")') ]]; do
     sleep 0.1

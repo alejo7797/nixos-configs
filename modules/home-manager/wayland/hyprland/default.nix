@@ -49,11 +49,10 @@ in
 
         let
           uwsm-app = lib.getExe' pkgs.uwsm "uwsm-app";
-          kitty = lib.getExe pkgs.kitty;
         in
 
         {
-          "$terminal" = "${uwsm-app} -- ${kitty}";
+          "$terminal" = "${uwsm-app} -- kitty.desktop";
 
           # Make it so that wofi launches applications as units using the UWSM helper.
           # Our implementation requires that `drun-print_desktop_file` be set to true.
