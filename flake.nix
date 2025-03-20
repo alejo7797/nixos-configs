@@ -10,13 +10,13 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
-      # Manage a home user environment with Nix.
+      # Manage users' home environment configuration with Nix.
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nix-index-database = {
-      # Quickly locate packages with specfic files.
+      # Quickly locate packages giving specfic files.
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
