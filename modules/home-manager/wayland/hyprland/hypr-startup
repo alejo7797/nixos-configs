@@ -12,6 +12,9 @@ while [[ -z $(hyprctl clients -j | jq '.[] | select(.workspace.id==4) | select(.
     sleep 0.1
 done
 
+hyprctl dispatch workspace 4
+hyprctl dispatch hy3:makegroup tab
+
 hyprctl dispatch exec '[workspace 4 silent]' uwsm-app kitty.desktop
 
 while [[ -z $(hyprctl clients -j | jq '.[] | select(.workspace.id==4) | select(.class == "kitty")') ]]; do
