@@ -41,10 +41,13 @@ in
       imagemagick
       inkscape
       joplin-desktop
+      keepassxc
+      kitty
       libreoffice
       libsForQt5.breeze-qt5
       libnotify
       mesa-demos
+      mpv
       pavucontrol
       pdftk
       piper
@@ -61,6 +64,7 @@ in
       wineWowPackages.stable
       yt-dlp
       yubioath-flutter
+      zathura
       zenity
     ];
 
