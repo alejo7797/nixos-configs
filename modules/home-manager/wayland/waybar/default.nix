@@ -54,5 +54,10 @@ in
         ];
       };
     };
+
+    systemd.user.services.waybar = {
+      Unit.PartOf = [ "tray.target" ];
+      Install.WantedBy = [ "tray.target" ];
+    };
   };
 }

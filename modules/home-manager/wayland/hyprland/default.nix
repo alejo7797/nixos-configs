@@ -1,9 +1,4 @@
-{
-  lib,
-  config,
-  pkgs,
-  ...
-}:
+{ config, lib, pkgs, ... }:
 
 let
   cfg = config.myHome.hyprland;
@@ -29,10 +24,9 @@ in
       (_: _: { Unit.After = [ "graphical-session.target" ]; })
 
       {
-        # Fixed with release 25.05
-        gammastep = { }; hypridle = { };
-        kdeconnect = { };
-        kdeconnect-indicator = { };
+        # TODO: Fixed with release 25.05
+        gammastep = { };
+        hypridle = { };
         waybar = { };
       };
 
