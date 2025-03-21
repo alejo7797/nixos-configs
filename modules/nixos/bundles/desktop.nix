@@ -79,7 +79,6 @@ in
     services = {
       avahi.enable = true;
       blueman.enable = true;
-      dbus.packages = [ pkgs.gcr ];
       libinput.enable = true;
       pcscd.enable = true;
       printing.enable = true;
