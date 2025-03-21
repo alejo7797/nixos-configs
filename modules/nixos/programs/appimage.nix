@@ -3,7 +3,7 @@
   programs.appimage = {
 
     package = pkgs.appimage-run.override {
-      extraPkgs = pkgs: [ pkgs.icu ];
+      extraPkgs = pkgs: with pkgs; [ icu libpng ];
     };
 
   };
