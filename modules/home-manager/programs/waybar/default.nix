@@ -33,8 +33,7 @@ in
       style = ./style.css;
 
       settings.mainBar = {
-        # The one and only bar.
-        height = 30; spacing = 5;
+        height = 32; spacing = 5;
         position = "bottom";
 
         modules-left = [ "hyprland/workspaces" ];
@@ -49,15 +48,14 @@ in
     };
 
     systemd.user.services = {
-      kdeconnect-indicator = {
-        Unit.After = [ "tray.target" ];
-      };
-
       waybar = {
+        # https://github.com/nix-community/home-manager/pull/6675
         Unit.PartOf = [ "tray.target" ];
         Install.WantedBy = [ "tray.target" ];
       };
 
+      # This seems like an story in active development.
+      # For now, see https://github.com/Alexays/Waybar/issues/2437.
       waybar-tray-init-shim = {
         Unit = {
           Description = "Wait for org.kde.StatusNotifierWatcher to appear in the system bus";
