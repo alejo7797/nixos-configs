@@ -8,6 +8,7 @@
     inputs.lanzaboote.nixosModules.lanzaboote
     ./filesystems.nix ./hardware.nix
 
+    # TODO: figure this out
     ../../users/ewan
   ];
 
