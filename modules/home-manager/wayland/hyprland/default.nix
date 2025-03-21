@@ -27,6 +27,7 @@ in
         # TODO: Fixed with release 25.05
         gammastep = { };
         hypridle = { };
+        kdeconnect-indicator = { };
         network-manager-applet = { };
         waybar = { };
       };
