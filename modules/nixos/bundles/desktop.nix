@@ -48,6 +48,7 @@ in
       libnotify
       mesa-demos
       mpv
+      networkmanagerapplet
       pavucontrol
       pdftk
       piper
@@ -74,7 +75,6 @@ in
       firefox.enable = true;
       java.enable = true;
       kdeconnect.enable = true;
-      nm-applet.enable = true;
       steam.enable = true;
       thunderbird.enable = true;
       wireshark.enable = true;
