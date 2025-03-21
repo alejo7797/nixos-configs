@@ -62,6 +62,7 @@
   };
 
   my = {
+    gaming.enable = true;
     laptop.enable = true;
     yubikey._2fa = true;
   };
@@ -71,14 +72,8 @@
     dolphin.enable = true;
     hyprland.enable = true;
     jupyter.enable = true;
-    retroarch.enable = true;
     tzupdate.enable = true;
 
-  };
-
-  programs = {
-    gamemode.enable = true;
-    steam.protontricks.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
@@ -94,15 +89,6 @@
     snappy-math
     texliveFull
     zotero
-
-    # Games.
-    bolt-launcher
-    dosbox-x
-    easyrpg-player
-    gamescope
-    lutris
-    mangohud
-    prismlauncher
 
     # Programming.
     clang
