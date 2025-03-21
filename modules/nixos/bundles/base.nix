@@ -7,6 +7,7 @@
     jq
     lsof
     nmap
+    sqlite
     unar
     usbutils
   ];
