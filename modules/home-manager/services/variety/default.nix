@@ -71,7 +71,8 @@ in
       Unit = {
         Description = "Variety wallpaper changer";
         PartOf = [ "graphical-session.target" ];
-        After = [ "graphical-session.target" "swww.service" ];
+        After = [ "graphical-session.target" "swww.service" "tray.target" ];
+        Wants = [ "swww.service" "tray.target" ];
         X-Restart-Triggers = [ config.xdg.configFile."variety/variety.conf".source ];
       };
       Service = {

@@ -55,9 +55,14 @@ in
       };
     };
 
-    systemd.user.services.waybar = {
-      Unit.PartOf = [ "tray.target" ];
-      Install.WantedBy = [ "tray.target" ];
+    systemd.user.services = {
+      kdeconnect-indicator = {
+        Unit.After = [ "tray.target" ];
+      };
+      waybar = {
+        Unit.PartOf = [ "tray.target" ];
+        Install.WantedBy = [ "tray.target" ];
+      };
     };
   };
 }

@@ -92,16 +92,5 @@ in
       };
     };
 
-    myHome.lib.mkGraphicalService =
-      { Unit, Service }:
-      {
-        Install.WantedBy = [ "graphical-session.target" ];
-        Unit = {
-          inherit (Unit) Description;
-          PartOf = [ "graphical-session.target" ];
-          After = [ "graphical-session.target" ];
-        };
-        inherit Service;
-      };
   };
 }
