@@ -37,7 +37,6 @@ in
     };
 
     opts = {
-      autochdir = true;
       breakindent = true;
       expandtab = true;
       foldlevelstart = 99;
@@ -368,6 +367,8 @@ in
           autocmd.enabled = true;
         };
       };
+
+      project-nvim.enable = true;
 
       trouble.enable = true;
     };
