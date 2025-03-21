@@ -23,6 +23,7 @@ in
     services = {
       my.variety.enable = true;
       gpg-agent.enable = true;
+      network-manager-applet.enable = true;
     };
 
     home.packages = with pkgs; [
