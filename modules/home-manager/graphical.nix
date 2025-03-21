@@ -7,6 +7,8 @@
 
 let
   cfg = config.myHome.graphical;
+  ini = pkgs.formats.ini {};
+  yaml = pkgs.formats.yaml {};
 in
 
 {
@@ -77,12 +79,15 @@ in
         "latexmk/latexmkrc".source = ./programs/latex/latexmkrc;
 
         "latexindent/latexindent.yaml".source = ./programs/latex/latexindent.yaml;
-        "latexindent/indentconfig.yaml".source = (pkgs.formats.yaml {}).generate "indentconfig.yaml" {
+        "latexindent/indentconfig.yaml".source = yaml.generate "indentconfig.yaml" {
           paths = [ "${config.xdg.configHome}/latexindent/latexindent.yaml" ];
         };
 
-        "baloofilerc".text = lib.generators.toINI {} {
+        "baloofilerc".source = ini.generate "baloofilerc" {
           "Basic Settings"."Indexing-Enabled" = false;
+        };
+        "kwalletrc".source = ini.generate "kwalletrc" {
+          "Wallet"."Enabled" = false;
         };
       };
     };
