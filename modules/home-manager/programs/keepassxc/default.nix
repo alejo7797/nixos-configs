@@ -1,20 +1,20 @@
-{
-  lib,
-  config,
-  pkgs,
-  ...
-}:
+{ config, lib, pkgs, ... }:
 
 let
-  cfg = config.myHome.keepassxc;
+  cfg = config.programs.my.keepassxc;
 in
 
 {
-  options.myHome.keepassxc.enable = lib.mkEnableOption "KeepassXC";
+  options.programs.my.keepassxc = {
+
+    enable = lib.mkEnableOption "KeepassXC";
+    package = lib.mkPackageOption pkgs "keepassxc" { };
+
+  };
 
   config = lib.mkIf cfg.enable {
 
-    home.packages = [ pkgs.keepassxc ];
+    home.packages = [ cfg.package ];
 
     systemd.user.services.keepassxc = {
       Unit = {
@@ -24,7 +24,8 @@ in
         Wants = [ "tray.target" ];
       };
       Service = {
-        ExecStart = "${pkgs.keepassxc}/bin/keepassxc";
+        ExecStartPre = "${pkgs.coreutils}/bin/sleep 5";
+        ExecStart = lib.getExe cfg.package;
       };
       Install = {
         WantedBy = [ "graphical-session.target" ];
