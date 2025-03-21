@@ -16,7 +16,6 @@ in
       gamescope
       lutris
       mangohud
-      osu-lazer-bin
       prismlauncher
     ];
 
