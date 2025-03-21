@@ -68,12 +68,9 @@
   };
 
   myNixOS = {
-
-    dolphin.enable = true;
     hyprland.enable = true;
     jupyter.enable = true;
     tzupdate.enable = true;
-
   };
 
   environment.systemPackages = with pkgs; [

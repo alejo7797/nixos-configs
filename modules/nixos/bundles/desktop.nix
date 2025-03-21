@@ -66,6 +66,7 @@ in
 
     programs = {
       appimage.enable = true;
+      my.dolphin.enable = true;
       firefox.enable = true;
       java.enable = true;
       kdeconnect.enable = true;

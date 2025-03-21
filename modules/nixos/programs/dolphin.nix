@@ -1,44 +1,42 @@
-{
-  lib,
-  config,
-  inputs,
-  pkgs,
-  ...
-}:
+{ config, inputs, lib, pkgs, ... }:
 
 let
-  cfg = config.myNixOS.dolphin;
+  cfg = config.programs.my.dolphin;
 in
 
 {
-  options.myNixOS.dolphin.enable = lib.mkEnableOption "the Dolphin ecosystem";
+  options.programs.my.dolphin.enable = lib.mkEnableOption "the Dolphin ecosystem";
 
   config = lib.mkIf cfg.enable {
 
-    # Pull this in just in case.
-    myNixOS.graphical.enable = true;
-
     environment = {
 
-      # Install Dolphin and all that's good with it.
       systemPackages = with pkgs.kdePackages; [
 
-        ark dolphin dolphin-plugins ffmpegthumbs
-        gwenview kde-cli-tools kfind kimageformats
-        kdegraphics-thumbnailers kio-admin konsole
-        kio-extras qtimageformats qtsvg taglib
+        ark
+        dolphin
+        dolphin-plugins
+        ffmpegthumbs
+        gwenview
+        kde-cli-tools
+        kfind
+        kimageformats
+        kdegraphics-thumbnailers
+        konsole
+        kio-extras
+        qtimageformats
+        qtsvg
+        taglib
 
       ];
 
       etc =
         let
-          applications = # This fixes the unpopulated application menus in Dolphin.
+          applications-menu = # Fix the unpopulated application menus in Dolphin.
             "${pkgs.libsForQt5.kservice}/etc/xdg/menus/applications.menu";
         in
         {
-          "/xdg/menus/i3-applications.menu".source = applications;
-          "/xdg/menus/Hyprland-applications.menu".source = applications;
-          "/xdg/menus/sway-applications.menu".source = applications;
+          "/xdg/menus/Hyprland-applications.menu".source = applications-menu;
         };
 
       pathsToLink = [ "/share/color-schemes" ];
