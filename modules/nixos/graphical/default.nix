@@ -15,22 +15,10 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    programs = {
-      appimage = {
-        enable = true;
-        binfmt = true;
-      };
-    };
-
-    services = {
-
-
-      geoclue2 = {
-        enable = true;
-        # See https://github.com/NixOS/nixpkgs/issues/321121.
-        geoProviderUrl = "https://api.beacondb.net/v1/geolocate";
-      };
-
+    services.geoclue2 = {
+      enable = true;
+      # See https://github.com/NixOS/nixpkgs/issues/321121.
+      geoProviderUrl = "https://api.beacondb.net/v1/geolocate";
     };
 
     security.pam.services.login.enableGnomeKeyring = true;
