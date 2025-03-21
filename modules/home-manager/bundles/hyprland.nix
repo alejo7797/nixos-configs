@@ -13,16 +13,18 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    # TODO: migrate
-    myHome.hyprland.enable = true;
-
     programs = {
       waybar.enable = true;
+      wlogout.enable = true;
     };
 
     services = {
+      kanshi.enable = true;
+      swaync.enable = true;
       my.swww.enable = true;
     };
+
+    wayland.windowManager.hyprland.enable = true;
 
   };
 }

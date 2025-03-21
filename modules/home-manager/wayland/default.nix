@@ -14,10 +14,6 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    myHome = {
-      swaync.enable = true;
-    };
-
     # Set environment variables using UWSM.
     xdg.configFile."uwsm/env".text = ''
 
@@ -65,8 +61,6 @@ in
     };
 
     services = {
-      kanshi.enable = true;
-
       gammastep = {
         enable = true;
         tray = true;
@@ -105,7 +99,7 @@ in
           };
       };
 
-      # Can remove with Stylix 25.05 release.
+      # TODO: remove with Stylix 25.05 release.
       hyprpaper.enable = lib.mkForce false;
     };
   };
