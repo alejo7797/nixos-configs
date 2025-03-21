@@ -39,9 +39,6 @@
     # Domain Name Resolution.
     resolved.enable = true;
 
-    # Install drivers for HP printers.
-    printing.drivers = [ pkgs.hplip ];
-
     udev.extraRules = ''
       # Prevent the Logitech USB mouse receiver from waking the system up from suspend. It has been known to cause issues for us in the past.
       ACTION=="add|change", SUBSYSTEM=="usb", DRIVERS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c547", ATTR{power/wakeup}="disabled"
@@ -81,39 +78,39 @@
 
   programs = {
     gamemode.enable = true;
-    thunderbird.enable = true;
-    wireshark.enable = true;
-
-    steam = {
-      enable = true;
-      protontricks.enable = true;
-    };
+    steam.protontricks.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
 
-    # Actual programs.
-    anki audacity castero
-    digikam gimp filezilla
-    geogebra inkscape krita
-    joplin-desktop musescore
-    plex-desktop spotify
-    tellico vesktop zotero
+    # Math.
+    biber
+    gap
+    geogebra
+    khoca
+    knotjob
+    mathematica-webdoc
+    sage
+    snappy-math
+    texliveFull
+    zotero
 
-    # Games and all that.
-    bolt-launcher dosbox-x
-    easyrpg-player mangohud
-    lutris prismlauncher
-    winetricks gamescope
-    wineWowPackages.stable
+    # Games.
+    bolt-launcher
+    dosbox-x
+    easyrpg-player
+    gamescope
+    lutris
+    mangohud
+    prismlauncher
 
     # Programming.
-    clang jdk23 nodejs
-    bundix bundler gap
-    mathematica-webdoc
-    knotjob snappy-math
-    biber texliveFull
-    sage khoca ruby
+    clang
+    jdk23
+    nodejs
+    bundix
+    bundler
+    ruby
 
   ];
 }

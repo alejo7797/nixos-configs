@@ -13,29 +13,9 @@ in
       { my.desktop.enable = true; }
     ];
 
-    environment.systemPackages = with pkgs; [
-      btop
-      dconf-editor
-      ffmpeg
-      font-manager
-      icoutils
-      imagemagick
-      libreoffice
-      libsForQt5.breeze-qt5
-      libnotify
-      mesa-demos
-      pavucontrol
-      pdftk
-      piper
-      seahorse
-      simple-scan
-      sqlitebrowser
-      xorg.xeyes
-      vulkan-tools
-      yt-dlp
-      yubioath-flutter
-      zenity
-    ];
+    stylix.enable = true;
+
+    boot.plymouth.enable = true;
 
     hardware = {
       gpgSmartcards.enable = true;
@@ -44,23 +24,59 @@ in
 
     i18n.inputMethod.enable = true;
 
+    security.rtkit.enable = true;
+
+    environment.systemPackages = with pkgs; [
+      anki
+      audacity
+      btop
+      castero
+      dconf-editor
+      digikam
+      ffmpeg
+      filezilla
+      font-manager
+      gimp
+      icoutils
+      imagemagick
+      inkscape
+      joplin-desktop
+      libreoffice
+      libsForQt5.breeze-qt5
+      libnotify
+      mesa-demos
+      pavucontrol
+      pdftk
+      piper
+      plex-desktop
+      seahorse
+      simple-scan
+      spotify
+      sqlitebrowser
+      tellico
+      xorg.xeyes
+      vesktop
+      vulkan-tools
+      winetricks
+      wineWowPackages.stable
+      yt-dlp
+      yubioath-flutter
+      zenity
+    ];
+
     programs = {
       firefox.enable = true;
       kdeconnect.enable = true;
       nm-applet.enable = true;
+      steam.enable = true;
+      thunderbird.enable = true;
+      wireshark.enable = true;
     };
 
-    security.rtkit.enable = true;
-
-    boot.plymouth.enable = true;
-
-    stylix.enable = true;
-
     services = {
-      dbus.packages = [ pkgs.gcr ];
-
       avahi.enable = true;
       blueman.enable = true;
+      dbus.packages = [ pkgs.gcr ];
       libinput.enable = true;
       pcscd.enable = true;
       printing.enable = true;
