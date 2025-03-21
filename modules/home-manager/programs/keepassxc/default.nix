@@ -24,7 +24,6 @@ in
         Wants = [ "tray.target" ];
       };
       Service = {
-        ExecStartPre = "${pkgs.coreutils}/bin/sleep 5";
         ExecStart = lib.getExe cfg.package;
       };
       Install = {

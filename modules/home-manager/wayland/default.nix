@@ -14,13 +14,7 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    my = {
-      swww.enable = true;
-    };
-
     myHome = {
-      graphical.enable = true;
-      waybar.enable = true;
       swaync.enable = true;
     };
 

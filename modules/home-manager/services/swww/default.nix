@@ -1,13 +1,13 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.my.swww;
+  cfg = config.services.my.swww;
 in
 
 {
   options = {
 
-    my.swww = {
+    services.my.swww = {
 
       enable = lib.mkEnableOption "swww";
       package = lib.mkPackageOption pkgs "swww" { };

@@ -13,6 +13,9 @@ in
 
   config = lib.mkIf cfg.enable {
 
+    # TODO: migrate
+    myHome.graphical.enable = true;
+
     programs = {
       direnv.enable = true;
       gpg.enable = true;

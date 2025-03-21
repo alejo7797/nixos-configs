@@ -24,12 +24,11 @@
       firefox thunderbird zotero
     ];
 
+    hyprland.enable = true;
     joplin.enable = true;
   };
 
   myHome = {
-    hyprland.enable = true;
-
     firefox.enable = true;
     thunderbird.enable = true;
 
@@ -38,11 +37,6 @@
       "DP-1" = [ 1 2 3 4 5 6 7 8 9 10
         11 12 13 14 15 16 17 18 19 20 ];
       "eDP-1" = [ "name:extra" ];
-    };
-
-    waybar = {
-      location = "Cambridge, MA";
-      thermal-zone = 7;
     };
   };
 
@@ -149,6 +143,11 @@
           encryptionPasscommand = "${pkgs.coreutils}/bin/cat ${config.sops.secrets."borg/passphrase".path}";
         };
       };
+    };
+
+    waybar.my = {
+      location = "Cambridge, MA";
+      thermal-zone = 7;
     };
 
   };

@@ -56,8 +56,6 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    my.swww.enable = config.my.wayland.enable;
-
     services.my.variety.settings = {
       sources.favorites = {
         type = "favorites";

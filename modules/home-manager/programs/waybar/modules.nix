@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.myHome.waybar;
+  cfg = config.programs.waybar;
 in
 
 {
@@ -77,7 +77,7 @@ in
     };
 
     temperature = {
-      inherit (cfg) thermal-zone;
+      inherit (cfg.my) thermal-zone;
       format = "{temperatureC}°C {icon}";
       format-icons = ["" "" ""];
     };
@@ -109,7 +109,7 @@ in
       exec = ''
         ${lib.getExe pkgs.wttrbar} \
           --custom-indicator "{FeelsLikeC}°C {ICON}" \
-          --location "${cfg.location}"
+          --location "${cfg.my.location}"
       '';
     };
 
