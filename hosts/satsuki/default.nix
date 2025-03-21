@@ -106,7 +106,6 @@
 
     # Programming.
     clang
-    jdk23
     nodejs
     bundix
     bundler
