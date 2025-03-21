@@ -28,7 +28,6 @@ in
         gammastep = { };
         hypridle = { };
         kdeconnect-indicator = { };
-        network-manager-applet = { };
         waybar = { };
       };
 
