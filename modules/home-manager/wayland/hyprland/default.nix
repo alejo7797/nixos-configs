@@ -27,6 +27,7 @@ in
         # TODO: Fixed with release 25.05
         gammastep = { };
         hypridle = { };
+        network-manager-applet = { };
         waybar = { };
       };
 
