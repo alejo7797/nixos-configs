@@ -92,7 +92,6 @@
     clang
     nodejs
     bundix
-    bundler
     ruby
 
   ];
