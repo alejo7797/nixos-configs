@@ -23,6 +23,7 @@
         {
           inherit (unstable)
             borgmatic # Don't use ~/.borgmatic.
+            php # Fix some temporary php-cs issue?
             uwsm # Use login shell environment.
           ;
 
