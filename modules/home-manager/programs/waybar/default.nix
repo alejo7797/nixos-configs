@@ -59,7 +59,7 @@ in
       waybar-tray-init-shim = {
         Unit = {
           Description = "Wait for org.kde.StatusNotifierWatcher to appear in the system bus";
-          ConditionEnvironment = "WAYLAND_DISPLAY"; After = [ "waybar.service" ];
+          Requires = [ "waybar.service" ]; After = [ "waybar.service" ];
         };
         Service = {
           Type = "oneshot";
