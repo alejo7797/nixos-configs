@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-echo "$XDG_STATE_HOME/wall.jpg"
+cat "$XDG_CONFIG_HOME/variety/wallpaper/wallpaper.jpg.txt"
