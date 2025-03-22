@@ -1,9 +1,17 @@
 { pkgs, config, ... }: {
 
   home = {
-    username = "ewan";
-    homeDirectory = "/home/ewan";
     stateVersion = "24.11";
+
+    shellAliases =
+      let
+        what-is-my-ip = "dig +short myip.opendns.com";
+      in
+      {
+        # These rely on a custom firewall rule.
+        pubip = "${what-is-my-ip} @resolver1.opendns.com";
+        vpnip = "${what-is-my-ip} @resolver2.opendns.com";
+      };
   };
 
   sops.secrets = {
@@ -16,24 +24,19 @@
       firefox thunderbird zotero
     ];
 
+    hyprland.enable = true;
     joplin.enable = true;
   };
 
   myHome = {
-    hyprland.enable = true;
-
     firefox.enable = true;
     thunderbird.enable = true;
 
     workspaces = {
-      # I'm used to it, okay?
-      "DP-1" = [ 1 2 3 4 6 8 9 10 ];
-      "eDP-1" = [ 5 7 ];
-    };
-
-    waybar = {
-      location = "Cambridge, MA";
-      thermal-zone = 7;
+      # TODO: look into this.
+      "DP-1" = [ 1 2 3 4 5 6 7 8 9 10
+        11 12 13 14 15 16 17 18 19 20 ];
+      "eDP-1" = [ "name:extra" ];
     };
   };
 
@@ -142,15 +145,10 @@
       };
     };
 
-    zsh.shellAliases =
-      let
-        what-is-my-ip = "dig +short myip.opendns.com";
-      in
-      {
-        # These rely on a custom firewall rule.
-        pubip = "${what-is-my-ip} @resolver1.opendns.com";
-        vpnip = "${what-is-my-ip} @resolver2.opendns.com";
-      };
+    waybar.my = {
+      location = "Cambridge, MA";
+      thermal-zone = 7;
+    };
 
   };
 }

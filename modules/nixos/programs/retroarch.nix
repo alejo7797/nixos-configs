@@ -1,16 +1,11 @@
-{
-  lib,
-  config,
-  pkgs,
-  ...
-}:
+{ config, lib, pkgs, ... }:
 
 let
-  cfg = config.myNixOS.retroarch;
+  cfg = config.programs.my.retroarch;
 in
 
 {
-  options.myNixOS.retroarch.enable = lib.mkEnableOption "RetroArch";
+  options.programs.my.retroarch.enable = lib.mkEnableOption "RetroArch";
 
   config = lib.mkIf cfg.enable {
 

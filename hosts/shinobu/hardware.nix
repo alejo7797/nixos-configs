@@ -16,7 +16,7 @@
   # Enables DHCP on each ethernet and wireless interface.
   networking.useDHCP = lib.mkDefault true;
 
-  nixpkgs.hostPlatform = "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = true;
+  nixpkgs.hostPlatform = "x86_64-linux";
 
 }

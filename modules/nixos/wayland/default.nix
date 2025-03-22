@@ -22,15 +22,10 @@
     # Let hyprlock authenticate users.
     security.pam.services.hyprlock = { };
 
-    # Start nm-applet after WAYLAND_DISPLAY is set.
-    systemd.user.services.nm-applet = {
-      after = [ "graphical-session.target" ];
-    };
-
     # Install some Wayland-specific packages.
     environment.systemPackages = with pkgs; [
 
-      bemenu grimblast swww
+      bemenu grimblast
       wf-recorder wl-clipboard
       libsForQt5.qt5.qtwayland
       kdePackages.qtwayland

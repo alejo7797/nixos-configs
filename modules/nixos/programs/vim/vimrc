@@ -1,0 +1,43 @@
+" My default vimrc file.
+
+filetype plugin indent on
+
+set hidden
+set autochdir
+set showcmd
+
+set incsearch
+set ignorecase
+set smartcase
+
+syntax on
+set mouse=nvi
+set title
+
+" Tab config.
+set shiftwidth=4
+set expandtab
+
+" Look and feel.
+set background=dark
+set termguicolors
+
+" Do not create .viminfo file in users' $HOME.
+set viminfofile=$HOME/.local/state/vim/viminfo
+
+" A pleasant default colorscheme.
+colorscheme base16-tomorrow-night
+
+" Set vim-airline appearance.
+let g:airline_powerline_fonts = 1
+let g:airline_theme = 'base16'
+
+" Use vim-airline's buffer line extension.
+let g:airline#extensions#tabline#show_buffers = 1
+let g:airline#extensions#tabline#enabled = 1
+
+" Copy text into the local clipboard using OSC52.
+autocmd TextYankPost * execute 'OSCYankRegister "'
+
+" Suppress info messages.
+let g:oscyank_silent = 1

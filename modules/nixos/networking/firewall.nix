@@ -1,7 +1,7 @@
 {
   networking.firewall = {
 
-    # Avoid Wireguard issues.
+    # Issues with Wireguard.
     checkReversePath = false;
 
     # Reduce kernel log verbosity.

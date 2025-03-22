@@ -6,22 +6,30 @@ defaultIndent: "    "
 modifyLineBreaks:
   textWrapOptions:
     columns: 79
-
-    # Allow for text wrapping after display
-    # math and related math environments.
     blocksFollow:
       other: |-
-        (?x) \\\]
-        | \\item(?:\h|\[)
-        | \\end\{align\*?\}
-        | \\end\{equation\}
+        (?x)
+
+        # After `\item`s.
+        \\item(?:\h|\[)
+
+        # Within theorem environments.
+        | \\begin\{(?:lem|prop|claim)\*?\}
+        | \\begin\{(?:thm(?:-cite)?|cor)\*?\}
+        | \\begin\{(?:prf|conj|warning)\*?\}
+        | \\begin\{(?:df|example|rem)\*?\}
+
+        # After display math.
+        | \\\] | \\end\{align\*?\}
+        | \\end\{equation\*?\}
+
 
 # Don't keep long \item fields at
 # an unnatural indentation level.
 indentAfterItems:
 
 # Don't introduce additional
-# indentation in blocks of text.
+# indentation in text blocks.
 noAdditionalIndent:
   emph: 1
   inlineMath: 1
@@ -31,8 +39,8 @@ noAdditionalIndent:
 specialBeginEnd:
   specialBeforeCommand: 1
 
-  # Not in defaultSettings.yaml
-  # for some unkown reason.
+  # Not in defaults for
+  # some unkown reason.
   inlineMathLaTeX:
     begin: (?<!\\)\\\(
     end: \\\)

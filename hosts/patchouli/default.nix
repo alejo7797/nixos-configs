@@ -1,7 +1,4 @@
-{
-  config,
-  ...
-}:
+{ config, pkgs, ... }:
 
 let
   localIP = "100.105.183.8";
@@ -11,7 +8,7 @@ in
   # Did you read the comment?
   system.stateVersion = "24.11";
 
-  imports = [ ./filesystems.nix ./hardware.nix ];
+  imports = [ ./filesystems.nix ./hardware.nix ../../users/ewan ];
 
   swapDevices = [ { device = "/var/swapfile"; size = 4096; } ];
 
@@ -62,8 +59,6 @@ in
   time.timeZone = "America/New_York";
 
   sops.secrets = {
-    "my-password" = { neededForUsers = true; };
-
     "syncthing/cert.pem" = { owner = "syncthing"; };
     "syncthing/key.pem" = { owner = "syncthing"; };
 
@@ -72,6 +67,9 @@ in
 
     "wpa-supplicant" = { };
   };
+
+  # TODO: refactor
+  home-manager.sharedModules = [ ./home.nix ];
 
   myNixOS = {
 
@@ -170,4 +168,12 @@ in
     };
 
   };
+
+  environment.systemPackages = with pkgs; [
+
+    ffmpeg
+    imagemagick
+    yt-dlp
+
+  ];
 }

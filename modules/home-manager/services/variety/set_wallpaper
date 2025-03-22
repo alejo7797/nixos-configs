@@ -13,4 +13,4 @@ else
 fi
 
 # Restore previous wallpaper on login.
-magick "$WP" "$XDG_STATE_HOME/wall.png"
+magick "$WP" "$XDG_STATE_HOME/wall.jpg"

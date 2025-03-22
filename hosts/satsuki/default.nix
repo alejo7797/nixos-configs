@@ -7,6 +7,9 @@
   imports = [
     inputs.lanzaboote.nixosModules.lanzaboote
     ./filesystems.nix ./hardware.nix
+
+    # TODO: figure this out
+    ../../users/ewan
   ];
 
   swapDevices = [ { device = "/var/swapfile"; size = 16384; } ];
@@ -37,9 +40,6 @@
     # Domain Name Resolution.
     resolved.enable = true;
 
-    # Install drivers for HP printers.
-    printing.drivers = [ pkgs.hplip ];
-
     udev.extraRules = ''
       # Prevent the Logitech USB mouse receiver from waking the system up from suspend. It has been known to cause issues for us in the past.
       ACTION=="add|change", SUBSYSTEM=="usb", DRIVERS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c547", ATTR{power/wakeup}="disabled"
@@ -51,6 +51,10 @@
     };
   };
 
+  home-manager = {
+    users.ewan = import ./home.nix;
+  };
+
   sops.secrets = {
     u2f-mappings = {
       # YubiKey pam-u2f module secrets.
@@ -59,62 +63,37 @@
   };
 
   my = {
+    gaming.enable = true;
+    laptop.enable = true;
     yubikey._2fa = true;
   };
 
   myNixOS = {
-
-    home-users.ewan = {
-      userConfig = ./home.nix;
-      userSettings = {
-        # I'm the only one here.
-        extraGroups = [ "wheel" ];
-      };
-    };
-
-    dolphin.enable = true;
     hyprland.enable = true;
     jupyter.enable = true;
-    retroarch.enable = true;
     tzupdate.enable = true;
-
-  };
-
-  programs = {
-    gamemode.enable = true;
-    thunderbird.enable = true;
-    wireshark.enable = true;
-
-    steam = {
-      enable = true;
-      protontricks.enable = true;
-    };
   };
 
   environment.systemPackages = with pkgs; [
 
-    # Actual programs.
-    anki audacity castero
-    digikam gimp filezilla
-    geogebra inkscape krita
-    joplin-desktop musescore
-    plex-desktop spotify
-    tellico vesktop zotero
-
-    # Games and all that.
-    bolt-launcher dosbox-x
-    easyrpg-player mangohud
-    lutris prismlauncher
-    winetricks gamescope
-    wineWowPackages.stable
+    # Math.
+    biber
+    gap
+    geogebra
+    khoca
+    knotjob
+    mathematica-webdoc
+    sage
+    snappy-math
+    texliveFull
+    zotero
 
     # Programming.
-    clang jdk23 nodejs
-    bundix bundler gap
-    mathematica-webdoc
-    knotjob snappy-math
-    biber texliveFull
-    sage khoca ruby
+    clang
+    nodejs
+    bundix
+    bundler
+    ruby
 
   ];
 }

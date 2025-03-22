@@ -9,7 +9,7 @@
 
     supportedLocales =
 
-      # Take note of this!
+      # Pulls in C.UTF-8.
       lib.mkOptionDefault
 
       [

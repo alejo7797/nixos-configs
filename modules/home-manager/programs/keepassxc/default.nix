@@ -1,27 +1,33 @@
-{
-  lib,
-  config,
-  pkgs,
-  ...
-}:
+{ config, lib, pkgs, ... }:
 
 let
-  cfg = config.myHome.keepassxc;
+  cfg = config.programs.my.keepassxc;
 in
 
 {
-  options.myHome.keepassxc.enable = lib.mkEnableOption "KeepassXC";
+  options.programs.my.keepassxc = {
+
+    enable = lib.mkEnableOption "KeepassXC";
+    package = lib.mkPackageOption pkgs "keepassxc" { };
+
+  };
 
   config = lib.mkIf cfg.enable {
 
-    home.packages = [ pkgs.keepassxc ];
+    home.packages = [ cfg.package ];
 
-    systemd.user.services.keepassxc = config.myHome.lib.mkGraphicalService {
-      Unit.Description = "KeepassXC password manager";
+    systemd.user.services.keepassxc = {
+      Unit = {
+        Description = "KeepassXC password manager";
+        PartOf = [ "graphical-session.target" ];
+        After = [ "graphical-session.target" "tray.target" ];
+        Wants = [ "tray.target" ];
+      };
       Service = {
-        # Prevent quirks with KeepassXC when it starts too early.
-        ExecStartPre = "${pkgs.coreutils}/bin/sleep 10";
-        ExecStart = "${pkgs.keepassxc}/bin/keepassxc";
+        ExecStart = lib.getExe cfg.package;
+      };
+      Install = {
+        WantedBy = [ "graphical-session.target" ];
       };
     };
 

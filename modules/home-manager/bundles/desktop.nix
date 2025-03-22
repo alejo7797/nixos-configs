@@ -1,0 +1,39 @@
+{ config, lib, pkgs, ... }:
+
+let
+  cfg = config.my.desktop;
+in
+
+{
+  options = {
+
+    my.desktop.enable = lib.mkEnableOption "desktop bundle";
+
+  };
+
+  config = lib.mkIf cfg.enable {
+
+    # TODO: migrate
+    myHome.graphical.enable = true;
+
+    programs = {
+      direnv.enable = true;
+      gpg.enable = true;
+      my.keepassxc.enable = true;
+      lsd.enable = true;
+      nixvim.enable = true;
+    };
+
+    services = {
+      gpg-agent.enable = true;
+      my.variety.enable = true;
+    };
+
+    home.packages = with pkgs; [
+      favicon-generator
+      round-corners
+      sleep-deprived
+    ];
+
+  };
+}

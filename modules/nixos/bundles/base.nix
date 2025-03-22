@@ -1,43 +1,28 @@
-{ lib, pkgs, ... }: {
+{ pkgs, ... }: {
 
   environment.systemPackages = with pkgs; [
-
-    curl dig file findutils
-    ffmpeg htop imagemagick
-    lm_sensors lsd lsof ncdu
-    neofetch nmap procps psmisc
-    rsync sops unar usbutils
-    wireguard-tools wget yt-dlp
-
+    dua
+    fastfetch
+    file
+    jq
+    lsof
+    nmap
+    sqlite
+    unar
+    usbutils
   ];
 
   programs = {
-
-    git = {
-      enable = true;
-      package = pkgs.gitFull;
-    };
-
-    vim = {
-      enable = true;
-      defaultEditor = true;
-    };
-
+    git.enable = true;
+    vim.enable = true;
   };
 
   services = {
-
     openssh.enable = true;
-
-    timesyncd.enable = lib.mkDefault true;
-
+    timesyncd.enable = true;
   };
 
   security = {
-
-    polkit.enable = true;
-
     sudo.enable = true;
-
   };
 }

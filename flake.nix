@@ -10,12 +10,19 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
-      # Manage a user's home environment using Nix.
+      # Manage users' home environment configuration with Nix.
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-index-database = {
+      # Quickly locate packages giving specfic files.
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nur = {
+      # Access to the Nix User Repository.
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -27,7 +34,7 @@
     };
 
     my-expressions = {
-      # My personal derivations and Nixpkgs overlays.
+      # My personal scripts, derivations and Nixpkgs overlays.
       url = "gitlab:alex/nix-expressions?host=git.patchoulihq.cc";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -39,7 +46,7 @@
     };
 
     nixos-mailserver = {
-      # NixOS module for setting up a 10/10 email server.
+      # NixOS module setting up a complete and simple email server.
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };

@@ -1,16 +1,8 @@
-{
-  lib,
-  inputs,
-  config,
-  pkgs,
-  ...
-}:
+{ config, inputs, lib, ... }: {
 
-{
   imports = with lib.fileset;
 
     [
-      inputs.nixvim.homeManagerModules.nixvim
       inputs.sops-nix.homeManagerModules.sops
     ]
 
@@ -32,9 +24,8 @@
       settings.use-xdg-base-directories = true;
 
       gc = {
-        automatic = true;
-        frequency = "weekly";
-        options = "--delete-older-than 30d";
+        automatic = true; frequency = "daily";
+        options = "--delete-older-than 7d";
       };
     };
 
@@ -43,27 +34,13 @@
       age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
     };
 
-    myHome = {
-      git.enable = true;
-      neovim.enable = true;
-      zsh.enable = true;
-    };
-
-    programs = {
-      home-manager.enable = true;
-    };
+    # Default starting from 25.05.
+    systemd.user.startServices = true;
 
     xdg = {
       enable = true;
 
       configFile."nix/nix.conf".enable = false;
     };
-
-    # My personal shell scripts.
-    home.packages = with pkgs; [
-      favicon-generator
-      round-corners
-      sleep-deprived
-    ];
   };
 }

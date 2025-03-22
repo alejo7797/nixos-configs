@@ -7,6 +7,8 @@
 
 let
   cfg = config.myHome.graphical;
+  ini = pkgs.formats.ini {};
+  yaml = pkgs.formats.yaml {};
 in
 
 {
@@ -35,26 +37,19 @@ in
 
     myHome = {
       dolphin.enable = true;
-      keepassxc.enable = true;
       kitty.enable = true;
       konsole.enable = true;
-      gpg.enable = true;
       mimeApps.enable = true;
       mpv.enable = true;
       ssh.enable = true;
-      variety.enable = true;
       zathura.enable = true;
     };
 
     services = {
-      mpris-proxy.enable = true;
       gnome-keyring.enable = true;
+      kdeconnect.indicator = true;
+      mpris-proxy.enable = true;
       playerctld.enable = true;
-
-      kdeconnect = {
-        enable = true;
-        indicator = true;
-      };
     };
 
     gtk.gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
@@ -69,6 +64,8 @@ in
 
       NPM_CONFIG_CACHE = "${config.xdg.cacheHome}/npm";
 
+      PYTHON_HISTORY = "${config.xdg.stateHome}/python/history";
+
       RENPY_PATH_TO_SAVES = "${config.xdg.dataHome}/renpy";
 
       WINEPREFIX = "${config.xdg.dataHome}/wine";
@@ -81,26 +78,18 @@ in
         "latexmk/latexmkrc".source = ./programs/latex/latexmkrc;
 
         "latexindent/latexindent.yaml".source = ./programs/latex/latexindent.yaml;
-        "latexindent/indentconfig.yaml".source = (pkgs.formats.yaml {}).generate "indentconfig.yaml" {
+        "latexindent/indentconfig.yaml".source = yaml.generate "indentconfig.yaml" {
           paths = [ "${config.xdg.configHome}/latexindent/latexindent.yaml" ];
         };
 
-        "baloofilerc".text = lib.generators.toINI {} {
+        "baloofilerc".source = ini.generate "baloofilerc" {
           "Basic Settings"."Indexing-Enabled" = false;
+        };
+        "kwalletrc".source = ini.generate "kwalletrc" {
+          "Wallet"."Enabled" = false;
         };
       };
     };
 
-    myHome.lib.mkGraphicalService =
-      { Unit, Service }:
-      {
-        Install.WantedBy = [ "graphical-session.target" ];
-        Unit = {
-          inherit (Unit) Description;
-          PartOf = [ "graphical-session.target" ];
-          After = [ "graphical-session.target" ];
-        };
-        inherit Service;
-      };
   };
 }

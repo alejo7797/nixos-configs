@@ -6,23 +6,13 @@
 }:
 
 let
-  cfg = config.myHome.wayland;
+  cfg = config.my.wayland;
 in
 
 {
-  options.myHome.wayland.enable = lib.mkEnableOption "Wayland";
+  options.my.wayland.enable = lib.mkEnableOption "Wayland";
 
   config = lib.mkIf cfg.enable {
-
-    my = {
-      swww.enable = true;
-    };
-
-    myHome = {
-      graphical.enable = true;
-      waybar.enable = true;
-      swaync.enable = true;
-    };
 
     # Set environment variables using UWSM.
     xdg.configFile."uwsm/env".text = ''
@@ -44,7 +34,7 @@ in
             grace = 5; hide_cursor = true;
           };
           background = {
-            path = "${config.xdg.stateHome}/wall.png";
+            path = "${config.xdg.stateHome}/wall.jpg";
             blur_passes = 2; brightness = 0.5;
           };
           input-field = {
@@ -71,8 +61,6 @@ in
     };
 
     services = {
-      kanshi.enable = true;
-
       gammastep = {
         enable = true;
         tray = true;
@@ -111,7 +99,7 @@ in
           };
       };
 
-      # Can remove with Stylix 25.05 release.
+      # TODO: remove with Stylix 25.05 release.
       hyprpaper.enable = lib.mkForce false;
     };
   };

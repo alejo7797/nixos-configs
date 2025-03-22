@@ -13,7 +13,7 @@
     # My favorite color scheme https://github.com/chriskempson/tomorrow-theme.
     base16Scheme = "${pkgs.base16-schemes}/share/themes/tomorrow-night.yaml";
 
-    # Set system theme.
+    # Enable dark mode.
     polarity = "dark";
 
     fonts = rec {
@@ -56,7 +56,7 @@
 
     stylix = {
       iconTheme = {
-        # Setting not available in the NixOS module.
+        # Setting not available within the NixOS module.
         enable = true; package = pkgs.papirus-icon-theme;
         dark = "Papirus-Dark"; light = "Papirus-Light";
       };
@@ -65,7 +65,7 @@
         # Don't create ~/.themes directory.
         gtk.flatpakSupport.enable = false;
 
-        # Won't need these with 25.05.
+        # Won't need these on 25.05.
         hyprpaper.enable = lib.mkForce false;
         hyprlock.enable = false;
       };

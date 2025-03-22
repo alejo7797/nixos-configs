@@ -4,7 +4,7 @@
   # Did you read the comment?
   system.stateVersion = "24.11";
 
-  imports = [ ./filesystems.nix ./hardware.nix ];
+  imports = [ ./filesystems.nix ./hardware.nix ../../users/ewan ];
 
   swapDevices = [ { device = "/var/swapfile"; size = 32768; } ];
 
@@ -44,9 +44,11 @@
 
   time.timeZone = "Europe/Madrid";
 
-  sops.secrets = {
-    "my-password" = { neededForUsers = true; };
+  home-manager = {
+    users.ewan = import ./home.nix;
+  };
 
+  sops.secrets = {
     "syncthing/cert.pem" = { owner = "ewan"; };
     "syncthing/key.pem" = { owner = "ewan"; };
 
@@ -55,18 +57,12 @@
   };
 
   my = {
+    desktop.enable = true;
     nvidia.enable = true;
     yubikey.sudo = true;
   };
 
   myNixOS = {
-
-    home-users."ewan" = {
-      userConfig = ./home.nix;
-      userSettings = {
-        extraGroups = [ "wheel" ];
-      };
-    };
 
     dolphin.enable = true;
     hyprland.enable = true;

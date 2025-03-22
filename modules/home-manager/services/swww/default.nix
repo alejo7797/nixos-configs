@@ -1,22 +1,37 @@
-{
-  lib,
-  config,
-  pkgs,
-  ...
-}:
+{ config, lib, pkgs, ... }:
 
 let
-  cfg = config.my.swww;
+  cfg = config.services.my.swww;
 in
 
 {
-  options.my.swww.enable = lib.mkEnableOption "swww";
+  options = {
+
+    services.my.swww = {
+
+      enable = lib.mkEnableOption "swww";
+      package = lib.mkPackageOption pkgs "swww" { };
+
+    };
+
+  };
 
   config = lib.mkIf cfg.enable {
 
-    systemd.user.services.swww = config.myHome.lib.mkGraphicalService {
-      Unit.Description = "swww wallpaper daemon";
-      Service.ExecStart = "${pkgs.swww}/bin/swww-daemon";
+    home.packages = [ cfg.package ];
+
+    systemd.user.services.swww = {
+      Unit = {
+        ConditionEnvironment = "WAYLAND_DISPLAY";
+        Description = "swww wallpaper daemon";
+        PartOf = [ "graphical-session.target" ];
+        After = [ "graphical-session.target" ];
+      };
+      Service = {
+        ExecStart = lib.getExe' cfg.package "swww-daemon";
+        Restart = "on-failure";
+      };
+      Install.WantedBy = [ "graphical-session.target" ];
     };
 
   };

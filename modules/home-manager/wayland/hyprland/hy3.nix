@@ -5,8 +5,6 @@ in
 {
   wayland.windowManager.hyprland.settings.plugin.hy3 = {
 
-    tab_first_window = true;
-
     tabs = {
       height = 30;
       padding = 0;

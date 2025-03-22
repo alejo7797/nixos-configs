@@ -24,12 +24,12 @@
     channel.enable = false;
 
     gc = {
-      automatic = true; dates = "weekly";
+      automatic = true; dates = "daily";
       options = "--delete-older-than 7d";
     };
 
     settings = {
-      # Enable the experimental v3 CLI and flake support.
+      # Enable the experimental v3 CLI and flakes support.
       experimental-features = [ "nix-command" "flakes" ];
 
       # Use $XDG_STATE_HOME and so on.
@@ -43,8 +43,8 @@
     # Get old files out of the way.
     backupFileExtension = "backup";
 
-    # Access flake inputs in Home Manager.
-    extraSpecialArgs = { inherit inputs; };
+    # Access inputs and outputs in Home Manager.
+    extraSpecialArgs = { inherit inputs self; };
 
     sharedModules = [
       # Top-level module to build on.
