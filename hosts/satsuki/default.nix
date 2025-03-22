@@ -77,7 +77,6 @@
   environment.systemPackages = with pkgs; [
 
     # Math.
-    biber
     gap
     geogebra
     khoca
