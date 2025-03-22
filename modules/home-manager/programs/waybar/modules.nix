@@ -10,7 +10,7 @@ in
     "hyprland/workspaces" =  {
       format = "{icon}";
       format-icons = {
-        "1" = ""; # firefox
+        "1" = "󰈹"; # firefox
         "2" = ""; # emails
         "3" = ""; # latex
         "4" = ""; # terminal
@@ -19,7 +19,7 @@ in
         "8" = ""; # discord
         "9" = ""; # spotify
 
-        "18" = ""; # library
+        "18" = ""; # library
         "20" = ""; # btop
 
         "extra" = "";
