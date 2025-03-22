@@ -32,7 +32,6 @@ in
 
     my = {
       fcitx5.enable = true;
-      style.enable = true;
     };
 
     myHome = {

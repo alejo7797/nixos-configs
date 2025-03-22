@@ -10,9 +10,6 @@
 
   config = lib.mkIf config.myNixOS.wayland.enable {
 
-    # Install some basic graphical utlities.
-    myNixOS.graphical.enable = true;
-
     # Integrate Fcitx5 with Wayland.
     i18n.inputMethod.fcitx5.waylandFrontend = true;
 

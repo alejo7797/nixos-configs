@@ -24,7 +24,12 @@ in
 
     i18n.inputMethod.enable = true;
 
-    security.rtkit.enable = true;
+    security = {
+      pam.services.login.enableGnomeKeyring = true;
+      rtkit.enable = true;
+    };
+
+    xdg.portal.xdgOpenUsePortal = true;
 
     environment.systemPackages = with pkgs; [
       anki
@@ -83,6 +88,7 @@ in
     services = {
       avahi.enable = true;
       blueman.enable = true;
+      geoclue2.enable = true;
       libinput.enable = true;
       pcscd.enable = true;
       printing.enable = true;

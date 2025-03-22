@@ -1,4 +1,4 @@
-{ inputs, lib, pkgs, ... }: {
+{ inputs, pkgs, ... }: {
 
   imports = [ inputs.stylix.nixosModules.stylix ];
 
@@ -50,27 +50,5 @@
     };
 
   };
-
-  # Set up Stylix for home users.
-  home-manager.sharedModules = [{
-
-    stylix = {
-      iconTheme = {
-        # Setting not available within the NixOS module.
-        enable = true; package = pkgs.papirus-icon-theme;
-        dark = "Papirus-Dark"; light = "Papirus-Light";
-      };
-
-      targets = {
-        # Don't create ~/.themes directory.
-        gtk.flatpakSupport.enable = false;
-
-        # Won't need these on 25.05.
-        hyprpaper.enable = lib.mkForce false;
-        hyprlock.enable = false;
-      };
-    };
-
-  }];
 
 }
