@@ -93,19 +93,17 @@ in
     fonts.packages = with pkgs; [
       corefonts
       font-awesome
-      noto-fonts
-      source-sans
-      vistafonts
-
-      # CJK fonts.
       ipaexfont
       jigmo
       kanji-stroke-order-font
+      noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
       source-han-sans
       source-han-serif
+      source-sans
       takao
+      vistafonts
     ];
 
   };
