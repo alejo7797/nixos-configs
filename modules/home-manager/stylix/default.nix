@@ -34,9 +34,16 @@ in
       };
     };
 
-    home.sessionVariables = {
-      # Also fot Qt apps.
-      QT_FONT_DPI = 120;
+    home = {
+      sessionVariables = {
+        # Also fot Qt apps.
+        QT_FONT_DPI = 120;
+      };
+
+      packages = [
+        # The default sound theme for KDE.
+        pkgs.kdePackages.ocean-sound-theme
+      ];
     };
 
     # TODO: remove with 25.05 release
@@ -44,9 +51,6 @@ in
       ".icons/default/index.theme".enable = false;
       ".icons/${config.home.pointerCursor.name}".enable = false;
     };
-
-    # TODO: sound theme?
-    # kdePackages.ocean-sound-theme
 
     xresources.path = "${config.xdg.configHome}/X11/xresources";
   };
