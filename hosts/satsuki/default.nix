@@ -64,12 +64,12 @@
 
   my = {
     gaming.enable = true;
+    hyprland.enable = true;
     laptop.enable = true;
     yubikey._2fa = true;
   };
 
   myNixOS = {
-    hyprland.enable = true;
     jupyter.enable = true;
     tzupdate.enable = true;
   };
