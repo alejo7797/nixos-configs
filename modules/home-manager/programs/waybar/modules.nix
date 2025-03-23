@@ -19,7 +19,7 @@ in
         "8" = ""; # discord
         "9" = ""; # spotify
 
-        "18" = ""; # library
+        "18" = ""; # library
         "20" = ""; # btop
 
         "extra" = "";
