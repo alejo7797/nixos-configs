@@ -31,7 +31,7 @@ in
         ];
 
         search = {
-          default = "DuckDuckGo";
+          default = "Qwant";
           force = true;
           engines = {
             "Bing".metaData.hidden = true;
