@@ -60,6 +60,7 @@ in
       plex-desktop
       seahorse
       simple-scan
+      signal-desktop
       spotify
       sqlitebrowser
       tellico
