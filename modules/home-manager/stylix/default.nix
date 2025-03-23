@@ -27,6 +27,13 @@ in
       };
     };
 
+    fonts.fontconfig.defaultFonts = with cfg.fonts; {
+      monospace = [ monospace.name ];
+      serif = [ serif.name ];
+      sansSerif = [ sansSerif.name ];
+      emoji = [ emoji.name ];
+    };
+
     dconf.settings = {
       "org/gnome/desktop/interface" = {
         # Scale the user interface.
