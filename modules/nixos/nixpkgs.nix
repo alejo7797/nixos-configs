@@ -27,11 +27,15 @@
             uwsm # Use login shell environment.
           ;
 
+          # Upstream refactor.
+          libgbm = final.mesa;
+
           # Alternative RuneScape launcher with support for Jagex account logins.
           bolt-launcher = unstable.bolt-launcher.override { libgbm = final.mesa; };
 
           # Enable Wayland IME, fix application icon, build against the correct mesa version.
           joplin-desktop = unstable.joplin-desktop.override { inherit (final) appimageTools; };
+          signal-desktop = unstable.signal-desktop.override { inherit (final) callPackage; };
 
           # Enable Wayland IME, build against the correct mesa version.
           spotify = unstable.spotify.override { libgbm = final.mesa; };
