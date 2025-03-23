@@ -5,12 +5,12 @@
 
     shellAliases =
       let
-        what-is-my-ip = "dig +short myip.opendns.com";
+        what-is-my-ip = "host myip.opendns.com";
       in
       {
         # These rely on a custom firewall rule.
-        pubip = "${what-is-my-ip} @resolver1.opendns.com";
-        vpnip = "${what-is-my-ip} @resolver2.opendns.com";
+        pubip = "${what-is-my-ip} resolver1.opendns.com";
+        vpnip = "${what-is-my-ip} resolver2.opendns.com";
       };
   };
 
