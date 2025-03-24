@@ -10,13 +10,22 @@
 
     # Essential Firefox addons.
     Extensions.Install =
-      map (a: "https://addons.mozilla.org/firefox/downloads/latest/${a}/latest.xpi")
-        [
-          "canvasblocker" "decentraleyes" "facebook-container"
-          "font-fingerprint-defender" "h264ify" "indie-wiki-buddy"
-          "keepassxc-browser" "privacy-badger17"
-          "ublock-origin" "youtube-shorts-block"
-        ];
+      map
+      (
+        a: "https://addons.mozilla.org/firefox/downloads/latest/${a}/latest.xpi"
+      )
+      [
+        "canvasblocker"
+        "decentraleyes"
+        "facebook-container"
+        "font-fingerprint-defender"
+        "h264ify"
+        "indie-wiki-buddy"
+        "keepassxc-browser"
+        "privacy-badger17"
+        "ublock-origin"
+        "youtube-shorts-block"
+      ];
 
     Preferences =
       let
