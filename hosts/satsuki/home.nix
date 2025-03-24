@@ -21,7 +21,10 @@
 
   my = {
     autostart = with pkgs; [
-      firefox thunderbird zotero
+      firefox
+      signal-desktop
+      thunderbird
+      zotero
     ];
 
     hyprland.enable = true;
