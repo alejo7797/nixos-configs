@@ -16,7 +16,7 @@ in
         "4" = ""; # terminal
         "5" = ""; # games
         "6" = ""; # coding
-        "8" = ""; # discord
+        "8" = ""; # messaging
         "9" = ""; # spotify
 
         "18" = ""; # library
