@@ -44,7 +44,7 @@ in
 
         extraStopCommands = ''
           ip46tables -t mangle -D OUTPUT -j dest-filter 2>/dev/null || true
-          ip46tables -t nat -D POSTROUTING -m mark --mark 0xcbca -j MASQUERADE
+          ip46tables -t nat -D POSTROUTING -m mark --mark 0xcbca -j MASQUERADE 2>/dev/null || true
         '';
 
         extraCommands =
@@ -53,7 +53,7 @@ in
             ip46tables -t mangle -X dest-filter 2>/dev/null || true
             ip46tables -t mangle -N dest-filter
 
-            iptables -A INPUT -s 9.9.9.9 -p udp --sport 53 -j ACCEPT
+            iptables -I INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
           ''
           +
           lib.flip (lib.concatMapStringsSep "\n") cfg.my.no-vpn
@@ -72,7 +72,7 @@ in
             )
           +
           ''
-            iptables -D INPUT -s 9.9.9.9 -p udp --sport 53 -j ACCEPT
+            iptables -D INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 
             ip46tables -t nat -A POSTROUTING -m mark --mark 0xcbca -j MASQUERADE
             ip46tables -t mangle -A OUTPUT -j dest-filter
