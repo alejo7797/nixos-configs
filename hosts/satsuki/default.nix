@@ -32,7 +32,7 @@
     firewall.extraCommands = ''
       # Route traffic to resolver1.opendns.com outside of the VPN tunnel.
       iptables -t mangle -A OUTPUT -d 208.67.222.222 -p udp --dport 53 -j MARK --set-mark 0xcbca
-      iptables -t nat -A POSTROUTING -d 208.67.222.222 -p udp --dport 53 -j MASQUERADE
+      iptables -t nat -A POSTROUTING -m mark --mark 0xcbca -j MASQUERADE
     '';
 
     nameservers = [
