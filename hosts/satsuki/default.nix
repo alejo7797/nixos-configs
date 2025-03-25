@@ -29,10 +29,33 @@
     hostName = "satsuki";
     networkmanager.enable = true;
 
+    # TODO: make this into a separate module?
+
     firewall.extraCommands = ''
-      # Route traffic to resolver1.opendns.com outside of the VPN tunnel.
-      iptables -t mangle -A OUTPUT -d 208.67.222.222 -p udp --dport 53 -j MARK --set-mark 0xcbca
-      iptables -t nat -A POSTROUTING -m mark --mark 0xcbca -j MASQUERADE
+      iptables -t mangle -D OUTPUT -j my-filter 2>/dev/null || true
+      iptables -t nat -D POSTROUTING -j my-reroute 2>/dev/null || true
+
+      for chain in my-filter my-reroute; do
+        iptables -t mangle -F "$chain" 2>/dev/null || true
+        iptables -t mangle -X "$chain" 2>/dev/null || true
+      done
+
+      iptables -t nat -F my-reroute 2>/dev/null || true
+      iptables -t nat -X my-reroute 2>/dev/null || true
+
+      iptables -t mangle -N my-filter
+      iptables -t mangle -N my-reroute
+      iptables -t nat -N my-reroute
+
+      iptables -t mangle -A my-filter -d 208.67.222.222 -p udp --dport 53 -j my-reroute
+      iptables -t mangle -A my-filter -d 18.1.0.0/16 -p tcp --dport 443 -j my-reroute
+
+      iptables -t mangle -A my-reroute -j MARK --set-mark 0xcbca
+
+      iptables -t nat -A my-reroute -m mark --mark 0xcbca -j MASQUERADE
+
+      iptables -t nat -A POSTROUTING -j my-reroute
+      iptables -t mangle -A OUTPUT -j my-filter
     '';
 
     nameservers = [
