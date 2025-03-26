@@ -23,6 +23,8 @@ modifyLineBreaks:
         | \\\] | \\end\{align\*?\}
         | \\end\{equation\*?\}
 
+        # Long colored blocks.
+        | \\textcolor\{\w*\}\{
 
 # Don't keep long \item fields at
 # an unnatural indentation level.
