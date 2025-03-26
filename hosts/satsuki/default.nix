@@ -43,6 +43,7 @@
 
   services = {
     resolved.enable = true;
+    my.tzupdate.enable = true;
 
     udev.extraRules = ''
       # Prevent the Logitech USB mouse receiver from waking the system up from suspend. It has been known to cause issues for us in the past.
@@ -75,7 +76,6 @@
 
   myNixOS = {
     jupyter.enable = true;
-    tzupdate.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
