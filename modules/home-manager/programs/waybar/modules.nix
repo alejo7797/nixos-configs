@@ -43,7 +43,7 @@ in
       format-bluetooth = "{volume}% {icon}{format_source}";
       format = "{volume}% {icon}{format_source}";
 
-      format-muted = " ";
+      format-muted = "";
       # Only show when source is on.
       format-source = " {volume}% ";
       format-source-muted = "";
