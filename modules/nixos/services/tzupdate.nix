@@ -15,7 +15,7 @@ in
 
           ! [[ $1 =~ wlo[0-9] ]] && exit 0
 
-          if [[ $2 == "up" ]]; then
+          if [[ $2 == up ]]; then
 
             # Avoids using any VPN public IP addresses.
             ip=$(${lib.getExe pkgs.dig} +short myip.opendns.com @resolver1.opendns.com)
@@ -31,6 +31,7 @@ in
 
             fi
           fi
+
         '';
       }
     ];
