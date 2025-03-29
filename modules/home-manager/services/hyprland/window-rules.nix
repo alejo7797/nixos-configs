@@ -26,9 +26,11 @@
       { ws = 1; criteria = "title:^(\\.+ - )?Mozilla Firefox$"; }
       { ws = 2; criteria = "title:^(Home - )?Mozilla Thunderbird$"; }
 
-      { ws = 3; criteria = "class:^steam$"; }
+      { ws = 5; criteria = "class:^steam$"; }
 
+      { ws = 8; criteria = "class:^signal$"; }
       { ws = 8; criteria = "class:^vesktop$"; }
+
       { ws = 9; criteria = "class:^spotify$"; }
 
       { ws = 18; criteria = "class:^Zotero$"; }

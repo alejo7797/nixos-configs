@@ -10,16 +10,16 @@ in
     "hyprland/workspaces" =  {
       format = "{icon}";
       format-icons = {
-        "1" = ""; # firefox
+        "1" = "󰈹"; # firefox
         "2" = ""; # emails
         "3" = ""; # latex
         "4" = ""; # terminal
         "5" = ""; # games
         "6" = ""; # coding
-        "8" = ""; # discord
+        "8" = ""; # messaging
         "9" = ""; # spotify
 
-        "18" = ""; # library
+        "18" = ""; # library
         "20" = ""; # btop
 
         "extra" = "";
@@ -43,7 +43,7 @@ in
       format-bluetooth = "{volume}% {icon}{format_source}";
       format = "{volume}% {icon}{format_source}";
 
-      format-muted = " ";
+      format-muted = "";
       # Only show when source is on.
       format-source = " {volume}% ";
       format-source-muted = "";

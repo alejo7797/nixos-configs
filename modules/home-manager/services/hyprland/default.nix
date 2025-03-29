@@ -17,12 +17,15 @@ lib.mkIf cfg.enable {
     (_: _: { Unit.After = [ "graphical-session.target" ]; })
 
     {
-      # TODO: Fixed with release 25.05
+      # TODO: remove with 25.05.
       gammastep = { };
       hypridle = { };
       kdeconnect-indicator = { };
       waybar = { };
     };
+
+  # TODO: remove with 25.05.
+  services.hyprpaper.enable = lib.mkForce false;
 
   wayland.windowManager.hyprland = {
 

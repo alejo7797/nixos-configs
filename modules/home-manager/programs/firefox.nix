@@ -23,21 +23,16 @@ in
         # Profile-specific extensions.
         extensions = with pkgs.nur.repos.rycee.firefox-addons; [
 
-          augmented-steam betterttv
-          darkreader simple-tab-groups
-          tampermonkey to-google-translate
-          yomitan zotero-connector
+          augmented-steam
+          betterttv
+          darkreader
+          simple-tab-groups
+          tampermonkey
+          to-google-translate
+          yomitan
+          zotero-connector
 
         ];
-
-        search = {
-          default = "DuckDuckGo";
-          force = true;
-          engines = {
-            "Bing".metaData.hidden = true;
-            "Google".metaData.hidden = true;
-          };
-        };
 
         settings = {
           # Restore previous session.

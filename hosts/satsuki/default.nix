@@ -29,16 +29,21 @@
     hostName = "satsuki";
     networkmanager.enable = true;
 
-    firewall.extraCommands = ''
-      # Route traffic to resolver1.opendns.com outside of the VPN tunnel.
-      iptables -t mangle -A OUTPUT -d 208.67.222.222 -p udp --dport 53 -j MARK --set-mark 0xcbca
-      iptables -t nat -A POSTROUTING -d 208.67.222.222 -p udp --dport 53 -j MASQUERADE
-    '';
+    firewall.my.no-vpn = [
+      "en.wikipedia.org"
+      "resolver1.opendns.com"
+      "math.mit.edu"
+    ];
+
+    nameservers = [
+      "9.9.9.9#dns.quad9.net" "149.112.112.112#dns.quad9.net"
+      "[2620:fe::fe]#dns.quad9.net" "[2620:fe::9]#dns.quad9.net"
+    ];
   };
 
   services = {
-    # Domain Name Resolution.
     resolved.enable = true;
+    my.tzupdate.enable = true;
 
     udev.extraRules = ''
       # Prevent the Logitech USB mouse receiver from waking the system up from suspend. It has been known to cause issues for us in the past.
@@ -64,20 +69,18 @@
 
   my = {
     gaming.enable = true;
+    hyprland.enable = true;
     laptop.enable = true;
     yubikey._2fa = true;
   };
 
   myNixOS = {
-    hyprland.enable = true;
     jupyter.enable = true;
-    tzupdate.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
 
     # Math.
-    biber
     gap
     geogebra
     khoca
@@ -92,7 +95,6 @@
     clang
     nodejs
     bundix
-    bundler
     ruby
 
   ];

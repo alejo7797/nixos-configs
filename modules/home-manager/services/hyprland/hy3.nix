@@ -6,7 +6,7 @@ in
   wayland.windowManager.hyprland.settings.plugin.hy3 = {
 
     tabs = {
-      height = 30;
+      height = 32;
       padding = 0;
       rounding = 0;
       text_height = 12;

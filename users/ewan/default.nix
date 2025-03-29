@@ -20,10 +20,10 @@ in
     # Public SSH key coming from my personal OpenPGP key.
     openssh.authorizedKeys.keyFiles = [ ./id_rsa.pub ];
 
-    extraGroups = with groups;
+    extraGroups = with groups; [ wheel.name ]
 
-      # Admin group.
-      [ wheel.name ]
+      # Give permission to capture network traffic using Wireshark.
+      ++ lib.optional config.programs.wireshark.enable wireshark.name
 
       # Give access to the NetworkManager daemon: configure and add new networks.
       ++ lib.optional config.networking.networkmanager.enable networkmanager.name

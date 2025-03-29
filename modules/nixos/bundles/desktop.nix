@@ -24,7 +24,12 @@ in
 
     i18n.inputMethod.enable = true;
 
-    security.rtkit.enable = true;
+    security = {
+      pam.services.login.enableGnomeKeyring = true;
+      rtkit.enable = true;
+    };
+
+    xdg.portal.xdgOpenUsePortal = true;
 
     environment.systemPackages = with pkgs; [
       anki
@@ -55,6 +60,7 @@ in
       plex-desktop
       seahorse
       simple-scan
+      signal-desktop
       spotify
       sqlitebrowser
       tellico
@@ -83,6 +89,7 @@ in
     services = {
       avahi.enable = true;
       blueman.enable = true;
+      geoclue2.enable = true;
       libinput.enable = true;
       pcscd.enable = true;
       printing.enable = true;
@@ -93,19 +100,17 @@ in
     fonts.packages = with pkgs; [
       corefonts
       font-awesome
-      noto-fonts
-      source-sans
-      vistafonts
-
-      # CJK fonts.
       ipaexfont
       jigmo
       kanji-stroke-order-font
+      noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
       source-han-sans
       source-han-serif
+      source-sans
       takao
+      vistafonts
     ];
 
   };
