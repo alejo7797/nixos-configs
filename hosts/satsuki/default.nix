@@ -49,13 +49,11 @@
 
           case "$CONNECTION_ID" in
 
-            Koakuma_VPN)
+            Koakuma_VPN|xfinitywifi_HUH_Res)
               nta="patchoulihq.cc" ;;
 
-            xfinitywifi_HUH_Res)
-              nta="patchoulihq.cc mail.epelde.net" ;;
-
             *) nta="" ;;
+
           esac
 
           resolvectl nta "$DEVICE_IFACE" "$nta"
