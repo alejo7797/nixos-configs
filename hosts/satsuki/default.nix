@@ -32,6 +32,7 @@
     firewall.my.no-vpn = [
       "en.wikipedia.org"
       "resolver1.opendns.com"
+      "api.beacondb.net"
       "math.mit.edu"
     ];
 
