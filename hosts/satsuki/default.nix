@@ -39,6 +39,29 @@
       "9.9.9.9#dns.quad9.net" "149.112.112.112#dns.quad9.net"
       "[2620:fe::fe]#dns.quad9.net" "[2620:fe::9]#dns.quad9.net"
     ];
+
+    networkmanager.dispatcherScripts = [
+      {
+        source = pkgs.writeShellScript "patchoulihq.cc-nta" ''
+
+          ! [[ $2 == up ]] && exit 0
+
+          case "$CONNECTION_ID" in
+
+            Koakuma_VPN)
+              nta="patchoulihq.cc" ;;
+
+            xfinitywifi_HUH_Res)
+              nta="patchoulihq.cc mail.epelde.net" ;;
+
+            *) nta="" ;;
+          esac
+
+          resolvectl nta "$DEVICE_IFACE" "$nta"
+
+        '';
+      }
+    ];
   };
 
   services = {
