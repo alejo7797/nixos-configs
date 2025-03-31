@@ -1,12 +1,20 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ config, lib, pkgs, ... }:
 
 let
   cfg = config.networking.firewall;
+
+  vpn-whitelist = pkgs.writeShellScriptBin "vpn-whitelist"
+    ''
+      readarray -t ipv4 < <( dig +short @9.9.9.9 A "$1" | grep -v "\.$" )
+      for ip in "''${ipv4[@]}"; do
+        iptables -t mangle -A dest-filter -d "$ip" -j MARK --set-mark 0xcbca
+      done
+
+      readarray -t ipv6 < <( dig +short @9.9.9.9 AAAA "$1" | grep -v "\.$" )
+      for ip in "''${ipv6[@]}"; do
+        ip6tables -t mangle -A dest-filter -d "$ip" -j MARK --set-mark 0xcbca
+      done
+    '';
 in
 
 {
@@ -63,27 +71,28 @@ in
         description = "My firewall script";
         path = [ cfg.package pkgs.dig ];
 
-        after = [ "network-online.target" ];
         wants = [ "network-online.target" ];
         wantedBy = [ "firewall.service" ];
+
+        after = [
+          "network-online.target"
+          "firewall.service"
+        ];
 
         serviceConfig = {
           Type = "oneshot";
         };
 
-        script = lib.flip (lib.concatMapStringsSep "\n") cfg.my.no-vpn (name: ''
-          ipv4=$(dig +short @9.9.9.9 A ${name} | grep -v "\.$" || true)
-          if [[ -n "$ipv4" ]]; then
-            iptables -t mangle -A dest-filter -d "$ipv4" -j MARK --set-mark 0xcbca
-          fi
-
-          ipv6=$(dig +short @9.9.9.9 AAAA ${name} | grep -v "\.$" || true)
-          if [[ -n "$ipv6" ]]; then
-            ip6tables -t mangle -A dest-filter -d "$ipv6" -j MARK --set-mark 0xcbca
-          fi
-        '');
+        script =
+          lib.concatMapStringsSep "\n"
+          (name: ''
+            ${lib.getExe vpn-whitelist} ${name}
+          '')
+          cfg.my.no-vpn;
 
       };
+
+      environment.systemPackages = [ vpn-whitelist ];
 
     })
 
