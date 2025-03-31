@@ -63,12 +63,13 @@ in
 
       NPM_CONFIG_CACHE = "${config.xdg.cacheHome}/npm";
 
+      PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR = "${config.xdg.dataHome}/plex/Application Support";
+
       PYTHON_HISTORY = "${config.xdg.stateHome}/python/history";
 
       RENPY_PATH_TO_SAVES = "${config.xdg.dataHome}/renpy";
 
       WINEPREFIX = "${config.xdg.dataHome}/wine";
-
     };
 
     xdg = {
