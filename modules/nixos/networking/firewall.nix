@@ -66,7 +66,7 @@ in
 
       };
 
-      systemd.services.firewall-post = {
+      systemd.services.firewall-post = rec {
 
         description = "My firewall script";
         path = [ cfg.package pkgs.dig ];
@@ -80,15 +80,20 @@ in
         ];
 
         serviceConfig = {
+          RemainAfterExit = true;
           Type = "oneshot";
+        };
+
+        unitConfig = {
+          ReloadPropagatedFrom = "firewall.service";
         };
 
         script =
           lib.concatMapStringsSep "\n"
-          (name: ''
-            ${lib.getExe vpn-whitelist} ${name}
-          '')
+          (name: "${lib.getExe vpn-whitelist} ${name}")
           cfg.my.no-vpn;
+
+        reload = script;
 
       };
 
