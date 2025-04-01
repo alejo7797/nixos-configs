@@ -22,8 +22,9 @@
 
         {
           inherit (unstable)
+            azahar # New 3DS emulator project.
             borgmatic # Don't use ~/.borgmatic.
-            uwsm # Use login shell environment.
+            uwsm # Inherit shell environment.
           ;
 
           # Upstream refactor.
