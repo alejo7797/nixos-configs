@@ -102,6 +102,9 @@
 
   environment.systemPackages = with pkgs; [
 
+    # Messaging.
+    caprine-bin
+
     # Math.
     gap
     geogebra
