@@ -14,6 +14,8 @@ in
 
     extraPackages = with pkgs; [ fd ];
 
+    extraPlugins = with pkgs.vimPlugins; [ tabout-nvim ];
+
     clipboard = {
       register = "unnamedplus";
       providers = {
@@ -108,6 +110,7 @@ in
     ];
 
     plugins = {
+
       # Utility.
       bufdelete.enable = true;
       comment.enable = true;
@@ -372,5 +375,9 @@ in
 
       trouble.enable = true;
     };
+
+    extraConfigLua = ''
+      require('tabout').setup()
+    '';
   };
 }
