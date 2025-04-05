@@ -1,12 +1,7 @@
-{
-  lib,
-  config,
-  pkgs,
-  ...
-}:
+{ config, lib, pkgs, ... }:
 
 let
-  cfg = config.myNixOS.jupyter;
+  cfg = config.programs.my.jupyter;
 
   # TODO: remove with 25.05
   sage-logo = builtins.fetchurl {
@@ -17,7 +12,7 @@ let
 in
 
 {
-  options.myNixOS.jupyter.enable = lib.mkEnableOption "Jupyter";
+  options.programs.my.jupyter.enable = lib.mkEnableOption "Jupyter";
 
   config = lib.mkIf cfg.enable {
 

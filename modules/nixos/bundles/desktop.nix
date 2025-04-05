@@ -35,6 +35,7 @@ in
       anki
       audacity
       btop
+      caprine-bin
       castero
       dconf-editor
       digikam
