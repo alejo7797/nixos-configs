@@ -19,6 +19,12 @@ modifyLineBreaks:
         | \\begin\{(?:prf|conj|warning)\*?\}
         | \\begin\{(?:df|example|rem)\*?\}
 
+        # Within the abstract.
+        | \\begin\{abstract\}
+
+        # After item lists.
+        | \\end\{itemize\}
+
         # After display math.
         | \\\] | \\end\{align\*?\}
         | \\end\{equation\*?\}

@@ -6,13 +6,19 @@
 
   imports = [
     inputs.lanzaboote.nixosModules.lanzaboote
-    ./filesystems.nix ./hardware.nix
+    ./filesystems.nix
+    ./hardware.nix
 
     # TODO: figure this out
     ../../users/ewan
   ];
 
-  swapDevices = [ { device = "/var/swapfile"; size = 16384; } ];
+  swapDevices = [
+    {
+      device = "/var/swapfile";
+      size = 16384;
+    }
+  ];
 
   boot = {
     lanzaboote = {
@@ -20,7 +26,10 @@
       pkiBundle = "/var/lib/sbctl";
     };
     loader.timeout = 0;
-    kernelParams = [ "quiet" "nowatchdog" ];
+    kernelParams = [
+      "quiet"
+      "nowatchdog"
+    ];
   };
 
   hardware.bluetooth.enable = true;
@@ -32,12 +41,36 @@
     firewall.my.no-vpn = [
       "en.wikipedia.org"
       "resolver1.opendns.com"
+      "api.beacondb.net"
       "math.mit.edu"
     ];
 
     nameservers = [
-      "9.9.9.9#dns.quad9.net" "149.112.112.112#dns.quad9.net"
-      "[2620:fe::fe]#dns.quad9.net" "[2620:fe::9]#dns.quad9.net"
+      "9.9.9.9#dns.quad9.net"
+      "149.112.112.112#dns.quad9.net"
+      "[2620:fe::fe]#dns.quad9.net"
+      "[2620:fe::9]#dns.quad9.net"
+    ];
+
+    networkmanager.dispatcherScripts = [
+      {
+        source = pkgs.writeShellScript "patchoulihq.cc-nta" ''
+
+          ! [[ $2 == up ]] && exit 0
+
+          case "$CONNECTION_ID" in
+
+            Koakuma_VPN|xfinitywifi_HUH_Res)
+              nta="patchoulihq.cc" ;;
+
+            *) nta="" ;;
+
+          esac
+
+          resolvectl nta "$DEVICE_IFACE" "$nta"
+
+        '';
+      }
     ];
   };
 
@@ -45,10 +78,18 @@
     resolved.enable = true;
     my.tzupdate.enable = true;
 
-    udev.extraRules = ''
-      # Prevent the Logitech USB mouse receiver from waking the system up from suspend. It has been known to cause issues for us in the past.
-      ACTION=="add|change", SUBSYSTEM=="usb", DRIVERS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c547", ATTR{power/wakeup}="disabled"
-    '';
+    udev = {
+      extraRules = ''
+        # Prevent the Logitech USB mouse receiver from waking the system up from suspend. It has been known to cause issues for us in the past.
+        ACTION=="add|change", SUBSYSTEM=="usb", DRIVERS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c547", ATTR{power/wakeup}="disabled"
+      '';
+
+      packages = [
+        (pkgs.writeTextDir "etc/udev/rules.d/71-usb-device.rules" ''
+          SUBSYSTEM=="usb", MODE="0660", TAG+="uaccess"
+        '')
+      ];
+    };
 
     getty = {
       autologinUser = "ewan";
@@ -63,7 +104,8 @@
   sops.secrets = {
     u2f-mappings = {
       # YubiKey pam-u2f module secrets.
-      group = "users"; mode = "0440";
+      group = "users";
+      mode = "0440";
     };
   };
 
@@ -79,6 +121,9 @@
   };
 
   environment.systemPackages = with pkgs; [
+
+    # Messaging.
+    caprine-bin
 
     # Math.
     gap

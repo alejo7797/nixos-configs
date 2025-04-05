@@ -1,12 +1,20 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ config, lib, pkgs, ... }:
 
 let
   cfg = config.networking.firewall;
+
+  vpn-whitelist = pkgs.writeShellScriptBin "vpn-whitelist"
+    ''
+      readarray -t ipv4 < <( dig +short @9.9.9.9 A "$1" | grep -v "\.$" )
+      for ip in "''${ipv4[@]}"; do
+        iptables -t mangle -A dest-filter -d "$ip" -j MARK --set-mark 0xcbca
+      done
+
+      readarray -t ipv6 < <( dig +short @9.9.9.9 AAAA "$1" | grep -v "\.$" )
+      for ip in "''${ipv6[@]}"; do
+        ip6tables -t mangle -A dest-filter -d "$ip" -j MARK --set-mark 0xcbca
+      done
+    '';
 in
 
 {
@@ -26,61 +34,72 @@ in
 
   };
 
-  config = {
+  config = lib.mkMerge [
 
-    networking.firewall = lib.mkMerge [
-
-      {
+    {
+      networking.firewall = {
         # Issues with Wireguard.
         checkReversePath = false;
 
         # Reduce kernel log verbosity.
         logRefusedConnections = false;
-      }
+      };
+    }
 
-      (lib.mkIf (cfg.my.no-vpn != [ ]) {
+    (lib.mkIf (cfg.my.no-vpn != [ ]) {
 
-        extraPackages = [ pkgs.dig ];
+      networking.firewall = {
 
         extraStopCommands = ''
           ip46tables -t mangle -D OUTPUT -j dest-filter 2>/dev/null || true
           ip46tables -t nat -D POSTROUTING -m mark --mark 0xcbca -j MASQUERADE 2>/dev/null || true
         '';
 
-        extraCommands =
-          ''
-            ip46tables -t mangle -F dest-filter 2>/dev/null || true
-            ip46tables -t mangle -X dest-filter 2>/dev/null || true
-            ip46tables -t mangle -N dest-filter
+        extraCommands = ''
+          ip46tables -t mangle -F dest-filter 2>/dev/null || true
+          ip46tables -t mangle -X dest-filter 2>/dev/null || true
+          ip46tables -t mangle -N dest-filter
 
-            iptables -I INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-          ''
-          +
-          lib.flip (lib.concatMapStringsSep "\n") cfg.my.no-vpn
-            (
-              name: ''
-                ipv4=$(dig +short @9.9.9.9 A ${name} | grep -v "\.$" || true)
-                if [[ -n "$ipv4" ]]; then
-                  iptables -t mangle -A dest-filter -d "$ipv4" -j MARK --set-mark 0xcbca
-                fi
+          ip46tables -t nat -A POSTROUTING -m mark --mark 0xcbca -j MASQUERADE
+          ip46tables -t mangle -A OUTPUT -j dest-filter
+        '';
 
-                ipv6=$(dig +short @9.9.9.9 AAAA ${name} | grep -v "\.$" || true)
-                if [[ -n "$ipv6" ]]; then
-                  ip6tables -t mangle -A dest-filter -d "$ipv6" -j MARK --set-mark 0xcbca
-                fi
-              ''
-            )
-          +
-          ''
-            iptables -D INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+      };
 
-            ip46tables -t nat -A POSTROUTING -m mark --mark 0xcbca -j MASQUERADE
-            ip46tables -t mangle -A OUTPUT -j dest-filter
-          '';
+      systemd.services.firewall-post = rec {
 
-      })
+        description = "My firewall script";
+        path = [ cfg.package pkgs.dig ];
 
-    ];
+        wants = [ "network-online.target" ];
+        wantedBy = [ "firewall.service" ];
 
-  };
+        after = [
+          "network-online.target"
+          "firewall.service"
+        ];
+
+        serviceConfig = {
+          RemainAfterExit = true;
+          Type = "oneshot";
+        };
+
+        unitConfig = {
+          ReloadPropagatedFrom = "firewall.service";
+        };
+
+        script =
+          lib.concatMapStringsSep "\n"
+          (name: "${lib.getExe vpn-whitelist} ${name}")
+          cfg.my.no-vpn;
+
+        reload = script;
+
+      };
+
+      environment.systemPackages = [ vpn-whitelist ];
+
+    })
+
+  ];
 }

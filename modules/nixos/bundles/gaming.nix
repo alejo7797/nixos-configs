@@ -10,6 +10,7 @@ in
   config = lib.mkIf cfg.enable {
 
     environment.systemPackages = with pkgs; [
+      azahar
       bolt-launcher
       dosbox-x
       easyrpg-player
