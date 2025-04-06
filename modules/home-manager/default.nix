@@ -22,7 +22,7 @@
 
   sops = {
     defaultSopsFile = ../../secrets/${config.home.username}.yaml;
-    age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
+    gnupg.home = "/dev/null"; # Don't even try to use my PGP key.
   };
 
   # TODO: remove starting with 25.05.
