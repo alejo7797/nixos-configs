@@ -68,6 +68,7 @@ in
       xorg.xeyes
       vesktop
       vulkan-tools
+      whatsie
       winetricks
       wineWowPackages.stable
       yt-dlp
