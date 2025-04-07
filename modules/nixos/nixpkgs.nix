@@ -32,6 +32,7 @@
 
           # Alternative RuneScape launcher with support for Jagex account logins.
           bolt-launcher = unstable.bolt-launcher.override { inherit (final) libgbm; };
+          altus = unstable.altus.override { inherit (final) appimageTools; };
 
           # Enable Wayland IME, fix application icon, build against the correct mesa version.
           joplin-desktop = unstable.joplin-desktop.override { inherit (final) appimageTools; };

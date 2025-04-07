@@ -32,6 +32,7 @@ in
     xdg.portal.xdgOpenUsePortal = true;
 
     environment.systemPackages = with pkgs; [
+      altus
       anki
       audacity
       btop
@@ -68,7 +69,6 @@ in
       xorg.xeyes
       vesktop
       vulkan-tools
-      whatsie
       winetricks
       wineWowPackages.stable
       yt-dlp

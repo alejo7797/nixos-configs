@@ -21,10 +21,10 @@
 
   my = {
     autostart = with pkgs; [
+      altus
       firefox
       signal-desktop
       thunderbird
-      whatsie
       zotero
     ];
 
