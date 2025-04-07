@@ -30,6 +30,7 @@
 
       { ws = 8; criteria = "class:^signal$"; }
       { ws = 8; criteria = "class:^vesktop$"; }
+      { ws = 8; criteria = "class:whatsie$"; }
 
       { ws = 9; criteria = "class:^spotify$"; }
 

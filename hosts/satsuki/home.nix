@@ -24,6 +24,7 @@
       firefox
       signal-desktop
       thunderbird
+      whatsie
       zotero
     ];
 
