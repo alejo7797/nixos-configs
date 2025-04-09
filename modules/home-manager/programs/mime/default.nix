@@ -85,7 +85,7 @@ in
           "video/mp4" "video/x-ms-wmv"
         ]
 
-        // setListTo cfg.defaultTextEditor [
+        // setListTo cfg.my.defaultTextEditor [
           # What Neovim advertises support for.
           "text/plain" "text/x-makefile"
           "text/x-c++hdr" "text/x-c++src"

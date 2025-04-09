@@ -58,7 +58,7 @@ in
 
     xdg.dataFile = {
 
-      "konsole/Default.profile".text = ini.generate "Default.profile" {
+      "konsole/Default.profile".source = ini.generate "Default.profile" {
 
         General.Name = "Default";
 

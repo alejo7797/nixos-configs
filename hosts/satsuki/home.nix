@@ -19,29 +19,18 @@
     "borg/ssh-key" = { };
   };
 
-  my = {
-    autostart = with pkgs; [
-      altus
-      firefox
-      signal-desktop
-      thunderbird
-      zotero
-    ];
-
-    hyprland.enable = true;
-    joplin.enable = true;
-  };
+  my.autostart = with pkgs; [
+    altus
+    firefox
+    signal-desktop
+    thunderbird
+    zotero
+  ];
 
   myHome = {
-    firefox.enable = true;
+    # TODO: migrate these
     thunderbird.enable = true;
-
-    workspaces = {
-      # TODO: look into this.
-      "DP-1" = [ 1 2 3 4 5 6 7 8 9 10
-        11 12 13 14 15 16 17 18 19 20 ];
-      "eDP-1, persistent:true" = [ "name:extra" ];
-    };
+    firefox.enable = true;
   };
 
   xdg.configFile."uwsm/env-hyprland".text = ''
@@ -100,8 +89,9 @@
 
   };
 
-  wayland.windowManager =  {
-    hyprland.settings.device = [
+  wayland.windowManager.hyprland = {
+
+    settings.device = [
       {
         # PRO X Superlight.
         name = "logitech-usb-receiver";
@@ -118,6 +108,14 @@
         sensitivity = -1;
       }
     ];
+
+    my.workspaces = {
+      # TODO: look into improving this setting.
+      "DP-1" = [ 1 2 3 4 5 6 7 8 9 10
+        11 12 13 14 15 16 17 18 19 20 ];
+      "eDP-1, persistent:true" = [ "name:extra" ];
+    };
+
   };
 
   programs = {

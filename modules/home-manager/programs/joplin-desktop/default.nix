@@ -1,7 +1,7 @@
 { lib, config, ... }:
 
 let
-  cfg = config.my.joplin;
+  cfg = config.programs.joplin-desktop;
 in
 
 {
@@ -9,9 +9,7 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    # Install and configure joplin-desktop.
     programs.joplin-desktop = {
-      enable = true;
 
       extraConfig = {
         # Basic settings.
@@ -27,9 +25,10 @@ in
         "style.editor.fontFamily" = "Noto Sans CJK JP";
         "style.editor.monospaceFontFamily" = "Hack Nerd Font Mono";
       };
+
     };
 
-    # Style the interface.
+    # Style interface.
     xdg.configFile = {
       "joplin-desktop/userchrome.css".source = ./userchrome.css;
       "joplin-desktop/userstyle.css".source = ./userstyle.css;

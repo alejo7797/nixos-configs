@@ -9,14 +9,12 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    # TODO: migrate this completely
-    myHome.graphical.enable = true;
-
     xdg.mimeApps.enable = true;
 
     programs = {
       direnv.enable = true;
       gpg.enable = true;
+      joplin-desktop.enable = true;
       kitty.enable = true;
       lsd.enable = true;
       mpv.enable = true;
