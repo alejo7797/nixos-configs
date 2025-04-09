@@ -9,6 +9,10 @@ in
 
   config = lib.mkIf cfg.enable {
 
+    home-manager.sharedModules = [
+      { my.math.enable = true; }
+    ];
+
     environment.systemPackages = with pkgs; [
       gap
       geogebra

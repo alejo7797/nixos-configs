@@ -5,11 +5,7 @@ let
 in
 
 {
-  options = {
-
-    my.hyprland.enable = lib.mkEnableOption "Hyprland bundle";
-
-  };
+  options.my.hyprland.enable = lib.mkEnableOption "Hyprland bundle";
 
   config = lib.mkIf cfg.enable {
 

@@ -27,4 +27,5 @@
   security = {
     sudo.enable = true;
   };
+
 }
