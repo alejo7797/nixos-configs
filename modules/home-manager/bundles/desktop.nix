@@ -14,11 +14,15 @@ in
 
     programs = {
       direnv.enable = true;
-      my.fcitx5.enable = true;
       gpg.enable = true;
-      my.keepassxc.enable = true;
       lsd.enable = true;
       nixvim.enable = true;
+    };
+
+    programs.my = {
+      dolphin.enable = true;
+      fcitx5.enable = true;
+      keepassxc.enable = true;
     };
 
     services = {

@@ -1,34 +1,53 @@
-{
-  lib,
-  config,
-  ...
-}:
+{ config, lib, pkgs, ... }:
 
 let
-  cfg = config.myHome.dolphin;
+  cfg = config.programs.my.dolphin;
+  ini = pkgs.formats.ini { };
 in
 
 {
-  options.myHome.dolphin.enable = lib.mkEnableOption "Dolphin configuration";
+  options.programs.my.dolphin.enable = lib.mkEnableOption "Dolphin";
 
   config = lib.mkIf cfg.enable {
 
-    xdg.configFile."dolphinrc".text = lib.generators.toINI {} {
+    xdg.configFile = {
 
-      DetailsMode = {
-        IconSize = 22;
-        PreviewSize = 22;
-        SidePadding = 21;
+      dolphinrc.source = ini.generate "dolphinrc" {
+
+        DetailsMode = {
+          IconSize = 22;
+          PreviewSize = 22;
+          SidePadding = 21;
+        };
+
+        "KFileDialog Settings" = {
+          "Places Icons Auto-resize" = false;
+          "Places Icons Static Size" = 22;
+        };
+
+        MainWindow = {
+          MenuBar = "Disabled";
+          ToolBarsMovable = "Disabled";
+        };
+
       };
 
-      "KFileDialog Settings" = {
-        "Places Icons Auto-resize" = false;
-        "Places Icons Static Size" = 22;
+      arkrc.source = ini.generate "arkrc" {
+        General.defaultOpenAction = "Open";
       };
 
-      MainWindow = {
-        MenuBar = "Disabled";
-        ToolBarsMovable = "Disabled";
+      ktrashrc.source = ini.generate "ktrashrc" {
+        "${config.xdg.dataHome}/Trash" = {
+          UseTimeLimit = true; Days = 7;
+        };
+      };
+
+      baloofilerc.source = ini.generate "baloofilerc" {
+        "Basic Settings"."Indexing-Enabled" = false;
+      };
+
+      kwalletrc.source = ini.generate "kwalletrc" {
+        "Wallet"."Enabled" = false;
       };
 
     };

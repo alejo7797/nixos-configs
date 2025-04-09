@@ -7,7 +7,6 @@
 
 let
   cfg = config.myHome.graphical;
-  ini = pkgs.formats.ini { };
   yaml = pkgs.formats.yaml { };
 in
 
@@ -31,7 +30,6 @@ in
   config = lib.mkIf cfg.enable {
 
     myHome = {
-      dolphin.enable = true;
       kitty.enable = true;
       konsole.enable = true;
       mimeApps.enable = true;
@@ -48,13 +46,6 @@ in
         "latexindent/latexindent.yaml".source = ./programs/latex/latexindent.yaml;
         "latexindent/indentconfig.yaml".source = yaml.generate "indentconfig.yaml" {
           paths = [ "${config.xdg.configHome}/latexindent/latexindent.yaml" ];
-        };
-
-        "baloofilerc".source = ini.generate "baloofilerc" {
-          "Basic Settings"."Indexing-Enabled" = false;
-        };
-        "kwalletrc".source = ini.generate "kwalletrc" {
-          "Wallet"."Enabled" = false;
         };
       };
     };
