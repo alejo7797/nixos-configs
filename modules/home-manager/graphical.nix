@@ -29,15 +29,6 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    myHome = {
-      kitty.enable = true;
-      konsole.enable = true;
-      mimeApps.enable = true;
-      mpv.enable = true;
-      ssh.enable = true;
-      zathura.enable = true;
-    };
-
     xdg = {
       configFile = {
         "chktexrc".source = ./programs/latex/chktexrc;

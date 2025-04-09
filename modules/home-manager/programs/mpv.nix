@@ -1,28 +1,18 @@
-{
-  lib,
-  config,
-  pkgs,
-  ...
-}:
+{ pkgs, ... }: {
 
-let
-  cfg = config.myHome.mpv;
-in
+  programs.mpv = {
 
-{
-  options.myHome.mpv.enable = lib.mkEnableOption "mpv";
+    config = {
+      # Resume from last position.
+      save-position-on-quit = true;
 
-  config = lib.mkIf cfg.enable {
-
-    programs.mpv = {
-      enable = true;
-
-      config = {
-        profile = "gpu-hq";
-        save-position-on-quit = true;
-      };
-
-      scripts = with pkgs.mpvScripts; [ autoload ];
+      # GPU acceleration.
+      profile = "gpu-hq";
     };
+
+    # Automatically queue files in the directory.
+    scripts = with pkgs.mpvScripts; [ autoload ];
+
   };
+
 }

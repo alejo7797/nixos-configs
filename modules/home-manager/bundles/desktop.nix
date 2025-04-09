@@ -12,11 +12,16 @@ in
     # TODO: migrate this completely
     myHome.graphical.enable = true;
 
+    xdg.mimeApps.enable = true;
+
     programs = {
       direnv.enable = true;
       gpg.enable = true;
+      kitty.enable = true;
       lsd.enable = true;
+      mpv.enable = true;
       nixvim.enable = true;
+      zathura.enable = true;
     };
 
     programs.my = {

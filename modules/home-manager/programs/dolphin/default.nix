@@ -32,6 +32,10 @@ in
 
       };
 
+      konsolerc.source = ini.generate "konsolerc" {
+        "Desktop Entry".DefaultProfile = "Default.profile";
+      };
+
       arkrc.source = ini.generate "arkrc" {
         General.defaultOpenAction = "Open";
       };
@@ -51,5 +55,23 @@ in
       };
 
     };
+
+    xdg.dataFile = {
+
+      "konsole/Default.profile".text = ini.generate "Default.profile" {
+
+        General.Name = "Default";
+
+        Appearance = with config.stylix.fonts; {
+          ColorScheme = "TomorrowNight"; # Custom implementation of Tomorrow Night for Konsole.
+          Font = "${monospace.name},${toString sizes.applications},-1,5,400,0,0,0,0,0,0,0,0,0,0,1";
+        };
+
+      };
+
+      "konsole/TomorrowNight.colorscheme".source = ./colorscheme;
+
+    };
+
   };
 }
