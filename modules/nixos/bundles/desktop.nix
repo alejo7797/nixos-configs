@@ -37,13 +37,13 @@ in
       audacity
       btop
       caprine-bin
-      castero
       dconf-editor
       digikam
       ffmpeg
       filezilla
       font-manager
       gimp
+      gpodder
       icoutils
       imagemagick
       inkscape

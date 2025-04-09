@@ -61,6 +61,8 @@ in
       MATHEMATICA_USERBASE = "${config.xdg.dataHome}/WolframEngine";
       WOLFRAM_USERBASE = "${config.xdg.dataHome}/Wolfram";
 
+      GPODDER_HOME = "${config.xdg.dataHome}/gPodder";
+
       NPM_CONFIG_CACHE = "${config.xdg.cacheHome}/npm";
 
       PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR = "${config.xdg.dataHome}/plex/Application Support";
