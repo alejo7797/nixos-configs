@@ -342,7 +342,6 @@ in
         };
         sources = {
           diagnostics = {
-            checkmake.enable = true;
             deadnix.enable = true;
             phpcs.enable = true;
             rubocop.enable = true;
