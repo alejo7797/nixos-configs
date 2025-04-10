@@ -17,10 +17,13 @@
 
   my.intel-graphics.enable = true;
 
-  # Necessary fix at the moment for functioning RTD3 power management.
-  hardware.nvidia = { open = lib.mkForce false; gsp.enable = false; };
+  hardware = {
+    bluetooth.enable = true;
+    cpu.intel.updateMicrocode = true;
 
-  hardware.cpu.intel.updateMicrocode = true;
+    # Necessary fix at the moment for RTD3 power management.
+    nvidia = { open = lib.mkForce false; gsp.enable = false; };
+  };
+
   nixpkgs.hostPlatform = "x86_64-linux";
-
 }

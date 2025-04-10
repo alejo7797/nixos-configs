@@ -9,6 +9,10 @@ in
 
   config = lib.mkIf cfg.enable {
 
+    home-manager.sharedModules = [
+      { my.hyprland.enable = true; }
+    ];
+
     environment.variables.NIXOS_OZONE_WL = 1;
 
     i18n.inputMethod.fcitx5.waylandFrontend = true;

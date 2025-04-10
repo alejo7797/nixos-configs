@@ -372,9 +372,19 @@
       ];
 
       cmp.settings.mapping = {
-        "<C-Space>" = "cmp.mapping.complete()";
-        "<C-e>" = "cmp.mapping.close()";
-        "<CR>" = "cmp.mapping.confirm({ select = true })";
+        "<CR>" = ''
+          cmp.mapping(function(fallback)
+            if cmp.visible() then
+              if cmp.get_active_entry() then
+                cmp.confirm()
+              else
+                cmp.close()
+              end
+            else
+              fallback()
+            end
+          end, { "i", "s" })
+        '';
 
         "<Tab>" = ''
           cmp.mapping(function(fallback)

@@ -32,16 +32,18 @@ in
     xdg.portal.xdgOpenUsePortal = true;
 
     environment.systemPackages = with pkgs; [
+      altus
       anki
       audacity
       btop
-      castero
+      caprine-bin
       dconf-editor
       digikam
       ffmpeg
       filezilla
       font-manager
       gimp
+      gpodder
       icoutils
       imagemagick
       inkscape

@@ -1,12 +1,27 @@
-{ config,...}: {
+{ config, ... }:
+{
 
   programs = {
 
     git = {
-      userName = "Alex Epelde";
+      # Set basic Git identity.
       userEmail = "alex@epelde.net";
+      userName = "Alex Epelde";
     };
 
+    gpg.publicKeys = [
+      {
+        source = builtins.fetchurl {
+          url = "https://alex.epelde.net/public-key.asc"; # My public key.
+          sha256 = "1mijaxbqrc5mbwm9npbaf1vk8zbrrv3f4fc956kj98j7phb284gh";
+        };
+
+        # It's my key, lol.
+        trust = "ultimate";
+      }
+    ];
+
+    # Set up Z shell.
     zsh.enable = true;
 
   };

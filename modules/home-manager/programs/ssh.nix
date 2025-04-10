@@ -1,42 +1,27 @@
 {
-  lib,
-  config,
-  ...
-}:
+  programs.ssh = {
 
-let
-  cfg = config.myHome.ssh;
-in
+    matchBlocks = {
+      "*.srcf.net" = {
+        user = "ae433";
+      };
 
-{
-  options.myHome.ssh.enable = lib.mkEnableOption "SSH configuration";
+      "abel" = {
+        user = "epelde";
+      };
 
-  config = lib.mkIf cfg.enable {
+      "patchouli" = {
+        port = 21055;
+      };
 
-    programs.ssh = {
-      enable = true;
+      "git.patchoulihq.cc" = {
+        port = 21055;
+      };
 
-      matchBlocks = {
-        "*.srcf.net" = {
-          user = "ae433";
-        };
-
-        "abel" = {
-          user = "epelde";
-        };
-
-        "patchouli" = {
-          port = 21055;
-        };
-
-        "git.patchoulihq.cc" = {
-          port = 21055;
-        };
-
-        "koakuma" = {
-          port = 51901;
-        };
+      "koakuma" = {
+        port = 51901;
       };
     };
+
   };
 }

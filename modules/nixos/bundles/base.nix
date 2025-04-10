@@ -8,6 +8,7 @@
     jq
     lsof
     nmap
+    sops
     sqlite
     unar
     usbutils
@@ -26,4 +27,5 @@
   security = {
     sudo.enable = true;
   };
+
 }

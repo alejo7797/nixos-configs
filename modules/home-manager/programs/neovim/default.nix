@@ -114,6 +114,7 @@ in
       # Utility.
       bufdelete.enable = true;
       comment.enable = true;
+      lastplace.enable = true;
       nvim-autopairs.enable = true;
       nvim-surround.enable = true;
       todo-comments.enable = true;
@@ -342,7 +343,6 @@ in
         };
         sources = {
           diagnostics = {
-            checkmake.enable = true;
             deadnix.enable = true;
             phpcs.enable = true;
             rubocop.enable = true;

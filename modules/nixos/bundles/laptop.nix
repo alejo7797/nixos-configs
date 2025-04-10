@@ -5,13 +5,13 @@ let
 in
 
 {
-  options = {
-
-    my.laptop.enable = lib.mkEnableOption "laptop bundle";
-
-  };
+  options.my.laptop.enable = lib.mkEnableOption "laptop bundle";
 
   config = lib.mkIf cfg.enable {
+
+    home-manager.sharedModules = [{
+      my.laptop.enable = true;
+    }];
 
     my.desktop.enable = true;
 
@@ -19,12 +19,6 @@ in
       auto-cpufreq.enable = true;
       thermald.enable = true;
     };
-
-    home-manager.sharedModules = [{
-
-      my.laptop.enable = true;
-
-    }];
 
   };
 }

@@ -5,11 +5,7 @@ let
 in
 
 {
-  options = {
-
-    my.laptop.enable = lib.mkEnableOption "laptop bundle";
-
-  };
+  options.my.laptop.enable = lib.mkEnableOption "laptop bundle";
 
   config = lib.mkIf cfg.enable {
 

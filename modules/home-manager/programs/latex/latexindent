@@ -64,3 +64,5 @@ specialBeginEnd:
   leftRightBrace:
     begin: '\\left\\\{'
     end: '\\right\\\}'
+
+# vim: ft=yaml

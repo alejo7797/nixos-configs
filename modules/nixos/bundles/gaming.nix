@@ -9,6 +9,10 @@ in
 
   config = lib.mkIf cfg.enable {
 
+    home-manager.sharedModules = [
+      { my.gaming.enable = true; }
+    ];
+
     environment.systemPackages = with pkgs; [
       azahar
       bolt-launcher
