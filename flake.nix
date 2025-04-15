@@ -45,6 +45,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    autofirma-nix = {
+      # Suite of tools for working with Spain's administration.
+      url = "github:nix-community/autofirma-nix/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixos-mailserver = {
       # NixOS module setting up a complete and simple email server.
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.11";

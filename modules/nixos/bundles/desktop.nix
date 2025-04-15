@@ -79,6 +79,7 @@ in
 
     programs = {
       appimage.enable = true;
+      autofirma.enable = true;
       my.dolphin.enable = true;
       firefox.enable = true;
       java.enable = true;
