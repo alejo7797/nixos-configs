@@ -114,6 +114,7 @@ in
       # Utility.
       bufdelete.enable = true;
       comment.enable = true;
+      hex.enable = true;
       lastplace.enable = true;
       nvim-autopairs.enable = true;
       nvim-surround.enable = true;
