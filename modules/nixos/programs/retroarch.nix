@@ -15,9 +15,8 @@ in
 
         cores = with libretro; [
 
-          # For the list of cores and other information check these sites:
           # https://github.com/NixOS/nixpkgs/tree/master/pkgs/applications/emulators/libretro
-          # https://emulation.gametechwiki.com/index.php/Main_Page
+          # https://emulation.gametechwiki.com/index.php/Main_Page for the state of emulation
 
           mesen          # Famicom
           mgba           # Game Boy

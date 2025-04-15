@@ -22,7 +22,7 @@ in
 
         definitions = {
 
-          # The default Python 3 interpreter.
+          # The default Jupyter Python interpreter.
           inherit (jupyter-kernel.default) python3;
 
           # Wolfram Language kernel for Jupyter.
