@@ -1,50 +1,67 @@
-{
-  lib,
-  config,
-  pkgs,
-  ...
-}:
+{ config, lib, pkgs, ... }:
 
 let
   cfg = config.xdg.mimeApps;
 
-  setListTo = value: list:
-    builtins.listToAttrs
+  toINI = lib.generators.toINI {};
+
+  setListTo = value: list: builtins.listToAttrs
     (map (name: { inherit name value; }) list);
 in
 
 {
   options.xdg.mimeApps.my = {
 
-    defaultWebBrowser = lib.mkOption {
-      type = lib.types.str;
-      default = "firefox.desktop";
-      description = "Default web browser.";
-    };
-
-    defaultTextEditor = lib.mkOption {
-      type = lib.types.str;
-      default = "nvim.desktop";
-      description = "Default text editor.";
-    };
-
     defaultImageViewer = lib.mkOption {
-      description = "Default image viewer.";
       type = lib.types.str;
+      description = "Default image viewer.";
       default = "org.kde.gwenview.desktop";
     };
 
     defaultMediaPlayer = lib.mkOption {
       type = lib.types.str;
-      default = "mpv.desktop";
       description = "Default media player.";
+      default = "mpv.desktop";
+    };
+
+    defaultTerminalEmulator = lib.mkOption {
+      type = lib.types.str;
+      description = "Default terminal emulator.";
+      default = "kitty.desktop";
+    };
+
+    defaultTextEditor = lib.mkOption {
+      type = lib.types.str;
+      description = "Default text editor.";
+      default = "nvim.desktop";
+    };
+
+    defaultWebBrowser = lib.mkOption {
+      type = lib.types.str;
+      description = "Default web browser.";
+      default = "firefox.desktop";
     };
 
   };
 
   config = lib.mkIf cfg.enable {
 
+    home.packages = [
+      # For default terminal.
+      pkgs.xdg-terminal-exec
+    ];
+
     xdg = {
+
+      configFile = {
+        "kdeglobals.text".text = toINI {
+          General.TerminalApplication = "kitty";
+        };
+
+        "xdg-terminals.list".text = ''
+          ${cfg.my.defaultTerminalEmulator}
+        '';
+      };
 
       dataFile."mime/packages" = {
         # Extra MimeTypes.
@@ -55,12 +72,12 @@ in
       mimeApps.defaultApplications =
 
         setListTo cfg.my.defaultWebBrowser [
-          # Set the default browser.
           "application/x-extension-htm"
           "application/x-extension-html"
           "application/x-extension-shtml"
           "application/x-extension-xht"
           "application/x-extension-xhtml"
+          "text/html" # Not good.
           "x-scheme-handler/chrome"
           "x-scheme-handler/http"
           "x-scheme-handler/https"
@@ -86,7 +103,7 @@ in
         ]
 
         // setListTo cfg.my.defaultTextEditor [
-          # What Neovim advertises support for.
+          # Neovim says these are good.
           "text/plain" "text/x-makefile"
           "text/x-c++hdr" "text/x-c++src"
           "text/x-chdr" "text/x-csrc"
@@ -94,31 +111,34 @@ in
           "text/x-pascal" "text/x-tex"
           "application/x-shellscript"
 
-          # And some extra associations.
-          "text/html" "application/xml"
-          "text/yaml" "application/json"
+          # And some extra file associations.
+          "application/json" "application/xml"
           "application/x-wine-extension-ini"
-          "application/x-zerosize"
+          "application/x-zerosize" "text/yaml"
         ]
 
-        // {
-          # We like to use Zathura for PDF files.
-          "application/pdf" = [ "org.pwmt.zathura-pdf-mupdf.desktop" cfg.my.defaultWebBrowser ];
+        //
 
-          # We like to use Inkscape for SVG files.
+        {
+          "application/pdf" = [
+            "org.pwmt.zathura-pdf-mupdf.desktop"
+            cfg.my.defaultWebBrowser # Fallback.
+          ];
+
+          # Use Inkscape to open SVG files, when available.
           "image/svg+xml" = "org.inkscape.Inkscape.desktop";
 
-          # Use WINE for Windows executables.
+          # Use WINE to run Windows executables under Linux.
           "application/x-ms-dos-executable" = "wine.desktop";
 
-          # Other applications might take Ark's spot otherwise.
+          # Give Ark priority when opening zip files.
           "application/zip" = "org.kde.ark.desktop";
         };
 
     };
 
     home.activation.mime-update = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      ${pkgs.shared-mime-info}/bin/update-mime-database ${config.xdg.dataHome}/mime
+      ${lib.getExe' pkgs.shared-mime-info "update-mime-database"} ${config.xdg.dataHome}/mime
     '';
 
   };
