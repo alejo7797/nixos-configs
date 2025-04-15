@@ -19,6 +19,7 @@ in
       khoca
       knotjob
       mathematica-webdoc
+      regina-normal
       sage
       snappy-math
       texliveFull
