@@ -54,9 +54,10 @@ in
     xdg = {
 
       configFile = {
-        "kdeglobals.text".text = toINI {
-          General.TerminalApplication = "kitty";
-        };
+        "kdeglobals".text = toINI {
+          General.TerminalApplication = # Desktop entry -> command.
+            lib.removeSuffix ".desktop" cfg.my.defaultTerminalEmulator;
+          };
 
         "xdg-terminals.list".text = ''
           ${cfg.my.defaultTerminalEmulator}

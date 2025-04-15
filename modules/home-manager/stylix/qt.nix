@@ -48,7 +48,6 @@ in
 
       "kdeglobals".text = toINI {
         KDE.widgetStyle = "qt6ct-style";
-        General.TerminalApplication = "kitty";
         Icons.Theme = iconTheme;
       };
 
