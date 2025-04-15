@@ -19,15 +19,15 @@ in
       khoca
       knotjob
       mathematica-webdoc
-      regina-normal
-      sage
       snappy-math
       texliveFull
       zotero
     ];
 
-    programs = {
-      my.jupyter.enable = true;
+    programs.my = {
+      jupyter.enable = true;
+      regina.enable = true;
+      sage.enable = true;
     };
 
   };
