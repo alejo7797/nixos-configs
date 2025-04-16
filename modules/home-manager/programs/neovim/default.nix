@@ -34,23 +34,37 @@ in
     };
 
     globals = {
-      mapleader = " ";
+      # Set leader key.
       maplocalleader = " ";
+      mapleader = " ";
     };
 
     opts = {
-      breakindent = true;
+      # Tab options.
       expandtab = true;
+      shiftwidth = 4;
+
+      breakindent = true;
       foldlevelstart = 99;
+      signcolumn = "yes";
+      splitright = true;
+
+      # Window title.
+      title = true;
+
+      # Search options.
       hlsearch = false;
       ignorecase = true;
-      shiftwidth = 4;
-      signcolumn = "yes";
       smartcase = true;
-      splitright = true;
-      title = true;
+
+      # Persistent undo.
       undofile = true;
+
+      # More responsive.
       updatetime = 100;
+
+      # Keep project spell files.
+      spellfile = "en.utf-8.add";
     };
 
     highlightOverride = with stylix-colors; {
