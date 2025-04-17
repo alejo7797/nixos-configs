@@ -13,6 +13,7 @@ in
 
     programs = {
       direnv.enable = true;
+      firefox.enable = true;
       gpg.enable = true;
       joplin-desktop.enable = true;
       kitty.enable = true;

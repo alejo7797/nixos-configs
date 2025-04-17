@@ -1,109 +1,95 @@
-{
-  lib,
-  config,
-  pkgs,
-  ...
-}:
-
-let
-  cfg = config.myHome.firefox;
-in
+{ config, pkgs, ... }:
 
 {
-  options.myHome.firefox.enable = lib.mkEnableOption "Firefox configuration";
+  programs.firefox = {
 
-  config = lib.mkIf cfg.enable {
+    # Manage my profile declaratively.
+    profiles."${config.home.username}.default" = {
 
-    programs.firefox = {
-      enable = true;
+      # Profile-specific extensions.
+      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
 
-      # Manage my profile declaratively.
-      profiles."${config.home.username}.default" = {
+        augmented-steam
+        betterttv
+        darkreader
+        simple-tab-groups
+        tampermonkey
+        to-google-translate
+        wayback-machine
+        yomitan
+        zotero-connector
 
-        # Profile-specific extensions.
-        extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+      ];
 
-          augmented-steam
-          betterttv
-          darkreader
-          simple-tab-groups
-          tampermonkey
-          to-google-translate
-          yomitan
-          zotero-connector
+      settings = {
+        # Restore previous session.
+        "browser.startup.page" = 3;
 
+        # Always ask where to save downloaded files.
+        "browser.download.useDownloadDir" = false;
+
+        # Do not ask to save passwords or addresses.
+        "signon.rememberSignons" = false;
+        "extensions.formautofill.addresses.enabled" = false;
+        "extensions.formautofill.creditCards.enabled" = false;
+
+        # Privacy settings.
+        "browser.contentblocking.category" = "strict";
+        "privacy.donottrackheader.enabled" = true;
+        "privacy.fingerprintingProtection" = true;
+        "privacy.globalprivacycontrol.enabled" = true;
+
+        # HTTPS-only mode.
+        "dom.security.https_only_mode" = true;
+
+        # Play DRM-controlled content.
+        "media.eme.enabled" = true;
+
+        # Clear cookies on browser shutdown.
+        "privacy.history.custom" = true;
+        "privacy.sanitize.sanitizeOnShutdown" = true;
+        "privacy.sanitize.clearOnShutdown.hasMigratedToNewPrefs2" = true;
+        "privacy.clearOnShutdown_v2.historyFormDataAndDownloads" = false;
+
+        # Pinned sites.
+        "browser.newtabpage.pinned" = [
+          {
+            label = "youtube";
+            url = "https://www.youtube.com";
+          }
+          {
+            label = "wanikani";
+            url = "https://www.wanikani.com";
+          }
+          {
+            label = "patchouli";
+            url = "https://patchoulihq.cc";
+          }
+          {
+            label = "nextcloud";
+            url = "https://cloud.patchoulihq.cc";
+            customScreenshotURL = "https://patchoulihq.cc/nextcloud-logo.png";
+          }
+          {
+            label = "arxiv";
+            url = "https://arxiv.org/list/math.GT/recent";
+            baseDomain = "arxiv.org";
+          }
+          {
+            label = "ae433";
+            url = "https://alex.epelde.net/about-to-get-very-silly";
+            baseDomain = "alex.epelde.net";
+          }
+          {
+            label = "nixos";
+            url = "https://search.nixos.org";
+            customScreenshotURL = "https://patchoulihq.cc/nix-logo.png";
+          }
+          {
+            label = "patreon";
+            url = "https://www.patreon.com";
+          }
         ];
-
-        settings = {
-          # Restore previous session.
-          "browser.startup.page" = 3;
-
-          # Always ask where to save downloaded files.
-          "browser.download.useDownloadDir" = false;
-
-          # Do not ask to save passwords or addresses.
-          "signon.rememberSignons" = false;
-          "extensions.formautofill.addresses.enabled" = false;
-          "extensions.formautofill.creditCards.enabled" = false;
-
-          # Privacy settings.
-          "browser.contentblocking.category" = "strict";
-          "privacy.donottrackheader.enabled" = true;
-          "privacy.fingerprintingProtection" = true;
-          "privacy.globalprivacycontrol.enabled" = true;
-
-          # HTTPS-only mode.
-          "dom.security.https_only_mode" = true;
-
-          # Play DRM-controlled content.
-          "media.eme.enabled" = true;
-
-          # Clear cookies on browser shutdown.
-          "privacy.history.custom" = true;
-          "privacy.sanitize.sanitizeOnShutdown" = true;
-          "privacy.sanitize.clearOnShutdown.hasMigratedToNewPrefs2" = true;
-          "privacy.clearOnShutdown_v2.historyFormDataAndDownloads" = false;
-
-          # Pinned sites.
-          "browser.newtabpage.pinned" = [
-            {
-              label = "youtube";
-              url = "https://www.youtube.com";
-            }
-            {
-              label = "wanikani";
-              url = "https://www.wanikani.com";
-            }
-            {
-              label = "patchouli";
-              url = "https://patchoulihq.cc";
-            }
-            {
-              label = "nextcloud";
-              url = "https://cloud.patchoulihq.cc";
-              customScreenshotURL = "https://patchoulihq.cc/nextcloud-logo.png";
-            }
-            {
-              label = "arxiv";
-              url = "https://arxiv.org/list/math.GT/recent";
-              baseDomain = "arxiv.org";
-            }
-            {
-              label = "ae433";
-              url = "https://alex.epelde.net/about-to-get-very-silly";
-              baseDomain = "alex.epelde.net";
-            }
-            {
-              label = "nixos";
-              url = "https://search.nixos.org";
-              customScreenshotURL = "https://patchoulihq.cc/nix-logo.png";
-            }
-            {
-              label = "patreon";
-              url = "https://www.patreon.com";
-            }
-          ];
-        };
       };
     };
   };

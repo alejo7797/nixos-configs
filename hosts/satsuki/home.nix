@@ -28,9 +28,8 @@
   ];
 
   myHome = {
-    # TODO: migrate these
+    # TODO: migrate this
     thunderbird.enable = true;
-    firefox.enable = true;
   };
 
   xdg.configFile."uwsm/env-hyprland".text = ''
