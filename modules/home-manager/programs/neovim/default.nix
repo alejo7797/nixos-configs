@@ -241,7 +241,7 @@ in
       toggleterm = {
         enable = true;
         settings = {
-          direction = "vertical";
+          direction = "horizontal";
           open_mapping = "[[<C-t>]]";
           size = ''
             function(term)
