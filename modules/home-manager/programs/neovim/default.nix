@@ -44,6 +44,11 @@ in
       expandtab = true;
       shiftwidth = 4;
 
+      # Location.
+      number = true;
+      scrolloff = 8;
+      rnu = true;
+
       breakindent = true;
       foldlevelstart = 99;
       signcolumn = "yes";
@@ -67,11 +72,13 @@ in
       spellfile = "en.utf-8.add";
     };
 
-    highlightOverride = with stylix-colors; {
+    highlightOverride = with stylix-colors; rec {
 
+      # Fix some UI elements.
       MiniIconsBlue.fg = base0D;
       MiniIconsGrey.fg = base04;
       LightBulbSign.bg = base00;
+      MatchParen.fg = base0A;
 
       GitSignsAdd = {
         fg = base0B;
@@ -91,17 +98,19 @@ in
       };
 
       NormalFloat.bg = base00;
-      WhichKeyGroup.fg = base05;
       WhichKeySeparator.bg = base00;
+      WhichKeyGroup.fg = base05;
 
-      MatchParen = {
-        fg = base0A;
-        bg = base02;
-      };
-      SignColumn = {
-        fg = base04;
+      LineNr = {
+        fg = base03;
         bg = base00;
       };
+
+      # Use common color.
+      LineNrBelow = LineNr;
+      LineNrAbove = LineNr;
+      SignColumn = LineNr;
+
       WinSeparator = {
         fg = base05;
         bg = base00;
