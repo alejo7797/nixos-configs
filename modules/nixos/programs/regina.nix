@@ -17,7 +17,7 @@ in
 
       systemPackages = [ pkgs.regina-normal ];
 
-      variables = {  # Help Regina communicate directly with SnapPy.
+      variables = { # Help Regina communicate directly with SnapPy.
         REGINA_PYLIBDIR = "${regina-env}/${regina-env.sitePackages}";
       };
 
