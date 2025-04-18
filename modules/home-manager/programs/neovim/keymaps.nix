@@ -297,6 +297,26 @@
           silent = true;
         };
       }
+
+      # todo-comments.nvim
+      {
+        action.__raw = "require('todo-comments').jump_next";
+        key = "]t";
+        mode = "n";
+        options = {
+          desc = "Next todo comment";
+          silent = true;
+        };
+      }
+      {
+        action.__raw = "require('todo-comments').jump_prev";
+        key = "[t";
+        mode = "n";
+        options = {
+          desc = "Previous todo comment";
+          silent = true;
+        };
+      }
     ];
 
     plugins = {
