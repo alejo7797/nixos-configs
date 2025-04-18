@@ -59,6 +59,7 @@ in
       pavucontrol
       pdftk
       piper
+      playerctl
       plex-desktop
       seahorse
       simple-scan
