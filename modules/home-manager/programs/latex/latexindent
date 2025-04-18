@@ -14,10 +14,10 @@ modifyLineBreaks:
         \\item(?:\h|\[)
 
         # Within theorem environments.
-        | \\begin\{(?:prop(?:\*prf)?|claim)\*?\}
-        | \\begin\{(?:lem|thm(?:\*cite)?|cor)\*?\}
-        | \\begin\{(?:prf|conj|warning)\*?\}
-        | \\begin\{(?:df|example|rem)\*?\}
+        | \\begin\{(?:lem|cor|claim)\*?\}
+        | \\begin\{(?:thm|prop)\*?(?:c|p)?\}
+        | \\begin\{(?:proof|conj|warn)\*?\}
+        | \\begin\{(?:defn|exmp|rem)\*?\}
 
         # Within the abstract.
         | \\begin\{abstract\}
