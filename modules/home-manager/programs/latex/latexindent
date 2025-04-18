@@ -14,8 +14,8 @@ modifyLineBreaks:
         \\item(?:\h|\[)
 
         # Within theorem environments.
-        | \\begin\{(?:lem|prop|claim)\*?\}
-        | \\begin\{(?:thm(?:-cite)?|cor)\*?\}
+        | \\begin\{(?:prop(?:\*prf)?|claim)\*?\}
+        | \\begin\{(?:lem|thm(?:\*cite)?|cor)\*?\}
         | \\begin\{(?:prf|conj|warning)\*?\}
         | \\begin\{(?:df|example|rem)\*?\}
 
