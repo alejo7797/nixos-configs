@@ -34,11 +34,11 @@
           bolt-launcher = unstable.bolt-launcher.override { inherit (final) libgbm; };
           altus = unstable.altus.override { inherit (final) appimageTools; };
 
-          # Enable Wayland IME, fix application icon, build against the correct mesa version.
+          # Enable Wayland IME, fix application icon and build with the correct mesa version.
+          signal-desktop = unstable.signal-desktop-bin.override { inherit (final) callPackage; };
           joplin-desktop = unstable.joplin-desktop.override { inherit (final) appimageTools; };
-          signal-desktop = unstable.signal-desktop.override { inherit (final) callPackage; };
 
-          # Enable Wayland IME, build against the correct mesa version.
+          # Enable Wayland IME and build against the correct mesa version.
           spotify = unstable.spotify.override { inherit (final) libgbm; };
 
           vimPlugins = prev.vimPlugins.extend (
