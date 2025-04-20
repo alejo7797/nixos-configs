@@ -30,14 +30,10 @@ in
 
       ];
 
-      etc =
-        let
-          applications-menu = # Fix the unpopulated application menus in Dolphin.
-            "${pkgs.libsForQt5.kservice}/etc/xdg/menus/applications.menu";
-        in
-        {
-          "/xdg/menus/Hyprland-applications.menu".source = applications-menu;
-        };
+      etc = {
+        "/xdg/menus/Hyprland-applications.menu".source = # Fix Dolphin menus.
+          "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/applications.menu";
+      };
 
       pathsToLink = [ "/share/color-schemes" ];
 
@@ -54,14 +50,21 @@ in
           );
 
           qt6Packages = prev.qt6Packages.overrideScope (
-            _: _: {
-              qt6ct = ilya-fedin.qt6ct.overrideAttrs (oldAttrs: {
+            qt6-final: qt6-prev: {
+              qt6ct = qt6-prev.qt6ct.overrideAttrs (oldAttrs: rec {
+
+                version = "0.10";
+
                 src = final.fetchFromGitHub {
-                  owner = "trialuser02";
+                  owner = "ilya-fedin";
                   repo = "qt6ct";
-                  rev = oldAttrs.version;
-                  hash = "sha256-MmN/qPBlsF2mBST+3eYeXaq+7B3b+nTN2hi6CmxrILc=";
+                  tag = version;
                 };
+
+                buildInputs = with final.kdePackages; oldAttrs.buildInputs ++ [
+                  qt6-final.qtdeclarative kconfig kcolorscheme kiconthemes
+                ];
+
               });
             }
           );
