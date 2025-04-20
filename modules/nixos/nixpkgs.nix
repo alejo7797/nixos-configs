@@ -12,8 +12,10 @@
       # The Nix User Repository.
       inputs.nur.overlays.default
 
-      # Backports.
-      (final: prev:
+
+      (
+        # Backports.
+        final: prev:
 
         let
           # Build a Nixpkgs instance based off of the `nixos-unstable` branch upstream.

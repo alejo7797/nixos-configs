@@ -31,8 +31,8 @@ in
       ];
 
       etc = {
-        "/xdg/menus/Hyprland-applications.menu".source = # Fix Dolphin menus.
-          "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/applications.menu";
+        "/xdg/menus/Hyprland-applications.menu".source = # Fix empty Dolphin menus.
+          "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
       };
 
       pathsToLink = [ "/share/color-schemes" ];
@@ -40,10 +40,14 @@ in
     };
 
     nixpkgs.overlays = [
-      (final: prev:
+
+      (
+        final: prev:
+
         let
           ilya-fedin = import inputs.ilya-fedin { pkgs = prev; };
         in
+
         {
           libsForQt5 = prev.libsForQt5.overrideScope (
             _: _: { inherit (ilya-fedin) qt5ct; }
@@ -51,14 +55,14 @@ in
 
           qt6Packages = prev.qt6Packages.overrideScope (
             qt6-final: qt6-prev: {
+
               qt6ct = qt6-prev.qt6ct.overrideAttrs (oldAttrs: rec {
 
                 version = "0.10";
 
                 src = final.fetchFromGitHub {
-                  owner = "ilya-fedin";
-                  repo = "qt6ct";
-                  tag = version;
+                  owner = "ilya-fedin"; repo = "qt6ct"; tag = version;
+                  hash = "sha256-ePY+BEpEcAq11+pUMjQ4XG358x3bXFQWwI1UAi+KmLo=";
                 };
 
                 buildInputs = with final.kdePackages; oldAttrs.buildInputs ++ [
@@ -66,10 +70,12 @@ in
                 ];
 
               });
+
             }
           );
         }
       )
+
     ];
 
   };
