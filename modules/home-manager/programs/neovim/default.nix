@@ -120,7 +120,7 @@ in
     autoCmd = [
       {
         event = "FileType";
-        pattern = [ "nix" ];
+        pattern = [ "c" "nix" ];
         callback.__raw = ''
           function(opts)
             local bo = vim.bo[opts.buf]
