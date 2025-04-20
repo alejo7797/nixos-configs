@@ -146,7 +146,13 @@ in
 
       # Visuals.
       indent-blankline.enable = true;
-      nvim-colorizer.enable = true;
+      nvim-colorizer = {
+        enable = true;
+        userDefaultOptions = {
+          css = true;
+          names = false;
+        };
+      };
       web-devicons.enable = true;
 
       # UI.
