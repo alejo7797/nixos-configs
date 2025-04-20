@@ -230,6 +230,7 @@ in
       # File tree.
       neo-tree = {
         enable = true;
+        closeIfLastWindow = true;
         filesystem = {
           useLibuvFileWatcher = true;
         };
@@ -239,7 +240,7 @@ in
       friendly-snippets.enable = true;
       luasnip = {
         enable = true;
-        # Load custom snippets.
+        # Load any local snippets and my custom package.
         fromSnipmate = [ { } { paths = ./snippets; } ];
       };
 
