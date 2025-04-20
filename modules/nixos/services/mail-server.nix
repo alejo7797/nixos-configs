@@ -60,13 +60,6 @@ in
       };
     };
 
-    services.postfix = {
-      config = {
-        # Disable AUTH LOGIN on port 25.
-        smtpd_sasl_auth_enable = lib.mkForce false;
-      };
-    };
-
     security.acme.certs."mail.patchoulihq.cc" = {
       extraDomainNames = [ "mail.epelde.net" ];
     };
