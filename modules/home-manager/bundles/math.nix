@@ -19,6 +19,11 @@ in
       JUPYTER_PLATFORM_DIRS = 1;
     };
 
+    programs.nixvim.plugins = {
+      lsp.servers.texlab.enable = true;
+      vimtex.enable = true;
+    };
+
     xdg.configFile = {
       # Set LaTeX environments for chktex to ignore.
       "chktexrc".source = ../programs/latex/chktexrc;

@@ -8,40 +8,70 @@
       local rule = require('nvim-autopairs.rule')
       require('nvim-autopairs').add_rules({
 
-        rule("$ ", " $", "tex"),
-
+        -- Inline math environment.
         rule("\\(", "\\)", "tex"),
-        rule("\\left(", "\\right)", "tex"),
 
+        -- Display math environment.
         rule("\\[", "\\]", "tex"),
+
+        rule("\\left(", "\\right)", "tex"),
+        rule("\\left\\{", "\\right\\}", "tex"),
         rule("\\left[", "\\right]", "tex"),
 
-        rule("\\{", "\\}", "tex"),
-        rule("\\left\\{", "\\right\\}", "tex"),
-
+        -- More LaTeX delimiters.
         rule("\\langle", "\\rangle", "tex"),
-        rule("\\left\\langle", "\\right\\rangle", "tex"),
+        rule("\\{", "\\}", "tex"),
 
       })
 
     '';
 
-    lsp.servers = {
-      texlab = {
-        enable = true;
-        settings.texlab = {
-          bibtexFormatter = "texlab";
-          chktex = { onEdit = true; onOpenAndSave = true; };
-          latexindent = { modifyLineBreaks = true; };
-          inlayHints = { labelReferences = false; };
-        };
+    # Settings for the TeX language server.
+    lsp.servers.texlab.settings.texlab = {
+
+      chktex = {
+        # Enable regular linting of TeX files.
+        onEdit = true; onOpenAndSave = true;
       };
+
+      inlayHints = {
+        # Distracts source code.
+        labelReferences = false;
+      };
+
+      latexindent = {
+        # Enables line wrapping.
+        modifyLineBreaks = true;
+      };
+
     };
 
     vimtex = {
-      enable = true;
+
+      # Avoid missing package issues.
       texlivePackage = pkgs.texliveFull;
-      settings = { view_method = "zathura_simple"; };
+
+      settings = {
+
+        # Use keybinding `ts$`.
+        env_toggle_math_map = {
+
+          "\\(" = "\\["; # inline -> display
+          "align" = "equation"; # -> add label
+          "equation" = "\\("; # -> closes loop
+          "\\[" = "align*"; # -> multi-line
+
+          # Fallback.
+          "$$" = "\\[";
+          "$" = "\\(";
+
+        };
+
+        # Use Zathura for viewing PDFs.
+        view_method = "zathura_simple";
+
+      };
+
     };
   };
 }
