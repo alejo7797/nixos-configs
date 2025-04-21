@@ -42,7 +42,7 @@
     borgmatic.enable = true;
     syncthing.enable = true;
 
-    kanshi.profiles =
+    kanshi.settings =
 
       let
         laptop-screen = {
@@ -61,21 +61,34 @@
         };
       in
 
-      {
-        home.outputs = [
-          (laptop-screen // { position = "1920,0"; })
-          (home-monitor // { position = "0,0"; })
-        ];
-
-        office.outputs = [
-          (laptop-screen // { position = "1920,0"; })
-          (office-monitor // { position = "0,0"; })
-        ];
-
-        mobile.outputs = [
-          (laptop-screen // { position = "0,0"; })
-        ];
-      };
+      [
+        {
+          profile = {
+            name = "home";
+            outputs = [
+              (home-monitor // { position = "0,0"; })
+              (laptop-screen // { position = "1920,0"; })
+            ];
+          };
+        }
+        {
+          profile = {
+            name = "office";
+            outputs = [
+              (office-monitor // { position = "0,0"; })
+              (laptop-screen // { position = "1920,0"; })
+            ];
+          };
+        }
+        {
+          profile = {
+            name = "mobile";
+            outputs = [
+              (laptop-screen // { position = "0,0"; })
+            ];
+          };
+        }
+      ];
 
   };
 
