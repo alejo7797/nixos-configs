@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}:
+{ pkgs, ... }:
 
 {
   home = {
@@ -9,47 +6,40 @@
   };
 
   my = {
-    joplin.enable = true;
-
     autostart = with pkgs; [
-      firefox joplin-desktop
-      spotify steam thunderbird
-      vesktop zotero
+      altus
+      firefox
+      joplin-desktop
+      signal-desktop
+      spotify
+      steam
+      thunderbird
+      vesktop
+      zotero
     ];
   };
 
-  myHome = {
-    hyprland.enable = true;
-
-    firefox.enable = true;
-    thunderbird.enable = true;
-
-    waybar.thermal-zone = 1;
-    waybar.location = "San Lorenzo de El Escorial";
+  programs = {
+    waybar.my = {
+      location = "San Lorenzo de El Escorial";
+      thermal-zone = 1;
+    };
   };
 
   services = {
-    kanshi.settings = [
-      {
-        profile.name = "default";
-        profile.outputs = [
-          {
-            criteria = "Microstep MSI MP273A PB4HC14702300";
-            mode = "1920x1080@99.999Hz";
-          }
-        ];
-      }
-    ];
-
+    # borgmatic.enable = true;
     syncthing.enable = true;
   };
 
   wayland.windowManager.hyprland.settings = {
-    device = [
-      {
-        name = "logitech-g203-lightsync-gaming-mouse";
-        sensitivity = -1;
-      }
-    ];
+
+    device = {
+      name = "logitech-g203-lightsync-gaming-mouse";
+      sensitivity = -1; # New fancy Logitech mouse.
+    };
+
+    # No need for Kanshi on a desktop computer.
+    monitor =  "HDMI-1, 1920x1080@100, 0x0, 1";
+
   };
 }

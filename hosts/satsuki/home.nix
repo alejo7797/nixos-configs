@@ -42,7 +42,7 @@
     borgmatic.enable = true;
     syncthing.enable = true;
 
-    kanshi.settings =
+    kanshi.profiles =
 
       let
         laptop-screen = {
@@ -61,30 +61,21 @@
         };
       in
 
-      [
-        {
-          profile.name = "home";
-          profile.outputs = [
-            (home-monitor // { position = "0,0"; })
-            (laptop-screen // { position = "1920,0"; })
-          ];
-        }
+      {
+        home.outputs = [
+          (laptop-screen // { position = "1920,0"; })
+          (home-monitor // { position = "0,0"; })
+        ];
 
-        {
-          profile.name = "office";
-          profile.outputs = [
-            (office-monitor // { position = "0,0"; })
-            (laptop-screen // { position = "1920,0"; })
-          ];
-        }
+        office.outputs = [
+          (laptop-screen // { position = "1920,0"; })
+          (office-monitor // { position = "0,0"; })
+        ];
 
-        {
-          profile.name = "mobile";
-          profile.outputs = [
-            (laptop-screen // { position = "0,0"; })
-          ];
-        }
-      ];
+        mobile.outputs = [
+          (laptop-screen // { position = "0,0"; })
+        ];
+      };
 
   };
 
@@ -92,19 +83,16 @@
 
     settings.device = [
       {
-        # PRO X Superlight.
         name = "logitech-usb-receiver";
-        sensitivity = -1;
+        sensitivity = -1; # For gaming.
       }
       {
-        # Trusty office use mouse.
         name = "logitech-b330/m330/m331-1";
-        sensitivity = -1;
+        sensitivity = -1; # My office mouse.
       }
       {
-        # Only when I really need it.
         name = "telink-wireless-receiver-mouse";
-        sensitivity = -1;
+        sensitivity = -1; # Only when I need it.
       }
     ];
 
