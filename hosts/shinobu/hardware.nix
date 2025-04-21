@@ -1,22 +1,30 @@
-{ lib, modulesPath, ... }: {
+{ modulesPath, ... }: {
 
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+  imports = [
+    # Find out the contents over on the Nixpkgs repo.
+    (modulesPath + "/installer/scan/not-detected.nix")
+  ];
 
   boot = {
-    # Kernel modules in the initial ramdisk.
     initrd.availableKernelModules = [
-      "vmd" "xhci_pci" "ahci" "nvme"
-      "usbhid" "usb_storage" "sd_mod"
+      # Which kernel modules to load into the initial ramdisk image.
+      "ahci" "nvme" "sd_mod" "usb_storage" "usbhid" "vmd" "xhci_pci"
     ];
 
     # Kernel modules to load at boot.
     kernelModules = [ "kvm-intel" ];
   };
 
-  # Enables DHCP on each ethernet and wireless interface.
-  networking.useDHCP = lib.mkDefault true;
+  my.nvidia.enable = true;
 
-  hardware.cpu.intel.updateMicrocode = true;
+  hardware = {
+    # Thankfully available.
+    bluetooth.enable = true;
+
+    # Ensure we update CPU microcode.
+    cpu.intel.updateMicrocode = true;
+  };
+
+  # Still not cool enough to use aarch64.
   nixpkgs.hostPlatform = "x86_64-linux";
-
 }

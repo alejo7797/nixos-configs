@@ -1,107 +1,79 @@
-{ pkgs, ... }:
+{ lib, pkgs, self, ... }:
 
 {
-  # Did you read the comment?
   system.stateVersion = "24.11";
 
-  imports = [ ./filesystems.nix ./hardware.nix ../../users/ewan ];
+  imports = [
+    # Set up my personal account.
+    self.nixosModules.users.ewan
 
-  swapDevices = [ { device = "/var/swapfile"; size = 32768; } ];
+    # Other machine-specific config.
+    ./filesystems.nix ./hardware.nix
+  ];
 
-  boot = {
-    kernelParams = [ "quiet" "nowatchdog" ];
+  swapDevices = [{
+    device = "/var/swapfile";
+    size = 32768; # 32GiB.
+  }];
 
-    loader = {
-      systemd-boot = {
-        enable = true;
+  # Custom bootloader settings.
+  boot.loader.systemd-boot = {
 
-        # Create our own Windows bootloader entry.
-        windows."11" = {
-          title = "Windows 11";
-          sortKey = "a_windows";
-          efiDeviceHandle = "HD0b";
-        };
-
-        extraInstallCommands = ''
-          # Do not show the auto-generated Windows entry.
-          echo "auto-entries false" >>/boot/loader/loader.conf
-
-          # Set Windows as the default boot entry.
-          ${pkgs.gnused}/bin/sed -i 's/default .*/default windows_11.conf/' /boot/loader/loader.conf
-        '';
-      };
+    windows."11" = {
+      title = "Windows 11";
+      efiDeviceHandle = "HD0b";
+      sortKey = "a_windows";
     };
-  };
 
-  hardware.bluetooth.enable = true;
+    extraInstallCommands = ''
+      # Don't show auto-generated Windows entry in the menu.
+      echo "auto-entries false" >>/boot/loader/loader.conf
+
+      # Set Windows as the default boot entry. Booting into NixOS requires manual user intervention.
+      ${lib.getExe pkgs.gnused} -i 's/default .*/default windows_11.conf/' /boot/loader/loader.conf
+    '';
+
+  };
 
   networking = {
+    # Very good, it's me.
     hostName = "shinobu";
+
+    # Actually a bit questionable.
     networkmanager.enable = true;
+
+    nameservers = [
+      # Some fallback DNS servers for systemd-resolved to use.
+      "[2620:fe::fe]#dns.quad9.net" "[2620:fe::9]#dns.quad9.net"
+      "9.9.9.9#dns.quad9.net" "149.112.112.112#dns.quad9.net"
+    ];
   };
 
-  services.resolved.enable = true;
+  services = {
+    # Use systemd-resolved.
+    resolved.enable = true;
+  };
 
+  # This desktop PC is not moving.
   time.timeZone = "Europe/Madrid";
 
   home-manager = {
+    # Additional user configuration.
     users.ewan = import ./home.nix;
   };
 
-  sops.secrets = {
-    "syncthing/cert.pem" = { owner = "ewan"; };
-    "syncthing/key.pem" = { owner = "ewan"; };
-
-    "wireguard/koakuma/private-key" = { };
-    "wireguard/koakuma/preshared-key" = { };
-  };
-
   my = {
+    # Main custom module.
     desktop.enable = true;
-    nvidia.enable = true;
+
+    # Set up desktop env.
+    hyprland.enable = true;
+
+    # Good package sets.
+    gaming.enable = true;
+    math.enable = true;
+
+    # Lax YubiKey setup.
     yubikey.sudo = true;
   };
-
-  myNixOS = {
-
-    dolphin.enable = true;
-    hyprland.enable = true;
-    retroarch.enable = true;
-
-  };
-
-  programs = {
-    gamemode.enable = true;
-    thunderbird.enable = true;
-    wireshark.enable = true;
-
-    steam = {
-      enable = true;
-      protontricks.enable = true;
-    };
-  };
-
-  environment.systemPackages = with pkgs; [
-
-    # Actual programs.
-    digikam filezilla geogebra
-    inkscape joplin-desktop krita
-    gimp spotify vesktop zotero
-
-    # Games and all that.
-    bolt-launcher dosbox-x
-    easyrpg-player mangohud
-    lutris prismlauncher
-    winetricks gamescope
-    wineWowPackages.stable
-
-    # Programming.
-    clang jdk23 nodejs
-    bundix bundler gap
-    mathematica-webdoc
-    knotjob snappy-math
-    biber texliveFull
-    sage khoca ruby
-
-  ];
 }

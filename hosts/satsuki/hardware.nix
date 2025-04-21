@@ -1,6 +1,9 @@
 { lib, modulesPath, ... }: {
 
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+  imports = [
+    # Find out the contents over on the Nixpkgs repo.
+    (modulesPath + "/installer/scan/not-detected.nix")
+  ];
 
   boot = {
     initrd.availableKernelModules = [
@@ -15,15 +18,20 @@
   # Use the Nvidia dGPU in PRIME render offload mode.
   my.nvidia = { enable = true; prime.enable = true; };
 
+  # Load extra Intel GPU drivers.
   my.intel-graphics.enable = true;
 
   hardware = {
+    # Thankfully available.
     bluetooth.enable = true;
+
+    # Ensure we update CPU microcode.
     cpu.intel.updateMicrocode = true;
 
-    # Necessary fix at the moment for RTD3 power management.
+    # Necessary fix at the moment for working power management.
     nvidia = { open = lib.mkForce false; gsp.enable = false; };
   };
 
+  # Still not cool enough to use aarch64.
   nixpkgs.hostPlatform = "x86_64-linux";
 }

@@ -29,7 +29,6 @@
     loader.timeout = 0;
   };
 
-
   networking = {
     # Very good, it's me.
     hostName = "satsuki";
@@ -83,18 +82,23 @@
     users.ewan = import ./home.nix;
   };
 
-  sops.secrets = {
-    u2f-mappings = {
-      # YubiKey pam-u2f module secrets.
-      group = "users"; mode = "0440";
-    };
+  sops.secrets.u2f-mappings = {
+    # YubiKey pam-u2f module secrets.
+    group = "users"; mode = "0440";
   };
 
   my = {
-    gaming.enable = true;
-    hyprland.enable = true;
+    # Main custom module.
     laptop.enable = true;
+
+    # Set up desktop env.
+    hyprland.enable = true;
+
+    # Good package sets.
+    gaming.enable = true;
     math.enable = true;
+
+    # Extra 2FA security.
     yubikey._2fa = true;
   };
 }

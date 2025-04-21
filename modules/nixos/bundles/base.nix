@@ -1,5 +1,13 @@
 { pkgs, ... }: {
 
+  boot.loader = {
+    systemd-boot.enable = true;
+  };
+
+  security = {
+    sudo.enable = true;
+  };
+
   environment.systemPackages = with pkgs; [
     dig
     dua
@@ -21,10 +29,6 @@
   services = {
     openssh.enable = true;
     timesyncd.enable = true;
-  };
-
-  security = {
-    sudo.enable = true;
   };
 
 }
