@@ -24,6 +24,7 @@
       };
 
       sansSerif = {
+        # A pleasant default font.
         package = pkgs.noto-fonts;
         name = "Noto Sans";
       };

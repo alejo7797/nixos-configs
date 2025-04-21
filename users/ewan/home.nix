@@ -21,7 +21,7 @@
       }
     ];
 
-    # Set up Z shell.
+    # Load full config.
     zsh.enable = true;
 
   };

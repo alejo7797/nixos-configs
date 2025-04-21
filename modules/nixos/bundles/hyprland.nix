@@ -15,9 +15,13 @@ in
 
     environment.variables.NIXOS_OZONE_WL = 1;
 
-    i18n.inputMethod.fcitx5.waylandFrontend = true;
+    i18n.inputMethod.fcitx5 = {
+      waylandFrontend = true;
+    };
 
-    security.pam.services.hyprlock = { };
+    security.pam = {
+      services.hyprlock = { };
+    };
 
     programs.hyprland = {
       enable = true;

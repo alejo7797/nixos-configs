@@ -8,11 +8,8 @@ in
 {
   users.users.ewan = {
 
-    # Common settings for 'real' users.
-    isNormalUser = true; linger = true;
-
-    # Set user shell.
-    shell = pkgs.zsh;
+    # Common settings for real users, set the user shell.
+    isNormalUser = true; linger = true; shell = pkgs.zsh;
 
     # Use `mkpasswd -m sha-512` to get a new hash.
     hashedPasswordFile = secrets.my-password.path;
@@ -33,7 +30,6 @@ in
 
     ;
   };
-
 
   # Home Manager module with personal configs.
   home-manager.users.ewan = import ./home.nix;

@@ -52,7 +52,7 @@
     };
 
     nixos-mailserver = {
-      # NixOS module setting up a complete and simple email server.
+      # NixOS module setting up a complete and simple 10/10 email server.
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -79,11 +79,21 @@
         # Build a NixOS configuration for each machine sitting under ./hosts.
         (hostName: _: mkSystem ./hosts/${hostName}) (builtins.readDir ./hosts);
 
-      # Top-level NixOS module for all hosts.
-      nixosModules.default = ./modules/nixos;
+      nixosModules = {
+        # Default top-level module.
+        default = ./modules/nixos;
 
-      # Top-level module for all home user configurations.
-      homeManagerModules.default = ./modules/home-manager;
+        # Personal configurations.
+        users.ewan = ./users/ewan;
+      };
+
+      homeManagerModules = {
+        # Top-level Home Manager module.
+        default = ./modules/home-manager;
+
+        # Personal Home Manager settings.
+        users.ewan = ./users/ewan/home.nix;
+      };
     };
 
 }

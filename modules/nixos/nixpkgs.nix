@@ -12,7 +12,6 @@
       # The Nix User Repository.
       inputs.nur.overlays.default
 
-
       (
         # Backports.
         final: prev:
@@ -48,7 +47,6 @@
             _: _: { inherit (unstable.vimPlugins) vim-airline; }
           );
         }
-
       )
 
     ];

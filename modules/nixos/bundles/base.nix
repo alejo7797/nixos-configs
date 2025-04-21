@@ -8,7 +8,6 @@
     jq
     lsof
     nmap
-    sops
     sqlite
     unar
     usbutils

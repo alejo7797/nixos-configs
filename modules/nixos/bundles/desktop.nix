@@ -15,21 +15,26 @@ in
 
     stylix.enable = true;
 
-    boot.plymouth.enable = true;
+    boot = {
+      plymouth.enable = true;
+    };
 
     hardware = {
       gpgSmartcards.enable = true;
       sane.enable = true;
     };
 
-    i18n.inputMethod.enable = true;
+    i18n = {
+      inputMethod.enable = true;
+    };
 
     security = {
-      pam.services.login.enableGnomeKeyring = true;
       rtkit.enable = true;
     };
 
-    xdg.portal.xdgOpenUsePortal = true;
+    xdg.portal = {
+      xdgOpenUsePortal = true;
+    };
 
     environment.systemPackages = with pkgs; [
       altus
@@ -64,6 +69,7 @@ in
       seahorse
       simple-scan
       signal-desktop
+      sops
       spotify
       sqlitebrowser
       tellico
