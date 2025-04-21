@@ -67,6 +67,12 @@
 
         };
 
+        delim_toggle_mod_list = [
+          # Toggle delim size.
+          [ "\\left" "\\right" ]
+          [ "\\big" "\\big" ]
+        ];
+
         # Use Zathura for viewing PDFs.
         view_method = "zathura_simple";
 
