@@ -292,16 +292,36 @@ in
               end
             '';
           };
-          sources = [
-            { name = "nvim_lsp"; }
-            { name = "luasnip"; }
-            { name = "path"; }
-            { name = "buffer"; }
-          ];
           window = {
             completion.border = "rounded";
             documentation.border = "rounded";
           };
+          sources = [
+            {
+              name = "nvim_lsp";
+              group_index = 1;
+            }
+            {
+              name = "luasnip";
+              group_index = 1;
+            }
+            {
+              name = "buffer";
+              group_index = 2;
+            }
+          ];
+        };
+        filetype = {
+          gitcommit.sources = [
+            {
+              name = "git";
+              group_index = 1;
+            }
+            {
+              name = "buffer";
+              group_index = 2;
+            }
+          ];
         };
         cmdline = {
           "/" = {
@@ -313,14 +333,19 @@ in
           ":" = {
             mapping.__raw = "cmp.mapping.preset.cmdline()";
             sources = [
-              { name = "path"; }
-              { name = "cmdline"; }
+              {
+                name = "path";
+                group_index = 1;
+              }
+              {
+                name = "cmdline";
+                group_index = 2;
+              }
             ];
+            matching.disallow_symbol_nonprefix_matching = false;
           };
         };
       };
-
-      cmp-git.enable = true;
 
       treesitter = {
         enable = true;
@@ -409,8 +434,8 @@ in
     };
 
     extraConfigLua = ''
-      require('tabout').setup {}
       require('aw_watcher').setup {}
+      require('tabout').setup {}
     '';
   };
 }

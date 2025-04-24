@@ -392,18 +392,25 @@
       ];
 
       cmp.settings.mapping = {
+        # Basic completion menu operations.
+        "<C-b>" = "cmp.mapping.scroll_docs(-4)";
+        "<C-f>" = "cmp.mapping.scroll_docs(4)";
+        "<C-e>" = "cmp.mapping.abort()";
+
         "<CR>" = ''
           cmp.mapping(function(fallback)
             if cmp.visible() then
-              if cmp.get_active_entry() then
-                cmp.confirm()
+              if require('luasnip').expandable() then
+                require('luasnip').expand()
               else
-                cmp.close()
+                cmp.confirm({
+                  select = true,
+                })
               end
             else
               fallback()
             end
-          end, { "i", "s" })
+          end)
         '';
 
         "<Tab>" = ''
