@@ -30,6 +30,7 @@ in
     };
 
     services = {
+      activitywatch.enable = true;
       gnome-keyring.enable = true;
       gpg-agent.enable = true;
       kdeconnect.indicator = true;

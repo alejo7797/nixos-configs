@@ -14,7 +14,7 @@ in
 
     extraPackages = with pkgs; [ fd ];
 
-    extraPlugins = with pkgs.vimPlugins; [ tabout-nvim ];
+    extraPlugins = with pkgs.vimPlugins; [ tabout-nvim aw-watcher-nvim ];
 
     clipboard = {
       register = "unnamedplus";
@@ -409,7 +409,8 @@ in
     };
 
     extraConfigLua = ''
-      require('tabout').setup()
+      require('tabout').setup {}
+      require('aw_watcher').setup {}
     '';
   };
 }

@@ -9,10 +9,9 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    environment.systemPackages = with pkgs; [
+    environment.systemPackages = with pkgs; [(
 
-      (retroarch.override {
-
+      retroarch.override {
         cores = with libretro; [
 
           # https://github.com/NixOS/nixpkgs/tree/master/pkgs/applications/emulators/libretro
@@ -30,7 +29,8 @@ in
           ppsspp         # PSP
 
         ];
-      })
-    ];
+      }
+
+    )];
   };
 }

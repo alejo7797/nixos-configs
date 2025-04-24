@@ -10,6 +10,7 @@
       extensions = with pkgs.nur.repos.rycee.firefox-addons; [
 
         augmented-steam
+        aw-watcher-web
         betterttv
         darkreader
         simple-tab-groups

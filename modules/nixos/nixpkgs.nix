@@ -43,8 +43,8 @@
           spotify = unstable.spotify.override { inherit (final) libgbm; };
 
           vimPlugins = prev.vimPlugins.extend (
-            # Replace legacy maxlinenr symbol U+2630 with U+2261.
-            _: _: { inherit (unstable.vimPlugins) vim-airline; }
+            # New plugin, and replace legacy maxlinenr symbol U+2630 with U+2261.
+            _: _: { inherit (unstable.vimPlugins) aw-watcher-nvim vim-airline; }
           );
         }
       )
