@@ -19,13 +19,13 @@
     "borg/ssh-key" = { };
   };
 
-  my.autostart = with pkgs; [
-    altus
-    firefox
-    signal-desktop
-    thunderbird
-    zotero
-  ];
+  xdg.autostart.my.entries = {
+    altus = "Altus.desktop";
+    firefox = "firefox.desktop";
+    signal-desktop = "signal-desktop.desktop";
+    thunderbird = "thunderbird.desktop";
+    zotero = "zotero.desktop";
+  };
 
   myHome = {
     # TODO: migrate this

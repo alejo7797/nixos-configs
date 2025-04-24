@@ -1,30 +1,55 @@
-{
-  lib,
-  config,
-  ...
-}:
+{ config, lib, pkgs, ... }:
+
+let
+  cfg = config.xdg.autostart;
+
+  linkedDesktopEntries = pkgs.runCommandLocal "xdg-autostart-entries" { } ''
+    mkdir -p $out
+    ${lib.concatMapStringsSep "\n" (e: "ln -s ${e} $out") cfg.entries}
+  '';
+in
 
 {
-  options.my.autostart = lib.mkOption {
-    type = with lib.types; listOf package;
-    description = "List of programs to autostart with the user session.";
-    default = [ ];
+  options.xdg.autostart = {
+    enable = lib.mkEnableOption "creation of XDG autostart entries";
+
+    entries = lib.mkOption {
+      type = with lib.types; listOf path;
+      description = ''
+    Paths to desktop files that should be linked to `XDG_CONFIG_HOME/autostart`
+      '';
+      default = [ ];
+    };
+
+    my.entries = lib.mkOption {
+      type = with lib.types; attrsOf str;
+      description = "Desktop files to autostart.";
+      default = { };
+    };
   };
 
-  config.xdg.configFile = builtins.listToAttrs (map
+  config = lib.mkMerge [
 
     (
-      pkg:
-        let
-          name = pkg.pname or pkg.name;
-        in
-        {
-          name = "autostart/${name}.desktop";
-          value.source = "${pkg}/share/applications/${name}.desktop";
-        }
+      lib.mkIf (cfg.enable && cfg.entries != [ ]) {
+        xdg.configFile.autostart = {
+          source = linkedDesktopEntries;
+          recursive = false;
+        };
+      }
     )
 
-    config.my.autostart
+    {
+      xdg.autostart = {
+        # TODO: add with 25.05
+        # readOnly = true;
 
-  );
+        entries = lib.mapAttrsToList (
+          # TODO: make this a little smarter? There are limits...
+          name: entry: "${pkgs.${name}}/share/applications/${entry}"
+        ) config.xdg.autostart.my.entries;
+      };
+    }
+
+  ];
 }

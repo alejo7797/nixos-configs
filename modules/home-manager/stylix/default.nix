@@ -60,5 +60,11 @@ in
     };
 
     xresources.path = "${config.xdg.configHome}/X11/xresources";
+
+    xdg.configFile = {
+      # We prefer to keep the autostart directory read-only.
+      "autostart/stylix-activate-gnome.desktop".enable = false;
+      "autostart/stylix-activate-kde.desktop".enable = false;
+    };
   };
 }

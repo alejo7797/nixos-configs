@@ -9,7 +9,10 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    xdg.mimeApps.enable = true;
+    xdg = {
+      autostart.enable = true;
+      mimeApps.enable = true;
+    };
 
     programs = {
       direnv.enable = true;
