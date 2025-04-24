@@ -1,9 +1,5 @@
-{
-  lib,
-  ...
-}:
+{ lib, ... }: {
 
-{
   wayland.windowManager.hyprland.settings.windowrulev2 =
 
     let
