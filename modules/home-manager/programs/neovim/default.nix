@@ -151,6 +151,7 @@ in
         userDefaultOptions = {
           css = true;
           names = false;
+          RGB = false;
         };
       };
       web-devicons.enable = true;
