@@ -180,6 +180,7 @@ in
             ++ map (x: "$mainMod SHIFT, ${x}") [
 
               # More basic keybindings.
+              "Return, exec, [float; size 600 480] $terminal"
               "Q, killactive," "Space, togglefloating,"
 
               # Screenshot keyboard shortcuts.
