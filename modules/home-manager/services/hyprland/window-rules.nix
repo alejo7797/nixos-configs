@@ -61,6 +61,7 @@
 
       # Other goodies we like to keep floating.
       "class:^org\\.keepassxc\\.KeePassXC$"
+      "class:^yubioath-flutter$, title:Authenticator"
       "class:^net.lutris.Lutris$, title:^Log for .*$"
       "class:^variety$, title:^Variety Images$"
     ]
