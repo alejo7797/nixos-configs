@@ -392,16 +392,22 @@
       ];
 
       cmp.settings.mapping = {
-        # Basic completion menu operations.
+        # Scroll the info popup on the side.
         "<C-b>" = "cmp.mapping.scroll_docs(-4)";
         "<C-f>" = "cmp.mapping.scroll_docs(4)";
+
+        # Scroll between completion suggestions.
+        "<C-p>" = "cmp.mapping.select_prev_item()";
+        "<C-n>" = "cmp.mapping.select_next_item()";
+
+        # Close the auto-complete menu.
         "<C-e>" = "cmp.mapping.abort()";
 
         "<CR>" = ''
           cmp.mapping(function(fallback)
             if cmp.visible() then
-              if require('luasnip').expandable() then
-                require('luasnip').expand()
+              if luasnip.expandable() then
+                luasnip.expand()
               else
                 cmp.confirm({
                   select = true,
@@ -415,10 +421,8 @@
 
         "<Tab>" = ''
           cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_next_item()
-            elseif require('luasnip').locally_jumpable(1) then
-              require('luasnip').jump(1)
+            if luasnip.jumpable(1) then
+              luasnip.jump(1)
             else
               fallback()
             end
@@ -427,10 +431,8 @@
 
         "<S-Tab>" = ''
           cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            elseif require('luasnip').locally_jumpable(-1) then
-              require('luasnip').jump(-1)
+            if luasnip.jumpable(-1) then
+              luasnip.jump(-1)
             else
               fallback()
             end

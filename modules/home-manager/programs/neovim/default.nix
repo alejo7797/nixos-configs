@@ -239,11 +239,14 @@ in
       # Autocomplete.
       cmp = {
         enable = true;
+        luaConfig.pre = ''
+          local luasnip = require('luasnip')
+        '';
         settings = {
           snippet = {
             expand = ''
               function(args)
-                require('luasnip').lsp_expand(args.body)
+                luasnip.lsp_expand(args.body)
               end
             '';
           };
