@@ -72,51 +72,6 @@ in
       spellfile = "en.utf-8.add";
     };
 
-    highlightOverride = with stylix-colors; rec {
-
-      # Fix some UI elements.
-      MiniIconsBlue.fg = base0D;
-      MiniIconsGrey.fg = base04;
-      LightBulbSign.bg = base00;
-      MatchParen.fg = base0A;
-
-      GitSignsAdd = {
-        fg = base0B;
-        bg = base00;
-      };
-      GitSignsChange = {
-        fg = base0E;
-        bg = base00;
-      };
-      GitSignsDelete = {
-        fg = base08;
-        bg = base00;
-      };
-      GitSignsUntracked = {
-        fg = base0C;
-        bg = base00;
-      };
-
-      NormalFloat.bg = base00;
-      WhichKeySeparator.bg = base00;
-      WhichKeyGroup.fg = base05;
-
-      LineNr = {
-        fg = base03;
-        bg = base00;
-      };
-
-      # Use common color.
-      LineNrBelow = LineNr;
-      LineNrAbove = LineNr;
-      SignColumn = LineNr;
-
-      WinSeparator = {
-        fg = base05;
-        bg = base00;
-      };
-    };
-
     autoCmd = [
       {
         event = "FileType";
