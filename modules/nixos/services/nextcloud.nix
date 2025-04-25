@@ -1,67 +1,52 @@
-{
-  lib,
-  config,
-  ...
-}:
+{ config, lib, ... }:
 
 let
-  cfg = config.myNixOS.nextcloud;
+  cfg = config.services.nextcloud;
 in
 
-{
-  options.myNixOS.nextcloud.enable = lib.mkEnableOption "Nextcloud server";
+lib.mkIf cfg.enable {
 
-  config = lib.mkIf cfg.enable {
+  services = {
 
-    services = {
+    nextcloud = {
+      https = true;
 
-      nextcloud = {
-        enable = true;
-        https = true;
+      # My very own self-hosted Nextcloud instance.
+      hostName = "cloud.${config.networking.domain}";
 
-        # It's my very own Nextcloud.
-        hostName = "cloud.patchoulihq.cc";
+      # Memory cache support.
+      configureRedis = true;
 
-        # Caching support.
-        configureRedis = true;
+      # Use a local MySQL database.
+      database.createLocally = true;
+      config.dbtype = "mysql";
 
-        # Use a local MySQL database.
-        config.dbtype = "mysql";
-        database.createLocally = true;
+      # Miscellaneous goodies.
+      autoUpdateApps.enable = true;
+      notify_push.enable = true;
 
-        # Miscellaneous goodies.
-        autoUpdateApps.enable = true;
-        notify_push.enable = true;
-
-        settings = {
-          # System email configuration.
-          mail_smtphost = "mail.patchoulihq.cc";
-        };
-
-        # Admin user password and other sensitive Nextcloud secrets.
-        config.adminpassFile = config.sops.secrets."nextcloud/admin".path;
-        secretFile = config.sops.secrets."nextcloud/extra".path;
+      settings = {
+        # Nextcloud system email configuration.
+        mail_smtphost = "mail.patchoulihq.cc";
       };
 
-      mysql.settings = {
-        mysqld = {
-          # For utf8mb4 support.
-          innodb_large_prefix = true;
-          innodb_file_format = "barracuda";
-          innodb_file_per_table = true;
-        };
-      };
+      # Admin user password and other sensitive Nextcloud secrets.
+      config.adminpassFile = config.sops.secrets."nextcloud/admin".path;
+      secretFile = config.sops.secrets."nextcloud/extra".path;
+    };
 
-      nginx.virtualHosts."cloud.patchoulihq.cc" = {
-        # Use our existing wildcard SSL certificate.
-        useACMEHost = "patchoulihq.cc"; forceSSL = true;
+    mysql.settings = {
+      mysqld = {
+        innodb_file_per_table = true;
+        innodb_file_format = "barracuda";
+        innodb_large_prefix = true;
       };
     };
 
-    sops.secrets = {
-      # File containing config secrets.
-      "nextcloud/admin" = { owner = "nextcloud"; };
-      "nextcloud/extra" = { owner = "nextcloud"; };
-    };
+  };
+
+  sops.secrets = with config.users.users; {
+    "nextcloud/admin" = { owner = nextcloud.name; };
+    "nextcloud/extra" = { owner = nextcloud.name; };
   };
 }

@@ -3,6 +3,8 @@
 let
   cfg = config.myNixOS.rutorrent;
   inherit (config.sops) secrets;
+  inherit (config.networking) domain;
+  inherit (config.users) groups;
 in
 
 {
@@ -33,12 +35,11 @@ in
         "/data/natsuhi/media/Music" = { };
       };
 
-      specialArgs = { inherit secrets; };
+      specialArgs = { inherit domain groups secrets; };
 
-      config = { secrets, ... }: {
+      config = { domain, groups, secrets, ... }: {
 
-        # Matches the GID in the host.
-        users.groups.media = { gid = 1001; };
+        users.groups.media = { inherit (groups.media) gid; };
 
         services = {
           rtorrent = {
@@ -50,8 +51,8 @@ in
             enable = true;
             nginx.enable = true;
 
-            # For use by the Nginx virtual host.
-            hostName = "rutorrent.patchoulihq.cc";
+            # For use by Nginx virtual host.
+            hostName = "rutorrent.${domain}";
           };
         };
 
@@ -80,29 +81,26 @@ in
 
         };
 
-        system.stateVersion = "24.11";
+        system.stateVersion = "25.05";
       };
     };
 
-    services = {
-      nginx.virtualHosts."rutorrent.patchoulihq.cc" = {
+    services.nginx.virtualHosts = {
 
-        # Use our existing wildcard SSL certificate.
-        useACMEHost = "patchoulihq.cc"; forceSSL = true;
+      "rutorrent.${config.networking.domain}" = {
 
-        # Restrict access only to trusted networks.
-        extraConfig = config.myNixOS.nginx.trustedOnly;
+        my.trustedOnly = true;
 
         locations."/" = {
-          # Proxy to ruTorrent on its container.
-          proxyPass = "http://172.18.0.2:80";
+          proxyPass = "http://${config.containers.rtorrent.localAddress}";
         };
+
       };
     };
 
     sops.secrets = {
-      "wireguard/airvpn/private-key" = { };
       "wireguard/airvpn/preshared-key" = { };
+      "wireguard/airvpn/private-key" = { };
     };
   };
 }

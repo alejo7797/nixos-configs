@@ -1,45 +1,26 @@
-{
-  lib,
-  config,
-  ...
-}:
+{ config, lib, ... }:
 
 let
-  cfg = config.myNixOS.prowlarr;
+  cfg = config.services.prowlarr;
 in
 
-{
-  options.myNixOS.prowlarr.enable = lib.mkEnableOption "Prowlarr";
+lib.mkIf cfg.enable {
 
-  config = lib.mkIf cfg.enable {
+  services.nginx.virtualHosts = {
 
-    services = {
+    "prowlarr.${config.networking.domain}" = {
 
-      # Enable Prowlarr.
-      prowlarr.enable = true;
-
-      # Run Prowlarr behind our Nginx web server.
-      nginx.virtualHosts."prowlarr.patchoulihq.cc" = {
-
-        # Use our existing wildcard SSL certificate.
-        useACMEHost = "patchoulihq.cc"; forceSSL = true;
-
-        extraConfig =
-          ''
-            # Increased values.
-            proxy_read_timeout 10m;
-            proxy_send_timeout 10m;
-          ''
-          # Restrict access to trusted networks.
-          + config.myNixOS.nginx.trustedOnly;
-
-        locations."/" = {
-          # Proxy to Radarr running on localhost.
-          proxyPass = "http://localhost:9696";
-          proxyWebsockets = true;
-        };
-
+      my = {
+        trustedOnly = true;
+        increasedProxyTimeouts = true;
       };
+
+      locations."/" = {
+        proxyPass = "http://localhost:9696";
+        proxyWebsockets = true;
+      };
+
     };
   };
+
 }

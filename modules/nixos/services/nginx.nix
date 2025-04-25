@@ -1,19 +1,13 @@
-{
-  lib,
-  config,
-  pkgs,
-  ...
-}:
+{ config, lib, pkgs, ... }:
 
 let
-  cfg = config.myNixOS.nginx;
+  cfg = config.services.nginx;
 in
 
 {
-  options.myNixOS.nginx = {
-    enable = lib.mkEnableOption "nginx";
+  options.services.nginx = {
 
-    trustedNetworks = lib.mkOption {
+    my.trustedNetworks = lib.mkOption {
       type = with lib.types; listOf str;
       default = [ "127.0.0.0/8" "::1/128" ];
       description = ''
@@ -22,23 +16,51 @@ in
       '';
     };
 
-    trustedOnly = lib.mkOption {
-      type = lib.types.str;
-      description = ''
-        Nginx configuration restricting access to this
-        virtual host only to configured trusted networks.
-      '';
+    virtualHosts = lib.mkOption {
+      type = with lib.types; attrsOf (
+        submodule (
+          { config, ... }: {
+
+            options.my = {
+              trustedOnly = lib.mkEnableOption "IP protection for this virtual host";
+              increasedProxyTimeouts = lib.mkEnableOption "increased proxy timeouts";
+            };
+
+            config = {
+              enableACME = lib.mkDefault true;
+              forceSSL = lib.mkDefault true;
+
+              extraConfig = ''
+                ${
+                  lib.optionalString config.my.trustedOnly ''
+                    ${
+                      lib.concatStrings (
+                        map (network: ''
+                          allow ${network};
+                        '') cfg.my.trustedNetworks
+                      )
+                    }
+                    deny all;
+                  ''
+                }
+                ${
+                  lib.optionalString config.my.increasedProxyTimeouts ''
+                    proxy_read_timeout 10m;
+                    proxy_send_timeout 10m;
+                  ''
+                }
+              '';
+            };
+
+          }
+        )
+      );
     };
   };
 
   config = lib.mkIf cfg.enable {
 
-    myNixOS.nginx.trustedOnly =
-      # Here we allow access to hosts from trusted networks and deny everyone else.
-      lib.concatStrings (map (net: "allow ${net};") cfg.trustedNetworks) + "deny all;";
-
     services.nginx = {
-      enable = true;
 
       additionalModules = with pkgs.nginxModules; [ fancyindex ];
 
@@ -48,56 +70,46 @@ in
                         '"$http_referer" "$http_user_agent"';
       '';
 
-      resolver.addresses = [ "127.0.0.1" "[::1]" ];
+      resolver.addresses = [
+        "127.0.0.1" "[::1]"
+      ];
 
-      # Useful settings to enable.
+      # All-around good to set up.
+      recommendedGzipSettings = true;
       recommendedOptimisation = true;
       recommendedTlsSettings = true;
-      recommendedGzipSettings = true;
 
-      # Useful for reverse proxies.
+      # Useful for my reverse proxies.
       recommendedProxySettings = true;
 
       virtualHosts = {
 
         "_" = {
           default = true;
+          forceSSL = false;
           rejectSSL = true;
           extraConfig = ''
             return 444
           '';
         };
 
-        "patchoulihq.cc" = {
-          enableACME = true;
-          forceSSL = true;
-
-          extraConfig = cfg.trustedOnly;
+        ${config.networking.domain} = {
+          my.trustedOnly = true;
           root = "/var/www/html";
         };
 
-        "epelde.net" = {
-          enableACME = true;
-          forceSSL = true;
-
-          # Points to the SRCF webserver.
-          globalRedirect = "alex.epelde.net";
-        };
-
       };
+
     };
 
     networking.firewall = {
       allowedTCPPorts = [ 80 443 ];
     };
 
-    security.acme.certs."patchoulihq.cc" = {
-      extraDomainNames = [ "*.patchoulihq.cc" ];
+    sops.secrets = with config.users.users; {
+      # Desec.io API key for DNS challenges.
+      "acme/desec" = { owner = acme.name; };
     };
 
-    sops.secrets = {
-      # Cloudflare API key for DNS challenges.
-      "acme/cloudflare" = { owner = "acme"; };
-    };
   };
 }

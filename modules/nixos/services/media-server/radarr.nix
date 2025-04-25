@@ -1,47 +1,34 @@
-{
-  lib,
-  config,
-  ...
-}:
+{ config, lib, ... }:
 
 let
-  cfg = config.myNixOS.radarr;
+  cfg = config.services.radarr;
 in
 
-{
-  options.myNixOS.radarr.enable = lib.mkEnableOption "Radarr";
+lib.mkIf cfg.enable {
 
-  config = lib.mkIf cfg.enable {
+  services = {
 
-    services = {
+    radarr = {
+      group = "media";
+    };
 
-      radarr = {
-        enable = true;
-        group = "media";
-      };
+    nginx.virtualHosts = {
 
-      # Run Radarr behind our Nginx web server.
-      nginx.virtualHosts."radarr.patchoulihq.cc" = {
+      "radarr.${config.networking.domain}" = {
 
-        # Use our existing wildcard SSL certificate.
-        useACMEHost = "patchoulihq.cc"; forceSSL = true;
-
-        extraConfig =
-          ''
-            # Increased values.
-            proxy_read_timeout 10m;
-            proxy_send_timeout 10m;
-          ''
-          # Restrict access to trusted networks.
-          + config.myNixOS.nginx.trustedOnly;
+        my = {
+          trustedOnly = true;
+          increasedProxyTimeouts = true;
+        };
 
         locations."/" = {
-          # Proxy to Radarr running on localhost.
           proxyPass = "http://localhost:7878";
           proxyWebsockets = true;
         };
 
       };
+
     };
   };
+
 }

@@ -1,12 +1,7 @@
-{
-  lib,
-  inputs,
-  config,
-  ...
-}:
+{ config, lib, inputs, ... }:
 
 let
-  cfg = config.myNixOS.mailserver;
+  cfg = config.mailserver;
 
   mkAliases =
     domain: aliases: map (name: "${name}@${domain}") aliases;
@@ -18,23 +13,19 @@ in
 {
   imports = [ inputs.nixos-mailserver.nixosModules.default ];
 
-  options.myNixOS.mailserver.enable = lib.mkEnableOption "email server functionality";
-
   config = lib.mkIf cfg.enable {
 
     mailserver = {
-      enable = true;
-
       certificateScheme = "acme";
       fqdn = "mail.patchoulihq.cc";
 
       domains = [
-        # Personal email accounts.
+        # My personal email accounts.
         "epelde.net" "patchoulihq.cc"
 
         # Gitlab & Nextcloud.
-        "git.patchoulihq.cc"
         "cloud.patchoulihq.cc"
+        "git.patchoulihq.cc"
       ];
 
       loginAccounts = {
@@ -65,13 +56,10 @@ in
     };
 
     sops.secrets = {
-      # Cloudflare API key for DNS challenges.
-      "acme/cloudflare" = { owner = "acme"; };
-
-      # Secure password deployment.
       "mailserver/alex" = { };
-      "mailserver/ewan" = { };
       "mailserver/dmarc" = { };
+      "mailserver/ewan" = { };
     };
+
   };
 }

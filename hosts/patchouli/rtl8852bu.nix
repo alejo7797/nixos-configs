@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://linux.brostrend.com/${name}-dkms.deb";
-    sha256 = "0bh9sgixdlgbhfblbnvb2bys34mclpgcmmn1cl5nby9268757m3h";
+    sha256 = "sha256-Y3WSTmB/R5554cn9Fql8FfcJFkZhe+2yT5ZvA0QEo5I=";
   };
 
   hardeningDisable = [ "pic" "format" ];
@@ -29,7 +29,13 @@ stdenv.mkDerivation rec {
   '';
 
   postPatch = ''
-    substituteInPlace Makefile --replace-fail "/sbin/depmod" "# depmod"
+    substituteInPlace Makefile \
+      --replace-fail "/sbin/depmod -a \''${KVER}" "" \
+      --replace-fail "cp -f \$(MODULE_NAME).conf /etc/modprobe.d" "" \
+      --replace-fail "sh edit-options.sh" ""
+
+    substituteInPlace core/rtw_debug.c \
+      --replace-fail "RTW_PRINT_SEL(sel, \"build time: %s %s\n\", __DATE__, __TIME__);" ""
   '';
 
   preBuild = ''

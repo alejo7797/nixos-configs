@@ -17,6 +17,7 @@ in
     kernelModules = [ "kvm-intel" ];
 
     blacklistedKernelModules = [ "ath9k" ];
+
     extraModulePackages = [ rtl8852bu ];
 
     extraModprobeConfig = ''

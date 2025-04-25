@@ -2,11 +2,12 @@
 
   security.acme = {
 
-    acceptTerms = true; # See https://letsencrypt.org/repository/.
+    acceptTerms = true; # https://letsencrypt.org/repository/.
 
     defaults = {
-      email = "ewan@patchoulihq.cc"; dnsProvider = "cloudflare";
-      environmentFile = config.sops.secrets."acme/cloudflare".path;
+      email = "ewan@patchoulihq.cc"; dnsProvider = "desec";
+      environmentFile = config.sops.secrets."acme/desec".path;
+      server = "https://api.test4.buypass.no/acme/directory";
     };
 
   };
