@@ -3,24 +3,6 @@
 {
   programs.nixvim.plugins = {
 
-    nvim-autopairs.luaConfig.post = ''
-      npairs.add_rules({
-        -- Inline math environment.
-        rule("\\(", "\\)", "tex"),
-
-        -- Display math environment.
-        rule("\\[", "\\]", "tex"),
-
-        rule("\\left(", "\\right)", "tex"),
-        rule("\\left\\{", "\\right\\}", "tex"),
-        rule("\\left[", "\\right]", "tex"),
-
-        -- More LaTeX delimiters.
-        rule("\\langle", "\\rangle", "tex"),
-        rule("\\{", "\\}", "tex"),
-      })
-    '';
-
     # Settings for the TeX language server.
     lsp.servers.texlab.settings.texlab = {
 

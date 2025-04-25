@@ -14,7 +14,7 @@ in
 
     extraPackages = with pkgs; [ fd ];
 
-    extraPlugins = with pkgs.vimPlugins; [ tabout-nvim aw-watcher-nvim ];
+    extraPlugins = with pkgs.vimPlugins; [ aw-watcher-nvim ];
 
     clipboard = {
       register = "unnamedplus";
@@ -211,20 +211,6 @@ in
         };
       };
 
-      # Snippets.
-      friendly-snippets.enable = true;
-      luasnip = {
-        enable = true;
-        fromLua = [
-          { } { paths = ./snippets; }
-        ];
-        settings = {
-          enable_autosnippets = true;
-          keep_roots = true;
-          link_children = true;
-        };
-      };
-
       # Telescope.
       telescope.enable = true;
 
@@ -412,7 +398,6 @@ in
 
     extraConfigLua = ''
       require('aw_watcher').setup {}
-      require('tabout').setup {}
     '';
   };
 }
