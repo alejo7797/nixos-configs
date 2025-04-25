@@ -75,7 +75,7 @@ in
     autoCmd = [
       {
         event = "FileType";
-        pattern = [ "c" "nix" ];
+        pattern = [ "c" "lua" "nix" ];
         callback.__raw = ''
           function(opts)
             local bo = vim.bo[opts.buf]
@@ -94,7 +94,20 @@ in
       comment.enable = true;
       hex.enable = true;
       lastplace.enable = true;
-      nvim-autopairs.enable = true;
+      nvim-autopairs = {
+        enable = true;
+        luaConfig = {
+          pre = ''
+            local npairs = require('nvim-autopairs')
+            local rule = require('nvim-autopairs.rule')
+          '';
+          post = ''
+            npairs.add_rules({
+              rule(" = {", "};", "nix"),
+            })
+          '';
+        };
+      };
       nvim-surround.enable = true;
       todo-comments.enable = true;
       trim.enable = true;
@@ -202,8 +215,14 @@ in
       friendly-snippets.enable = true;
       luasnip = {
         enable = true;
-        # Load any local snippets and my custom package.
-        fromSnipmate = [ { } { paths = ./snippets; } ];
+        fromLua = [
+          { } { paths = ./snippets; }
+        ];
+        settings = {
+          enable_autosnippets = true;
+          keep_roots = true;
+          link_children = true;
+        };
       };
 
       # Telescope.

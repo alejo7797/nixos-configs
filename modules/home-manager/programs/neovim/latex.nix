@@ -4,10 +4,7 @@
   programs.nixvim.plugins = {
 
     nvim-autopairs.luaConfig.post = ''
-
-      local rule = require('nvim-autopairs.rule')
-      require('nvim-autopairs').add_rules({
-
+      npairs.add_rules({
         -- Inline math environment.
         rule("\\(", "\\)", "tex"),
 
@@ -21,9 +18,7 @@
         -- More LaTeX delimiters.
         rule("\\langle", "\\rangle", "tex"),
         rule("\\{", "\\}", "tex"),
-
       })
-
     '';
 
     # Settings for the TeX language server.

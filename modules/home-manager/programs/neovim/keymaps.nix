@@ -400,29 +400,15 @@
         "<C-p>" = "cmp.mapping.select_prev_item()";
         "<C-n>" = "cmp.mapping.select_next_item()";
 
-        # Close the auto-complete menu.
+        # Accept suggestion or close the popup menu.
+        "<CR>" = "cmp.mapping.confirm({select = true})";
         "<C-e>" = "cmp.mapping.abort()";
 
-        "<CR>" = ''
-          cmp.mapping(function(fallback)
-            if cmp.visible() then
-              if luasnip.expandable() then
-                luasnip.expand()
-              else
-                cmp.confirm({
-                  select = true,
-                })
-              end
-            else
-              fallback()
-            end
-          end)
-        '';
 
         "<Tab>" = ''
           cmp.mapping(function(fallback)
-            if luasnip.jumpable(1) then
-              luasnip.jump(1)
+            if luasnip.expand_or_jumpable() then
+              luasnip.expand_or_jump()
             else
               fallback()
             end
