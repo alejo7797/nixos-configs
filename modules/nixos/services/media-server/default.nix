@@ -9,10 +9,11 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    myNixOS = {
-      # Main download client.
-      rutorrent.enable = true;
+    my = {
+      rtorrent.enable = true;
+    };
 
+    myNixOS = {
       # Indexer management.
       autobrr.enable = true;
       flaresolverr.enable = true;

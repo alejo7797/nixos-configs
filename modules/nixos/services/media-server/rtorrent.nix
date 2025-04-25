@@ -1,14 +1,14 @@
 { lib, config, ... }:
 
 let
-  cfg = config.myNixOS.rutorrent;
+  cfg = config.my.rtorrent;
   inherit (config.sops) secrets;
   inherit (config.networking) domain;
   inherit (config.users) groups;
 in
 
 {
-  options.myNixOS.rutorrent.enable = lib.mkEnableOption "rTorrent";
+  options.my.rtorrent.enable = lib.mkEnableOption "rTorrent";
 
   config = lib.mkIf cfg.enable {
 
@@ -35,9 +35,7 @@ in
         "/data/natsuhi/media/Music" = { };
       };
 
-      specialArgs = { inherit domain groups secrets; };
-
-      config = { domain, groups, secrets, ... }: {
+      config = {
 
         users.groups.media = { inherit (groups.media) gid; };
 
@@ -87,7 +85,7 @@ in
 
     services.nginx.virtualHosts = {
 
-      "rutorrent.${config.networking.domain}" = {
+      "rutorrent.${domain}" = {
 
         my.trustedOnly = true;
 

@@ -64,6 +64,8 @@ in
 
       additionalModules = with pkgs.nginxModules; [ fancyindex ];
 
+      clientMaxBodySize = "20M";
+
       commonHttpConfig = ''
         log_format main '$remote_addr - $remote_user [$time_local] '
                         '"$request" $status $body_bytes_sent '
