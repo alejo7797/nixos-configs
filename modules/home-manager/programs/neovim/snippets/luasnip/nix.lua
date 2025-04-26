@@ -30,10 +30,12 @@ return {
         }
       ]],
 			{
-				i(1, "<name>"),
-        rep(1),
-				i(2, "<description>"),
-        i(0),
+				i(1, "name"),
+				rep(1),
+				d(2, function(args)
+					return sn(nil, i(1, args[1]))
+				end, { 1 }),
+				i(0),
 			}
 		)
 	),

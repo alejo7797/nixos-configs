@@ -20,7 +20,7 @@
         ];
 
         fromVscode = lib.mkForce [
-          { exclude = [ "latex" ]; }
+          { exclude = [ "tex" ]; }
         ];
 
         settings = {
@@ -31,7 +31,7 @@
           cut_selection_keys = "<Tab>";
 
           update_events = [
-            # Improve visual feedback.
+            # Improved visual feedback.
             "TextChanged" "TextChangedI"
           ];
 
