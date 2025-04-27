@@ -11,7 +11,6 @@ with config.lib.stylix.colors.withHashtag;
       # Fix some UI elements.
       MiniIconsBlue.fg = base0D;
       MiniIconsGrey.fg = base04;
-      WhichKeyGroup.fg = base05;
       MatchParen.fg = base0A;
 
       DiagnosticFloatingError = {
@@ -76,8 +75,14 @@ with config.lib.stylix.colors.withHashtag;
         link = "NormalFloat";
       };
 
+      WhichKeyDesc = {
+        link = "Normal";
+      };
       WhichKeySeparator = {
         link = "NormalFloat";
+      };
+      WhichKeyGroup = {
+        link = "Normal";
       };
 
       WinSeparator = {

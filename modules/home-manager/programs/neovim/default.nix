@@ -1,4 +1,8 @@
-{ lib, inputs, pkgs, ... }:
+{ config, lib, inputs, pkgs, ... }:
+
+let
+  stylix-colors = config.lib.stylix.colors.withHashtag;
+in
 
 {
   imports = [
@@ -160,26 +164,36 @@
       # Tab line.
       bufferline = {
         enable = true;
-        settings.options = {
-          close_command.__raw = ''
-            function(bufnum)
-              require('bufdelete').bufdelete(bufnum, false)
-            end
-          '';
-          left_mouse_command = "buffer %d";
-          right_mouse_command = "vertical sbuffer %d";
-          diagnostics = "nvim_lsp";
-          diagnostics_indicator.__raw = ''
-            function(count, level, diagnostics_dict, context)
-              local s = " "
-                for e, n in pairs(diagnostics_dict) do
-                  local sym = e == "error" and "   "
-                    or (e == "warning" and "   " or "  " )
-                  s = s .. n .. sym
-                end
-              return s
-            end
-          '';
+        settings =  {
+          highlights = {
+            fill.bg = stylix-colors.base00;
+          };
+          options = {
+            close_command.__raw = ''
+              function(bufnum)
+                require("bufdelete").bufdelete(bufnum, false)
+              end
+            '';
+            diagnostics = "nvim_lsp";
+            diagnostics_indicator.__raw = ''
+              function(count, level, diagnostics_dict, context)
+                local s = " "
+                  for e, n in pairs(diagnostics_dict) do
+                    local sym = e == "error" and "   "
+                      or (e == "warning" and "   " or "  " )
+                    s = s .. n .. sym
+                  end
+                return s
+              end
+            '';
+            left_mouse_command = "buffer %d";
+            numbers.__raw = ''
+              function(opts)
+                return string.format('%s·%s', opts.raise(opts.id), opts.lower(opts.ordinal))
+              end
+            '';
+            right_mouse_command = "vertical sbuffer %d";
+          };
         };
       };
 
