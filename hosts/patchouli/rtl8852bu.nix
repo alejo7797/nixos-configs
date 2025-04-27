@@ -29,22 +29,21 @@ stdenv.mkDerivation rec {
   '';
 
   postPatch = ''
-    substituteInPlace Makefile \
-      --replace-fail "/sbin/depmod -a \''${KVER}" "" \
-      --replace-fail "cp -f \$(MODULE_NAME).conf /etc/modprobe.d" "" \
-      --replace-fail "sh edit-options.sh" ""
-
     substituteInPlace core/rtw_debug.c \
       --replace-fail "RTW_PRINT_SEL(sel, \"build time: %s %s\n\", __DATE__, __TIME__);" ""
   '';
 
   preBuild = ''
-    export src=$(pwd); mkdir -p $out/${modDir}
+    export src=$(pwd)
   '';
 
   makeFlags = [
-    "KSRC=${kernel.dev}/${modDir}/build" "MODDESTDIR=$(out)/${modDir}"
+    "KSRC=${kernel.dev}/${modDir}/build"
   ];
+
+  installPhase = ''
+    install -Dm644 ${lib.removePrefix "rtl" name}.ko -t $out/${modDir}
+  '';
 
   meta = {
     description = "Kernel module for the Brostrend AX4L USB WiFi adapter";
