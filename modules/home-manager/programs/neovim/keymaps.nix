@@ -1,6 +1,18 @@
 {
   programs.nixvim = {
+
     keymaps = [
+
+      {
+        action = "<ESC>";
+        key = "jk";
+        mode = "i";
+        options = {
+          desc = "Exit insert mode";
+          silent = true;
+        };
+      }
+
       # bufferline.nvim
       {
         action = ":Bdelete<CR>";
@@ -80,9 +92,9 @@
         action.__raw = ''
           function()
             if vim.wo.diff then
-              vim.cmd.normal({']c', bang = true})
+              vim.cmd.normal({"]c", bang = true})
             else
-              require('gitsigns').next_hunk()
+              require("gitsigns").next_hunk()
             end
           end
         '';
@@ -97,9 +109,9 @@
         action.__raw = ''
           function()
             if vim.wo.diff then
-              vim.cmd.normal({'[c', bang = true})
+              vim.cmd.normal({"[c", bang = true})
             else
-              require('gitsigns').prev_hunk()
+              require("gitsigns").prev_hunk()
             end
           end
         '';
@@ -268,7 +280,7 @@
 
       # lspconfig
       {
-        action = ":FormatToggle <CR>";
+        action = ":FormatToggle<CR>";
         key = "<leader>ltf";
         mode = "n";
         options = {
@@ -392,7 +404,7 @@
       ];
 
       cmp.settings.mapping = {
-        # Scroll the info popup on the side.
+        # Scroll the cuurent suggestion's info.
         "<C-b>" = "cmp.mapping.scroll_docs(-4)";
         "<C-f>" = "cmp.mapping.scroll_docs(4)";
 
@@ -504,6 +516,8 @@
           };
         };
       };
+
     };
+
   };
 }

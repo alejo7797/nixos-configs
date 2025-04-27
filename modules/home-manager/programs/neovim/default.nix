@@ -1,4 +1,4 @@
-{ config, inputs, pkgs, ... }:
+{ config, lib, inputs, pkgs, ... }:
 
 let
   stylix-colors = config.lib.stylix.colors.withHashtag;
@@ -98,8 +98,8 @@ in
         enable = true;
         luaConfig = {
           pre = ''
-            local npairs = require('nvim-autopairs')
-            local rule = require('nvim-autopairs.rule')
+            local npairs = require("nvim-autopairs")
+            local rule = require("nvim-autopairs.rule")
           '';
           post = ''
             npairs.add_rules({
@@ -245,7 +245,7 @@ in
       cmp = {
         enable = true;
         luaConfig.pre = ''
-          local luasnip = require('luasnip')
+          local luasnip = require("luasnip")
         '';
         settings = {
           snippet = {
@@ -345,7 +345,7 @@ in
           nil_ls = {
             enable = true;
             settings = {
-              formatting.command = [ "${pkgs.nixfmt-rfc-style}/bin/nixfmt" ];
+              formatting.command = [ "${lib.getExe pkgs.nixfmt-rfc-style}" ];
               nix.flake.autoArchive = true;
             };
           };
@@ -397,7 +397,7 @@ in
     };
 
     extraConfigLua = ''
-      require('aw_watcher').setup {}
+      require("aw_watcher").setup({})
     '';
   };
 }
