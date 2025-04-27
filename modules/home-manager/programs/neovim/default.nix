@@ -103,7 +103,7 @@ in
           '';
           post = ''
             npairs.add_rules({
-              rule(" = {", "};", "nix"),
+              rule(" = ", ";", "nix"),
             })
           '';
         };
