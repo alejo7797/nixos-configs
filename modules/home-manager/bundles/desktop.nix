@@ -49,8 +49,9 @@ in
     ];
 
     home.sessionVariables = {
-      # Keep application data outside of $HOME.
-      CUDA_CACHE_PATH="${config.xdg.cacheHome}/nv";
+
+      CARGO_HOME = "${config.xdg.dataHome}/cargo";
+      CUDA_CACHE_PATH = "${config.xdg.cacheHome}/nv";
       GPODDER_HOME = "${config.xdg.dataHome}/gPodder";
       WINEPREFIX = "${config.xdg.dataHome}/wine";
 
