@@ -194,7 +194,7 @@
         key = "<leader>xq";
         mode = "n";
         options = {
-          desc = "QuickFix list";
+          desc = "Quickfix list";
         };
       }
       {
@@ -488,8 +488,8 @@
               __unkeyed = "<leader>l";
               group = "+LSP";
               icon = {
-                cat = "lsp";
-                name = "constructor";
+                icon = " ";
+                color = "blue";
               };
             }
             {
@@ -577,6 +577,20 @@
             {
               __unkeyed = "[d";
               desc = "Previous diagnostic";
+            }
+            {
+              __unkeyed = "]t";
+              icon = {
+                cat = "filetype";
+                name = "TODO";
+              };
+            }
+            {
+              __unkeyed = "[t";
+              icon = {
+                cat = "filetype";
+                name = "TODO";
+              };
             }
           ];
         };
