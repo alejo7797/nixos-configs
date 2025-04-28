@@ -313,7 +313,7 @@
               gitsigns.nav_hunk("next")
             end
           end, {
-            desc = "Next hunk",
+            desc = "Next Git hunk",
           })
 
           map("n", "[c", function()
@@ -323,7 +323,7 @@
               gitsigns.nav_hunk("prev")
             end
           end, {
-            desc = "Previous hunk",
+            desc = "Previous Git hunk",
           })
 
           -- Actions.
@@ -442,7 +442,7 @@
         "<leader>fz" = {
           action = "current_buffer_fuzzy_find";
           options = {
-            desc = "Telescope current buffer";
+            desc = "Telescope this buffer";
           };
         };
       };
@@ -468,8 +468,8 @@
             {
               __unkeyed = "<leader>e";
               icon = {
-                cat = "filetype";
-                name = "neo-tree";
+                icon = "󰙅";
+                color = "yellow";
               };
             }
             {
@@ -485,18 +485,80 @@
               };
             }
             {
-              __unkeyed = "<leader>l";
-              group = "+LSP";
+              __unkeyed = "<leader>hb";
               icon = {
-                icon = " ";
-                color = "blue";
+                cat = "filetype";
+                name = "git";
               };
             }
             {
-              __unkeyed = "<leader>lf";
+              __unkeyed = "<leader>hd";
+              icon = {
+                cat = "filetype";
+                name = "git";
+              };
+            }
+            {
+              __unkeyed = "<leader>hD";
+              icon = {
+                cat = "filetype";
+                name = "git";
+              };
+            }
+            {
+              __unkeyed = "<leader>hi";
+              icon = {
+                cat = "filetype";
+                name = "git";
+              };
+            }
+            {
+              __unkeyed = "<leader>hp";
+              icon = {
+                cat = "filetype";
+                name = "git";
+              };
+            }
+            {
+              __unkeyed = "<leader>hr";
+              icon = {
+                cat = "filetype";
+                name = "git";
+              };
+            }
+            {
+              __unkeyed = "<leader>hR";
+              icon = {
+                cat = "filetype";
+                name = "git";
+              };
+            }
+            {
+              __unkeyed = "<leader>hs";
+              icon = {
+                cat = "filetype";
+                name = "git";
+              };
+            }
+            {
+              __unkeyed = "<leader>hS";
+              icon = {
+                cat = "filetype";
+                name = "git";
+              };
+            }
+            {
+              __unkeyed = "<leader>hu";
+              icon = {
+                cat = "filetype";
+                name = "git";
+              };
+            }
+            {
+              __unkeyed = "<leader>l";
               group = "+LSP";
               icon = {
-                icon = " ";
+                icon = " ";
                 color = "cyan";
               };
             }
@@ -508,21 +570,60 @@
               };
             }
             {
+              __unkeyed = "<leader>lf";
+              icon = {
+                icon = " ";
+                color = "cyan";
+              };
+            }
+            {
               __unkeyed = "<leader>ln";
               icon = {
-                cat = "lsp";
-                name = "variable";
+                icon = "󰑕";
+                color = "cyan";
               };
             }
             {
               __unkeyed = "<leader>lg";
               group = "+Go to";
+              icon = {
+                icon = "󱞷";
+                color = "cyan";
+              };
+            }
+            {
+              __unkeyed = "<leader>lH";
+              icon = {
+                icon = " ";
+                color = "cyan";
+              };
+            }
+            {
+              __unkeyed = "<leader>lh";
+              icon = {
+                icon = " ";
+                color = "cyan";
+              };
+            }
+            {
+              __unkeyed = "<leader>lr";
+              icon = {
+                icon = " ";
+                color = "cyan";
+              };
             }
             {
               __unkeyed = "<leader>lS";
               icon = {
-                cat = "lsp";
-                name = "variable";
+                icon = " ";
+                color = "cyan";
+              };
+            }
+            {
+              __unkeyed = "<leader>ls";
+              icon = {
+                icon = " ";
+                color = "cyan";
               };
             }
             {
@@ -536,8 +637,8 @@
               __unkeyed = "<leader>lw";
               group = "+Workspace";
               icon = {
-                cat = "lsp";
-                name = "folder";
+                icon = "󰉋 ";
+                color = "blue";
               };
             }
             {
@@ -549,11 +650,32 @@
               };
             }
             {
+              __unkeyed = "<leader>tb";
+              icon = {
+                cat = "filetype";
+                name = "git";
+              };
+            }
+            {
+              __unkeyed = "<leader>td";
+              icon = {
+                cat = "filetype";
+                name = "git";
+              };
+            }
+            {
+              __unkeyed = "<leader>tw";
+              icon = {
+                cat = "filetype";
+                name = "git";
+              };
+            }
+            {
               __unkeyed = "<leader>x";
               group = "+Trouble";
               icon = {
-                cat = "filetype";
-                name = "trouble";
+                icon = "󰙅";
+                color = "red";
               };
             }
             {
@@ -581,15 +703,22 @@
             {
               __unkeyed = "]t";
               icon = {
-                cat = "filetype";
-                name = "TODO";
+                icon = "󰝖 ";
+                color = "purple";
               };
             }
             {
               __unkeyed = "[t";
               icon = {
-                cat = "filetype";
-                name = "TODO";
+                icon = "󰝖 ";
+                color = "purple";
+              };
+            }
+            {
+              __unkeyed = "<C-n>";
+              icon = {
+                icon = "󰙅";
+                color = "yellow";
               };
             }
           ];

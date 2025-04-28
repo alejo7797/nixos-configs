@@ -32,21 +32,23 @@ in
         sp = colors.base0B;
       };
 
-      MiniIconsOrange = {
-        fg = colors.base09;
-      };
-      MiniIconsPurple = {
-        fg = colors.base0E;
-      };
-      MiniIconsYellow = {
-        fg = colors.base0A;
-      };
-
       WhichKeyDesc = {
         fg = colors.base05;
       };
       WhichKeyGroup = {
         fg = colors.base05;
+      };
+
+      WhichKeyIconOrange = {
+        fg = colors.base09;
+      };
+
+      WhichKeyIconPurple = {
+        fg = colors.base0E;
+      };
+
+      WhichKeyIconYellow = {
+        fg = colors.base0A;
       };
 
     };

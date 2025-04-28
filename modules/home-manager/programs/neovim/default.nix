@@ -90,7 +90,14 @@
           '';
           post = ''
             npairs.add_rules({
-              rule(" = ", ";", "nix"),
+              rule(" = ", ";", "nix")
+                :with_pair(function(opts)
+                  if opts.line:match(";$") then
+                    return false
+                  else
+                    return true
+                  end
+                end),
             })
           '';
         };
@@ -101,11 +108,6 @@
 
       # Visuals.
       indent-blankline.enable = true;
-      mini = {
-        enable = true;
-        mockDevIcons = true;
-        modules.icons = {};
-      };
       nvim-colorizer = {
         enable = true;
         userDefaultOptions = {
@@ -114,6 +116,7 @@
           RGB = false;
         };
       };
+      web-devicons.enable = true;
 
       # UI.
       fastaction = {
