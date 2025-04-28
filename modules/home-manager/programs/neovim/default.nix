@@ -1,17 +1,9 @@
-{ config, lib, inputs, pkgs, ... }:
-
-let
-  stylix-colors = config.lib.stylix.colors.withHashtag;
-in
+{ lib, inputs, pkgs, ... }:
 
 {
   imports = [
     inputs.nixvim.homeManagerModules.nixvim
   ];
-
-  stylix.targets.nixvim = {
-    plugin = "base16-nvim";
-  };
 
   programs.nixvim = {
     vimAlias = true;
@@ -109,6 +101,11 @@ in
 
       # Visuals.
       indent-blankline.enable = true;
+      mini = {
+        enable = true;
+        mockDevIcons = true;
+        modules.icons = {};
+      };
       nvim-colorizer = {
         enable = true;
         userDefaultOptions = {
@@ -117,7 +114,6 @@ in
           RGB = false;
         };
       };
-      web-devicons.enable = true;
 
       # UI.
       fastaction = {
@@ -159,41 +155,54 @@ in
 
       # Git.
       fugitive.enable = true;
-      gitsigns.enable = true;
+      git-conflict.enable = true;
+      gitsigns = {
+        enable = true;
+        settings = {
+          preview_config = {
+            border = "rounded";
+          };
+        };
+      };
 
       # Tab line.
       bufferline = {
         enable = true;
-        settings =  {
-          highlights = {
-            fill.bg = stylix-colors.base00;
-          };
-          options = {
-            close_command.__raw = ''
-              function(bufnum)
-                require("bufdelete").bufdelete(bufnum, false)
-              end
-            '';
-            diagnostics = "nvim_lsp";
-            diagnostics_indicator.__raw = ''
-              function(count, level, diagnostics_dict, context)
-                local s = " "
-                  for e, n in pairs(diagnostics_dict) do
-                    local sym = e == "error" and "   "
-                      or (e == "warning" and "   " or "  " )
-                    s = s .. n .. sym
-                  end
-                return s
-              end
-            '';
-            left_mouse_command = "buffer %d";
-            numbers.__raw = ''
-              function(opts)
-                return string.format('%s·%s', opts.raise(opts.id), opts.lower(opts.ordinal))
-              end
-            '';
-            right_mouse_command = "vertical sbuffer %d";
-          };
+        settings.options = {
+          close_command.__raw = ''
+            function(bufnum)
+              require("bufdelete").bufdelete(bufnum, false)
+            end
+          '';
+          diagnostics = "nvim_lsp";
+          diagnostics_indicator.__raw = ''
+            function(count, level, diagnostics_dict, context)
+              local s = " "
+                for e, n in pairs(diagnostics_dict) do
+                  local sym = e == "error" and "   "
+                    or (e == "warning" and "   " or "  " )
+                  s = s .. n .. sym
+                end
+              return s
+            end
+          '';
+          left_mouse_command = "buffer %d";
+          numbers.__raw = ''
+            function(opts)
+              return string.format('%s·%s', opts.raise(opts.id), opts.lower(opts.ordinal))
+            end
+          '';
+          offsets = [
+            {
+              filetype = "neo-tree";
+              highlight = "Comment";
+              separator = true;
+              text = "File Explorer";
+              text_align = "center";
+            }
+          ];
+          right_mouse_command = "vertical sbuffer %d";
+          style_preset.__raw = "require('bufferline').style_preset.minimal";
         };
       };
 
@@ -225,7 +234,7 @@ in
         settings = {
           direction = "horizontal";
           open_mapping = "[[<C-t>]]";
-          size = ''
+          size.__raw = ''
             function(term)
               if term.direction == "horizontal" then
                 return 15
@@ -254,15 +263,15 @@ in
         '';
         settings = {
           snippet = {
-            expand = ''
+            expand.__raw = ''
               function(args)
                 luasnip.lsp_expand(args.body)
               end
             '';
           };
           window = {
-            completion.border = "rounded";
-            documentation.border = "rounded";
+            completion.__raw = "cmp.config.window.bordered()";
+            documentation.__raw = "cmp.config.window.bordered()";
           };
           sources = [
             {
@@ -357,8 +366,17 @@ in
         };
       };
 
-      lsp-format = {
+      conform-nvim = {
         enable = true;
+        settings.format_on_save = ''
+          function(bufnr)
+            if vim.g.disable_autoformat then
+              return
+            else
+              return { lsp_fallback = true }
+            end
+          end
+        '';
       };
 
       none-ls = {

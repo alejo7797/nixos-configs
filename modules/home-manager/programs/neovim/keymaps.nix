@@ -9,413 +9,592 @@
         mode = "i";
         options = {
           desc = "Exit insert mode";
-          silent = true;
         };
       }
 
-      # bufferline.nvim
       {
-        action = ":Bdelete<CR>";
+        action.__raw = ''
+          function()
+            require("bufdelete").bufdelete(0, false)
+          end
+        '';
         key = "<leader>bx";
         mode = "n";
         options = {
           desc = "Close buffer";
-          silent = true;
         };
       }
       {
-        action = ":BufferLineCycleNext<CR>";
-        key = "<leader>bn";
+        action.__raw = ''
+          function()
+            require("bufferline").cycle(1)
+          end
+        '';
+        key = "]b";
         mode = "n";
         options = {
           desc = "Next buffer";
-          silent = true;
         };
       }
       {
-        action = ":BufferLineCyclePrev<CR>";
-        key = "<leader>bp";
+        action.__raw = ''
+          function()
+            require("bufferline").cycle(-1)
+          end
+        '';
+        key = "[b";
         mode = "n";
         options = {
           desc = "Previous buffer";
-          silent = true;
         };
       }
       {
-        action = ":BufferLinePick<CR>";
+        action.__raw = ''
+          function()
+            require("bufferline").pick()
+          end
+        '';
         key = "<leader>bc";
         mode = "n";
         options = {
           desc = "Pick buffer";
-          silent = true;
         };
       }
       {
-        action = ":BufferLineSortByExtension<CR>";
-        key = "<leader>bse";
-        mode = "n";
-        options = {
-          desc = "Sort buffers by extension";
-          silent = true;
-        };
-      }
-      {
-        action = ":BufferLineSortByDirectory<CR>";
+        action.__raw = ''
+          function()
+            require("bufferline").sort_by("directory")
+          end
+        '';
         key = "<leader>bsd";
         mode = "n";
         options = {
           desc = "Sort buffers by directory";
-          silent = true;
         };
       }
       {
-        action = ":BufferLineMoveNext<CR>";
+        action.__raw = ''
+          function()
+            require("bufferline").sort_by("extension")
+          end
+        '';
+        key = "<leader>bse";
+        mode = "n";
+        options = {
+          desc = "Sort buffers by extension";
+        };
+      }
+      {
+        action.__raw = ''
+          function()
+            require("bufferline").move(1)
+          end
+        '';
         key = "<leader>bmn";
         mode = "n";
         options = {
           desc = "Move buffer forwards";
-          silent = true;
         };
       }
       {
-        action = ":BufferLineMovePrev<CR>";
+        action.__raw = ''
+          function()
+            require("bufferline").move(-1)
+          end
+        '';
         key = "<leader>bmp";
         mode = "n";
         options = {
           desc = "Move buffer backwards";
-          silent = true;
         };
       }
 
-      # gitsigns.nvim
       {
         action.__raw = ''
           function()
-            if vim.wo.diff then
-              vim.cmd.normal({"]c", bang = true})
-            else
-              require("gitsigns").next_hunk()
-            end
+            require("neo-tree.command").execute({
+              toggle = true,
+            })
           end
         '';
-        key = "]c";
+        key = "<C-n>";
         mode = "n";
         options = {
-          desc = "Next hunk [Gitsigns]";
-          silent = true;
+          desc = "Toggle Neo-tree";
         };
       }
       {
         action.__raw = ''
           function()
-            if vim.wo.diff then
-              vim.cmd.normal({"[c", bang = true})
-            else
-              require("gitsigns").prev_hunk()
-            end
+            require("neo-tree.command").execute({
+              action = "focus",
+            })
           end
         '';
-        key = "[c";
+        key = "<leader>e";
         mode = "n";
         options = {
-          desc = "Previous hunk [Gitsigns]";
-          silent = true;
-        };
-      }
-      {
-        action.__raw = "require('gitsigns').stage_hunk";
-        key = "<leader>hs";
-        mode = "n";
-        options = {
-          desc = "Stage hunk [Gitsigns]";
-          silent = true;
-        };
-      }
-      {
-        action.__raw = "require('gitsigns').reset_hunk";
-        key = "<leader>hr";
-        mode = "n";
-        options = {
-          desc = "Reset hunk [Gitsigns]";
-          silent = true;
-        };
-      }
-      {
-        action.__raw = "require('gitsigns').stage_buffer";
-        key = "<leader>hS";
-        mode = "n";
-        options = {
-          desc = "Stage buffer [Gitsigns]";
-          silent = true;
-        };
-      }
-      {
-        action.__raw = "require('gitsigns').undo_stage_hunk";
-        key = "<leader>hu";
-        mode = "n";
-        options = {
-          desc = "Undo stage hunk [Gitsigns]";
-          silent = true;
-        };
-      }
-      {
-        action.__raw = "require('gitsigns').reset_buffer";
-        key = "<leader>hR";
-        mode = "n";
-        options = {
-          desc = "Reset buffer [Gitsigns]";
-          silent = true;
-        };
-      }
-      {
-        action.__raw = "require('gitsigns').preview_hunk";
-        key = "<leader>hp";
-        mode = "n";
-        options = {
-          desc = "Preview hunk [Gitsigns]";
-          silent = true;
-        };
-      }
-      {
-        action.__raw = "function() require('gitsigns').blame_line{full=true} end";
-        key = "<leader>hb";
-        mode = "n";
-        options = {
-          desc = "Blame line [Gitsigns]";
-          silent = true;
-        };
-      }
-      {
-        action.__raw = "require('gitsigns').toggle_current_line_blame";
-        key = "<leader>tb";
-        mode = "n";
-        options = {
-          desc = "Toggle blame [Gitsigns]";
-          silent = true;
-        };
-      }
-      {
-        action.__raw = "require('gitsigns').diffthis";
-        key = "<leader>hd";
-        mode = "n";
-        options = {
-          desc = "Diff this [Gitsigns]";
-          silent = true;
-        };
-      }
-      {
-        action.__raw = "function() require('gitsigns').diffthis('~') end";
-        key = "<leader>hD";
-        mode = "n";
-        options = {
-          desc = "Diff project [Gitsigns]";
-          silent = true;
-        };
-      }
-      {
-        action.__raw = "require('gitsigns').toggle_deleted";
-        key = "<leader>td";
-        mode = "n";
-        options = {
-          desc = "Toggle deleted [Gitsigns]";
-          silent = true;
+          desc = "Neo-tree";
         };
       }
 
-      # trouble.nvim
       {
-        action = ":Trouble toggle diagnostics<CR>";
+        action.__raw = ''
+          function()
+            require("trouble").toggle({
+              mode = "diagnostics"
+            })
+          end
+        '';
         key = "<leader>lwd";
         mode = "n";
         options = {
-          desc = "Workspace diagnostics [trouble]";
-          silent = true;
+          desc = "Project diagnostics";
         };
       }
       {
-        action = ":Trouble toggle diagnostics filter.buf=0<CR>";
-        key = "<leader>ld";
+        action.__raw = ''
+          function()
+            require("trouble").toggle({
+              mode = "diagnostics",
+              filter = {
+                buf = 0,
+              },
+            })
+          end
+        '';
+        key = "<leader>lb";
         mode = "n";
         options = {
-          desc = "Document diagnostics [trouble]";
-          silent = true;
+          desc = "Buffer diagnostics";
         };
       }
       {
-        action = ":Trouble toggle lsp_references<CR>";
+        action.__raw = ''
+          function()
+            require("trouble").toggle({
+              mode = "lsp_references"
+            })
+          end
+        '';
         key = "<leader>lr";
         mode = "n";
         options = {
-          desc = "LSP References [trouble]";
-          silent = true;
+          desc = "LSP references";
         };
       }
       {
-        action = ":Trouble toggle quickfix<CR>";
+        action.__raw = ''
+          function()
+            require("trouble").toggle({
+              mode = "quickfix"
+            })
+          end
+        '';
         key = "<leader>xq";
         mode = "n";
         options = {
-          desc = "QuickFix [trouble]";
-          silent = true;
+          desc = "QuickFix list";
         };
       }
       {
-        action = ":Trouble toggle loclist<CR>";
+        action.__raw = ''
+          function()
+            require("trouble").toggle({
+              mode = "loclist"
+            })
+          end
+        '';
         key = "<leader>xl";
         mode = "n";
         options = {
-          desc = "LOCList [trouble]";
-          silent = true;
+          desc = "Location list";
         };
       }
       {
-        action = ":Trouble toggle symbols<CR>";
+        action.__raw = ''
+          function()
+            require("trouble").toggle({
+              mode = "symbols"
+            })
+          end
+        '';
         key = "<leader>xs";
         mode = "n";
         options = {
-          desc = "Symbols [trouble]";
-          silent = true;
+          desc = "Document symbols";
         };
       }
 
-      # lspconfig
       {
-        action = ":FormatToggle<CR>";
+        action.__raw = ''
+          function()
+            vim.g.disable_autoformat = not vim.g.disable_autoformat
+          end
+        '';
         key = "<leader>ltf";
         mode = "n";
         options = {
           desc = "Toggle format on save";
-          silent = true;
-        };
-      }
-      {
-        action.__raw = "vim.lsp.buf.format";
-        key = "<leader>lf";
-        mode = "v";
-        options = {
-          desc = "Format selection";
-          silent = true;
         };
       }
       {
         action.__raw = ''
           function()
-            vim.notify(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+            require("conform").format({
+              lsp_fallback = true,
+            })
           end
         '';
-        key = "<leader>lwl";
+        key = "<leader>lf";
+        mode = "n";
         options = {
-          desc = "List workspace folders";
-          silent = true;
+          desc = "Format buffer";
+        };
+      }
+      {
+        action.__raw = ''
+          function()
+            require("conform").format({
+              lsp_fallback = true,
+            })
+          end
+        '';
+        key = "<leader>lf";
+        mode = "x";
+        options = {
+          desc = "Format selection";
         };
       }
 
-      # todo-comments.nvim
       {
-        action.__raw = "require('todo-comments').jump_next";
+        action.__raw = ''
+          function()
+            require("todo-comments").jump_next()
+          end
+        '';
         key = "]t";
         mode = "n";
         options = {
           desc = "Next todo comment";
-          silent = true;
         };
       }
       {
-        action.__raw = "require('todo-comments').jump_prev";
+        action.__raw = ''
+          function()
+            require("todo-comments").jump_prev()
+          end
+        '';
         key = "[t";
         mode = "n";
         options = {
           desc = "Previous todo comment";
-          silent = true;
         };
       }
     ];
 
     plugins = {
 
+      gitsigns.settings.on_attach.__raw = ''
+        function(bufnr)
+          local gitsigns = require("gitsigns")
+
+          local function map(mode, l, r, opts)
+            opts = opts or {}
+            opts.buffer = bufnr
+            vim.keymap.set(mode, l, r, opts)
+          end
+
+          -- Navigation.
+          map("n", "]c", function()
+            if vim.wo.diff then
+              vim.cmd.normal({ "]c", bang = true })
+            else
+              gitsigns.nav_hunk("next")
+            end
+          end, {
+            desc = "Next hunk",
+          })
+
+          map("n", "[c", function()
+            if vim.wo.diff then
+              vim.cmd.normal({ "[c", bang = true })
+            else
+              gitsigns.nav_hunk("prev")
+            end
+          end, {
+            desc = "Previous hunk",
+          })
+
+          -- Actions.
+          map("n", "<leader>hs", gitsigns.stage_hunk, {
+            desc = "Stage hunk",
+          })
+          map("n", "<leader>hu", gitsigns.undo_stage_hunk, {
+            desc = "Undo stage hunk",
+          })
+          map("n", "<leader>hr", gitsigns.reset_hunk, {
+            desc = "Reset hunk",
+          })
+
+          map("v", "<leader>hs", function()
+            gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+          end, {
+            desc = "Stage hunk",
+          })
+
+          map("v", "<leader>hr", function()
+            gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
+          end, {
+            desc = "Reset hunk",
+          })
+
+          map("n", "<leader>hS", gitsigns.stage_buffer, {
+            desc = "Stage buffer",
+          })
+          map("n", "<leader>hR", gitsigns.reset_buffer, {
+            desc = "Reset buffer",
+          })
+          map("n", "<leader>hp", gitsigns.preview_hunk, {
+            desc = "Preview hunk",
+          })
+          map("n", "<leader>hi", gitsigns.preview_hunk_inline, {
+            desc = "Preview inline",
+          })
+
+          map("n", "<leader>hb", function()
+            gitsigns.blame_line({ full = true })
+          end, {
+            desc = "Blame line",
+          })
+
+          map("n", "<leader>hd", gitsigns.diffthis, {
+            desc = "Diff buffer",
+          })
+
+          map("n", "<leader>hD", function()
+            gitsigns.diffthis("~")
+          end, {
+            desc = "Diff project",
+          })
+
+          -- Toggles.
+          map("n", "<leader>tb", gitsigns.toggle_current_line_blame, {
+            desc = "Toggle line blame",
+          })
+          map("n", "<leader>td", gitsigns.toggle_deleted, {
+            desc = "Toggle deleted",
+          })
+          map("n", "<leader>tw", gitsigns.toggle_word_diff, {
+            desc = "Toggle word diff",
+          })
+
+          -- Text object.
+          map({ "o", "x" }, "ih", gitsigns.select_hunk, {
+            desc = "git hunk",
+          })
+        end
+      '';
+
       telescope.keymaps = {
+        "<leader>fb" = {
+          action = "buffers";
+          options = {
+            desc = "Telescope open buffers";
+          };
+        };
+        "<leader>fc" = {
+          action = "git_commits";
+          options = {
+            desc = "Telescope Git commits";
+          };
+        };
         "<leader>ff" = {
           action = "find_files";
-          options.desc = "Find files";
+          options = {
+            desc = "Telescope project files";
+          };
         };
         "<leader>fg" = {
           action = "live_grep";
-          options.desc = "Live grep";
-        };
-        "<leader>fb" = {
-          action = "buffers";
-          options.desc = "Buffers";
+          options = {
+            desc = "Telescope live grep";
+          };
         };
         "<leader>fh" = {
           action = "help_tags";
-          options.desc = "Help tags";
+          options = {
+            desc = "Telescope help pages";
+          };
         };
-        "<leader>ft" = {
-          action = "";
-          options.desc = "Open Telescope";
+        "<leader>fo" = {
+          action = "oldfiles";
+          options = {
+            desc = "Telescope old files";
+          };
+        };
+        "<leader>fs" = {
+          action = "git_status";
+          options = {
+            desc = "Telescope Git status";
+          };
+        };
+        "<leader>fz" = {
+          action = "current_buffer_fuzzy_find";
+          options = {
+            desc = "Telescope current buffer";
+          };
         };
       };
 
-      which-key.settings.spec = [
-        {
-          __unkeyed = "<leader>b";
-          group = "+Buffer";
-        }
-        {
-          __unkeyed = "<leader>bm";
-          group = "+BufferLineMove";
-        }
-        {
-          __unkeyed = "<leader>bs";
-          group = "+BufferLineSort";
-        }
-        {
-          __unkeyed = "<leader>f";
-          group = "+Telescope";
-        }
-        {
-          __unkeyed = "<leader>h";
-          group = "+Gitsigns";
-        }
-        {
-          __unkeyed = "<leader>lr";
-          desc = "LSP References [trouble]";
-          icon = {
-            icon = "󱖫 ";
-            color = "green";
-          };
-        }
-        {
-          __unkeyed = "<leader>lw";
-          group = "+Workspace";
-          icon = {
-            icon = " ";
-            color = "blue";
-          };
-        }
-        {
-          __unkeyed = "<leader>x";
-          group = "+Trouble";
-          icon = {
-            icon = "󱖫 ";
-            color = "green";
-          };
-        }
-      ];
+      which-key = {
+        enable = true;
+        settings = {
+          preset = "modern";
+          win.border = "rounded";
+          spec = [
+            {
+              __unkeyed = "<leader>b";
+              group = "+Buffers";
+            }
+            {
+              __unkeyed = "<leader>bm";
+              group = "+Move buffers";
+            }
+            {
+              __unkeyed = "<leader>bs";
+              group = "+Sort buffers";
+            }
+            {
+              __unkeyed = "<leader>e";
+              icon = {
+                cat = "filetype";
+                name = "neo-tree";
+              };
+            }
+            {
+              __unkeyed = "<leader>f";
+              group = "+Telescope";
+            }
+            {
+              __unkeyed = "<leader>h";
+              group = "+Gitsigns";
+              icon = {
+                cat = "filetype";
+                name = "git";
+              };
+            }
+            {
+              __unkeyed = "<leader>l";
+              group = "+LSP";
+              icon = {
+                cat = "lsp";
+                name = "constructor";
+              };
+            }
+            {
+              __unkeyed = "<leader>lf";
+              group = "+LSP";
+              icon = {
+                icon = " ";
+                color = "cyan";
+              };
+            }
+            {
+              __unkeyed = "<leader>lb";
+              icon = {
+                icon = "󱖫 ";
+                color = "green";
+              };
+            }
+            {
+              __unkeyed = "<leader>ln";
+              icon = {
+                cat = "lsp";
+                name = "variable";
+              };
+            }
+            {
+              __unkeyed = "<leader>lg";
+              group = "+Go to";
+            }
+            {
+              __unkeyed = "<leader>lS";
+              icon = {
+                cat = "lsp";
+                name = "variable";
+              };
+            }
+            {
+              __unkeyed = "<leader>lt";
+              icon = {
+                icon = " ";
+                color = "cyan";
+              };
+            }
+            {
+              __unkeyed = "<leader>lw";
+              group = "+Workspace";
+              icon = {
+                cat = "lsp";
+                name = "folder";
+              };
+            }
+            {
+              __unkeyed = "<leader>t";
+              group = "+Toggle";
+              icon = {
+                cat = "filetype";
+                name = "git";
+              };
+            }
+            {
+              __unkeyed = "<leader>x";
+              group = "+Trouble";
+              icon = {
+                cat = "filetype";
+                name = "trouble";
+              };
+            }
+            {
+              __unkeyed = "]c";
+              icon = {
+                cat = "filetype";
+                name = "git";
+              };
+            }
+            {
+              __unkeyed = "[c";
+              icon = {
+                cat = "filetype";
+                name = "git";
+              };
+            }
+            {
+              __unkeyed = "]d";
+              desc = "Next diagnostic";
+            }
+            {
+              __unkeyed = "[d";
+              desc = "Previous diagnostic";
+            }
+          ];
+        };
+      };
 
       cmp.settings.mapping = {
-        # Scroll the cuurent suggestion's info.
-        "<C-b>" = "cmp.mapping.scroll_docs(-4)";
-        "<C-f>" = "cmp.mapping.scroll_docs(4)";
+        # Scroll the current suggestion's info.
+        "<C-b>".__raw = "cmp.mapping.scroll_docs(-4)";
+        "<C-f>".__raw = "cmp.mapping.scroll_docs(4)";
 
         # Scroll between completion suggestions.
-        "<C-p>" = "cmp.mapping.select_prev_item()";
-        "<C-n>" = "cmp.mapping.select_next_item()";
+        "<C-p>".__raw = "cmp.mapping.select_prev_item()";
+        "<C-n>".__raw = "cmp.mapping.select_next_item()";
 
         # Close the autosuggestion menu.
-        "<C-e>" = "cmp.mapping.abort()";
+        "<C-e>".__raw = "cmp.mapping.abort()";
 
-        "<Tab>" = ''
+        "<Tab>".__raw = ''
           cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.confirm({select = true})
@@ -427,7 +606,7 @@
           end, { "i", "s" })
         '';
 
-        "<S-Tab>" = ''
+        "<S-Tab>".__raw = ''
           cmp.mapping(function(fallback)
             if luasnip.jumpable(-1) then
               luasnip.jump(-1)
@@ -442,15 +621,15 @@
         diagnostic = {
           "<leader>lgn" = {
             action = "goto_next";
-            desc = "Go to next diagnostic";
+            desc = "Next diagnostic";
           };
           "<leader>lgp" = {
             action = "goto_prev";
-            desc = "Go to previous diagnostic";
+            desc = "Previous diagnostic";
           };
           "<leader>le" = {
             action = "open_float";
-            desc = "Open diagnostic float";
+            desc = "Diagnostics float";
           };
         };
         lspBuf = {
@@ -510,14 +689,8 @@
             action = "code_action";
             desc = "Code action";
           };
-          "<leader>lf" = {
-            action = "format";
-            desc = "Format";
-          };
         };
       };
-
     };
-
   };
 }
