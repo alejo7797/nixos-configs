@@ -1,60 +1,77 @@
 { pkgs, ... }:
 
 {
-  programs.nixvim.plugins = {
+  programs.nixvim = {
 
-    # Settings for the TeX language server.
-    lsp.servers.texlab.settings.texlab = {
+    globals = {
 
-      chktex = {
-        # Enable regular linting of TeX files.
-        onEdit = true; onOpenAndSave = true;
-      };
-
-      inlayHints = {
-        # Distracts source code.
-        labelReferences = false;
-      };
-
-      latexindent = {
-        # Enables line wrapping.
-        modifyLineBreaks = true;
-      };
+      # Better syntax highlighting.
+      matchup_override_vimtex = 1;
 
     };
 
-    vimtex = {
+    plugins = {
 
-      # Avoid missing package issues.
-      texlivePackage = pkgs.texliveFull;
+      # Settings for the TeX language server.
+      lsp.servers.texlab.settings.texlab = {
 
-      settings = {
-
-        # Use keybinding `ts$`.
-        env_toggle_math_map = {
-
-          "\\(" = "\\["; # inline -> display
-          "align" = "equation"; # -> add label
-          "equation" = "\\("; # -> closes loop
-          "\\[" = "align*"; # -> multi-line
-
-          # Fallback.
-          "$$" = "\\[";
-          "$" = "\\(";
-
+        chktex = {
+          # Enable regular linting of TeX files.
+          onEdit = true; onOpenAndSave = true;
         };
 
-        delim_toggle_mod_list = [
-          # Toggle delim size.
-          [ "\\left" "\\right" ]
-          [ "\\big" "\\big" ]
-        ];
+        inlayHints = {
+          # Distracts source code.
+          labelReferences = false;
+        };
 
-        # Use Zathura for viewing PDFs.
-        view_method = "zathura_simple";
+        latexindent = {
+          # Enables line wrapping.
+          modifyLineBreaks = true;
+        };
 
       };
 
+      treesitter.settings = {
+
+        # See :h vimtex-faq-treesitter.
+        highlight.disable = [ "latex" ];
+
+      };
+
+      vimtex = {
+
+        # Avoid missing package issues.
+        texlivePackage = pkgs.texliveFull;
+
+        settings = {
+
+          # Use keybinding `ts$`.
+          env_toggle_math_map = {
+
+            "\\(" = "\\["; # inline -> display
+            "align" = "equation"; # -> add label
+            "equation" = "\\("; # -> closes loop
+            "\\[" = "align*"; # -> multi-line
+
+            # Fallback.
+            "$$" = "\\[";
+            "$" = "\\(";
+
+          };
+
+          delim_toggle_mod_list = [
+            # Toggle delim size.
+            [ "\\left" "\\right" ]
+            [ "\\big" "\\big" ]
+          ];
+
+          # Use Zathura for viewing PDFs.
+          view_method = "zathura_simple";
+
+        };
+
+      };
     };
   };
 }

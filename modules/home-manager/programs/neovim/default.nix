@@ -105,6 +105,15 @@
       nvim-surround.enable = true;
       todo-comments.enable = true;
       trim.enable = true;
+      vim-matchup = {
+        enable = true;
+        matchParen = {
+          enable = true;
+          deferred.enable = true;
+          hiSurroundAlways = true;
+        };
+        treesitterIntegration.enable = true;
+      };
 
       # Visuals.
       indent-blankline.enable = true;
@@ -331,10 +340,7 @@
         enable = true;
         folding = true;
         settings = {
-          highlight = {
-            enable = true;
-            disable = [ "latex" ];
-          };
+          highlight.enable = true;
           indent.enable = true;
         };
       };

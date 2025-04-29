@@ -36,6 +36,11 @@ in
         sp = colors.base0B;
       };
 
+      MatchParen = {
+        italic = true;
+        fg = colors.base0A;
+      };
+
       WhichKeyDesc = {
         fg = colors.base05;
       };
