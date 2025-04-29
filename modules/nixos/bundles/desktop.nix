@@ -48,7 +48,6 @@ in
       filezilla
       font-manager
       gimp
-      gpodder
       icoutils
       imagemagick
       inkscape

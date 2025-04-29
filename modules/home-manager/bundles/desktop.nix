@@ -45,14 +45,12 @@ in
     home.packages = with pkgs; [
       favicon-generator
       round-corners
-      sleep-deprived
     ];
 
     home.sessionVariables = {
 
       CARGO_HOME = "${config.xdg.dataHome}/cargo";
       CUDA_CACHE_PATH = "${config.xdg.cacheHome}/nv";
-      GPODDER_HOME = "${config.xdg.dataHome}/gPodder";
       WINEPREFIX = "${config.xdg.dataHome}/wine";
 
       # Some Java applications actually respect this which avoids creating the ~/.java directory.
