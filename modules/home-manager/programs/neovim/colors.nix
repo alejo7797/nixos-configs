@@ -15,6 +15,10 @@ in
 
     highlightOverride = {
 
+      CmpItemAbbr = {
+        fg = colors.base05;
+      };
+
       DiagnosticOk = {
         fg = colors.base0B;
       };
@@ -42,11 +46,9 @@ in
       WhichKeyIconOrange = {
         fg = colors.base09;
       };
-
       WhichKeyIconPurple = {
         fg = colors.base0E;
       };
-
       WhichKeyIconYellow = {
         fg = colors.base0A;
       };
