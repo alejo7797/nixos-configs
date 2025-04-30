@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   cfg = config.my.media-server;
@@ -36,6 +36,13 @@ in
     users.groups = {
       media.gid = 1001;
     };
+
+    environment.systemPackages = with pkgs; [
+      ffmpeg
+      imagemagick
+      jdupes
+      yt-dlp
+    ];
 
   };
 }

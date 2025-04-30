@@ -1,4 +1,4 @@
-{ config, lib, pkgs, self, ... }:
+{ config, lib, self, ... }:
 
 let
   localIP = "100.105.183.8";
@@ -158,10 +158,4 @@ in
     };
 
   };
-
-  environment.systemPackages = with pkgs; [
-    ffmpeg
-    imagemagick
-    yt-dlp
-  ];
 }
