@@ -91,6 +91,42 @@ return {
 		)
 	),
 
+  s(
+    {
+      trig = "item",
+      condition = line_begin,
+      wordTrig = false,
+    },
+    fmta(
+      [[
+        \begin{itemize}
+          \item <>
+        \end{itemize}
+      ]],
+      {
+        i(0),
+      }
+    )
+  ),
+
+  s(
+    {
+      trig = "enum",
+      condition = line_begin,
+      wordTrig = false,
+    },
+    fmta(
+      [[
+        \begin{enumerate}
+          \item <>
+        \end{enumerate}
+      ]],
+      {
+        i(0),
+      }
+    )
+  ),
+
 	s(
 		{
 			trig = "thm",
