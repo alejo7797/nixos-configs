@@ -429,7 +429,7 @@
     };
 
     extraConfigLua = ''
-      require("aw_watcher").setup({})
+      -- require("aw_watcher").setup({})
     '';
   };
 }

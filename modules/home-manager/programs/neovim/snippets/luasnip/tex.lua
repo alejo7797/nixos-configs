@@ -48,13 +48,6 @@ return {
 		})
 	),
 
-	s(
-		"lr<",
-		fmta("\\left\\langle<>\\right\\rangle", {
-			d(1, get_visual),
-		})
-	),
-
 }, {
 
 	s(
@@ -264,6 +257,17 @@ return {
 			i(2),
 		})
 	),
+
+  s(
+    {
+      trig = [[\\\]],
+      condition = in_mathzone,
+      wordTrig = false,
+    },
+    {
+      t("\\setminus"),
+    }
+  ),
 
 	s(
     {
