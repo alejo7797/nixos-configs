@@ -13,11 +13,21 @@ modifyLineBreaks:
         # After `\item`s.
         \\item(?:\h|\[)
 
-        # Within theorem environments.
-        | \\begin\{(?:lem|cor|claim)\*?\}
-        | \\begin\{(?:thm|prop)\*?(?:c|p)?\}
-        | \\begin\{(?:proof|conj|warn)\*?\}
-        | \\begin\{(?:defn|exmp|rem)\*?\}
+        |
+          \\begin\{
+
+            (?:
+              # In theorem environments.
+              claim|conj|cor|defn|exmp|lem
+              |proof|prop|rem|thm|warn
+            )
+
+            \*? (?:c|p)? # Modifiers.
+
+          \}
+
+          # We allow for a label.
+          (?:\\label\{[\w\-]+\})?
 
         # Within the abstract.
         | \\begin\{abstract\}
