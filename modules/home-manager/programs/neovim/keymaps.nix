@@ -734,8 +734,9 @@
         "<C-p>".__raw = "cmp.mapping.select_prev_item()";
         "<C-n>".__raw = "cmp.mapping.select_next_item()";
 
-        # Close the autosuggestion menu.
+        # To close the autosuggestion menu.
         "<C-e>".__raw = "cmp.mapping.abort()";
+        "<CR>".__raw = "cmp.mapping.close()";
 
         "<Tab>".__raw = ''
           cmp.mapping(function(fallback)
