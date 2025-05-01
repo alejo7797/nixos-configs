@@ -14,7 +14,14 @@ end
 return {
 
 	s(
-		"lr",
+		"emph",
+		fmta("\\emph{<>}", {
+			d(1, get_visual),
+		})
+	),
+
+	s(
+		"lr(",
 		fmta("\\left(<>\\right)", {
 			d(1, get_visual),
 		})
@@ -42,7 +49,7 @@ return {
 	),
 
 	s(
-		"lra",
+		"lr<",
 		fmta("\\left\\langle<>\\right\\rangle", {
 			d(1, get_visual),
 		})
@@ -64,165 +71,163 @@ return {
 		})
 	),
 
-  s(
-    {
-      trig = "beg",
-      condition = line_begin,
-      wordTrig = false,
-    },
-    fmta(
-      [[
+	s(
+		{
+			trig = "beg",
+			condition = line_begin,
+			wordTrig = false,
+		},
+		fmta(
+			[[
         \begin{<>}
             <>
         \end{<>}
       ]],
-      {
-        i(1, "env"),
-        d(2, get_visual),
-        rep(1),
-      }
-    )
-  ),
+			{
+				i(1, "env"),
+				d(2, get_visual),
+				rep(1),
+			}
+		)
+	),
 
-  s(
-    {
-      trig = "thm",
-      condition = line_begin,
-      wordTrig = false,
-    },
-    fmta(
-      [[
+	s(
+		{
+			trig = "thm",
+			condition = line_begin,
+			wordTrig = false,
+		},
+		fmta(
+			[[
         \begin{thm}
             <>
         \end{thm}
       ]],
-      {
-        d(1, get_visual),
-      }
-    )
-  ),
+			{
+				i(0),
+			}
+		)
+	),
 
-  s(
-    {
-      trig = "prop",
-      condition = line_begin,
-      wordTrig = false,
-    },
-    fmta(
-      [[
+	s(
+		{
+			trig = "prop",
+			condition = line_begin,
+			wordTrig = false,
+		},
+		fmta(
+			[[
         \begin{prop}
             <>
         \end{prop}
       ]],
-      {
-        d(1, get_visual),
-      }
-    )
-  ),
+			{
+				i(0),
+			}
+		)
+	),
 
-  s(
-    {
-      trig = "defn",
-      condition = line_begin,
-      wordTrig = false,
-    },
-    fmta(
-      [[
+	s(
+		{
+			trig = "defn",
+			condition = line_begin,
+			wordTrig = false,
+		},
+		fmta(
+			[[
         \begin{defn}
             <>
         \end{defn}
       ]],
-      {
-        d(1, get_visual),
-      }
-    )
-  ),
+			{
+				i(0),
+			}
+		)
+	),
 
-  s(
-    {
-      trig = "exmp",
-      condition = line_begin,
-      wordTrig = false,
-    },
-    fmta(
-      [[
+	s(
+		{
+			trig = "exmp",
+			condition = line_begin,
+			wordTrig = false,
+		},
+		fmta(
+			[[
         \begin{exmp}
             <>
         \end{exmp}
       ]],
-      {
-        d(1, get_visual),
-      }
-    )
-  ),
+			{
+				i(0),
+			}
+		)
+	),
 
-  s(
-    {
-      trig = "rem",
-      condition = line_begin,
-      wordTrig = false,
-    },
-    fmta(
-      [[
+	s(
+		{
+			trig = "rem",
+			condition = line_begin,
+			wordTrig = false,
+		},
+		fmta(
+			[[
         \begin{rem}
             <>
         \end{rem}
       ]],
-      {
-        d(1, get_visual),
-      }
-    )
-  ),
+			{
+				i(0),
+			}
+		)
+	),
 
-  s(
-    {
-      trig = "ali",
-      condition = line_begin,
-      wordTrig = false,
-    },
-    fmta(
-      [[
+	s(
+		{
+			trig = "ali",
+			condition = line_begin,
+			wordTrig = false,
+		},
+		fmta(
+			[[
         \begin{align*}
             <>
         \end{align*}
       ]],
-      {
-        i(0),
-      }
-    )
-  ),
+			{
+				i(0),
+			}
+		)
+	),
 
-  s(
-    {
-      trig = "eqn",
-      condition = line_begin,
-      wordTrig = false,
-    },
-    fmta(
-      [[
+	s(
+		{
+			trig = "eqn",
+			condition = line_begin,
+			wordTrig = false,
+		},
+		fmta(
+			[[
         \begin{equation}
             <>
         \end{equation}
       ]],
-      {
-        i(0),
-      }
-    )
-  ),
+			{
+				i(0),
+			}
+		)
+	),
 
 	s(
-    {
-      trig = "//",
-      condition = in_mathzone,
-      wordTrig = false,
-    },
-    fmta("\\frac{<>}{<>}",
-      {
-        d(1, get_visual),
-        i(2),
-      }
-    )
-  ),
+		{
+			trig = "//",
+			condition = in_mathzone,
+			wordTrig = false,
+		},
+		fmta("\\frac{<>}{<>}", {
+			d(1, get_visual),
+			i(2),
+		})
+	),
 
 	s(
     {
@@ -230,7 +235,8 @@ return {
       condition = in_mathzone,
       wordTrig = false,
     },
-    t("\\to")
+    {
+      t("\\to"),
+    }
   ),
-
 }
