@@ -51,6 +51,7 @@ in
       icoutils
       imagemagick
       inkscape
+      jellyfin-media-player
       joplin-desktop
       keepassxc
       kitty
@@ -64,7 +65,6 @@ in
       pdftk
       piper
       playerctl
-      plex-desktop
       seahorse
       simple-scan
       signal-desktop

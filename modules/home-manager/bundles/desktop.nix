@@ -55,9 +55,6 @@ in
 
       # Some Java applications actually respect this which avoids creating the ~/.java directory.
       _JAVA_OPTIONS = "$_JAVA_OPTIONS -Djava.util.prefs.userRoot=${config.xdg.configHome}/java";
-
-      # For whatever reason, Plex Desktop will create a "~/Application Support" directory otherwise.
-      PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR = "${config.xdg.dataHome}/plex/Application Support";
     };
 
     gtk.gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
