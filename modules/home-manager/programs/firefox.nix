@@ -3,10 +3,10 @@
 {
   programs.firefox = {
 
-    # Manage my profile declaratively.
+    # Manage a Firefox user profile declaratively.
     profiles."${config.home.username}.default" = {
 
-      # Profile-specific extensions.
+      # Some profile-specific extensions to install by default.
       extensions = with pkgs.nur.repos.rycee.firefox-addons; [
 
         augmented-steam
@@ -29,69 +29,30 @@
         # Always ask where to save downloaded files.
         "browser.download.useDownloadDir" = false;
 
-        # Do not ask to save passwords or addresses.
-        "signon.rememberSignons" = false;
         "extensions.formautofill.addresses.enabled" = false;
+        "signon.rememberSignons" = false; # Don't offer to save.
         "extensions.formautofill.creditCards.enabled" = false;
 
-        # Privacy settings.
+        # We enable a few strict privacy settings.
         "browser.contentblocking.category" = "strict";
-        "privacy.donottrackheader.enabled" = true;
-        "privacy.fingerprintingProtection" = true;
         "privacy.globalprivacycontrol.enabled" = true;
+        "privacy.fingerprintingProtection" = true;
 
-        # HTTPS-only mode.
+        # Enable HTTPS-only mode by default.
         "dom.security.https_only_mode" = true;
 
-        # Play DRM-controlled content.
+        # For DRM-controlled content.
         "media.eme.enabled" = true;
 
-        # Clear cookies on browser shutdown.
+        # Custom history-related config.
         "privacy.history.custom" = true;
-        "privacy.sanitize.sanitizeOnShutdown" = true;
+
+        "privacy.sanitize.sanitizeOnShutdown" = true; # We clear cookies.
         "privacy.sanitize.clearOnShutdown.hasMigratedToNewPrefs2" = true;
         "privacy.clearOnShutdown_v2.historyFormDataAndDownloads" = false;
-
-        # Pinned sites.
-        "browser.newtabpage.pinned" = [
-          {
-            label = "youtube";
-            url = "https://www.youtube.com";
-          }
-          {
-            label = "wanikani";
-            url = "https://www.wanikani.com";
-          }
-          {
-            label = "patchouli";
-            url = "https://patchoulihq.cc";
-          }
-          {
-            label = "nextcloud";
-            url = "https://cloud.patchoulihq.cc";
-            customScreenshotURL = "https://patchoulihq.cc/nextcloud-logo.png";
-          }
-          {
-            label = "arxiv";
-            url = "https://arxiv.org/list/math.GT/recent";
-            baseDomain = "arxiv.org";
-          }
-          {
-            label = "ae433";
-            url = "https://alex.epelde.net/about-to-get-very-silly";
-            baseDomain = "alex.epelde.net";
-          }
-          {
-            label = "nixos";
-            url = "https://search.nixos.org";
-            customScreenshotURL = "https://patchoulihq.cc/nix-logo.png";
-          }
-          {
-            label = "patreon";
-            url = "https://www.patreon.com";
-          }
-        ];
       };
+
     };
+
   };
 }

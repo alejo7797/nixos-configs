@@ -3,6 +3,46 @@
 
   programs = {
 
+    firefox.profiles."ewan.default" = {
+
+      # Set my Firefox profile's New Tab page.
+      settings."browser.newtabpage.pinned" = [
+        {
+          label = "youtube"; # Watch vids.
+          url = "https://www.youtube.com";
+        }
+        {
+          label = "wanikani"; # 日本語です。
+          url = "https://www.wanikani.com";
+        }
+        {
+          label = "patchouli"; # My home.
+          url = "https://patchoulihq.cc";
+        }
+        {
+          label = "cloud"; url = "https://cloud.patchoulihq.cc"; # My cloud.
+          customScreenshotURL = "https://patchoulihq.cc/nextcloud-logo.png";
+        }
+        {
+          label = "arxiv"; baseDomain = "arxiv.org";
+          url = "https://arxiv.org/list/math.GT/recent";
+        }
+        {
+          label = "ae433"; baseDomain = "alex.epelde.net"; # Me!
+          url = "https://alex.epelde.net/about-to-get-very-silly";
+        }
+        {
+          label = "nixos"; url = "https://search.nixos.org"; # NixOS.
+          customScreenshotURL = "https://patchoulihq.cc/nix-logo.png";
+        }
+        {
+          label = "patreon"; # Keep it up.
+          url = "https://www.patreon.com";
+        }
+      ];
+
+    };
+
     git = {
       # Set basic Git identity.
       userEmail = "alex@epelde.net";
