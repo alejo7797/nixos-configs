@@ -21,6 +21,7 @@ in
 
     programs.nixvim.plugins = {
       lsp.servers.texlab.enable = true;
+      lean.enable = true;
       vimtex.enable = true;
     };
 

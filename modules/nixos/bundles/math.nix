@@ -18,6 +18,7 @@ in
       geogebra
       khoca
       knotjob
+      lean4
       mathematica-webdoc
       snappy-math
       texliveFull

@@ -353,9 +353,6 @@
           basedpyright.enable = true;
           ruff.enable = true;
 
-          # Shellscript.
-          bashls.enable = true;
-
           # C/C++.
           clangd.enable = true;
 
@@ -399,7 +396,6 @@
             selene.enable = true;
             statix.enable = true;
             yamllint.enable = true;
-            zsh.enable = true;
           };
           formatting = {
             phpcsfixer.enable = true;
@@ -424,6 +420,10 @@
       project-nvim.enable = true;
 
       trouble.enable = true;
+
+      lean = {
+        mappings = true;
+      };
     };
   };
 }
