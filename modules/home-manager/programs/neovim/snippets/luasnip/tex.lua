@@ -260,6 +260,17 @@ return {
 
 	s(
 		{
+			trig = "hat",
+			condition = in_mathzone,
+			wordTrig = false,
+		},
+		fmta("\\hat{<>}", {
+			d(1, get_visual),
+		})
+	),
+
+	s(
+		{
 			trig = "xx",
 			condition = in_mathzone,
 			wordTrig = false,
