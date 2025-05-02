@@ -10,8 +10,6 @@
 
     extraPackages = with pkgs; [ fd ];
 
-    extraPlugins = with pkgs.vimPlugins; [ aw-watcher-nvim ];
-
     clipboard = {
       register = "unnamedplus";
       providers = {
@@ -427,9 +425,5 @@
 
       trouble.enable = true;
     };
-
-    extraConfigLua = ''
-      -- require("aw_watcher").setup({})
-    '';
   };
 }
