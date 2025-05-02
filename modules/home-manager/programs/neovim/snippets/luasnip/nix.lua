@@ -1,11 +1,15 @@
 --# selene: allow(undefined_variable)
 
+-- Expand snippets only at the start of a line, like UltiSnips' flag `b`.
+local line_begin = require("luasnip.extras.expand_conditions").line_begin
+
 return {
 
 	s(
 		{
 			trig = "module",
-			dscr = "Simple NixOS / Home Manager module",
+			condition = line_begin,
+			wordTrig = false,
 		},
 		fmta(
 			[[
