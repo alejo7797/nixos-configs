@@ -36,6 +36,10 @@ in
       xdgOpenUsePortal = true;
     };
 
+    virtualisation = {
+      docker.rootless.enable = true;
+    };
+
     environment.systemPackages = with pkgs; [
       altus
       anki

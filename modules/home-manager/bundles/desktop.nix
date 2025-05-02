@@ -14,6 +14,10 @@ in
       mimeApps.enable = true;
     };
 
+    virtualisation = {
+      docker.rootless.enable = true;
+    };
+
     programs = {
       direnv.enable = true;
       firefox.enable = true;
