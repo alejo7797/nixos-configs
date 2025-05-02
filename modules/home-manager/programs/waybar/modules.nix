@@ -17,7 +17,7 @@ in
         "5" = ""; # games
         "6" = ""; # coding
         "8" = ""; # messaging
-        "9" = ""; # spotify
+        "9" = ""; # media
 
         "18" = ""; # library
         "20" = ""; # btop
