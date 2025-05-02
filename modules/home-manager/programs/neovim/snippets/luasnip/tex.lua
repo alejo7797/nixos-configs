@@ -248,6 +248,28 @@ return {
 
 	s(
 		{
+			trig = "td",
+			condition = in_mathzone,
+			wordTrig = false,
+		},
+		fmta("^{<>}", {
+			i(1),
+		})
+	),
+
+	s(
+		{
+			trig = "__",
+			condition = in_mathzone,
+			wordTrig = false,
+		},
+		fmta("_{<>}", {
+			i(1),
+		})
+	),
+
+	s(
+		{
 			trig = "//",
 			condition = in_mathzone,
 			wordTrig = false,
