@@ -36,6 +36,7 @@ in
       activitywatch.enable = true;
       gnome-keyring.enable = true;
       gpg-agent.enable = true;
+      my.jellyfin-rpc.enable = true;
       kdeconnect.indicator = true;
       mpris-proxy.enable = true;
       playerctld.enable = true;

@@ -3,7 +3,7 @@
 let
   cfg = config.xdg.mimeApps;
 
-  toINI = lib.generators.toINI {};
+  toINI = lib.generators.toINI { };
 
   setListTo = value: list: builtins.listToAttrs
     (map (name: { inherit name value; }) list);

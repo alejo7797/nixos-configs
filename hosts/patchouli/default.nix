@@ -63,7 +63,7 @@ in
 
   time.timeZone = "America/New_York";
 
-  sops.secrets = with config.users.users;{
+  sops.secrets = with config.users.users; {
 
     "acme/desec" = { owner = acme.name; };
 

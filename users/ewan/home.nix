@@ -68,6 +68,18 @@
 
   services = {
 
+    my.jellyfin-rpc = {
+
+      settings.jellyfin = {
+        url = "https://jellyfin.patchoulihq.cc";
+        username = [ "ewan" ]; # Basic config.
+      };
+
+      # File containing Jellyfin API key and other stuff.
+      secretsFile = config.sops.secrets.jellyfin-rpc.path;
+
+    };
+
     my.variety.settings = {
 
       # Change every 8 hours.
@@ -108,6 +120,12 @@
       };
 
     };
+
+  };
+
+  sops.secrets = {
+
+    jellyfin-rpc = { };
 
   };
 

@@ -7,7 +7,7 @@
 let
   cfg = config.my.qt;
 
-  toINI = lib.generators.toINI {};
+  toINI = lib.generators.toINI { };
 
   colorschemeSlug = with config.lib.stylix; lib.concatStrings (
     lib.filter lib.isString (builtins.split "[^a-zA-Z]" colors.scheme)
