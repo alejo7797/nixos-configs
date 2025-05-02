@@ -184,6 +184,15 @@
               require("bufdelete").bufdelete(bufnum, false)
             end
           '';
+          custom_filter.__raw = ''
+            function(buf, buf_nums)
+              if vim.bo[buf].filetype == "leaninfo" then
+                return false
+              else
+                return true
+              end
+            end
+          '';
           diagnostics = "nvim_lsp";
           diagnostics_indicator.__raw = ''
             function(count, level, diagnostics_dict, context)
