@@ -258,6 +258,17 @@ return {
 		})
 	),
 
+	s(
+		{
+			trig = "xx",
+			condition = in_mathzone,
+			wordTrig = false,
+		},
+    {
+      t("\\times"),
+    }
+	),
+
   s(
     {
       trig = [[\\\]],
