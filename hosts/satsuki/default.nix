@@ -61,6 +61,9 @@
     # Use systemd-resolved.
     resolved.enable = true;
 
+    # Drivers for department printer.
+    printing.drivers = [ pkgs.hplip ];
+
     # Updates using public IP.
     my.tzupdate.enable = true;
 
