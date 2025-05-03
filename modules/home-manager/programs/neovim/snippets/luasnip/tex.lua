@@ -11,6 +11,12 @@ local in_mathzone = function()
 	return vim.fn["vimtex#syntax#in_mathzone"]() == 1
 end
 
+local in_env = function(name)
+  -- Generic environment detection thanks to VimTeX.
+  local is_inside = vim.fn["vimtex#env#is_inside"](name)
+  return (is_inside[1] > 0 and is_inside[2] > 0)
+end
+
 return {
 
 	s(
@@ -344,6 +350,17 @@ return {
     {
       t("\\subseteq")
     }
+  ),
+
+  s(
+    {
+      trig = "arrow",
+      condition = in_env("tikzcd"),
+      wordTrig = false,
+    },
+    fmta("\\arrow[<>]", {
+      i(1),
+    })
   ),
 
 }
