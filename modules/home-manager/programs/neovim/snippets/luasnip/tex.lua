@@ -248,7 +248,7 @@ return {
 
 	s(
 		{
-			trig = "td",
+			trig = "^^",
 			condition = in_mathzone,
 			wordTrig = false,
 		},
@@ -323,4 +323,27 @@ return {
       t("\\to"),
     }
   ),
+
+  s(
+    {
+      trig = "cc",
+      condition = in_mathzone,
+      wordTrig = false,
+    },
+    {
+      t("\\subset")
+    }
+  ),
+
+  s(
+    {
+      trig = "c=",
+      condition = in_mathzone,
+      wordTrig = false,
+    },
+    {
+      t("\\subseteq")
+    }
+  ),
+
 }
