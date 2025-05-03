@@ -290,7 +290,7 @@ return {
 		{
 			trig = "hat",
 			condition = in_mathzone,
-			wordTrig = false,
+			wordTrig = true,
 		},
 		fmta("\\hat{<>}", {
 			d(1, get_visual),
@@ -356,7 +356,7 @@ return {
     {
       trig = "arrow",
       condition = in_env("tikzcd"),
-      wordTrig = false,
+      wordTrig = true,
     },
     fmta("\\arrow[<>]", {
       i(1),
