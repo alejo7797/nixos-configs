@@ -5,6 +5,8 @@
   ...
 }:
 
+# TODO: lidarr
+
 let
   cfg = config.myNixOS.unpackerr;
 
