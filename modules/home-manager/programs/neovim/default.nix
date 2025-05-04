@@ -368,6 +368,9 @@
           # Javascript.
           ts_ls.enable = true;
 
+          # Shellscript.
+          bashls.enable = true;
+
           # Nix.
           nil_ls = {
             enable = true;
