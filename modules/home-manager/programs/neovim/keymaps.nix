@@ -15,6 +15,19 @@
       {
         action.__raw = ''
           function()
+            vim.cmd("update")
+          end
+        '';
+        key = "<C-s>";
+        mode = [ "i" "n" ];
+        options = {
+          desc = "Write to disk";
+        };
+      }
+
+      {
+        action.__raw = ''
+          function()
             require("bufdelete").bufdelete(0, false)
           end
         '';
