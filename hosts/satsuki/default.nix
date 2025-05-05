@@ -36,8 +36,31 @@
     # Very good, it's me.
     hostName = "satsuki";
 
-    # A good choice for a laptop.
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+
+      dispatcherScripts = [
+        {
+          source = pkgs.writeShellScript "nta-script" ''
+
+            ! [[ $2 == up ]] && exit 0
+
+            case "$CONNECTION_ID" in
+
+              Koakuma_VPN|xfinitywifi_HUH_Res)
+                nta="patchoulihq.cc" ;;
+
+              *) exit 0 ;;
+
+            esac
+
+            # Sets DNSSEC negative trust anchors.
+            resolvectl nta "$DEVICE_IFACE" "$nta"
+
+          '';
+        }
+      ];
+    };
 
     firewall.my.no-vpn = [
       "en.wikipedia.org" # Edit Wikipedia.
