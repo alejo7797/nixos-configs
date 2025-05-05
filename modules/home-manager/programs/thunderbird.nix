@@ -229,7 +229,7 @@ in
         in
 
         {
-          "Nextcloud" = {
+          "Personal Calendar" = {
             primary = true;
             remote = {
               type = "caldav";
@@ -268,14 +268,26 @@ in
             );
           };
 
-          "Holidays" = {
+          "Holidays in Spain" = {
             remote = {
               type = "caldav";
               userName = "ewan";
-              url = "https://cloud.patchoulihq.cc/remote.php/dav/calendars/ewan/holidays";
+              url = "https://cloud.patchoulihq.cc/remote.php/dav/calendars/ewan/holidays_in_spain";
             };
             thunderbird.settings = id: (
               color "#0b7f39" id
+              // identity "Alex" id
+            );
+          };
+
+          "Holidays in USA" = {
+            remote = {
+              type = "http";
+              url = "https://www.officeholidays.com/ics-clean/usa/massachusetts";
+            };
+            thunderbird.settings = id: (
+              color "#0b7f39" id
+              // readOnly id
               // identity "Alex" id
             );
           };
