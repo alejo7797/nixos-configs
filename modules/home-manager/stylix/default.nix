@@ -18,6 +18,9 @@ in
       };
 
       targets = {
+        # Doesn't look great.
+        btop.enable = false;
+
         # Don't create ~/.themes directory.
         gtk.flatpakSupport.enable = false;
 
