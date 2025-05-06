@@ -1,32 +1,84 @@
 #!/usr/bin/env bash
 
-hyprctl dispatch exec '[workspace 20 silent]' uwsm-app btop.desktop
+hy_do() {
+    # A simple shortcut.
+    hyprctl dispatch "$@"
+}
 
-while [[ -z $(hyprctl clients -j | jq '.[] |  select(.title == "btop")') ]]; do
-    sleep 0.1
-done
+launch() {
+    # Wraps around the UWSM app launcher.
+    hy_do exec "$2" uwsm-app "$1".desktop
+}
 
-hyprctl dispatch exec '[workspace 4 silent]' uwsm-app org.kde.dolphin.desktop
+wait_for() {
+    local timer=0
 
-while [[ -z $(hyprctl clients -j | jq '.[] | select(.workspace.id==4) | select(.class == "org.kde.dolphin")') ]]; do
-    sleep 0.1
-done
+    while [[ -z $(hyprctl clients -j | jq ".[] | select($1)") ]];
+        do sleep 0.1 && timer=$((timer + 1)) # Wait for window.
 
-hyprctl dispatch workspace 4
-hyprctl dispatch hy3:makegroup tab
+        if [[ $timer -gt 200 ]]; then
+            notify-send -i error -u critical hypr-startup "Timed out waiting for $1"
+            exit 1 # Prevent hypr-startup from running indefinitely with this check.
+        fi
+    done
+}
 
-hyprctl dispatch exec '[workspace 4 silent]' uwsm-app kitty.desktop
+go_to_workspace() {
+    # Lets us return focus back to the workspace.
+    prev=$(hyprctl activeworkspace -j | jq ".id")
 
-while [[ -z $(hyprctl clients -j | jq '.[] | select(.workspace.id==4) | select(.class == "kitty")') ]]; do
-    sleep 0.1
-done
+    # Do actual motion.
+    hy_do workspace "$1"
+}
 
-hyprctl dispatch workspace 4
-hyprctl dispatch hy3:movewindow right
-hyprctl dispatch hy3:makegroup tab
 
-hyprctl dispatch movefocus l
-hyprctl dispatch movefocus r
+# On a second monitor.
+go_to_workspace name:extra
+go_to_workspace "$prev"
 
-hyprctl dispatch workspace name:extra
-hyprctl dispatch workspace 1
+
+# Launch in a custom workspace.
+launch btop '[workspace 20 silent]'
+wait_for '.title == "btop"'
+
+
+# Launch dolphin and wait for its window.
+launch org.kde.dolphin '[workspace 4 silent]'
+wait_for '.class == "org.kde.dolphin"'
+
+
+go_to_workspace 4
+# Create tab workspace.
+hy_do hy3:makegroup tab
+go_to_workspace "$prev"
+
+
+launch kitty '[workspace 4 silent]' # Launch Kitty.
+wait_for '.class == "kitty" and .workspace.id == 4'
+
+
+go_to_workspace 4
+
+# Carefully set a layout.
+hy_do hy3:movefocus r
+hy_do hy3:movewindow r
+hy_do hy3:makegroup tab
+
+# Force border refresh.
+hy_do hy3:movefocus l
+hy_do hy3:movefocus r
+
+go_to_workspace "$prev"
+
+
+wait_for '.class == "signal"'
+wait_for '.class == "Altus"'
+
+
+go_to_workspace 8
+# Put messaging apps in tabs.
+hy_do hy3:changegroup tab
+go_to_workspace "$prev"
+
+
+exit 0
