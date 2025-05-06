@@ -18,15 +18,15 @@
   # Use the Nvidia dGPU in PRIME render offload mode.
   my.nvidia = { enable = true; prime.enable = true; };
 
-  # Load extra Intel GPU drivers.
-  my.intel-graphics.enable = true;
-
   hardware = {
     # Thankfully available.
     bluetooth.enable = true;
 
     # Ensure we update CPU microcode.
     cpu.intel.updateMicrocode = true;
+
+    # Load extra Intel GPU drivers.
+    my.intel-graphics.enable = true;
 
     # Necessary fix at the moment for working power management.
     nvidia = { open = lib.mkForce false; gsp.enable = false; };
