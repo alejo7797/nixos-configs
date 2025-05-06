@@ -263,6 +263,17 @@ return {
 		})
 	),
 
+  s(
+    {
+      trig = "invs",
+      condition = in_mathzone,
+      wordTrig = false,
+    },
+    {
+      t("^{-1}")
+    }
+  ),
+
 	s(
 		{
 			trig = "__",
