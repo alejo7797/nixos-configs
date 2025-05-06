@@ -1,4 +1,4 @@
-{ lib, inputs, pkgs, self, ... }:
+{ config, inputs, lib, pkgs, self, ... }:
 
 {
   system.stateVersion = "24.11";
@@ -33,13 +33,21 @@
   };
 
   networking = {
-    # Very good, it's me.
     hostName = "satsuki";
+
+    my.airvpn = {
+      enable = true;
+      address = "10.131.183.183";
+      address6 = "fd7d:76ee:e68f:a993:9401:8cf2:f255:ed7d";
+      servers.AirVPN_NYC.autoconnect = true;
+    };
 
     networkmanager = {
       enable = true;
 
       logLevel = "INFO";
+
+      ensureProfiles.environmentFiles = [ config.sops.secrets.nm-secrets.path ];
 
       dispatcherScripts = [
         {
@@ -100,7 +108,7 @@
       '';
 
       packages = [
-        (pkgs.writeTextDir "etc/udev/rules.d/71-usb.rules" ''
+        (pkgs.writeTextDir "etc/udev/rules.d/71.rules" ''
           # Give regular users full access to USB devices.
           SUBSYSTEM=="usb", MODE="0660", TAG+="uaccess"
         '')
@@ -113,9 +121,15 @@
     users.ewan = import ./home.nix;
   };
 
-  sops.secrets.u2f-mappings = {
-    # YubiKey pam-u2f module secrets.
-    group = "users"; mode = "0440";
+  sops.secrets = {
+
+    nm-secrets = { };
+
+    u2f-mappings = {
+      # YubiKey pam-u2f module secrets.
+      group = "users"; mode = "0440";
+    };
+
   };
 
   my = {
