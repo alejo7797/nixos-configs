@@ -12,42 +12,42 @@ in
       enable = lib.mkEnableOption "Variety";
       package = lib.mkPackageOption pkgs "variety" { nullable = true; };
 
-      settings = lib.mkOption {
-        description = "Variety configuration.";
-        type = with lib.types; submodule {
-          options = {
-            changeInterval = lib.mkOption {
-              description = "Interval of time at which to change the wallpaper.";
-              type = int;
-              default = "3600";
-            };
-            downloadPreferenceRatio = lib.mkOption {
-              description = "How often to use newly downloaded wallpapers.";
-              type = float;
-              default = 0.5;
-            };
-            favoritesFolder = lib.mkOption {
-              description = "Folder to keep favorited wallpapers in.";
-              type = str;
-              default = "${config.xdg.userDirs.pictures}/Wallpapers/Favorites";
-            };
-            sources = lib.mkOption {
-              description = "Wallpaper sources.";
-              type = attrsOf (submodule {
-                options = {
-                  type = lib.mkOption {
-                    description = "Source type.";
-                    type = enum [ "image" "favorites" "folder" "wallhaven" ];
-                  };
-                  url = lib.mkOption {
-                    description = "Source URL";
-                    type = str;
-                  };
-                };
-              });
-            };
-          };
+      settings = {
+
+        changeInterval = lib.mkOption {
+          description = "Interval of time at which to change the wallpaper.";
+          type = lib.types.int;
+          default = 3600;
         };
+
+        downloadPreferenceRatio = lib.mkOption {
+          description = "How often to use newly downloaded wallpapers.";
+          type = lib.types.float;
+          default = 0.5;
+        };
+
+        favoritesFolder = lib.mkOption {
+          description = "Folder to keep favorited wallpapers in.";
+          type = lib.types.str;
+          default = "${config.xdg.userDirs.pictures}/Wallpapers/Favorites";
+        };
+
+        sources = lib.mkOption {
+          description = "Wallpaper sources.";
+          type = with lib.types; attrsOf (submodule {
+            options = {
+              type = lib.mkOption {
+                description = "Source type.";
+                type = enum [ "image" "favorites" "folder" "wallhaven" ];
+              };
+              url = lib.mkOption {
+                description = "Source URL";
+                type = str;
+              };
+            };
+          });
+        };
+
       };
 
     };
