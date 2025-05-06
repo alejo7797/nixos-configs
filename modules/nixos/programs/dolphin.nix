@@ -1,4 +1,4 @@
-{ config, inputs, lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   cfg = config.programs.my.dolphin;
@@ -44,13 +44,34 @@ in
       (
         final: prev:
 
-        let
-          ilya-fedin = import inputs.ilya-fedin { pkgs = prev; };
-        in
-
         {
           libsForQt5 = prev.libsForQt5.overrideScope (
-            _: _: { inherit (ilya-fedin) qt5ct; }
+            qt5-final: qt5-prev: {
+
+              qt5ct = qt5-prev.qt5ct.overrideAttrs (oldAttrs: {
+
+                buildInputs = with qt5-final; oldAttrs.buildInputs ++ [
+                  qtquickcontrols2 kconfig kconfigwidgets kiconthemes
+                ];
+
+                nativeBuildInputs = with qt5-final; [
+                  final.cmake wrapQtAppsHook qttools
+                ];
+
+                patches = [
+                  (final.fetchurl {
+                    url = "https://raw.githubusercontent.com/ilya-fedin/nur-repository/refs/heads/master/pkgs/qt5ct/qt5ct-shenanigans.patch";
+                    hash = "sha256-fziJn5xcSdtqwf69p36god0342n5zSHdJScjRw/IbgY=";
+                  })
+                ];
+
+                cmakeFlags = [
+                  "-DPLUGINDIR=${placeholder "out"}/${qt5-final.qtbase.qtPluginPrefix}"
+                ];
+
+              });
+
+            }
           );
 
           qt6Packages = prev.qt6Packages.overrideScope (
