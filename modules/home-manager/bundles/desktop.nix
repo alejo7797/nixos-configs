@@ -15,6 +15,7 @@ in
     };
 
     programs = {
+      btop.enable = true;
       direnv.enable = true;
       firefox.enable = true;
       gpg.enable = true;

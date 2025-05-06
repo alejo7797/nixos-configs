@@ -44,7 +44,6 @@ in
       altus
       anki
       audacity
-      btop
       caprine-bin
       dconf-editor
       digikam
