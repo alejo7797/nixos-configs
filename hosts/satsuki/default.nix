@@ -39,6 +39,8 @@
     networkmanager = {
       enable = true;
 
+      logLevel = "INFO";
+
       dispatcherScripts = [
         {
           source = pkgs.writeShellScript "nta-script" ''
