@@ -84,6 +84,7 @@
         luaConfig = {
           pre = ''
             local npairs = require("nvim-autopairs")
+            local cond = require("nvim-autopairs.conds")
             local rule = require("nvim-autopairs.rule")
           '';
           post = ''

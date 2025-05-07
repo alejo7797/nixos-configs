@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
 {
   programs.nixvim = {
@@ -29,6 +29,19 @@
           # Enables line wrapping.
           modifyLineBreaks = true;
         };
+
+      };
+
+      nvim-autopairs = {
+
+        luaConfig.post = lib.concatMapStrings
+          (left: ''
+            npairs.get_rule("${left}")
+              :with_pair(cond.not_before_text("\\"))
+          '')
+          [
+            "(" "[" "{"
+          ];
 
       };
 
