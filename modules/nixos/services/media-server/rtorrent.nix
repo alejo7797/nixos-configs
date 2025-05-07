@@ -14,7 +14,7 @@ in
 
     networking.nat = {
       enable = lib.mkDefault true;
-      internalInterfaces = [ "ve-rtorrent" ];
+      internalInterfaces = [ "ve-+" ];
     };
 
     containers.rtorrent = {
@@ -32,7 +32,6 @@ in
         # Data download directories.
         "/data/hanekawa/downloads" = { };
         "/data/natsuhi/downloads" = { };
-        "/data/natsuhi/media/Music" = { };
       };
 
       config = {
@@ -45,19 +44,16 @@ in
             group = "media";
           };
 
-          rutorrent = {
+          flood = {
             enable = true;
-            nginx.enable = true;
-
-            # For use by Nginx virtual host.
-            hostName = "rutorrent.${domain}";
+            host = "172.18.0.2";
           };
         };
 
         networking = {
 
           # Allow access to the webUI.
-          firewall.allowedTCPPorts = [ 80 ];
+          firewall.allowedTCPPorts = [ 3000 ];
 
           # Set up the AirVPN tunnel.
           wg-quick.interfaces."wg0" = {
@@ -90,7 +86,7 @@ in
         my.trustedOnly = true;
 
         locations."/" = {
-          proxyPass = "http://${config.containers.rtorrent.localAddress}";
+          proxyPass = "http://${config.containers.rtorrent.localAddress}:3000";
         };
 
       };
