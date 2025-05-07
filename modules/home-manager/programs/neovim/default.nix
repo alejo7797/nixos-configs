@@ -72,6 +72,37 @@
       }
     ];
 
+    userCommands = {
+
+      FormatEnable = {
+        command.__raw = ''
+          function()
+            vim.g.disable_autoformat = false
+          end
+        '';
+        desc = "Enable format on save";
+      };
+
+      FormatDisable = {
+        command.__raw = ''
+          function()
+            vim.g.disable_autoformat = true
+          end
+        '';
+        desc = "Disable format on save";
+      };
+
+      FormatToggle = {
+        command.__raw = ''
+          function()
+            vim.g.disable_autoformat = not vim.g.disable_autoformat
+          end
+        '';
+        desc = "Toggle format on save";
+      };
+
+    };
+
     plugins = {
 
       # Utility.
