@@ -12,6 +12,7 @@
         ''( \(\d+\% of [\d\.]+ \w+\))?''
 
         " — Dolphin$"
+
       ];
     in
 
@@ -44,10 +45,13 @@
     ++ map (w: "float, ${w}") [
 
       # Firefox Picture-in-Picture video player.
-      "class:^(firefox)$, title:^Picture-in-Picture$"
+      "class:^firefox$, title:^Picture-in-Picture$"
 
       # Thunderbird calendar reminder pop-up.
-      "class:^(thunderbird)$, title:^(Calendar|\\d+) Reminder(s)?$"
+      "class:^thunderbird$, title:^(Calendar|\\d+) Reminder(s)?$"
+
+      # Thunderbird compose email window.
+      "class:^thunderbird$, title:^Write: .* - Thunderbird$"
 
       # System tray applications.
       "class:^nm-connection-editor$"
@@ -86,7 +90,7 @@
 
     # Make these inhibit hypridle when fullscreen.
     ++ map (c: "idleinhibit fullscreen, class:^${c}$") [
-      "firefox" "mpv" "plex-desktop" "steam_app_\\d*"
+      "firefox" "mpv" "[\\w\\.]+jellyfin-media-player" "steam_app_\\d+"
     ]
 
     # Make Dolphin popups show up near the mouse cursor.
