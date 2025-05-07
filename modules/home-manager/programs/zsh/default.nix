@@ -20,14 +20,14 @@
 
     oh-my-zsh.enable = true;
 
-    plugins =
+    plugins = [
 
-      [
-        {
-          name = "nix-shell"; # Use Zsh under nix-shell.
-          src = "${pkgs.zsh-nix-shell}/share/zsh-nix-shell";
-        }
-      ];
+      {
+        name = "nix-shell"; # Use Zsh under nix-shell.
+        src = "${pkgs.zsh-nix-shell}/share/zsh-nix-shell";
+      }
+
+    ];
 
   };
 
