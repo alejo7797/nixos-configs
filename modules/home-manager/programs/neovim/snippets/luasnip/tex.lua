@@ -252,6 +252,17 @@ return {
 		)
 	),
 
+  s(
+    {
+      trig = "\\{",
+      condition = in_mathzone,
+      wordTrig = false,
+    },
+    fmta("\\{<>\\}", {
+      i(1),
+    })
+  ),
+
 	s(
 		{
 			trig = "^^",
