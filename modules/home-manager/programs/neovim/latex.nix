@@ -66,6 +66,9 @@
             [ "\\big" "\\big" ]
           ];
 
+          # Don't spell check comments.
+          syntax_nospell_comments = 1;
+
           # Use Zathura for viewing PDFs.
           view_method = "zathura_simple";
 
