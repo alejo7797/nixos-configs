@@ -2,6 +2,10 @@
 
 let
   cfg = config.programs.kitty;
+
+  # Use the global Stylix colors.
+  colors = stylix.colors.withHashtag;
+  inherit (config.lib) stylix;
 in
 
 {
@@ -19,6 +23,11 @@ in
         enable_audio_bell = "yes";
         linux_bell_theme = "ocean";
       };
+
+      extraConfig = lib.mkAfter ''
+        selection_background ${colors.base02}
+        selection_foreground ${colors.base05}
+      '';
 
     };
 
