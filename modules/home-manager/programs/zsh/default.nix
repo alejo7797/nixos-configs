@@ -12,6 +12,9 @@
       # Accept suggestion with Shift+Tab.
       bindkey '^[[Z' autosuggest-accept
 
+      # Sets window title in Kitty as desired.
+      ZSH_THEME_TERM_TAB_TITLE_IDLE="%n@%m:%~"
+
       # OhMyZsh...
       unalias gap
     '';

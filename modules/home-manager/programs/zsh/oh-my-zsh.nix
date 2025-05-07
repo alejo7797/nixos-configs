@@ -2,10 +2,15 @@
   programs.zsh.oh-my-zsh = {
 
     plugins = [
-      "alias-finder" "dirhistory"
-      "git" "history" "python"
-      "rsync" "ruby" "safe-paste"
-      "sudo" "systemd" "zbell"
+      "alias-finder"
+      "dirhistory"
+      "git"
+      "history"
+      "python"
+      "safe-paste"
+      "sudo"
+      "systemd"
+      "zbell"
     ];
 
     extraConfig = ''
@@ -17,11 +22,19 @@
       zstyle ':omz:plugins:alias-finder' cheaper yes
 
       zbell_ignore=(
-        bash dmesg nix-shell
-        git glola htop journalctl
-        less man sc-status
-        scu-status ssh vim
+        bash
+        nix-shell
+        git
+        glola
+        journalctl
+        less
+        man
+        sc-status
+        scu-status
+        ssh
+        vim
       )
     '';
+
   };
 }
