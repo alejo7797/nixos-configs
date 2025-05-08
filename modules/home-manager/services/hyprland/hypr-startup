@@ -47,28 +47,8 @@ launch org.kde.dolphin '[workspace 4 silent]'
 wait_for '.class == "org.kde.dolphin"'
 
 
-go_to_workspace 4
-# Create tab workspace.
-hy_do hy3:makegroup tab
-go_to_workspace "$prev"
-
-
 launch kitty '[workspace 4 silent]' # Launch Kitty.
 wait_for '.class == "kitty" and .workspace.id == 4'
-
-
-go_to_workspace 4
-
-# Carefully set a layout.
-hy_do hy3:movefocus r
-hy_do hy3:movewindow r
-hy_do hy3:makegroup tab
-
-# Force border refresh.
-hy_do hy3:movefocus l
-hy_do hy3:movefocus r
-
-go_to_workspace "$prev"
 
 
 wait_for '.class == "signal"'
