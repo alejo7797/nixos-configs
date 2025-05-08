@@ -51,7 +51,7 @@
       "class:^thunderbird$, title:^(Calendar|\\d+) Reminder(s)?$"
 
       # Thunderbird compose email window.
-      "class:^thunderbird$, title:^Write: .* - Thunderbird$"
+      "class:^thunderbird$, title:^Write: .*( - Thunderbird)?$"
 
       # System tray applications.
       "class:^nm-connection-editor$"
