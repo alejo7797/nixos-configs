@@ -13,6 +13,7 @@
         aw-watcher-web
         betterttv
         darkreader
+        image-search-options
         simple-tab-groups
         tampermonkey
         to-google-translate
