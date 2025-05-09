@@ -75,4 +75,9 @@ specialBeginEnd:
     begin: '\\left\\\{'
     end: '\\right\\\}'
 
+fineTuning:
+  namedGroupingBracesBrackets:
+    # Fix TikZ issues with `>=`.
+    name: '[0-9\.a-zA-Z@\*><=]+?'
+
 # vim: ft=yaml
