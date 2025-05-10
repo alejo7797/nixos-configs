@@ -17,6 +17,11 @@ local in_env = function(name)
   return (is_inside[1] > 0 and is_inside[2] > 0)
 end
 
+local in_tikz = function()
+  -- For TikZ snippet support.
+  return in_env("tikzpicture")
+end
+
 return {
 
 	s(
@@ -344,7 +349,9 @@ return {
 	s(
     {
       trig = "->",
-      condition = in_mathzone,
+      condition = function()
+        return in_mathzone() and not in_tikz()
+      end,
       wordTrig = false,
     },
     {
@@ -372,17 +379,6 @@ return {
     {
       t("\\subseteq")
     }
-  ),
-
-  s(
-    {
-      trig = "arrow",
-      condition = in_env("tikzcd"),
-      wordTrig = true,
-    },
-    fmta("\\arrow[<>]", {
-      i(1),
-    })
   ),
 
 }
