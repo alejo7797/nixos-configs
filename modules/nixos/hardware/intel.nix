@@ -13,8 +13,8 @@ in
 
       graphics = {
         # Additional driver packages.
-        extraPackages = with pkgs; [ intel-media-driver intel-compute-runtime libvdpau-va-gl ];
-        extraPackages32 = with pkgs.pkgsi686Linux; [ intel-media-driver libvdpau-va-gl ];
+        extraPackages = with pkgs; [ intel-media-driver intel-compute-runtime ];
+        extraPackages32 = with pkgs.pkgsi686Linux; [ intel-media-driver ];
       };
 
       intel-gpu-tools.enable = true;

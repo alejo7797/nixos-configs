@@ -316,6 +316,7 @@ return {
 	s(
 		{
 			trig = "hat",
+      -- TODO: detect if \\
 			condition = in_mathzone,
 			wordTrig = true,
 		},
