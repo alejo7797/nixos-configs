@@ -31,8 +31,8 @@ in
     ;
   };
 
-  # Home Manager module with personal configs.
-  home-manager.users.ewan = import ./home.nix;
+  # Home Manager module containing personal configs.
+  home-manager.users.ewan = import ./home-manager;
 
   # Make my password available during activation.
   sops.secrets.my-password.neededForUsers = true;

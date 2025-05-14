@@ -27,11 +27,6 @@
     zotero = "zotero.desktop";
   };
 
-  myHome = {
-    # TODO: migrate this
-    thunderbird.enable = true;
-  };
-
   xdg.configFile."uwsm/env-hyprland".text = ''
     IGPU_CARD=$(readlink -f /dev/dri/by-path/pci-0000:00:02.0-card)
     DGPU_CARD=$(readlink -f /dev/dri/by-path/pci-0000:01:00.0-card)

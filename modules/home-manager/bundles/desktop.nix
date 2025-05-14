@@ -24,6 +24,7 @@ in
       lsd.enable = true;
       mpv.enable = true;
       nixvim.enable = true;
+      thunderbird.enable = true;
       zathura.enable = true;
     };
 

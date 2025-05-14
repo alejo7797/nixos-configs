@@ -1,5 +1,14 @@
-{ config, ... }:
-{
+{ config, lib, ... }: {
+
+  imports = with lib.fileset;
+
+    toList (difference
+      # Automatically import Home Manager modules.
+      (fileFilter (file: file.hasExt "nix") ./.)
+      ./default.nix # You cannot import yourself!
+    )
+
+  ;
 
   programs = {
 
