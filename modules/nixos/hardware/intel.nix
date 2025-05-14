@@ -13,7 +13,7 @@ in
 
       graphics = {
         # Additional driver packages.
-        extraPackages = with pkgs; [ intel-media-driver intel-compute-runtime ];
+        extraPackages = with pkgs; [ intel-media-driver intel-compute-runtime vpl-gpu-rt ];
         extraPackages32 = with pkgs.pkgsi686Linux; [ intel-media-driver ];
       };
 

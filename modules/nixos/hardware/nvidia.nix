@@ -25,9 +25,7 @@ in
       # Additional driver packages.
       extraPackages = with pkgs; [
         nvidia-vaapi-driver # included by default in 25.05
-        libvdpau-va-gl
       ];
-      extraPackages32 = with pkgs.driversi686Linux; [ libvdpau-va-gl ];
     };
 
     hardware.nvidia = lib.mkMerge [
