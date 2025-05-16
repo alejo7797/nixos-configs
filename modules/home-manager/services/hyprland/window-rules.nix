@@ -5,11 +5,20 @@
     let
       dolphin-dialogs = lib.concatStrings [
 
-        "title:^(Copying|Deleting|Moving)"
+        "title:^("
+
+        (
+          lib.concatStringsSep "|" [
+            "Copying" "Moving" "Deleting"
+            "Extracting Files" # Variants.
+          ]
+        )
+
+        ")"
 
         # Sometimes the percentage progress is
         # present in the initial window title.
-        ''( \(\d+\% of [\d\.]+ \w+\))?''
+        ''(\(\d+\%( of [\d\.]+ \w+)?\))?''
 
         " — Dolphin$"
 
