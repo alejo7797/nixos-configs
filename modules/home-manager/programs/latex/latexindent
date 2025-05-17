@@ -30,7 +30,7 @@ modifyLineBreaks:
           (?:\[.*\])?
 
           # We allow for a label.
-          (?:\\label\{[\w\-]+\})?
+          (?:\\label\{[\w\-:]+\})?
 
         |
           \\begin\{
