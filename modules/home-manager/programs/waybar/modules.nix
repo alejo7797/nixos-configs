@@ -22,10 +22,8 @@ in
         "18" = ""; # library
         "20" = ""; # btop
 
-        "extra" = "";
+        "30" = ""; # extra
       };
-      # https://github.com/Alexays/Waybar/issues/3912
-      ignore-workspaces = "extra";
     };
 
     idle_inhibitor = {
