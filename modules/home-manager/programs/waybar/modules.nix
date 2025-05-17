@@ -24,6 +24,8 @@ in
 
         "extra" = "";
       };
+      # https://github.com/Alexays/Waybar/issues/3912
+      ignore-workspaces = "extra";
     };
 
     idle_inhibitor = {
