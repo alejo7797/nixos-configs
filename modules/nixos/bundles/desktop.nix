@@ -51,6 +51,7 @@ in
       filezilla
       font-manager
       gimp
+      homebank
       icoutils
       imagemagick
       inkscape
