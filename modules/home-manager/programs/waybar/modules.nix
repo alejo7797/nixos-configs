@@ -19,6 +19,7 @@ in
         "8" = ""; # messaging
         "9" = ""; # media
 
+        "16" = ""; # money
         "18" = ""; # library
         "20" = ""; # btop
 

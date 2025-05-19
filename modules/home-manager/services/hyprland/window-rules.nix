@@ -40,6 +40,8 @@
 
       { ws = 9; criteria = "class:^spotify$"; }
 
+      { ws = 16; criteria = "class:^homebank$"; }
+
       { ws = 18; criteria = "class:^Zotero$"; }
     ]
 
