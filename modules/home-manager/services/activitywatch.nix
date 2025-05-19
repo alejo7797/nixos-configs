@@ -38,6 +38,11 @@ in
               replace-app-id = "neovim"; replace-title = "$1 $2";
             }
             {
+              match-app-id = "homebank"; # Keep the title stable.
+              match-title = "\\*(\\w*.xhb - [^-]* - HomeBank)";
+              replace-app-id = "homebank"; replace-title = "$1";
+            }
+            {
               match-app-id = "org\\.kde\\.dolphin";
               replace-app-id = "dolphin"; # Shorten.
             }
