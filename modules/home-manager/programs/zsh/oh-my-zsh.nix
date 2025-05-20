@@ -26,13 +26,16 @@
         nix-shell
         git
         glola
+        ipython
         journalctl
         less
         man
+        sage
         sc-status
         scu-status
         ssh
         vim
+        zsh
       )
     '';
 
