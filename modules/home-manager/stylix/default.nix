@@ -21,12 +21,11 @@ in
         # Doesn't look great.
         btop.enable = false;
 
+        # Firefox profiles for which to enable Stylix integration.
+        firefox.profileNames = [ "${config.home.username}.default" ];
+
         # Don't create ~/.themes directory.
         gtk.flatpakSupport.enable = false;
-
-        # Won't need these on 25.05.
-        hyprpaper.enable = lib.mkForce false;
-        hyprlock.enable = false;
       };
     };
 
@@ -54,12 +53,6 @@ in
         # The default sound theme for KDE.
         pkgs.kdePackages.ocean-sound-theme
       ];
-    };
-
-    # TODO: remove with 25.05 release
-    home.file = lib.mkIf (config.home.pointerCursor != null) {
-      ".icons/default/index.theme".enable = false;
-      ".icons/${config.home.pointerCursor.name}".enable = false;
     };
 
     xresources.path = "${config.xdg.configHome}/X11/xresources";

@@ -106,7 +106,7 @@ in
       my.airvpn.servers = {
         AirVPN_NYC.endpoint = "198.44.136.254:1637";
         AirVPN_Japan.endpoint = "jp3.vpn.airdns.org:1637";
-        AirVPN_Spain.endpoint = "es3.vpn.airdns.org:1637";
+        AirVPN_Spain.endpoint = "185.93.182.173:1637";
         AirVPN_UK.endpoint = "gb3.vpn.airdns.org:1637";
       };
 

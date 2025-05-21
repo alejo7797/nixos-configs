@@ -7,7 +7,7 @@ in
 lib.mkIf cfg.enable {
 
   services.gpg-agent = {
-    pinentryPackage = pkgs.pinentry-gnome3;
+    pinentry.package = pkgs.pinentry-gnome3;
 
     # Replace ssh-agent.
     enableSshSupport = true;

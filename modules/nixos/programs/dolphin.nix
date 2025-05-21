@@ -48,7 +48,14 @@ in
           libsForQt5 = prev.libsForQt5.overrideScope (
             qt5-final: qt5-prev: {
 
-              qt5ct = qt5-prev.qt5ct.overrideAttrs (oldAttrs: {
+              qt5ct = qt5-prev.qt5ct.overrideAttrs (oldAttrs: rec {
+
+                version = "1.8";
+
+                src = final.fetchurl {
+                  url = "mirror://sourceforge/qt5ct/qt5ct-${version}.tar.bz2";
+                  sha256 = "sha256-I7dAVEFepBJDKHcu+ab5UIOpuGVp4SgDSj/3XfrYCOk=";
+                };
 
                 buildInputs = with qt5-final; oldAttrs.buildInputs ++ [
                   qtquickcontrols2 kconfig kconfigwidgets kiconthemes

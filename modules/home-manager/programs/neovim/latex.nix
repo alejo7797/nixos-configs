@@ -3,13 +3,6 @@
 {
   programs.nixvim = {
 
-    globals = {
-
-      # Better syntax highlighting.
-      matchup_override_vimtex = 1;
-
-    };
-
     plugins = {
 
       # Settings for the TeX language server.
@@ -42,6 +35,13 @@
           [
             "(" "[" "{"
           ];
+
+      };
+
+      vim-matchup = {
+
+        # Better syntax highlihgting.
+        settings.override_vimtex = 1;
 
       };
 

@@ -8,7 +8,7 @@
 
     history.path = "${config.xdg.stateHome}/zsh/history";
 
-    initExtra = ''
+    initContent = ''
       # Accept suggestion with Shift+Tab.
       bindkey '^[[Z' autosuggest-accept
 

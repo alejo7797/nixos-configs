@@ -20,25 +20,6 @@ in
     # TODO: migrate elsewhere
     my.wayland.enable = true;
 
-    # TODO: remove with 25.05.
-    services.kanshi.systemdTarget = "graphical-session.target";
-
-    systemd.user.services = lib.mapAttrs
-
-      # Delay the start of graphical systemd user services.
-      (_: _: { Unit.After = [ "graphical-session.target" ]; })
-
-      {
-        # TODO: remove with 25.05.
-        gammastep = { };
-        hypridle = { };
-        kdeconnect-indicator = { };
-        waybar = { };
-      };
-
-    # TODO: remove with 25.05.
-    services.hyprpaper.enable = lib.mkForce false;
-
     wayland.windowManager.hyprland = {
 
       # Use hy3 to allow for i3-like behaviour.

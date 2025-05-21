@@ -29,7 +29,7 @@ in
         favoritesFolder = lib.mkOption {
           description = "Folder to keep favorited wallpapers in.";
           type = lib.types.str;
-          default = "${config.xdg.userDirs.pictures}/Wallpapers/Favorites";
+          default = "${config.xdg.userDirs.pictures}/Wallpapers/Favourites";
         };
 
         sources = lib.mkOption {

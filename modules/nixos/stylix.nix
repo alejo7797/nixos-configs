@@ -10,7 +10,7 @@
       sha256 = "16d5pch4544knygndsslmh682fxp6sqwn5b9vnrb35ji7m5zfcm0";
     };
 
-    # My favorite color scheme https://github.com/chriskempson/tomorrow-theme.
+    # My favourite colour scheme https://github.com/chriskempson/tomorrow-theme.
     base16Scheme = "${pkgs.base16-schemes}/share/themes/tomorrow-night.yaml";
 
     # Enable dark mode.
@@ -33,8 +33,9 @@
       serif = sansSerif;
 
       monospace = {
-        name = "Hack Nerd Font"; # Avoid grabbing all Nerd Fonts.
-        package = pkgs.nerdfonts.override { fonts = [ "Hack" ]; };
+        # Monospace font of choice.
+        package = pkgs.nerd-fonts.hack;
+        name = "Hack Nerd Font";
       };
 
       emoji = {

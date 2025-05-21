@@ -50,7 +50,7 @@ in
       ffmpeg
       filezilla
       font-manager
-      gimp
+      gimp3
       gnucash
       gocryptfs
       icoutils

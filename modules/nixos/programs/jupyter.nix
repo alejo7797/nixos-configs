@@ -2,13 +2,6 @@
 
 let
   cfg = config.programs.my.jupyter;
-
-  # TODO: remove with 25.05
-  sage-logo = builtins.fetchurl {
-    url = "https://raw.githubusercontent.com/sagemath/sage/refs"
-      + "/heads/master/src/sage/ext_data/notebook-ipython/logo-64x64.png";
-    sha256 = "sha256-pE3myKl2ywp6zDUD0JiMs+lvAk6T4O3z5PdEC/B0ZL4=";
-  };
 in
 
 {
@@ -34,10 +27,7 @@ in
           };
 
           # SageMath Jupyter kernel.
-          sagemath = sage.kernelspec // {
-            logo32 = sage-logo;
-            logo64 = sage-logo;
-          };
+          sagemath = sage.kernelspec;
 
         };
       })

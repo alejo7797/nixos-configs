@@ -1,9 +1,4 @@
-{
-  lib,
-  config,
-  pkgs,
-  ...
-}:
+{ config, lib, ... }:
 
 let
   cfg = config.my.nvidia;
@@ -20,13 +15,6 @@ in
 
     # Install Nvidia graphics drivers.
     services.xserver.videoDrivers = [ "nvidia" ];
-
-    hardware.graphics = {
-      # Additional driver packages.
-      extraPackages = with pkgs; [
-        nvidia-vaapi-driver # included by default in 25.05
-      ];
-    };
 
     hardware.nvidia = lib.mkMerge [
 

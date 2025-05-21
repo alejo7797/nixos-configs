@@ -40,7 +40,7 @@ in
 
       };
 
-      initExtraFirst =
+      initContent = lib.mkBefore (
 
         lib.optionalString (direnv.enable && direnv.enableZshIntegration) ''
           emulate zsh -c "$(direnv export zsh)"
@@ -50,7 +50,9 @@ in
           if [[ -r "$XDG_CACHE_HOME/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
             source "$XDG_CACHE_HOME/p10k-instant-prompt-''${(%):-%n}.zsh"
           fi
-        '';
+        ''
+
+      );
 
       plugins =
 

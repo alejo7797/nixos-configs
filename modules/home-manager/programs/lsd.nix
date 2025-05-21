@@ -1,7 +1,7 @@
 {
   programs.lsd= {
 
-    enableAliases = true;
+    enableZshIntegration = true;
 
     settings = {
       sorting.dir-grouping = "first";

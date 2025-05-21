@@ -137,24 +137,24 @@
       trim.enable = true;
       vim-matchup = {
         enable = true;
-        matchParen = {
-          enable = true;
-          deferred.enable = true;
-          hiSurroundAlways = true;
+        settings = {
+          matchparen_deferred = 1;
+          matchparen_deferred_hi_surround_always = true;
+          matchparen_enabled = 1;
         };
-        treesitterIntegration.enable = true;
+        treesitter.enable = true;
       };
 
       # Visuals.
-      indent-blankline.enable = true;
-      nvim-colorizer = {
+      colorizer = {
         enable = true;
-        userDefaultOptions = {
+        settings.user_default_options = {
           css = true;
           names = false;
           RGB = false;
         };
       };
+      indent-blankline.enable = true;
       web-devicons.enable = true;
 
       # UI.
@@ -466,7 +466,7 @@
       trouble.enable = true;
 
       lean = {
-        mappings = true;
+        settings.mappings = true;
       };
     };
   };

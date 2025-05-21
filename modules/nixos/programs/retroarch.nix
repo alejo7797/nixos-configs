@@ -11,8 +11,8 @@ in
 
     environment.systemPackages = with pkgs; [(
 
-      retroarch.override {
-        cores = with libretro; [
+      retroarch.withCores (
+        cores: with cores; [
 
           # https://github.com/NixOS/nixpkgs/tree/master/pkgs/applications/emulators/libretro
           # https://emulation.gametechwiki.com/index.php/Main_Page for the state of emulation
@@ -28,8 +28,8 @@ in
           beetle-psx-hw  # PSX
           ppsspp         # PSP
 
-        ];
-      }
+        ]
+      )
 
     )];
   };

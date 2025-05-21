@@ -11,9 +11,6 @@ in
 
     xdg.configFile."uwsm/env".text = ''
 
-      # TODO: remove with 25.05.
-      export HYPRCURSOR_SIZE=24
-
       # Wayland fixes.
       export _JAVA_AWT_WM_NONREPARENTING=1
       export QT_WAYLAND_DISABLE_WINDOWDECORATION=1

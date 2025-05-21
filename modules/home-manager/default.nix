@@ -25,7 +25,4 @@
     gnupg.home = "/dev/null"; # Don't even try to use my PGP key.
   };
 
-  # TODO: remove starting with 25.05.
-  systemd.user.startServices = true;
-
 }
