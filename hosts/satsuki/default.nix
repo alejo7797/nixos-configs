@@ -39,7 +39,7 @@
       enable = true;
       address = "10.131.183.183";
       address6 = "fd7d:76ee:e68f:a993:9401:8cf2:f255:ed7d";
-      servers.AirVPN_NYC.autoconnect = true;
+      servers.AirVPN_Spain.autoconnect = true;
     };
 
     networkmanager = {
