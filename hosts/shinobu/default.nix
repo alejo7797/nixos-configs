@@ -1,4 +1,4 @@
-{ lib, pkgs, self, ... }:
+{ config, lib, pkgs, self, ... }:
 
 {
   system.stateVersion = "24.11";
@@ -36,11 +36,50 @@
   };
 
   networking = {
-    # Very good, it's me.
     hostName = "shinobu";
 
-    # Actually a bit questionable.
-    networkmanager.enable = true;
+    my.airvpn = {
+      enable = true;
+      address = "10.157.180.243";
+      address6 = "fd7d:76ee:e68f:a993:8495:5649:27b5:14ef";
+      servers.AirVPN_Spain.autoconnect = true;
+    };
+
+    networkmanager = {
+      enable = true;
+
+      logLevel = "INFO";
+
+      ensureProfiles.environmentFiles = [ config.sops.secrets.nm-secrets.path ];
+
+      dispatcherScripts = [
+        {
+          source = pkgs.writeShellScript "nta-script" ''
+
+            ! [[ $2 == up ]] && exit 0
+
+            case "$CONNECTION_ID" in
+
+              Koakuma_VPN|xfinitywifi_HUH_Res)
+                nta="patchoulihq.cc" ;;
+
+              *) exit 0 ;;
+
+            esac
+
+            # Sets DNSSEC negative trust anchors.
+            resolvectl nta "$DEVICE_IFACE" "$nta"
+
+          '';
+        }
+      ];
+    };
+
+    firewall.my.no-vpn = [
+      "en.wikipedia.org" # Edit Wikipedia.
+      "resolver1.opendns.com" # Accurate IP.
+      "api.beacondb.net" # Geo-location.
+    ];
 
     nameservers = [
       # Some fallback DNS servers for systemd-resolved to use.
@@ -60,6 +99,12 @@
   home-manager = {
     # Additional user configuration.
     users.ewan = import ./home.nix;
+  };
+
+  sops.secrets = {
+
+    nm-secrets = { };
+
   };
 
   my = {

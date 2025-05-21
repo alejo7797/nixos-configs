@@ -13,12 +13,12 @@
     };
 
     "/mnt/windows" = {
-      device = "/dev/disk/by-uuid/";
+      device = "/dev/disk/by-uuid/CC44716A44715862";
       fsType = "ntfs";
     };
 
     "/mnt/vault" = {
-      device = "/dev/disk/by-uuid/";
+      device = "/dev/disk/by-uuid/60BCD5ABBCD57BCA";
       fsType = "ntfs";
     };
 

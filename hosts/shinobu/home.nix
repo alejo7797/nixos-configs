@@ -1,22 +1,18 @@
-{ pkgs, ... }:
-
 {
   home = {
     stateVersion = "24.11";
   };
 
-  my = {
-    autostart = with pkgs; [
-      altus
-      firefox
-      joplin-desktop
-      signal-desktop
-      spotify
-      steam
-      thunderbird
-      vesktop
-      zotero
-    ];
+  xdg.autostart.my.entries = {
+    altus = "Altus.desktop";
+    firefox = "firefox.desktop";
+    joplin-desktop = "joplin.desktop";
+    signal-desktop = "signal.desktop";
+    spotify = "spotify.desktop";
+    steam = "steam.desktop";
+    thunderbird = "thunderbird.desktop";
+    vesktop = "vesktop.desktop";
+    zotero = "zotero.desktop";
   };
 
   programs = {
@@ -39,7 +35,7 @@
     };
 
     # No need for Kanshi on a desktop computer.
-    monitor =  "HDMI-1, 1920x1080@100, 0x0, 1";
+    monitor = "HDMI-1, 1920x1080@100, 0x0, 1";
 
   };
 }
