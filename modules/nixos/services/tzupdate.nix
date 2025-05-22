@@ -21,7 +21,7 @@ in
             ip=$(${lib.getExe pkgs.dig} +short myip.opendns.com @resolver1.opendns.com)
 
             # Procure the current timezone from our IP address.
-            tz=$(curl -s -f http://ip-api.com/line/"$ip"?fields=timezone)
+            tz=$(${lib.getExe pkgs.curl} -s -f http://ip-api.com/line/"$ip"?fields=timezone)
 
             # Make sure we got an actual timezone as a response.
             if [[ -n $tz && -r ${pkgs.tzdata}/share/zoneinfo/$tz ]]; then
