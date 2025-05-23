@@ -52,7 +52,7 @@ in
       font-manager
       gimp
       gnucash
-      homebank
+      gocryptfs
       icoutils
       imagemagick
       inkscape
