@@ -2,6 +2,8 @@
 
 let
   cfg = config.my.yubikey;
+
+
 in
 
 {
@@ -12,7 +14,16 @@ in
 
   config = {
 
-    services.udev.packages = [ pkgs.yubikey-personalization ];
+    services.udev.packages = [
+
+      pkgs.yubikey-personalization
+
+      (pkgs.writeTextDir "etc/udev/rules.d/80-yubikey.rules" ''
+        # Take actions when a Yubikey is plugged in or removed using custom systemd user units.
+        ENV{ID_VENDOR_ID}=="1050", ENV{ID_MODEL_ID}=="0407", SYMLINK+="yubikey", TAG+="systemd"
+      '')
+
+    ];
 
     security.pam = lib.mkMerge [
       {

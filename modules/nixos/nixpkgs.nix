@@ -9,8 +9,8 @@
       # My personal derivations and scripts.
       inputs.my-expressions.overlays.default
 
-      # The Nix User Repository.
-      inputs.nur.overlays.default
+      # We use rycee's addons flake directly.
+      inputs.firefox-addons.overlays.default
 
       (
         # Backports.

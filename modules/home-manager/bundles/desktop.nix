@@ -38,11 +38,15 @@ in
       activitywatch.enable = true;
       gnome-keyring.enable = true;
       gpg-agent.enable = true;
-      my.jellyfin-rpc.enable = true;
       kdeconnect.indicator = true;
       mpris-proxy.enable = true;
       playerctld.enable = true;
-      my.variety.enable = true;
+    };
+
+    services.my = {
+      jellyfin-rpc.enable = true;
+      variety.enable = true;
+      yubikey.enable = true;
     };
 
     home.packages = with pkgs; [

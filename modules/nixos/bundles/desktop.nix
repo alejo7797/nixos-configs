@@ -60,12 +60,14 @@ in
       joplin-desktop
       keepassxc
       kitty
+      libfido2
       libreoffice
       libsForQt5.breeze-qt5
       libnotify
       mesa-demos
       mpv
       networkmanagerapplet
+      nix-output-monitor
       pavucontrol
       pdftk
       piper

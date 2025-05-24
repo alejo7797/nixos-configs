@@ -21,12 +21,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nur = {
-      # Get access to Nix User Repository.
-      url = "github:nix-community/NUR";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     lanzaboote = {
       # Enable Secure Boot support for NixOS systems.
       url = "github:nix-community/lanzaboote/v0.4.2";
@@ -42,6 +36,12 @@
     nixvim = {
       # Manage your Neovim config and LSPs using Nix.
       url = "github:nix-community/nixvim/nixos-24.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    firefox-addons = {
+      # Get accesss to rycee's helpful list of browser extensions.
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
