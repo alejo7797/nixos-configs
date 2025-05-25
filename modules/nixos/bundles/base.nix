@@ -16,6 +16,7 @@
     jq
     lsof
     nmap
+    psmisc
     sqlite
     unar
     usbutils
