@@ -1,24 +1,71 @@
-{ config, lib, pkgs, ... }: {
+{ config, lib, ... }: {
 
   options.xdg.autostart = {
+
     my.entries = lib.mkOption {
-      type = with lib.types; attrsOf str;
-      description = "Desktop files to autostart.";
-      default = { };
+
+      type = with lib.types; listOf (
+
+        # Simple case.
+        either package
+
+        (
+          submodule {
+
+            package = lib.mkOption {
+              type = package;
+              description = ''
+                Package with desktop file to autostart.
+              '';
+            };
+
+            filename = lib.mkOption {
+              type = str;
+              description = ''
+                Desktop file within package to autostart.
+              '';
+            };
+
+          }
+        )
+
+      );
+
+      description = ''
+        Custom management of autostart entries.
+      '';
+
+      example = lib.literalExpression ''
+        [
+          pkgs.firefox
+
+          {
+            package = pkgs.signal-desktop;
+            filename = "signal.desktop";
+          }
+        ]
+      '';
+
+      default = [ ];
+
     };
+
   };
 
-  config =  {
+  config.xdg.autostart = {
 
-    xdg.autostart = {
-      readOnly = true;
+    readOnly = true;
 
-      entries = lib.mapAttrsToList (
-        # TODO: make this a little smarter? There are limits...
-        name: entry: "${pkgs.${name}}/share/applications/${entry}"
-      ) config.xdg.autostart.my.entries;
-    };
+    entries = lib.mapAttrsToList
+
+      (
+        # Default behaviour assumes upstream does a good job packaging `x`.
+        x: x.desktopEntry or "${x.package}/share/applications/${x.filename}"
+      )
+
+      config.xdg.autostart.my.entries;
 
   };
+
 
 }
