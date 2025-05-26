@@ -6,8 +6,8 @@
     # Manage a Firefox user profile declaratively.
     profiles."${config.home.username}.default" = {
 
-      # Some extensions to install by default.
-      extensions = with pkgs.firefox-addons; [
+      # Some extensions to install to profile by default.
+      extensions.packages = with pkgs.firefox-addons; [
 
         augmented-steam
         aw-watcher-web

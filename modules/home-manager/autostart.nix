@@ -12,18 +12,22 @@
         (
           submodule {
 
-            package = lib.mkOption {
-              type = package;
-              description = ''
-                Package with desktop file to autostart.
-              '';
-            };
+            options = {
 
-            filename = lib.mkOption {
-              type = str;
-              description = ''
-                Desktop file within package to autostart.
-              '';
+              package = lib.mkOption {
+                type = package;
+                description = ''
+                  Package with desktop file to autostart.
+                '';
+              };
+
+              filename = lib.mkOption {
+                type = str;
+                description = ''
+                  Desktop file within package to autostart.
+                '';
+              };
+
             };
 
           }
@@ -56,11 +60,24 @@
 
     readOnly = true;
 
-    entries = lib.mapAttrsToList
+    entries = map
 
       (
-        # Default behaviour assumes upstream does a good job packaging `x`.
-        x: x.desktopEntry or "${x.package}/share/applications/${x.filename}"
+        x:
+          # Manual override for packages who don't do things as we desire.
+          if x ? filename then "${x.package}/share/applications/${x.filename}"
+
+          else (
+
+            let
+              # Our relatively simple desktop entry derivation fetcher.
+              deskItem = x.desktopItem or (builtins.head x.desktopItems);
+            in
+
+              # The deskItem derivation wraps the actual entry.
+              "${deskItem}/share/applications/${deskItem.name}"
+
+          )
       )
 
       config.xdg.autostart.my.entries;

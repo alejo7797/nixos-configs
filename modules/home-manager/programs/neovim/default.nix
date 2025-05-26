@@ -442,7 +442,8 @@
             yamllint.enable = true;
           };
           formatting = {
-            phpcsfixer.enable = true;
+            # FIXME: broken in PHP 8.4
+            # phpcsfixer.enable = true;
             prettier = {
               enable = true;
               # Prevent conflicts with ts_ls.

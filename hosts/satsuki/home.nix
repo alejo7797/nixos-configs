@@ -19,13 +19,18 @@
     "borg/ssh-key" = { };
   };
 
-  xdg.autostart.my.entries = {
-    altus = "Altus.desktop";
-    firefox = "firefox.desktop";
-    signal-desktop = "signal.desktop";
-    thunderbird = "thunderbird.desktop";
-    zotero = "zotero.desktop";
-  };
+  xdg.autostart.my.entries = with pkgs; [
+
+    # Well behaved guys.
+    firefox signal-desktop
+    thunderbird zotero
+
+    {
+      package = altus; # lol ok
+      filename = "Altus.desktop";
+    }
+
+  ];
 
   xdg.configFile."uwsm/env-hyprland".text = ''
     IGPU_CARD=$(readlink -f /dev/dri/by-path/pci-0000:00:02.0-card)
