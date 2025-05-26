@@ -1,4 +1,9 @@
-{ lib, inputs, pkgs, ... }:
+{
+  lib,
+  inputs,
+  pkgs,
+  ...
+}:
 
 {
   imports = [
@@ -60,7 +65,11 @@
     autoCmd = [
       {
         event = "FileType";
-        pattern = [ "c" "lua" "nix" ];
+        pattern = [
+          "c"
+          "lua"
+          "nix"
+        ];
         callback.__raw = ''
           function(opts)
             local bo = vim.bo[opts.buf]
@@ -246,7 +255,7 @@
           offsets = [
             {
               filetype = "neo-tree";
-              highlight = "Comment";
+              highlight = "BufferLineTab";
               separator = true;
               text = "File Explorer";
               text_align = "center";
