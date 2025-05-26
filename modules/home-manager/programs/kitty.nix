@@ -25,8 +25,11 @@ in
       };
 
       extraConfig = lib.mkAfter ''
+        # Darker than tinted-theming default.
         selection_background ${colors.base02}
-        selection_foreground ${colors.base05}
+
+        # Let us actually see.
+        color8 ${colors.base03}
       '';
 
     };
