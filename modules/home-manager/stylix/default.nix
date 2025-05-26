@@ -49,6 +49,9 @@ in
         QT_FONT_DPI = 120;
       };
 
+      # Avoid creating ~/.icons directory.
+      pointerCursor.dotIcons.enable = false;
+
       packages = [
         # The default sound theme for KDE.
         pkgs.kdePackages.ocean-sound-theme
