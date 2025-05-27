@@ -1,8 +1,5 @@
 { lib, ... }: {
 
-  # TODO: with 25.05 came support for extensions
-  # and also for declarative feed accounts
-
   accounts = {
 
     email.accounts =

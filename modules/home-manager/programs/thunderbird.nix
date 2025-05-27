@@ -118,36 +118,36 @@ in
 
         isDefault = true;
 
-        search = {
-          default = "ddg";
-          force = true;
-        };
+        # Along declarative emails.
+        feedAccounts."Feeds" = { };
 
         settings = {
-          # Privacy settings.
+
+          # Some pretty reasonbale privacy settings.
+          "datareporting.healthreport.uploadEnabled" = false;
           "network.cookie.cookieBehavior" = 1;
           "places.history.enabled" = false;
           "privacy.donottrackheader.enabled" = true;
-          "datareporting.healthreport.uploadEnabled" = false;
 
-          # Set a delay before marking messages as read.
+          # A delay before marking messages as read.
           "mailnews.mark_message_read.delay" = true;
 
-          # Disable the start page.
+          # Disable the THunderbird start page.
           "mailnews.start_page.enabled" = false;
 
-          # Weeks start on Monday.
+          # Weeks start on a Monday.
           "calendar.week.start" = 1;
 
-          # Show 11 hours in the calendar view.
+          # We show 11 hours in the calendar.
           "calendar.view.visiblehours" = 11;
 
-          # Do not show week numbers.
+          # Do not show week numbers in views by default.
           "calendar.view-minimonth.showWeekNumber" = false;
 
-          # Disable event category colors.
+          # Disable the event category colors.
           "calendar.categories.names" = "Holidays";
           "calendar.category.color.holidays" = "";
+
         };
 
       };
