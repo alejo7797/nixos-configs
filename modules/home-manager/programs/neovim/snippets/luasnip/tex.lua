@@ -315,8 +315,8 @@ return {
 
 	s(
 		{
-			trig = "hat",
-      -- TODO: detect if \\
+			trig = "\\?hat",
+      trigEngine = "pattern",
 			condition = in_mathzone,
 			wordTrig = true,
 		},
