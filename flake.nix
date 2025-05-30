@@ -60,11 +60,11 @@
     # Set up an manage a modded Minecraf server on NixOS.
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
 
+    # Cool theming framework for NixOS and Home Manager host.
+    stylix.url = "github:nix-community/stylix/release-25.05";
+
     # Secret management tool for NixOS using sops.
     sops-nix.url = "github:Mic92/sops-nix/master";
-
-    # A theming framework for NixOS and Home Manager.
-    stylix.url = "github:danth/stylix/release-25.05";
 
   };
 
