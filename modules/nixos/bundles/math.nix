@@ -13,22 +13,30 @@ in
       { my.math.enable = true; }
     ];
 
-    environment.systemPackages = with pkgs; [
-      gap
-      geogebra
-      khoca
-      knotjob
-      lean4
-      mathematica-webdoc
-      snappy-math
-      texliveFull
-      zotero
-    ];
+    environment = {
+
+      pathsToLink = [
+        "/share/KnotJob"
+      ];
+
+      systemPackages = with pkgs; [
+        gap
+        geogebra
+        khoca
+        knotjob
+        lean4
+        snappy-math
+        texliveFull
+        zotero
+      ];
+
+    };
 
     programs.my = {
       jupyter.enable = true;
       regina.enable = true;
       sage.enable = true;
+      wolfram.enable = true;
     };
 
   };

@@ -12,7 +12,6 @@ in
 
     home.sessionVariables = {
       DOT_SAGE = "${config.xdg.configHome}/sage";
-      MATHEMATICA_USERBASE = "${config.xdg.dataHome}/WolframEngine";
       WOLFRAM_USERBASE = "${config.xdg.dataHome}/Wolfram";
 
       # TODO: default in Jupyter6
