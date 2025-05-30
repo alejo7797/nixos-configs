@@ -1,0 +1,35 @@
+SET utf-8
+
+PFX U Y 1
+PFX U   0     un         .
+
+PFX B Y 1
+PFX B   0     sub        .
+
+PFX O Y 1
+PFX O   0     co         .
+
+PFX N Y 1
+PFX N   0     contra     .
+
+PFX Q Y 1
+PFX Q   0     equi       .
+
+SFX S Y 4
+SFX S   y     ies        [^aeiou]y
+SFX S   0     s          [aeiou]y
+SFX S   0     es         [sxzh]
+SFX S   0     s          [^sxzhy]
+
+SFX M Y 1
+SFX M   0     's         .
+
+SFX Y Y 1
+SFX Y   0     ly         .
+
+SFX T Y 1
+SFX T   0     ity        .
+
+SFX C Y 2
+SFX C   sm    c          ism
+SFX C   y     ic         opy

@@ -1,19 +1,14 @@
-{
-  lib,
-  inputs,
-  pkgs,
-  ...
-}:
+{ lib, inputs, pkgs, ... }: {
 
-{
-  imports = [
-    inputs.nixvim.homeManagerModules.nixvim
-  ];
+  imports = [ inputs.nixvim.homeManagerModules.nixvim ];
 
   programs.nixvim = {
+
+    # Symlink `vim`.
     vimAlias = true;
 
-    extraPackages = with pkgs; [ fd ];
+    # A telescope dependency.
+    extraPackages = [ pkgs.fd ];
 
     clipboard = {
       register = "unnamedplus";
@@ -109,6 +104,26 @@
         '';
         desc = "Toggle format on save";
       };
+
+    };
+
+    extraFiles = {
+
+      "spell/en.utf-8.add.spl".source = pkgs.runCommand "en.utf-8.add.spl"
+        {
+          nativeBuildInputs = [ pkgs.neovim ];
+        }
+        ''
+          nvim --clean --cmd "mkspell $out ${./spell}/en.utf-8.add | quit"
+        '';
+
+      "spell/maths.utf-8.spl".source = pkgs.runCommand "maths.utf-8.spl"
+        {
+          nativeBuildInputs = [ pkgs.neovim ];
+        }
+        ''
+          nvim --clean --cmd "mkspell $out ${./spell}/maths.utf-8 | quit"
+        '';
 
     };
 
