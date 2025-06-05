@@ -62,6 +62,7 @@ in
 
       # Some Java applications actually respect this which avoids creating the ~/.java directory.
       _JAVA_OPTIONS = "$_JAVA_OPTIONS -Djava.util.prefs.userRoot=${config.xdg.configHome}/java";
+
     };
 
     gtk.gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";

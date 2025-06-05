@@ -20,6 +20,12 @@ in
     # TODO: migrate elsewhere
     my.wayland.enable = true;
 
+    # TODO: move elsewhere too
+    xdg.portal = {
+      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+      xdgOpenUsePortal = true;
+    };
+
     wayland.windowManager.hyprland = {
 
       # Use hy3 to allow for i3-like behaviour.

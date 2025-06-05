@@ -60,6 +60,7 @@ in
               i3lock = { };
               swaylock = { };
             };
+
       })
 
       # Optionally enable Yubikey-based passwordless sudo.
