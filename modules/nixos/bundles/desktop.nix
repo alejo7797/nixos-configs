@@ -91,6 +91,7 @@ in
     ];
 
     programs = {
+      adb.enable = true;
       appimage.enable = true;
       autofirma.enable = true;
       my.dolphin.enable = true;

@@ -28,6 +28,9 @@ in
       # Give access to local - and remote - scanners using the SANE library.
       ++ lib.optionals config.hardware.sane.enable [ lp.name scanner.name ]
 
+      # Give access to the Android Debug Bridge for USB devices.
+      ++ lib.optional config.programs.adb.enable adbusers.name
+
     ;
   };
 
