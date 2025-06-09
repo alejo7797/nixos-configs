@@ -1,7 +1,7 @@
-{ pkgs, ... }: {
+{ lib, pkgs, ... }: {
 
   boot.loader = {
-    systemd-boot.enable = true;
+    systemd-boot.enable = lib.mkDefault true;
   };
 
   security = {
@@ -14,7 +14,9 @@
     fastfetch
     file
     jq
+    kitty.terminfo
     lsof
+    nix-output-monitor
     nmap
     psmisc
     sqlite

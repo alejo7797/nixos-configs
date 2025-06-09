@@ -1,4 +1,4 @@
-{ config, inputs, lib, pkgs, self, ... }: {
+{ config, inputs, pkgs, self, ... }: {
 
   system.stateVersion = "24.11";
 
@@ -24,8 +24,8 @@
       pkiBundle = "/var/lib/sbctl";
     };
 
-    # Lanzaboote requires disabling systemd-boot.
-    loader.systemd-boot.enable = lib.mkForce false;
+    # Lanzaboote replaces systemd-boot.
+    loader.systemd-boot.enable = false;
 
     # Don't show menu.
     loader.timeout = 0;

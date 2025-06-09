@@ -689,19 +689,17 @@
         ]
       },
       "locked": {
-        "host": "git.patchoulihq.cc",
         "lastModified": 1748603832,
         "narHash": "sha256-tX9G38iCf4se5BCF2EUnmw0qKaKp0hKVZL7hn3fkyDE=",
-        "owner": "alex",
+        "owner": "alejo7797",
         "repo": "nix-expressions",
         "rev": "455324d87c872a8991089750d72e1e3216cc08e0",
-        "type": "gitlab"
+        "type": "github"
       },
       "original": {
-        "host": "git.patchoulihq.cc",
-        "owner": "alex",
+        "owner": "alejo7797",
         "repo": "nix-expressions",
-        "type": "gitlab"
+        "type": "github"
       }
     },
     "nix-github-actions": {

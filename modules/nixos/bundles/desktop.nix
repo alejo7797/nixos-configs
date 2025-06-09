@@ -67,7 +67,6 @@ in
       mesa-demos
       mpv
       networkmanagerapplet
-      nix-output-monitor
       pavucontrol
       pdftk
       piper

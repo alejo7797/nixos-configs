@@ -28,8 +28,8 @@
     };
 
     my-expressions = {
-      # My personal scripts, Nix derivations and Nixpkgs overlays.
-      url = "gitlab:alex/nix-expressions?host=git.patchoulihq.cc";
+      # My personal scripts and Nix derivations.
+      url = "github:alejo7797/nix-expressions";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
