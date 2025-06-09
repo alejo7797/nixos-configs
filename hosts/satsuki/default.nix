@@ -1,6 +1,5 @@
-{ config, inputs, lib, pkgs, self, ... }:
+{ config, inputs, lib, pkgs, self, ... }: {
 
-{
   system.stateVersion = "24.11";
 
   imports = [
@@ -146,4 +145,5 @@
     # Extra 2FA security.
     yubikey._2fa = true;
   };
+
 }
