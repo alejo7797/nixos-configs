@@ -8,6 +8,10 @@
     sudo.enable = true;
   };
 
+  fonts = {
+    fontconfig.enable = lib.mkDefault false;
+  };
+
   environment.systemPackages = with pkgs; [
     dig
     dua

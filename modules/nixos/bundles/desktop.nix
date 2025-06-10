@@ -13,7 +13,13 @@ in
       { my.desktop.enable = true; }
     ];
 
-    stylix.enable = true;
+    stylix = {
+      enable = true;
+    };
+
+    fonts = {
+      fontconfig.enable = true;
+    };
 
     boot = {
       plymouth.enable = true;
