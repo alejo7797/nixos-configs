@@ -1,4 +1,4 @@
-{ config, inputs, lib, ... }: {
+{ inputs, lib, ... }: {
 
   imports = with lib.fileset;
 
@@ -18,11 +18,6 @@
   nix.gc = {
     automatic = true; frequency = "daily";
     options = "--delete-older-than 7d";
-  };
-
-  sops = {
-    defaultSopsFile = ../../secrets/${config.home.username}.yaml;
-    gnupg.home = "/dev/null"; # Don't even try to use my PGP key.
   };
 
 }

@@ -7,7 +7,7 @@ let
     "--print-build-logs" "--verbose"
 
     # Path to my personal NixOS configs.
-    "--flake ~/Git\\ Repos/nixos-configs"
+    "--flake ~/Git\ Repos/nixos-configs"
 
     # Used by nix-output-monitor.
     "--log-format internal-json"
