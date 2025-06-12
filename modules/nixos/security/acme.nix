@@ -6,7 +6,7 @@
 
     defaults = {
       email = "ewan@patchoulihq.cc"; dnsProvider = "desec";
-      environmentFile = config.sops.secrets."acme/desec".path;
+      environmentFile = config.sops.secrets.desec-token.path;
       server = "https://api.test4.buypass.no/acme/directory";
     };
 

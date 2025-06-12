@@ -1,9 +1,5 @@
 { pkgs, ... }: {
 
-  services.redis = {
+  services.redits.package = pkgs.valkey;
 
-    # Open source drop-in.
-    package = pkgs.valkey;
-
-  };
 }
