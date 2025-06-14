@@ -1,5 +1,6 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
 
-  services.redits.package = pkgs.valkey;
+  services.redis.package = pkgs.valkey;
 
 }

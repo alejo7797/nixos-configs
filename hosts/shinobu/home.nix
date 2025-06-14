@@ -1,19 +1,38 @@
-{
+{ lib, pkgs, ... }: {
+
   home = {
     stateVersion = "24.11";
   };
 
-  xdg.autostart.my.entries = {
-    altus = "Altus.desktop";
-    firefox = "firefox.desktop";
-    joplin-desktop = "joplin.desktop";
-    signal-desktop = "signal.desktop";
-    spotify = "spotify.desktop";
-    steam = "steam.desktop";
-    thunderbird = "thunderbird.desktop";
-    vesktop = "vesktop.desktop";
-    zotero = "zotero.desktop";
-  };
+  xdg.autostart.my.entries = with pkgs; [
+
+    # Well behaved guys.
+    firefox
+    thunderbird
+    zotero
+    signal-desktop
+    vesktop
+
+    {
+      package = altus; # lol ok
+      filename = "Altus.desktop";
+    }
+
+    {
+      package = joplin-desktop;
+      filename = "joplin.desktop";
+    }
+
+    {
+      package = spotify; # well ok
+      filename = "spotify.desktop";
+    }
+
+    {
+      package = steam; # really?
+      filename = "steam.desktop";
+    }
+  ];
 
   programs = {
     waybar.my = {
@@ -25,6 +44,8 @@
   services = {
     # borgmatic.enable = true;
     syncthing.enable = true;
+
+    kanshi.enable = lib.mkForce false;
   };
 
   wayland.windowManager.hyprland.settings = {
